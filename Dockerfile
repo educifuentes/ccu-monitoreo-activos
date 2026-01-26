@@ -5,10 +5,10 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Install system dependencies
+# Removed software-properties-common as it's not needed for basic build tools in this base image
 RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
-    software-properties-common \
     git \
     && rm -rf /var/lib/apt/apt/lists/*
 
