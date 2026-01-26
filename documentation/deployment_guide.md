@@ -14,6 +14,13 @@ Whenever you make changes to your code or secrets and want to push them to the l
 2.  **Builds & Pushes**: Uploads your latest code and builds a new Docker image in the cloud.
 3.  **Deploys**: Updates the Cloud Run service to use the new image.
 
+## 🔗 Useful Links
+
+- **Live Application**: [Open App](https://ccu-monitoreo-activos-219154903837.southamerica-west1.run.app)
+- **Monitoring & Logs**: [Cloud Run Console](https://console.cloud.google.com/run/detail/southamerica-west1/ccu-monitoreo-activos/logs?project=clear-data-485013)
+- **Billing & Cost**: [GCP Billing Dashboard](https://console.cloud.google.com/billing?project=clear-data-485013)
+- **Container Registry**: [Artifact Registry Images](https://console.cloud.google.com/artifacts/docker/clear-data-485013/southamerica-west1/cloud-run-source-deploy?project=clear-data-485013)
+
 ---
 
 ## 🛠️ Infrastructure Overview
