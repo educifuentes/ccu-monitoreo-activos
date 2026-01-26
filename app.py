@@ -9,11 +9,12 @@ locales_page = st.Page("pages/reports/2_locales.py", title="Locales", icon=":mat
 # Section - Tools
 explore_page = st.Page("pages/tools/data_explorer.py", title="Explorador de Datos", icon=":material/search:")
 validations_page = st.Page("pages/tools/validations.py", title="Validaciones", icon=":material/check_circle:")
+documentation_page = st.Page("pages/tools/documentation.py", title="Documentación", icon=":material/book:")
 
 # current page
 pg = st.navigation({
     "Vistas": [general_page, locales_page],
-    "Herramientas": [explore_page, validations_page]
+    "Herramientas": [explore_page, validations_page, documentation_page]
 })
 
 with st.sidebar:
