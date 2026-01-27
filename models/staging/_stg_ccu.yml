@@ -1,0 +1,37 @@
+models:
+  - name: stg_ccu__locals
+    description: one unique customer per row
+    columns:
+      - name: local_id
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_ccu__censos
+    columns:
+      - name: censos_id
+        description: primary key
+        data_tests:
+          - unique
+          - not_null
+      - name: num_shoperas
+        description: number of shoperas
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_ccu__locals')
+                field: local_id
+  - name: stg_ccu__nominas
+    columns:
+      - name: nomina_id
+        description: primary key
+        data_tests:
+          - unique
+          - not_null
+  - name: stg_ccu__contratos
+    columns:
+      - name: contrato_id
+        description: primary key
+        data_tests:
+          - unique
+          - not_null
