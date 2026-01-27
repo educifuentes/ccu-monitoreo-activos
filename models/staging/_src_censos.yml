@@ -25,3 +25,5 @@ sources:
             data_tests:
               - unique
               - not_null
+    observations:
+      - coluna B sin nobre. Le puse tipo_de_local
