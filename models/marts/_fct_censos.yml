@@ -2,39 +2,39 @@ version: 2
 
 models:
   - name: fct_censos
-    description: Fact table containing censo survey metrics and results by local and date.
+    description: Tabla de hechos que contiene métricas y resultados de las encuestas (censos) por local y fecha.
     columns:
       - name: local_id
-        description: Unique identifier for the local.
+        description: Identificador único del local.
         data_tests:
           - not_null
       - name: fecha
-        description: Date of the censo survey.
+        description: Fecha en que se realizó la encuesta.
         data_tests:
           - not_null
       - name: periodo
-        description: Period (month/year) of the survey.
+        description: Período (mes/año) de la encuesta.
       - name: schoperas_ccu
-        description: Number of CCU shoperas.
+        description: Número de máquinas schoperas de CCU.
       - name: schoperas_otros
-        description: Number of other brands' shoperas.
+        description: Número de máquinas schoperas de otras marcas.
       - name: salidas_ccu
-        description: Number of CCU exits.
+        description: Número de salidas de CCU.
       - name: salidas_otras
-        description: Number of other brands' exits.
+        description: Número de salidas de otras marcas.
       - name: coolers_total
-        description: Total number of coolers in the local.
+        description: Número total de coolers en el local.
       - name: marcas_abenv
-        description: Survey result for AB-InBev brands.
+        description: Resultado de la encuesta para marcas de AB-InBev.
       - name: marcas_kross
-        description: Survey result for Kross brands.
+        description: Resultado de la encuesta para marca Kross.
       - name: marcas_otras
-        description: Survey result for other brands.
+        description: Resultado de la encuesta para otras marcas.
       - name: instalo
-        description: Boolean indicating if an installation took place.
+        description: Indicador booleano de si se realizó una instalación.
       - name: disponibilizo
-        description: Boolean indicating if outlets were made available.
+        description: Indicador booleano de si se habilitaron salidas.
       - name: salidas_total
-        description: Total number of exits.
+        description: Número total de salidas (grifos).
       - name: schoperas_total
-        description: Total number of shoperas.
+        description: Número total de máquinas schoperas.
