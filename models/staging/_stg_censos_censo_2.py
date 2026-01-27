@@ -3,7 +3,7 @@ import numpy as np
 
 def model():
     # Define file path
-    file_path = "sources/censos/CENSO CCU PK 27JULIO ID 260725-2 - Hoja1.csv"
+    file_path = "seeds/censos/CENSO CCU PK 27JULIO ID 260725-2 - Hoja1.csv"
     
     # Load CSV, skipping the first row of commas
     df = pd.read_csv(file_path, skiprows=1)
