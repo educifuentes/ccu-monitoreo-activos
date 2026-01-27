@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: dim_locales
+    description: Tabla de dimensión que contiene información maestra de los locales.
+    columns:
+      - name: id
+        description: Identificador único del local.
+        data_tests:
+          - unique
+          - not_null
+      - name: razon_social
+        description: Razón social legal del local.
+      - name: rut
+        description: Rol Único Tributario (RUT) del local.
+      - name: direccion
+        description: Dirección física del local.
+      - name: region
+        description: Región donde se ubica el local.
+      - name: ciudad
+        description: Ciudad donde se ubica el local.
+      - name: nombre_fantasia
+        description: Nombre comercial o de fantasía del local.
+      - name: cerro
+        description: Indicador de si el local está cerrado o cesó actividades.

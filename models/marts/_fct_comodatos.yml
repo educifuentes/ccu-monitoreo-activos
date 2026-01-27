@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: fct_comodatos
+    description: Tabla de hechos que contiene información sobre los equipos en comodato y sus movimientos.
+    columns:
+      - name: local_id
+        description: Identificador único del local asociado al comodato.
+        data_tests:
+          - not_null
+      - name: fecha
+        description: Fecha del registro del comodato.
+        data_tests:
+          - not_null
+      - name: periodo
+        description: Período (mes/año) del registro.
+      - name: situacion
+        description: Estado o situación actual del equipo en comodato.
+      - name: delta_schoperas
+        description: Cambio neto en la cantidad de máquinas schoperas.
+      - name: delta_salidas
+        description: Cambio neto en la cantidad de salidas (grifos).
+      - name: mes_cambio
+        description: Mes en el que se efectuó el cambio o movimiento.
+      - name: motivo
+        description: Razón o motivo del cambio en el comodato.

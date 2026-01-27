@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: dim_contratos
+    description: Tabla de dimensión que contiene información de los contratos de los locales.
+    columns:
+      - name: local_id
+        description: Identificador único del local asociado al contrato.
+        data_tests:
+          - not_null
+      - name: fecha_inicio
+        description: Fecha de inicio de la vigencia del contrato.
+      - name: fecha_fin
+        description: Fecha de término de la vigencia del contrato.
+      - name: vigente
+        description: Indicador booleano de si el contrato se encuentra vigente actualmente.
+      - name: folio
+        description: Número de folio correlativo del contrato.
