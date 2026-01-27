@@ -1,0 +1,40 @@
+sources:
+  - name: censos__censo_1
+    description: A clone of google sheets data shared by Pilar Lamana
+    filename: DATA COMPLETA CCU  PK
+    google_sheet_url: https://docs.google.com/spreadsheets/d/1Mqqao-EiFLMwNQJtZ_7_7Y2PYkNIhSpq/edit?gid=1378855769#gid=1378855769
+    tables:
+      - name: CERRADOS
+        description: Raw customers data
+        columns:
+          - name: id
+            description: primary key
+            data_tests:
+              - unique
+              - not_null
+  - name: censos__censo_2
+    description: A clone of google sheets data shared by Pilar Lamana
+    google_sheet_url: https://docs.google.com/spreadsheets/d/1XSTe86lIuoVuigm2YtpeCTcoJwqlLpn6664-Nodw4ds/
+    filename: CENSO CCU PK 27JULIO ID 260725-2
+    tables:
+      - name: hoja1
+        description: Raw customers data
+        columns:
+          - name: id
+            description: primary key
+            data_tests:
+              - unique
+              - not_null
+  - name: reporte_ccu__comodatos
+    description: reportes trimestrales de ccu sobre aumento o termino de contrato.
+    url: https://drive.google.com/drive/folders/1teDk4Cm3E6HWVGycmAWIomsz23mEMca_
+    tables:
+      - name: aumento shop q3
+        description: Raw customers data
+      - name: termino shop q3
+        description: Raw customers data
+  - name: reporte_ccu__imagen
+    description: Contratos imagen con locales
+    url: https://docs.google.com/spreadsheets/d/10g3BJ6TFIl7S84eAgNZA9ySzKMc9IDyc/edit?gid=473191189#gid=473191189
+    tables:
+      - name: Vigentes
