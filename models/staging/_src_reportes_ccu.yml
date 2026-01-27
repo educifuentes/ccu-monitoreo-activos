@@ -1,0 +1,13 @@
+- name: reportes_ccu__comodatos
+  description: reportes trimestrales de ccu sobre aumento o termino de contrato.
+  url: https://drive.google.com/drive/folders/1teDk4Cm3E6HWVGycmAWIomsz23mEMca_
+  tables:
+    - name: aumento shop q3
+      description: Raw customers data
+    - name: termino shop q3
+      description: Raw customers data
+- name: reportes_ccu__imagen
+  description: Contratos imagen con locales
+  url: https://docs.google.com/spreadsheets/d/10g3BJ6TFIl7S84eAgNZA9ySzKMc9IDyc/edit?gid=473191189#gid=473191189
+  tables:
+    - name: Vigentes
