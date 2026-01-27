@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: fct_censos
+    description: Fact table containing censo survey metrics and results by local and date.
+    columns:
+      - name: local_id
+        description: Unique identifier for the local.
+        data_tests:
+          - not_null
+      - name: fecha
+        description: Date of the censo survey.
+        data_tests:
+          - not_null
+      - name: periodo
+        description: Period (month/year) of the survey.
+      - name: schoperas_ccu
+        description: Number of CCU shoperas.
+      - name: schoperas_otros
+        description: Number of other brands' shoperas.
+      - name: salidas_ccu
+        description: Number of CCU exits.
+      - name: salidas_otras
+        description: Number of other brands' exits.
+      - name: coolers_total
+        description: Total number of coolers in the local.
+      - name: marcas_abenv
+        description: Survey result for AB-InBev brands.
+      - name: marcas_kross
+        description: Survey result for Kross brands.
+      - name: marcas_otras
+        description: Survey result for other brands.
+      - name: instalo
+        description: Boolean indicating if an installation took place.
+      - name: disponibilizo
+        description: Boolean indicating if outlets were made available.
+      - name: salidas_total
+        description: Total number of exits.
+      - name: schoperas_total
+        description: Total number of shoperas.
