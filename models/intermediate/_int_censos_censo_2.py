@@ -1,22 +1,45 @@
 from models.staging._stg_censos_censo_2 import stg_censos_censo_2
 
 def int_censos_2():
-    df = stg_censos_censo_2()
+    stg_censos_2_df = stg_censos_censo_2()
 
-    # cols_to_select = [
-    #     'ID PK',
-    #     'tipo_de_local',
-    #     'ID CCU',
-    #     'Punto',
-    #     'Inicio'
-    # ]
+    rename_dict = {
+        "ID PK": "local_id",
+        "tipo_de_local": "tipo_de_local",
+        "Visitador": "visitador",
+        "rut Visitador": "rut_visitador",
+        "EL LOCAL CUENTA CON MAQUINAS SHOPERAS?": "tiene_schoperas",
+        "NÚMERO DE MÁQUINAS SCHOPERAS DE CCU(ASUMIR QUE LA SCHOPERA ES CCU SI LA MAYORÍA DE LAS MARCAS SON CCU - REVISAR TARJETERO DE APOYO)": "schoperas_ccu",
+        "CUANTAS SHOPERAS PARA DISPONIBILIZAR NUEVAS INSTALO CCU ?": "instalo",
+        'CUANTAS SALIDAS DEJO LIBRE CCU EN TOTAL? s ': "disponibilizo",
+    }
+
+    # rename columns
+    int_censos_2_df = stg_censos_2_df.rename(columns=rename_dict)
+
+    # transfortm re parsing
+    int_censos_2_df["tiene_schoperas"] = int_censos_2_df["tiene_schoperas"].str.lower()
     
-    # df = df[cols_to_select].copy()
+
+    # new columns
+    int_censos_2_df["periodo"] = "2025-S2"
+    int_censos_2_df["salidas_ccu"] = stg_censos_2_df["SCHOPERA CCU 1 - NÚMERO DE SALIDAS"] + stg_censos_2_df["SCHOPERA CCU 2 - NÚMERO DE SALIDAS"] + stg_censos_2_df["SCHOPERA CCU 3 - NÚMERO DE SALIDAS"] + stg_censos_2_df["SCHOPERA CCU 4 - NÚMERO DE SALIDAS"] + stg_censos_2_df["SCHOPERA CCU 5 - NÚMERO DE SALIDAS"] + stg_censos_2_df["SCHOPERA CCU 6 - NÚMERO DE SALIDAS"]
     
-    # print("\n--- Intermediate Model Output (First 5 columns selected) ---")
-    # print(df.head())
+
+    selected_columns = [
+        "local_id",
+        "periodo",
+        "tipo_de_local",
+        "visitador",
+        "rut_visitador",
+        "tiene_schoperas",
+        "schoperas_ccu",
+        "instalo",
+        "disponibilizo",
+        "salidas_ccu"
+    ]
     
-    return df
+    return int_censos_2_df[selected_columns]
 
 if __name__ == "__main__":
     print(int_censos_2().head())

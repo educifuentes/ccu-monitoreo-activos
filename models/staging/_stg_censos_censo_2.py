@@ -23,11 +23,6 @@ def stg_censos_censo_2():
         if col in df.columns:
             df[col] = pd.to_datetime(df[col], errors='coerce')
             
-    # Convert Numeric (Lat/Long)
-    numeric_cols = ['Latitud', 'Longitud']
-    for col in numeric_cols:
-        if col in df.columns:
-            df[col] = pd.to_numeric(df[col], errors='coerce')
             
     # Handle specific survey columns that should be numeric
     count_cols = [
@@ -39,7 +34,6 @@ def stg_censos_censo_2():
         'SCHOPERA CCU 4 - NÚMERO DE SALIDAS',
         'SCHOPERA CCU 5 - NÚMERO DE SALIDAS',
         'SCHOPERA CCU 6 - NÚMERO DE SALIDAS',
-        'SCHOPERA CCU 7 - NÚMERO DE SALIDAS',
         'CUANTAS SHOPERAS PARA DISPONIBILIZAR NUEVAS INSTALO CCU ?',
         'CUANTAS SALIDAS DEJO LIBRE CCU EN TOTAL? s '
     ]
@@ -51,9 +45,9 @@ def stg_censos_censo_2():
     print("--- DataFrame Head ---")
     print(df.iloc[:, :5].head())
 
-    # print("\n--- List of Column Names ---")
-    # for i, col in enumerate(df.columns):
-    #     print(f"{i}: {col}")
+    print("\n--- List of Column Names ---")
+    for i, col in enumerate(df.columns):
+        print(f"{i}: {col}")
         
     return df
 

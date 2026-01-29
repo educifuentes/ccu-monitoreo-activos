@@ -15,18 +15,22 @@ sources:
               - not_null
   - name: censo_2
     description: A clone of google sheets data shared by Pilar Lamana
-    google_sheet_url: https://docs.google.com/spreadsheets/d/1XSTe86lIuoVuigm2YtpeCTcoJwqlLpn6664-Nodw4ds/
     filename: CENSO CCU PK 27JULIO ID 260725-2 - Hoja1.csv
     path: seeds/censos/CENSO CCU PK 27JULIO ID 260725-2 - Hoja1.csv
     tables:
       - name: censo_2
         sheet_name: Hoja1
-        description: Raw customers data
+        url: https://docs.google.com/spreadsheets/d/1XSTe86lIuoVuigm2YtpeCTcoJwqlLpn6664-Nodw4ds/
+        cuestionario_url: https://docs.google.com/spreadsheets/d/11SN4LAVZvaeeUVIlpulDUQXayFFE0CEAxuPlNLuOU7c/edit?gid=2030001645#gid=2030001645
         columns:
           - name: id
             description: primary key
             data_tests:
               - unique
               - not_null
+          - name: "CUANTA S SHOPERAS PARA DISPONIBILIZAR NUEVAS INSTALO CCU ?"
+            description: Number of schoperas installed for new availability
+          - name: CUANTAS SALIDAS DEJO LIBRE CCU EN TOTAL? s
+            description: Cuantas instalo. VERIFICAR DUDA
     observations:
       - coluna B sin nobre. Le puse tipo_de_local
