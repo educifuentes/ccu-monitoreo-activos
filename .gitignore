@@ -7,3 +7,5 @@ prompts/
 src/__pycache__/
 seeds/*
 models/staging/__pycache__
+models/intermediate/__pycache__
+models/marts/__pycache__
