@@ -1,10 +1,11 @@
 sources:
-  - name: censos__censo_1
+  - name: censo_1
     description: A clone of google sheets data shared by Pilar Lamana
     filename: DATA COMPLETA CCU  PK
     google_sheet_url: https://docs.google.com/spreadsheets/d/1Mqqao-EiFLMwNQJtZ_7_7Y2PYkNIhSpq/edit?gid=1378855769#gid=1378855769
     tables:
-      - name: CERRADOS
+      - name: censo_1
+        sheet_name: CERRADOS
         description: Raw customers data
         columns:
           - name: id
@@ -12,12 +13,14 @@ sources:
             data_tests:
               - unique
               - not_null
-  - name: censos__censo_2
+  - name: censo_2
     description: A clone of google sheets data shared by Pilar Lamana
     google_sheet_url: https://docs.google.com/spreadsheets/d/1XSTe86lIuoVuigm2YtpeCTcoJwqlLpn6664-Nodw4ds/
-    filename: CENSO CCU PK 27JULIO ID 260725-2
+    filename: CENSO CCU PK 27JULIO ID 260725-2 - Hoja1.csv
+    path: seeds/censos/CENSO CCU PK 27JULIO ID 260725-2 - Hoja1.csv
     tables:
-      - name: hoja1
+      - name: censo_2
+        sheet_name: Hoja1
         description: Raw customers data
         columns:
           - name: id
