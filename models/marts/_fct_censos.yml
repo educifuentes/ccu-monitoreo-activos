@@ -35,6 +35,6 @@ models:
       - name: disponibilizo
         description: Indicador booleano de si se habilitaron salidas.
       - name: salidas_total
-        description: Número total de salidas (grifos).
+        description: Número total de salidas (grifos). deberia ser otra definicion ahaha.
       - name: schoperas_total
         description: Número total de máquinas schoperas.
