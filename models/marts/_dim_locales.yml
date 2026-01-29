@@ -23,3 +23,5 @@ models:
         description: Nombre comercial o de fantasía del local.
       - name: cerro
         description: Indicador de si el local está cerrado o cesó actividades.
+    pending:
+      - falta razon social, no esta en censo 2 raw data
