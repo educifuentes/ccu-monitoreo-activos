@@ -6,3 +6,4 @@ data_scripts/outputs/
 prompts/
 src/__pycache__/
 seeds/*
+models/staging/__pycache__

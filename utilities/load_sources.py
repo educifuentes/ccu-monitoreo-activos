@@ -1,11 +1,19 @@
 import yaml
 import os
-from pprint import pprint
+import sys
+
+# Add project root to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 def read_yaml_config(yaml_path):
     """
     Reads a YAML file and returns the parsed content.
     """
+    if not os.path.exists(yaml_path):
+        # Try absolute path from project root if relative fails
+        root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+        yaml_path = os.path.join(root_path, yaml_path)
+        
     if not os.path.exists(yaml_path):
         raise FileNotFoundError(f"YAML file not found: {yaml_path}")
     
@@ -20,18 +28,16 @@ def get_source_path(table_name, yaml_path='models/staging/_src_censos.yml'):
     config = read_yaml_config(yaml_path)
     
     for source in config.get('sources', []):
-        # The path/url might be at the source level
         source_path = source.get('path') or source.get('google_sheet_url')
         
         for table in source.get('tables', []):
             if table.get('name') == table_name:
-                # Return table specific path/url if exists, otherwise fallback to source level
                 return table.get('path') or table.get('google_sheet_url') or source_path
                 
     return None
 
 if __name__ == "__main__":
     # Test cases
-    target_table = read_yaml_config("models/staging/_src_censos.yml")
-    pprint(target_table)
-  
+    target_table = "censo_2"
+    path = get_source_path(target_table)
+    print(f"Path for '{target_table}': {path}")

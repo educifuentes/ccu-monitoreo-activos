@@ -61,4 +61,4 @@ if __name__ == "__main__":
     # To run this script directly for verification:
     # python models/staging/_stg_censos_censo_2.py
     print("Executing model locally for verification...")
-    model()
+    stg_censos_censo_2()
