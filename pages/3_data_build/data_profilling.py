@@ -1,15 +1,20 @@
 import streamlit as st
 from pygwalker.api.streamlit import StreamlitRenderer
 from models.staging._stg_censos_censo_2 import stg_censos_censo_2
-
+from models.staging._stg_censos_censo_1 import stg_censos_censo_1
 
 st.header("Data Profiling")
 
-st.subheader("Censo 2 - 2025")
 
 # Load the data
 stg_censos_2 = stg_censos_censo_2()
+stg_censos_1 = stg_censos_censo_1()
+
+
+st.subheader("Censo 1 - 2024")
+st.write(stg_censos_1.shape)
+
 
 # Use the StreamlitRenderer to embed the explorer
-renderer = StreamlitRenderer(stg_censos_2)
+renderer = StreamlitRenderer(stg_censos_1)
 renderer.explorer()

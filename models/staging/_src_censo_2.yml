@@ -1,18 +1,4 @@
 sources:
-  - name: censo_1
-    description: A clone of google sheets data shared by Pilar Lamana
-    filename: DATA COMPLETA CCU  PK
-    google_sheet_url: https://docs.google.com/spreadsheets/d/1Mqqao-EiFLMwNQJtZ_7_7Y2PYkNIhSpq/edit?gid=1378855769#gid=1378855769
-    tables:
-      - name: censo_1
-        sheet_name: CERRADOS
-        description: Raw customers data
-        columns:
-          - name: id
-            description: primary key
-            data_tests:
-              - unique
-              - not_null
   - name: censo_2
     description: A clone of google sheets data shared by Pilar Lamana
     filename: CENSO CCU PK 27JULIO ID 260725-2 - Hoja1.csv
