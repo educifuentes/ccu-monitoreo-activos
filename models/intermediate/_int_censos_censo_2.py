@@ -1,6 +1,7 @@
 from models.staging._stg_censos_censo_2 import stg_censos_censo_2
+from utilities.data_transformations import yes_no_to_boolean
 
-def int_censos_2():
+def int_censos_censo_2():
     stg_censos_2_df = stg_censos_censo_2()
 
     rename_dict = {
@@ -16,15 +17,15 @@ def int_censos_2():
     }
 
     # rename columns
-    int_censos_2_df = stg_censos_2_df.rename(columns=rename_dict)
+    int_censos_censo_2_df = stg_censos_2_df.rename(columns=rename_dict)
 
     # transfortm re parsing
-    int_censos_2_df["tiene_schoperas"] = int_censos_2_df["tiene_schoperas"].str.lower()
+    int_censos_censo_2_df = yes_no_to_boolean(int_censos_censo_2_df, "tiene_schoperas")
     
 
     # new columns
-    int_censos_2_df["periodo"] = "2025-S2"
-    int_censos_2_df["salidas_ccu"] = stg_censos_2_df["SCHOPERA CCU 1 - NÚMERO DE SALIDAS"] + stg_censos_2_df["SCHOPERA CCU 2 - NÚMERO DE SALIDAS"] + stg_censos_2_df["SCHOPERA CCU 3 - NÚMERO DE SALIDAS"] + stg_censos_2_df["SCHOPERA CCU 4 - NÚMERO DE SALIDAS"] + stg_censos_2_df["SCHOPERA CCU 5 - NÚMERO DE SALIDAS"] + stg_censos_2_df["SCHOPERA CCU 6 - NÚMERO DE SALIDAS"]
+    int_censos_censo_2_df["periodo"] = "2025-S2"
+    int_censos_censo_2_df["salidas_ccu"] = stg_censos_2_df["SCHOPERA CCU 1 - NÚMERO DE SALIDAS"] + stg_censos_2_df["SCHOPERA CCU 2 - NÚMERO DE SALIDAS"] + stg_censos_2_df["SCHOPERA CCU 3 - NÚMERO DE SALIDAS"] + stg_censos_2_df["SCHOPERA CCU 4 - NÚMERO DE SALIDAS"] + stg_censos_2_df["SCHOPERA CCU 5 - NÚMERO DE SALIDAS"] + stg_censos_2_df["SCHOPERA CCU 6 - NÚMERO DE SALIDAS"]
     
 
     selected_columns = [
@@ -41,7 +42,7 @@ def int_censos_2():
         "salidas_ccu"
     ]
     
-    return int_censos_2_df[selected_columns]
+    return int_censos_censo_2_df[selected_columns]
 
 if __name__ == "__main__":
-    print(int_censos_2().head())
+    print(int_censos_censo_2().head())
