@@ -14,6 +14,3 @@ int_censos_2 = int_censos_censo_2()
 
 st.dataframe(int_censos_2)
 
-# Use the StreamlitRenderer to embed the explorer
-# renderer = StreamlitRenderer(stg_censos_2)
-# renderer.explorer()

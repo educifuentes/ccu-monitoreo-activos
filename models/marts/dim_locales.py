@@ -19,15 +19,21 @@ def load_locales_from_censo_2():
     selected_columns = [
         "local_id",
         "ccu_id",
+        "nombre_fantasia",
+        # geolocation
         "direccion",
         "comuna",
         "region",
         "latitud",
         "longitud",
-        "nombre_fantasia",
     ]
 
     return stg_censos_2_df[selected_columns]
 
+
+def marts_dim_locales():
+    
+    return load_locales_from_censo_2()
+
 if __name__ == "__main__":
-    print(load_locales_from_censo_2().head())
+    print(marts_dim_locales().head())
