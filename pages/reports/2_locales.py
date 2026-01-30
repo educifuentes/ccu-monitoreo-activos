@@ -93,7 +93,7 @@ with tab1:
     y='schoperas_totales',
     tooltip=['periodo', 'schoperas_totales']
 )
-    st.altair_chart(schoperas_chart, use_container_width=True)
+    st.altair_chart(schoperas_chart, width='stretch')
 
 with tab2:
     salidas_chart = alt.Chart(local_stats_df).mark_bar().encode(
@@ -101,7 +101,7 @@ with tab2:
     y='salidas_totales',
     tooltip=['periodo', 'salidas_totales']
 )
-    st.altair_chart(salidas_chart, use_container_width=True)
+    st.altair_chart(salidas_chart, width='stretch')
 
 st.dataframe(local_stats_df[['periodo', 'schoperas_totales', 'salidas_totales']])
 

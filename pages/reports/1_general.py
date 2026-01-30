@@ -96,7 +96,7 @@ chart = alt.Chart(censos_df).mark_bar().encode(
     )
 )
 
-st.altair_chart(chart, use_container_width=True, height=200)
+st.altair_chart(chart, width='stretch', height=200)
 
 # -----------------------------------------------------------------------------
 # ACTIVOS - DISTRIBUCION POR TRAMO
@@ -137,7 +137,7 @@ tramo_chart = alt.Chart(activos_plot_df).mark_bar().encode(
     tooltip=['periodo', 'salidas_tramo', 'count()']
 ).properties(height=300)
 
-st.altair_chart(tramo_chart, use_container_width=True)
+st.altair_chart(tramo_chart, width='stretch')
 
 st.subheader("Features posibles")
 st.markdown("- Estado de contrato por trimestre segun info de nominas.")
@@ -149,4 +149,4 @@ st.markdown("-  agregr URL del contrato drive u a otros doucmentos drive")
 
 
 fig = plot_clasificacion_pie(censos_df_anual)
-st.plotly_chart(fig, use_container_width=True, height=200)
+st.plotly_chart(fig, width='stretch', height=200)
