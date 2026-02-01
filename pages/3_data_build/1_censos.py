@@ -4,6 +4,7 @@ from pygwalker.api.streamlit import StreamlitRenderer
 from models.staging._stg_censos_censo_2 import stg_censos_censo_2
 from models.staging._stg_censos_censo_1 import stg_censos_censo_1
 from models.intermediate._int_censos_censo_2 import int_censos_censo_2
+from models.intermediate._int_censos_censo_1 import int_censos_censo_1
 
 
 st.header("Censos")
@@ -12,6 +13,7 @@ st.header("Censos")
 st.subheader("Censo 1 - 2024")
 # Load the data
 stg_censos_1 = stg_censos_censo_1()
+int_censos_1 = int_censos_censo_1()
 
 st.dataframe(int_censos_1)
 

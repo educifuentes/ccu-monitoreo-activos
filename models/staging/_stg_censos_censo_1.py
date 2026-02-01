@@ -38,12 +38,12 @@ def stg_censos_censo_1():
             df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0).astype(int)
 
     # 3. Output Information
-    print("--- DataFrame Head ---")
-    print(df.iloc[:, :5].head())
+    # print("--- DataFrame Head ---")
+    # print(df.iloc[:, :5].head())
 
-    print("\n--- List of Column Names ---")
-    for i, col in enumerate(df.columns):
-        print(f"{i}: {col}")
+    # print("\n--- List of Column Names ---")
+    # for i, col in enumerate(df.columns):
+    #     print(f"{i}: {col}")
         
     return df
 
