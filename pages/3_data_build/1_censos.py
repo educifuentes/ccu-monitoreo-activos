@@ -15,6 +15,11 @@ st.subheader("Censo 1 - 2024")
 stg_censos_1 = stg_censos_censo_1()
 int_censos_1 = int_censos_censo_1()
 
+st.markdown("### Staging")
+st.write(stg_censos_1.shape)
+st.dataframe(stg_censos_1)
+st.markdown("### Intermediate")
+st.write(int_censos_1.shape)
 st.dataframe(int_censos_1)
 
 st.subheader("Censo 2 - 2025")
@@ -22,5 +27,8 @@ st.subheader("Censo 2 - 2025")
 stg_censos_2 = stg_censos_censo_2()
 int_censos_2 = int_censos_censo_2()
 
+st.markdown("### Staging")
+st.dataframe(stg_censos_2)
+st.markdown("### Intermediate")
 st.dataframe(int_censos_2)
 

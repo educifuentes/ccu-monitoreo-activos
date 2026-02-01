@@ -1,5 +1,5 @@
 sources:
-  - name: censo_1
+  - name: censo_1 - gsheet raw
     description: Primer censo que se implemento. Fue hecho por diferentes agentes. No funciono bien. El censo se hizo en 2024. El segundo que se hizo sera el definitivo de esstrucutra.
     path: seeds/censos/corpa- Go to market - Censo Restaurantes PDV BBDD FINAL - BBDD.csv
     url: https://docs.google.com/spreadsheets/d/1-bztD501pwLTTONIaGxqg2z3g0J35KZglqFUhSvk-Q4/edit?gid=949637532#gid=949637532

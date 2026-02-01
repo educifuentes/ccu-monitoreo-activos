@@ -1,5 +1,6 @@
 from models.staging._stg_censos_censo_1 import stg_censos_censo_1
 from utilities.data_transformations import yes_no_to_boolean
+import pandas as pd
 
 def int_censos_censo_1():
     stg_censos_1_df = stg_censos_censo_1()
@@ -34,12 +35,17 @@ def int_censos_censo_1():
     # Add period
     int_censos_censo_1_df["periodo"] = "2024-S2" # Assuming this is the previous period
 
-    # Calculate total outputs (salidas) for CCU if possible
-    # In Censo 1 the structure is different, it has binary columns for brands.
-    # We might need to sum columns like AUSTRAL, BECKER, etc. for each machine.
-    # This is more complex than Censo 2 and might need a dedicated transformation.
-    # For now, let's keep it simple.
-    
+    # Calculate total outputs (salidas) by summing machines 1 to 12
+    int_censos_censo_1_df["salidas_total"] = 0
+    for i in range(1, 13):
+        col_name = f"NÚMERO DE SALIDAS TOTALES DE SCHOPERAS\nMÁQUINA SCHOPERA {i}:"
+        col_name_alt = f"NÚMERO DE SALIDAS TOTALES DE SCHOPERAS \nMÁQUINA SCHOPERA {i}:"
+        
+        if col_name in int_censos_censo_1_df.columns:
+            int_censos_censo_1_df["salidas_total"] += pd.to_numeric(int_censos_censo_1_df[col_name], errors='coerce').fillna(0)
+        elif col_name_alt in int_censos_censo_1_df.columns:
+            int_censos_censo_1_df["salidas_total"] += pd.to_numeric(int_censos_censo_1_df[col_name_alt], errors='coerce').fillna(0)
+
     selected_columns = [
         "local_id",
         "periodo",
@@ -53,7 +59,8 @@ def int_censos_censo_1():
         "observaciones",
         "tiene_schoperas",
         "schoperas_ccu",
-        "total_schoperas"
+        "total_schoperas",
+        "salidas_total"
     ]
     
     # Ensure all selected columns exist (some might have been dropped if empty)
