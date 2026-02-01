@@ -49,15 +49,9 @@ def int_censos_censo_1():
     selected_columns = [
         "local_id",
         "periodo",
-        "nombre_local",
-        "tipo_de_local",
-        "visitador",
-        "region",
-        "comuna",
-        "direccion",
-        "estado_local",
-        "observaciones",
-        "tiene_schoperas",
+        # "estado_local",
+        # "observaciones",
+        # "tiene_schoperas",
         "schoperas_ccu",
         "total_schoperas",
         "salidas_total"
