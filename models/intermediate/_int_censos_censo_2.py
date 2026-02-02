@@ -1,6 +1,7 @@
 import pandas as pd
 from models.staging._stg_censos_censo_2 import stg_censos_censo_2
 from utilities.data_transformations import yes_no_to_boolean
+from utilities.transformations.process_marcas import process_marcas
 
 def int_censos_censo_2():
     stg_censos_2_df = stg_censos_censo_2()
@@ -16,6 +17,7 @@ def int_censos_censo_2():
         "NÚMERO DE MÁQUINAS SCHOPERAS DE CCU(ASUMIR QUE LA SCHOPERA ES CCU SI LA MAYORÍA DE LAS MARCAS SON CCU - REVISAR TARJETERO DE APOYO)": "schoperas_ccu",
         "CUANTAS SHOPERAS PARA DISPONIBILIZAR NUEVAS INSTALO CCU ?": "instalo",
         'CUANTAS SALIDAS DEJO LIBRE CCU EN TOTAL? s ': "disponibilizo",
+        '¿CUALES DE ESTAS MARCAS SE VENDEN EN SCHOP?': "marcas"
     }
 
     # rename columns
@@ -23,6 +25,10 @@ def int_censos_censo_2():
 
     # data types        
     int_censos_censo_2_df["local_id"] = int_censos_censo_2_df["local_id"].astype("str")
+
+    # Apply brand processing
+    if "marcas" in int_censos_censo_2_df.columns:
+        int_censos_censo_2_df["marcas"] = int_censos_censo_2_df["marcas"].apply(process_marcas)
 
     # transfortm re parsing
     int_censos_censo_2_df = yes_no_to_boolean(int_censos_censo_2_df, "tiene_schoperas")
@@ -52,7 +58,9 @@ def int_censos_censo_2():
         "schoperas_ccu",
         "salidas_ccu",
         "instalo",
-        "disponibilizo"    ]
+        "disponibilizo",
+        "marcas"
+    ]
     
     return int_censos_censo_2_df[selected_columns]
 
