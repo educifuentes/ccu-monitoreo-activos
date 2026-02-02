@@ -1,5 +1,15 @@
 sources:
   - name: base normalizada
     description: Primer data que compartio Pilar. La separa en partes con colores.
+    url_original: https://docs.google.com/spreadsheets/d/1gwkzsE_dVjCnoZVTEV6-zlXp1Oqn-LWcneL-TyTSB24/edit?gid=380269881#gid=380269881
     url: https://docs.google.com/spreadsheets/d/1vWxDzWaVPt3l0enEewhs8LH61dzASeCNCBW2qVdeU04/edit?gid=1873477273#gid=1873477273
     tables:
+      - name: locales
+        url: https://docs.google.com/spreadsheets/d/1w9F7pvef-eOMT1fqHZ4K2OofzY8hoF20bluBo8wIYPE/edit?gid=581899419#gid=581899419
+        path:
+      - name: censo_1
+        url: https://docs.google.com/spreadsheets/d/1w9F7pvef-eOMT1fqHZ4K2OofzY8hoF20bluBo8wIYPE/edit?gid=1341712522#gid=1341712522
+        path:
+      - name: censo_2
+      - name: reporte_comodatos
+      - name: contratos
