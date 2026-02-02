@@ -43,6 +43,7 @@ def int_censos_censo_2():
     selected_columns = [
         "local_id",
         "periodo",
+        "fecha",
         # "tipo_de_local",
         # "visitador",
         # "rut_visitador",

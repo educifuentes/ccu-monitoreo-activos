@@ -24,6 +24,10 @@ def int_censos_censo_1():
     # rename columns
     int_censos_censo_1_df = stg_censos_1_df.rename(columns=rename_dict)
 
+    # new columns
+    int_censos_censo_1_df["periodo"] = "2024-S2"
+    int_censos_censo_1_df["fecha"] = pd.to_datetime("2024-10-01")
+
     # Transform boolean-like columns
     # In Censo 1 we don't have a direct "tiene_schoperas" Yes/No question for the whole local
     # but we can derive it from total_schoperas or use other questions if they fit the pattern.
@@ -51,6 +55,7 @@ def int_censos_censo_1():
     selected_columns = [
         "local_id",
         "periodo",
+        "fecha",
         # "estado_local",
         # "observaciones",
         # "tiene_schoperas",
