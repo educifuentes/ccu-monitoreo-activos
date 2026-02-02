@@ -3,6 +3,7 @@ import streamlit as st
 from models.staging._stg_censos_censo_2 import stg_censos_censo_2
 from models.staging._stg_censos_censo_1 import stg_censos_censo_1
 from models.staging._stg_base_norm_censo_1 import stg_base_norm_censo_1
+from models.staging._stg_base_norm_locales import stg_base_norm_locales
 
 
 
@@ -12,7 +13,15 @@ st.header("Staging")
 stg_censos_2 = stg_censos_censo_2()
 stg_censos_1 = stg_censos_censo_1()
 stg_base_norm_censo_1 = stg_base_norm_censo_1()
+stg_base_norm_locales = stg_base_norm_locales()
 
+
+st.subheader("Locales")
+st.badge("base_norm_locales")
+st.write(stg_base_norm_locales.shape)
+st.dataframe(stg_base_norm_locales)
+
+st.divider()
 
 st.subheader("Censo 1")
 
@@ -37,14 +46,6 @@ st.subheader("Censo 1 - 2024")
 st.write(stg_censos_1.shape)
 st.dataframe(stg_censos_1)
 
-
-# ---
-
-st.markdown("### Intermediate")
-st.write(int_censos_1.shape)
-st.dataframe(int_censos_1)
-
-# --------------------
 
 
 

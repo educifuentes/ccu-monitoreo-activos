@@ -11,6 +11,7 @@ from models.staging._stg_base_norm_locales import stg_base_norm_locales
 # load
 locales_df = stg_base_norm_locales()
 int_base_norm_censo_1_df = int_base_norm_censo_1()
+int_censos_censo_2_df = int_censos_censo_2()
 
 
 st.header("Intermediate")
@@ -32,3 +33,18 @@ st.markdown("- Dropped 20 rows with null id")
 st.markdown("- Dropped 687 rows with null agencia")
 
 st.dataframe(int_base_norm_censo_1_df) 
+
+st.divider()
+
+st.subheader("Censo 2")
+st.badge("int_censos_censo2")
+st.write(int_censos_censo_2_df.shape)
+st.dataframe(int_censos_censo_2_df)
+
+
+st.subheader("Censo 2 + Locales")
+# test censo 2 + locales 
+# left join int_censos_censo_2_df with locales_df
+
+int_censos_censo_2_df = int_censos_censo_2_df.merge(locales_df, on="local_id", how="left")
+st.dataframe(int_censos_censo_2_df)

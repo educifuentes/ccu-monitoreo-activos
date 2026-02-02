@@ -20,12 +20,16 @@ def int_censos_censo_2():
     # rename columns
     int_censos_censo_2_df = stg_censos_2_df.rename(columns=rename_dict)
 
+    # data types        
+    int_censos_censo_2_df["local_id"] = int_censos_censo_2_df["local_id"].astype("str")
+
     # transfortm re parsing
     int_censos_censo_2_df = yes_no_to_boolean(int_censos_censo_2_df, "tiene_schoperas")
     
 
     # new columns
     int_censos_censo_2_df["periodo"] = "2025-S2"
+    int_censos_censo_2_df["fecha"] = pd.to_datetime("2025-10-01")
     
     # Calculate total outputs (salidas_ccu) by summing machines
     int_censos_censo_2_df["salidas_ccu"] = 0

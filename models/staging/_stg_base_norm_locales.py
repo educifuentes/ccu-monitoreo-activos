@@ -31,9 +31,12 @@ def stg_base_norm_locales():
         "ciudad",
         "nombre_fantasia" ]
 
-    # 3. Output Information
-    # print("--- DataFrame Head ---")
-    # print(df.iloc[:, :5].head())
+    # data types
+    df["local_id"] = df["local_id"].astype("str")
+
+    # print data types
+    print("\n--- Data Types ---")
+    print(df.dtypes)
 
     print("\n--- List of Column Names ---")
     for i, col in enumerate(df.columns):
