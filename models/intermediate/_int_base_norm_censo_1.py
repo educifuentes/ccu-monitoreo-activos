@@ -43,6 +43,18 @@ def int_base_norm_censo_1():
 
     df = stg_base_norm_censo_1()
 
+    # drop rows with null value on id
+    initial_rows = len(df)
+    df = df.dropna(subset=["id"])
+    dropped_rows = initial_rows - len(df)
+    print(f"Dropped {dropped_rows} rows with null id")
+
+    # drop rows with null value on agencia column
+    initial_rows = len(df)
+    df = df.dropna(subset=["agencia"])
+    dropped_rows = initial_rows - len(df)
+    print(f"Dropped {dropped_rows} rows with null agencia")
+
     # Apply brand processing
     brands_col = "CCU/ABINBEV/OTRAS MARCAS COMPETENCIA"
     if brands_col in df.columns:

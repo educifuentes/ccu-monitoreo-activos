@@ -24,7 +24,11 @@ st.dataframe(locales_df)
 # ----
 
 st.subheader("Censo 1")
-
 st.badge("int_base_norm_censo1")
 st.write(int_base_norm_censo_1_df.shape)
+
+st.markdown("Notes")
+st.markdown("- Dropped 20 rows with null id")
+st.markdown("- Dropped 687 rows with null agencia")
+
 st.dataframe(int_base_norm_censo_1_df) 
