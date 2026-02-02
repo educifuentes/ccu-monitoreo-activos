@@ -27,6 +27,7 @@ st.dataframe(locales_df)
 st.subheader("Censo 1")
 st.badge("int_base_norm_censo1")
 st.write(int_base_norm_censo_1_df.shape)
+st.code(int_base_norm_censo_1_df.dtypes)
 
 st.markdown("Notes")
 st.markdown("- Dropped 20 rows with null id")
@@ -38,8 +39,13 @@ st.divider()
 
 st.subheader("Censo 2")
 st.badge("int_censos_censo2")
+
+st.markdown("Notes")
+st.markdown("- asumo CANTIDAD DE SALIDAS como salidas_ccu")
+
 st.write(int_censos_censo_2_df.shape)
 st.dataframe(int_censos_censo_2_df)
+st.code(int_censos_censo_2_df.dtypes)
 
 
 st.subheader("Censo 2 + Locales")

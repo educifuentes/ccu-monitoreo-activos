@@ -23,8 +23,6 @@ def int_censos_censo_2():
     # rename columns
     int_censos_censo_2_df = stg_censos_2_df.rename(columns=rename_dict)
 
-    # data types        
-    int_censos_censo_2_df["local_id"] = int_censos_censo_2_df["local_id"].astype("str")
 
     # Apply brand processing
     if "marcas" in int_censos_censo_2_df.columns:
@@ -45,6 +43,15 @@ def int_censos_censo_2():
         col_name = f"SCHOPERA CCU {i} - NÚMERO DE SALIDAS"
         if col_name in stg_censos_2_df.columns:
             int_censos_censo_2_df["salidas_ccu"] += pd.to_numeric(stg_censos_2_df[col_name], errors='coerce').fillna(0)
+
+    # data types        
+    int_censos_censo_2_df["local_id"] = int_censos_censo_2_df["local_id"].astype("str")
+
+    # int types
+    int_censos_censo_2_df["salidas_ccu"] = pd.to_numeric(int_censos_censo_2_df["salidas_ccu"], errors='coerce').astype("Int64")
+    int_censos_censo_2_df["schoperas_ccu"] = pd.to_numeric(int_censos_censo_2_df["schoperas_ccu"], errors='coerce').astype("Int64")
+    int_censos_censo_2_df["instalo"] = pd.to_numeric(int_censos_censo_2_df["instalo"], errors='coerce').astype("Int64")
+    int_censos_censo_2_df["disponibilizo"] = pd.to_numeric(int_censos_censo_2_df["disponibilizo"], errors='coerce').astype("Int64")
     
 
     selected_columns = [
