@@ -6,7 +6,8 @@ def int_censos_censo_2():
     stg_censos_2_df = stg_censos_censo_2()
 
     rename_dict = {
-        "ID PK": "local_id",
+        "ID PK": "id_pk",
+        "ID CCU": "local_id",
         "tipo_de_local": "tipo_de_local",
         "Visitador": "visitador",
         "rut Visitador": "rut_visitador",

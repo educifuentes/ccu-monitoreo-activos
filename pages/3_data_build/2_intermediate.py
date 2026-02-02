@@ -43,8 +43,10 @@ st.dataframe(int_censos_censo_2_df)
 
 
 st.subheader("Censo 2 + Locales")
-# test censo 2 + locales 
 # left join int_censos_censo_2_df with locales_df
+int_censos_censo_2_df = int_censos_censo_2_df.merge(locales_df, on="local_id", how="left", indicator=True)
 
-int_censos_censo_2_df = int_censos_censo_2_df.merge(locales_df, on="local_id", how="left")
+missing_locales = int_censos_censo_2_df[int_censos_censo_2_df["_merge"] == "left_only"]
+st.warning(f"Hay {len(missing_locales)} filas en Censo 2 que no tienen match en Locales")
+
 st.dataframe(int_censos_censo_2_df)
