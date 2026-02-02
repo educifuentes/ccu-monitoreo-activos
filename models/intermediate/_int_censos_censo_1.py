@@ -1,4 +1,6 @@
 from models.staging._stg_censos_censo_1 import stg_censos_censo_1
+from models.staging._stg_base_norm_censo_1 import stg_base_norm_censo_1
+
 from utilities.data_transformations import yes_no_to_boolean
 import pandas as pd
 
@@ -62,8 +64,3 @@ def int_censos_censo_1():
     
     return int_censos_censo_1_df[available_columns]
 
-if __name__ == "__main__":
-    # To run this script directly for verification:
-    # python models/intermediate/_int_censos_censo_1.py
-    print("Executing intermediate model locally for verification...")
-    print(int_censos_censo_1().head())

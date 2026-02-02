@@ -8,4 +8,6 @@ locales_df = stg_base_norm_locales()
 
 st.header("Locales")
 st.write(locales_df.shape)
+st.markdown("Source: Base normalizada")
+
 st.dataframe(locales_df)   
