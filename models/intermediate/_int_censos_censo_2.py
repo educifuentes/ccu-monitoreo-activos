@@ -1,7 +1,7 @@
 import pandas as pd
 from models.staging._stg_censos_censo_2 import stg_censos_censo_2
 from utilities.data_transformations import yes_no_to_boolean
-from utilities.transformations.process_marcas import process_marcas
+from utilities.transformations.process_marcas import process_marcas, classify_marcas
 
 def int_censos_censo_2():
     stg_censos_2_df = stg_censos_censo_2()
@@ -29,6 +29,7 @@ def int_censos_censo_2():
     # Apply brand processing
     if "marcas" in int_censos_censo_2_df.columns:
         int_censos_censo_2_df["marcas"] = int_censos_censo_2_df["marcas"].apply(process_marcas)
+        int_censos_censo_2_df = classify_marcas(int_censos_censo_2_df)
 
     # transfortm re parsing
     int_censos_censo_2_df = yes_no_to_boolean(int_censos_censo_2_df, "tiene_schoperas")
@@ -36,7 +37,7 @@ def int_censos_censo_2():
 
     # new columns
     int_censos_censo_2_df["periodo"] = "2025-S2"
-    int_censos_censo_2_df["fecha"] = pd.to_datetime("2025-10-01")
+    int_censos_censo_2_df["fecha"] = pd.to_datetime("2025-10-01").date()
     
     # Calculate total outputs (salidas_ccu) by summing machines
     int_censos_censo_2_df["salidas_ccu"] = 0
@@ -59,7 +60,11 @@ def int_censos_censo_2():
         "salidas_ccu",
         "instalo",
         "disponibilizo",
-        "marcas"
+        "marcas",
+        "marcas_abinbev",
+        "marcas_kross",
+        "marcas_ccu",
+        "marcas_otras"
     ]
     
     return int_censos_censo_2_df[selected_columns]

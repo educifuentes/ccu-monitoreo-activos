@@ -1,6 +1,6 @@
 from models.staging._stg_base_norm_censo_1 import stg_base_norm_censo_1
 import pandas as pd
-from utilities.transformations.process_marcas import process_marcas
+from utilities.transformations.process_marcas import process_marcas, classify_marcas
 
 
 def int_base_norm_censo_1():
@@ -23,6 +23,7 @@ def int_base_norm_censo_1():
     brands_col = "CCU/ABINBEV/OTRAS MARCAS COMPETENCIA"
     if brands_col in df.columns:
         df["marcas"] = df[brands_col].apply(process_marcas)
+        df = classify_marcas(df)
 
     # # rename
     rename_dict = {
@@ -41,15 +42,15 @@ def int_base_norm_censo_1():
         "salidas_totales",
         "schoperas_ccu",
         "schoperas_competencia",
-        "marcas"
+        "marcas",
+        "marcas_abinbev",
+        "marcas_kross",
+        "marcas_ccu",
+        "marcas_otras"
     ]
 
     # Filter columns that exist
     selected_columns = [col for col in selected_columns if col in df.columns]
-
-    # 3. Output Information
-    # print("--- DataFrame Head ---")
-    # print(df.iloc[:, :5].head())
 
     print("\n--- List of Column Names ---")
     for i, col in enumerate(df.columns):
