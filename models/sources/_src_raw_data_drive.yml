@@ -1,20 +1,24 @@
 sources:
   - name: data looker
-    description: Primer data que compartio Pilar. La separa en partes con colores.
+    description: data raw que comaprtio pilar fecha 26/01/2026
     url: https://drive.google.com/drive/folders/14O5-C1OWFdrl2D0MIltxfr6-Qoc6DQei
     folders:
-      - name: reporte ccu imagen
+      - name: contratos ccu imagen
         url: https://drive.google.com/drive/folders/1Kigt3Oy2FdAPm3CzrCix_xyiVqdRPfWu?usp=drive_link
-        path:
-      - name: reporte ccu comodatos
+        tables:
+          - name: Contratos Cervezas Vigentes 30.07.2025
+            url: https://docs.google.com/spreadsheets/d/1LCIzSU39Xa_SdJBaJ-SwmTzW87kyAuYt/edit?gid=1598106263#gid=1598106263
+            note: 265 locales
+      - name: comodatos ccu
         url: https://drive.google.com/drive/folders/1Kigt3Oy2FdAPm3CzrCix_xyiVqdRPfWu?usp=drive_link
-        path:
+        tables:
+
       - name: censo1
         url: https://docs.google.com/spreadsheets/d/1Mqqao-EiFLMwNQJtZ_7_7Y2PYkNIhSpq/edit?gid=1378855769#gid=1378855769
         tables:
           - name: DATA COMPLETA CCU  PK
             url: https://docs.google.com/spreadsheets/d/1Mqqao-EiFLMwNQJtZ_7_7Y2PYkNIhSpq/edit?gid=1378855769#gid=1378855769
-            nota: dff
+            nota: 265 locales
       - name: censo2
         url: https://drive.google.com/drive/folders/1WAFkxlJ7B9WimgqpZ5sugw-MvqwwA6us
       - name: clientes ccu
