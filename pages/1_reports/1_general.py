@@ -4,7 +4,7 @@ import altair as alt
 
 from models.marts.dashboard.bi_censo_locales import bi_censo_locales
 
-from utilities.charts.config import CLASIFICACION_COLORS
+from utilities.config import CLASIFICACION_COLORS
 
 st.title("Cumplimiento de Competencia CCU - Demo App")
 

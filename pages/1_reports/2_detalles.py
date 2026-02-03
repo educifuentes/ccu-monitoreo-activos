@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 from src.data_preparation import get_generated_dataframes
-from utils.config import CLASIFICACION_COLORS
+from utilities.config import CLASIFICACION_COLORS
 
 def display_compliance_badge(clasificacion):
     """Displays a formatted st.badge based on the classification."""
