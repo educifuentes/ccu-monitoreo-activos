@@ -6,9 +6,11 @@ from models.marts.dashboard.bi_censo_locales import bi_censo_locales
 
 from utilities.config import CLASIFICACION_COLORS
 
+
 st.title("Cumplimiento de Competencia CCU - Demo App")
 
 st.markdown("Lectura de datos desde [Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)")
+st.warning("Conexion a Google Sheets Desactivada", icon="⚠️")
 
 
 # load dataframe
