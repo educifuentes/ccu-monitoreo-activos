@@ -108,3 +108,7 @@ st.dataframe(
     hide_index=True,
 )
 
+
+st.subheader("Comodatos")
+st.warning("Evolucion de activos segun comodatos trimestrales CCU")
+
