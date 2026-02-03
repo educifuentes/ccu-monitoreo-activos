@@ -24,7 +24,6 @@ st.dataframe(stg_base_norm_locales)
 st.divider()
 
 st.subheader("Censo 1")
-
 st.badge("base_norm_censo1")
 
 st.write(stg_base_norm_censo_1.shape)
@@ -33,15 +32,24 @@ st.dataframe(stg_base_norm_censo_1)
 st.divider()
 
 
-# ---
-
 st.subheader("Censo 2 - 2025")
 st.write(stg_censos_2.shape)
+st.badge("censos_censo2")
+
 st.dataframe(stg_censos_2)
 
 
+
+# ---
+
+
+st.subheader("Descartadas")
+
 # CENSO 1 
 st.subheader("Censo 1 - 2024")
+st.badge("censos_censo1")
+st.warning ("No usar")
+
 
 st.write(stg_censos_1.shape)
 st.dataframe(stg_censos_1)
