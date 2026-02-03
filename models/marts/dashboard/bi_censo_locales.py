@@ -46,11 +46,11 @@ def bi_censo_locales():
     df.loc[mask, 'salidas_objetivo'] = (df.loc[mask, 'salidas_ccu'] / 4).apply(math.floor)
 
     # 4. Cálculo de Salidas Reales para Competencia
-    df["salidas_reales_otras"] = df["instalo"] + df["disponibilizo"]
+    df["salidas_competencia"] = df["instalo"] + df["disponibilizo"]
 
     # 5. Verificación de Cumplimiento
     df['cumple_cuota'] = False
-    df.loc[mask, 'cumple_cuota'] = df.loc[mask, 'salidas_reales_otras'] >= df.loc[mask, 'salidas_objetivo']
+    df.loc[mask, 'cumple_cuota'] = df.loc[mask, 'salidas_competencia'] >= df.loc[mask, 'salidas_objetivo']
 
     # 6. Clasificación Final
     df['clasificacion'] = df.apply(assign_clasificacion, axis=1)

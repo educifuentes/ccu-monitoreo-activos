@@ -70,16 +70,16 @@ with st.container(border=True):
 st.subheader("Censos")
 st.markdown("Información detallada de censos por periodo: clasificación de cumplimiento, totales de infraestructura y marcas detectadas.")
 
-censos_filtered = censos_df[censos_df['local_id'] == selected_local_id]
-display_columns = ['periodo', 'clasificacion', 'schoperas_total', 'salidas_total', 'salidas_otras', 'marcas', 'accion']
+censos_filtered = bi_censo_locales_df[bi_censo_locales_df['local_id'] == selected_local_id]
+display_columns = ['periodo', 'clasificacion', 'schoperas_ccu', 'salidas_ccu', 'salidas_competencia', 'marcas']
 censos_filtered = censos_filtered[display_columns].sort_values('periodo', ascending=False)
 
 st.dataframe(
     censos_filtered,
     column_config={
-        "schoperas_total": st.column_config.Column("Schoperas", help="Total de schoperas instaladas"),
-        "salidas_total": st.column_config.Column("Salidas", help="Total de salidas instaladas"),
-        "salidas_otras": st.column_config.Column("Salidas Otras", help="Total de salidas instaladas de otras marcas"),
+        "schoperas_ccu": st.column_config.Column("Schoperas", help="Total de schoperas instaladas"),
+        "salidas_ccu": st.column_config.Column("Salidas", help="Total de salidas instaladas"),
+        "salidas_competencia": st.column_config.Column("Salidas Competencia", help="Total de salidas instaladas de otras marcas"),
         "clasificacion": st.column_config.MultiselectColumn(
             "Clasificación",
             help="Estado de cumplimiento del local",
@@ -101,9 +101,11 @@ st.dataframe(
 # CONTRATOS
 # -----------------------------------------------------------------------------
 
+st.subheader("Contrato")
+
 st.warning("data demo")
 
-st.subheader("Contrato")
+
 local_contrato = contratos_df[contratos_df['local_id'] == selected_local_id]
 if not local_contrato.empty:
     contrato_info = local_contrato.iloc[0]
