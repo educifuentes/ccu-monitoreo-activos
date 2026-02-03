@@ -1,27 +1,24 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
+
 from src.data_preparation import get_generated_dataframes
+from src.models.marts.dashboard.bi_censo_locales import bi_censo_locales
+
+from utilities.ui_components import display_compliance_badge
 from utilities.config import CLASIFICACION_COLORS
 
-def display_compliance_badge(clasificacion):
-    """Displays a formatted st.badge based on the classification."""
-    if clasificacion == "En regla":
-        st.badge("En regla", icon="✅")
-    elif clasificacion == "No en regla":
-        st.badge("No en regla", icon="⚠️")
-    elif clasificacion == "No aplica":
-        st.badge("No aplica", icon="⚪")
-    elif clasificacion == "Sin comodato o terminado":
-        st.badge("Sin comodato o terminado", icon="🚫")
-    else:
-        st.badge(clasificacion, icon="🔍")
 
+# -----------------------------------------------------------------------------
+# LOAD DATA
+# -----------------------------------------------------------------------------
 try:
     locales_df, censos_df, activos_df, nominas_df, contratos_df = get_generated_dataframes()
 except FileNotFoundError as e:
     st.error(f"Error loading data file: {e}. Please make sure the files are in the 'data/raw/' directory.")
     st.stop()
+
+bi_censo_locales_df = bi_censo_locales()
 
 
 
