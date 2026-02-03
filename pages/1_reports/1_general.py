@@ -9,31 +9,6 @@ st.title("Cumplimiento de Competencia CCU - Demo App")
 
 st.markdown("Lectura de datos desde [Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)")
 
-def plot_clasificacion_pie(df):
-    """Generates a pie chart for classification distribution."""
-    fig = px.pie(
-        df,
-        names='clasificacion',
-        color='clasificacion',
-        hole=.3,
-        color_discrete_map=CLASIFICACION_COLORS,
-        height=300,
-        custom_data=['clasificacion'] # Optional, but good practice
-    )
-    fig.update_traces(
-        textinfo='percent+label', 
-        pull=[0.05, 0.05, 0.05, 0.05],
-        hovertemplate="<b>%{label}</b><br>Cantidad: %{value}<br>Porcentaje: %{percent}"
-    )
-    fig.update_layout(showlegend=False, margin=dict(t=0, b=0, l=0, r=0))
-    return fig
-
-try:
-    locales_df, censos_df, activos_df, nominas_df, contratos_df = get_generated_dataframes()
-except FileNotFoundError as e:
-    st.error(f"Error loading data file: {e}. Please make sure the files are in the 'data/raw/' directory.")
-    st.stop()
-
 
 # -----------------------------------------------------------------------------
 # FILTERS
@@ -146,7 +121,3 @@ st.markdown("- Cuantos locales no cumplen con el contrato? cual es la brecha de 
 st.markdown("- Filtros: comuuna, trimestre, etc..")
 st.markdown("- Tablas con formato customizado con boton de descarga")
 st.markdown("-  agregr URL del contrato drive u a otros doucmentos drive")
-
-
-fig = plot_clasificacion_pie(censos_df_anual)
-st.plotly_chart(fig, width='stretch', height=200)
