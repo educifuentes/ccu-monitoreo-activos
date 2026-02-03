@@ -17,5 +17,7 @@ st.dataframe(fct_censos_df)
 
 st.markdown("### DIM Locales")
 st.write(dim_locales_df.shape)
+st.code(dim_locales_df.columns.tolist())
+
 st.dataframe(dim_locales_df)
 

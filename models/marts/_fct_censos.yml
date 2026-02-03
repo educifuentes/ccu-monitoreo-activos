@@ -1,7 +1,8 @@
 version: 2
 
 models:
-  - name: fct_censos
+  - name: Censos
+    model_name: fct_censos
     description: Tabla de las encuestas (censos) por local y fecha.
     columns:
       - name: local_id
