@@ -1,0 +1,21 @@
+sources:
+  - name: data looker
+    description: Primer data que compartio Pilar. La separa en partes con colores.
+    url: https://drive.google.com/drive/folders/14O5-C1OWFdrl2D0MIltxfr6-Qoc6DQei
+    folders:
+      - name: reporte ccu imagen
+        url: https://drive.google.com/drive/folders/1Kigt3Oy2FdAPm3CzrCix_xyiVqdRPfWu?usp=drive_link
+        path:
+      - name: reporte ccu comodatos
+        url: https://drive.google.com/drive/folders/1Kigt3Oy2FdAPm3CzrCix_xyiVqdRPfWu?usp=drive_link
+        path:
+      - name: censo1
+        url: https://docs.google.com/spreadsheets/d/1Mqqao-EiFLMwNQJtZ_7_7Y2PYkNIhSpq/edit?gid=1378855769#gid=1378855769
+        tables:
+          - name: DATA COMPLETA CCU  PK
+            url: https://docs.google.com/spreadsheets/d/1Mqqao-EiFLMwNQJtZ_7_7Y2PYkNIhSpq/edit?gid=1378855769#gid=1378855769
+            nota: dff
+      - name: censo2
+        url: https://drive.google.com/drive/folders/1WAFkxlJ7B9WimgqpZ5sugw-MvqwwA6us
+      - name: clientes ccu
+        url: https://docs.google.com/spreadsheets/d/1be2kH8PmpvLmluL66l6Z6AsOCqpqsAqU/edit?gid=2063941551#gid=2063941551
