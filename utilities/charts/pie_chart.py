@@ -1,5 +1,5 @@
 import plotly.express as px
-from utils.config import CLASIFICACION_COLORS
+from utilities.config import CLASIFICACION_COLORS
 
 def plot_clasificacion_pie(df):
     """Generates a pie chart for classification distribution."""
