@@ -1,18 +1,22 @@
 version: 2
 
 models:
-  - name: dim_contratos
-    description: Tabla de dimensión que contiene información de los contratos de los locales.
+  - name: Contratos Imagen
+    model_name: dim_contratos
+    description: Contratos imagen con los locales. Info entregada por CCU.
     columns:
       - name: local_id
         description: Identificador único del local asociado al contrato.
-        data_tests:
-          - not_null
+        data_type: int
       - name: fecha_inicio
-        description: Fecha de inicio de la vigencia del contrato.
+        description: Fecha de inicio de la vigencia del contrat   o.
+        data_type: date
       - name: fecha_fin
         description: Fecha de término de la vigencia del contrato.
+        data_type: date
       - name: vigente
         description: Indicador booleano de si el contrato se encuentra vigente actualmente.
+        data_type: boolean
       - name: folio
         description: Número de folio correlativo del contrato.
+        data_type: text

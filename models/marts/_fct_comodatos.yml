@@ -1,26 +1,31 @@
 version: 2
 
 models:
-  - name: fct_comodatos
-    description: Tabla de hechos que contiene información sobre los equipos en comodato y sus movimientos.
+  - name: Comodatos CCU
+    model_name: fct_comodatos
+    description: Informacion trimestral de los comodatos de CCU. Movimeintos en la cantidad de activos (salidas y shoperas) e info de termino de contrato.
     columns:
       - name: local_id
         description: Identificador único del local asociado al comodato.
-        data_tests:
-          - not_null
+        data_type: int
       - name: fecha
         description: Fecha del registro del comodato.
-        data_tests:
-          - not_null
+        data_type: date
       - name: periodo
         description: Período (mes/año) del registro.
+        data_type: string
       - name: situacion
         description: Estado o situación actual del equipo en comodato.
+        data_type: string
       - name: delta_schoperas
         description: Cambio neto en la cantidad de máquinas schoperas.
+        data_type: int
       - name: delta_salidas
         description: Cambio neto en la cantidad de salidas (grifos).
+        data_type: int
       - name: mes_cambio
         description: Mes en el que se efectuó el cambio o movimiento.
+        data_type: string
       - name: motivo
         description: Razón o motivo del cambio en el comodato.
+        data_type: string

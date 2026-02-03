@@ -30,9 +30,7 @@ def render_model_docs(yaml_path):
             st.subheader(f"Tabla: {model_name}")
             st.info(description)
             
-            if 'columns' in model:
-                st.markdown("#### Detalle de Columnas")
-                
+            if 'columns' in model:                
                 # Preparar datos para la tabla
                 table_content = "| Columna | Descripción | Tipo |\n| :--- | :--- | :--- |\n"
                 
