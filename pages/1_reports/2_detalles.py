@@ -26,14 +26,25 @@ bi_censo_locales_df = bi_censo_locales()
 # FILTERS
 # -----------------------------------------------------------------------------
 
+# Get unique locales to avoid duplicates in the dropdown
+unique_locales = bi_censo_locales_df[['local_id', 'razon_social']].drop_duplicates().sort_values('local_id')
+locales_options = {row['local_id']: f"{row['local_id']} - {row['razon_social']}" for _, row in unique_locales.iterrows()}
+
 st.title("Locales")
 st.markdown("Informacion de censos y nominas de cada local por periodo")
+st.markdown(f"Total de Locales: {len(unique_locales)}")
 
-# Filter selection by razon_social
-names = bi_censo_locales_df['razon_social'].tolist()
-selected_name = st.selectbox("Seleccionar Local", names)
-local_info = bi_censo_locales_df[bi_censo_locales_df['razon_social'] == selected_name].iloc[0]
-selected_local_id = local_info['local_id']
+
+# Filter selection by local
+
+
+selected_local_id = st.selectbox(
+    "Seleccionar Local", 
+    options=list(locales_options.keys()), 
+    format_func=lambda x: locales_options[x]
+)
+
+local_info = bi_censo_locales_df[bi_censo_locales_df['local_id'] == selected_local_id].iloc[0]
 
 # -----------------------------------------------------------------------------
 
@@ -52,7 +63,7 @@ with st.container(border=True):
     
     with col1:
         st.markdown(f"### {local_info['razon_social']}")
-        st.caption(f"ID: {int(selected_local_id)} | RUT: {local_info['rut']}")
+        st.caption(f"ID: {selected_local_id} | RUT: {local_info['rut']}")
         st.markdown(f"📍 **{local_info['direccion']}**")
         st.markdown(f"{local_info['ciudad']}, {local_info['region']}")
         
