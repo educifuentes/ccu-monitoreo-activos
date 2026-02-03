@@ -46,7 +46,6 @@ selected_local_id = st.selectbox(
 
 local_info = bi_censo_locales_df[bi_censo_locales_df['local_id'] == selected_local_id].iloc[0]
 
-# -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
 # FICHA DEL LOCAL
@@ -73,6 +72,8 @@ with st.container(border=True):
             display_compliance_badge(latest_clasificacion)
         else:
             st.write("No hay censos registrados")
+    
+    st.warning("Estado Contrato Aqui")
 
 # -----------------------------------------------------------------------------
 # CENSOS
@@ -105,48 +106,5 @@ st.dataframe(
         ),
     },
     hide_index=True,
-)
-
-
-# -----------------------------------------------------------------------------
-# CONTRATOS
-# -----------------------------------------------------------------------------
-
-st.subheader("Contrato")
-
-st.warning("data demo")
-
-
-local_contrato = contratos_df[contratos_df['local_id'] == selected_local_id]
-if not local_contrato.empty:
-    contrato_info = local_contrato.iloc[0]
-    
-    # Check if reported inactive by CCU
-    if contrato_info.get('reportado_inactivo_ccu'):
-        st.error(f"🚫 **Contrato finalizado según nominas CCU**")
-        if pd.notna(contrato_info.get('motivo_termino')):
-            st.markdown(f"**Motivo término:** {contrato_info['motivo_termino']}")
-        if pd.notna(contrato_info.get('periodo_termino')):
-            st.caption(f"Informado en periodo: {contrato_info['periodo_termino']}")
-        st.divider()
-
-    # Check if upcoming expiration
-    if contrato_info['proximo_a_vencer']:
-        st.badge(
-            icon="⚠️", 
-            label=f"Contrato próximo a vencer ({contrato_info['dias_restantes']} días)"
-        )
-
-contrato_columns = ['fecha_inicio', 'fecha_fin', 'vigente']
-st.dataframe(local_contrato[contrato_columns], column_config={
-        "fecha_inicio": st.column_config.DateColumn(
-            "Fecha Inicio",
-            help="Fecha de inicio del contrato"
-        ),
-        "fecha_fin": st.column_config.DateColumn(
-            "Fecha Fin",
-            help="Fecha de fin del contrato"    
-        )
-    }
 )
 
