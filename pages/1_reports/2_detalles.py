@@ -3,7 +3,7 @@ import pandas as pd
 import altair as alt
 
 from src.data_preparation import get_generated_dataframes
-from src.models.marts.dashboard.bi_censo_locales import bi_censo_locales
+from models.marts.dashboard.bi_censo_locales import bi_censo_locales
 
 from utilities.ui_components import display_compliance_badge
 from utilities.config import CLASIFICACION_COLORS
@@ -30,10 +30,10 @@ st.title("Locales")
 st.markdown("Informacion de censos y nominas de cada local por periodo")
 
 # Filter selection by razon_social
-names = locales_df['razon_social'].tolist()
+names = bi_censo_locales_df['razon_social'].tolist()
 selected_name = st.selectbox("Seleccionar Local", names)
-local_info = locales_df[locales_df['razon_social'] == selected_name].iloc[0]
-selected_local_id = local_info['id']
+local_info = bi_censo_locales_df[bi_censo_locales_df['razon_social'] == selected_name].iloc[0]
+selected_local_id = local_info['local_id']
 
 # -----------------------------------------------------------------------------
 
@@ -42,9 +42,6 @@ selected_local_id = local_info['id']
 # -----------------------------------------------------------------------------
 
 st.subheader("Ficha del Local")
-if pd.notna(local_info['nota_interna']):
-    st.markdown(f"Nota demo: {local_info['nota_interna']}")
-
 
 # Get most recent census clasificacion for the badge
 local_censos = censos_df[censos_df['local_id'] == selected_local_id].sort_values('fecha', ascending=False)
@@ -65,43 +62,6 @@ with st.container(border=True):
             display_compliance_badge(latest_clasificacion)
         else:
             st.write("No hay censos registrados")
-
-
-# -----------------------------------------------------------------------------
-# ACTIVOS NOMINAS
-# -----------------------------------------------------------------------------
-
-st.subheader("Activos por Trimestre")
-st.markdown("Reconstruido usando censos y nominas CCU. Avisa si local necesita revision de cumplimiento.")
-st.markdown("*Se usa como fuente de verdad los totale sultimo censo registrado antes del periodo de la nomina.")
-
-
-local_stats_df = activos_df[activos_df['local_id'] == selected_local_id].copy()
-# Fill NaN values with 0 to ensure they appear in the chart
-local_stats_df['salidas_totales'] = local_stats_df['salidas_totales'].fillna(0)
-
-
-# bar plot
-tab1, tab2 = st.tabs(["Shoperas", "Salidas"])
-
-with tab1:
-    schoperas_chart = alt.Chart(local_stats_df).mark_bar().encode(
-    x='periodo',
-    y='schoperas_totales',
-    tooltip=['periodo', 'schoperas_totales']
-)
-    st.altair_chart(schoperas_chart, width='stretch')
-
-with tab2:
-    salidas_chart = alt.Chart(local_stats_df).mark_bar().encode(
-    x='periodo',
-    y='salidas_totales',
-    tooltip=['periodo', 'salidas_totales']
-)
-    st.altair_chart(salidas_chart, width='stretch')
-
-st.dataframe(local_stats_df[['periodo', 'schoperas_totales', 'salidas_totales']])
-
 
 # -----------------------------------------------------------------------------
 # CENSOS
