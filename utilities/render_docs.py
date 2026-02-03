@@ -27,20 +27,30 @@ def render_model_docs(yaml_path):
         description = model.get('description', 'Sin descripción disponible.')
         
         with st.container():
-            st.subheader(f"📊 Modelo: {model_name}")
+            st.subheader(f"Tabla: {model_name}")
             st.info(description)
             
             if 'columns' in model:
                 st.markdown("#### Detalle de Columnas")
                 
                 # Preparar datos para la tabla
-                table_content = "| Columna | Descripción | Tests |\n| :--- | :--- | :--- |\n"
+                table_content = "| Columna | Descripción | Tipo |\n| :--- | :--- | :--- |\n"
+                
+                def get_simple_type(t):
+                    if not t: return "---"
+                    t = str(t).lower()
+                    if any(x in t for x in ["str", "varchar", "text", "string"]): return "Texto"
+                    if any(x in t for x in ["int", "float", "number", "numeric", "decimal"]): return "Número"
+                    if "bool" in t: return "Booleano"
+                    if any(x in t for x in ["date", "time", "stamp"]): return "Fecha"
+                    return "Otro"
+
                 for col in model['columns']:
                     name = f"`{col.get('name', '')}`"
                     desc = col.get('description', '---')
-                    tests = col.get('data_tests', [])
-                    tests_str = ", ".join([f"`{t}`" for t in tests]) if tests else "---"
-                    table_content += f"| {name} | {desc} | {tests_str} |\n"
+                    raw_type = col.get('data_type') or col.get('type', '')
+                    tipo = get_simple_type(raw_type)
+                    table_content += f"| {name} | {desc} | {tipo} |\n"
                 
                 st.markdown(table_content)
             

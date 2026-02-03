@@ -10,6 +10,8 @@ st.header("Finales")
 
 st.markdown("### FCT Censos")
 st.write(fct_censos_df.shape)
+st.code(fct_censos_df.columns.tolist())
+
 st.dataframe(fct_censos_df)
 
 

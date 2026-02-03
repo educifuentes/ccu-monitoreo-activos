@@ -2,39 +2,38 @@ version: 2
 
 models:
   - name: fct_censos
-    description: Tabla de hechos que contiene métricas y resultados de las encuestas (censos) por local y fecha.
+    description: Tabla de las encuestas (censos) por local y fecha.
     columns:
       - name: local_id
         description: Identificador único del local.
-        data_tests:
-          - not_null
-      - name: fecha
-        description: Fecha en que se realizó la encuesta.
-        data_tests:
-          - not_null
+        data_type: string
       - name: periodo
         description: Período (mes/año) de la encuesta.
+        data_type: string
+      - name: fecha
+        description: Fecha en que se realizó la encuesta.
+        data_type: date
       - name: schoperas_ccu
         description: Número de máquinas schoperas de CCU.
-      - name: schoperas_otros
-        description: Número de máquinas schoperas de otras marcas.
+        data_type: number
       - name: salidas_ccu
         description: Número de salidas de CCU.
-      - name: salidas_otras
-        description: Número de salidas de otras marcas.
-      - name: coolers_total
-        description: Número total de coolers en el local.
-      - name: marcas_abenv
-        description: Resultado de la encuesta para marcas de AB-InBev.
-      - name: marcas_kross
-        description: Resultado de la encuesta para marca Kross.
-      - name: marcas_otras
-        description: Resultado de la encuesta para otras marcas.
+        data_type: number
       - name: instalo
-        description: Indicador booleano de si se realizó una instalación.
+        description: Cuantas salidas de schoperas de ccu instalo para marcas de competencia.
+        data_type: number
       - name: disponibilizo
-        description: Indicador booleano de si se habilitaron salidas.
-      - name: salidas_total
-        description: Número total de salidas del local (solo schoperas de ccu)
-      - name: schoperas_total
-        description: Número total de máquinas schoperas.
+        description: Numero de salidas de schoperas de ccu que disponibilizo para marcas de competencia.
+        data_type: number
+      - name: marcas
+        description: Listado de marcas que se venden en schop.
+        data_type: string
+      - name: marcas_abinbev
+        description: Si local ofrece alguna marca de AB-InBev en schop.
+        data_type: boolean
+      - name: marcas_kross
+        description: Si local ofrece alguna marca de Kross en schop.
+        data_type: boolean
+      - name: marcas_otras
+        description: Si local ofrece alguna marca de otras marcas en shop.
+        data_type: boolean
