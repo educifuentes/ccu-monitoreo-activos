@@ -1,7 +1,8 @@
 version: 2
 
 models:
-  - name: dim_locales
+  - name: Locales
+    model_name: dim_locales
     description: Tabla de dimensión que contiene información maestra de los locales.
     columns:
       - name: local_id

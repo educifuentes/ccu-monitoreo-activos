@@ -1,8 +1,8 @@
 version: 2
 
 models:
-  - name: Contratos Imagen
-    model_name: dim_contratos
+  - name: Contratos Imagen CCU
+    model_name: fct_contratos
     description: Contratos imagen con los locales. Info entregada por CCU.
     columns:
       - name: local_id
