@@ -6,7 +6,7 @@ from src.data_preparation import get_generated_dataframes
 from models.marts.dashboard.bi_censo_locales import bi_censo_locales
 
 from utilities.ui_components import display_compliance_badge
-from utilities.config import CLASIFICACION_COLORS
+from utilities.config import CLASIFICACION_COLORS, MARCAS_COLORS
 
 
 # -----------------------------------------------------------------------------
@@ -89,12 +89,8 @@ st.dataframe(
         "marcas": st.column_config.MultiselectColumn(
             "Marcas Ofrecidas",
             help="Marcas detectadas en el censo",
-            options=[
-                "ABInBev",
-                "Kross",
-                "Otros",
-            ],
-            color=["#0C7779", "#803df5", "#00c0f2"],
+            options=list(MARCAS_COLORS.keys()),
+            color=list(MARCAS_COLORS.values()),
         ),
     },
     hide_index=True,
@@ -104,6 +100,8 @@ st.dataframe(
 # -----------------------------------------------------------------------------
 # CONTRATOS
 # -----------------------------------------------------------------------------
+
+st.warning("data demo")
 
 st.subheader("Contrato")
 local_contrato = contratos_df[contratos_df['local_id'] == selected_local_id]

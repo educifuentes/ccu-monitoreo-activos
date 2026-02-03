@@ -7,3 +7,9 @@ CLASIFICACION_COLORS = {
 # data connections
 # google sheets TTL
 TTL_VALUE = "5m" # 5 minutes 
+
+MARCAS_COLORS = {
+    "ABInBev": "#0C7779",
+    "Kross": "#803df5",
+    "Otros": "#00c0f2"
+}
