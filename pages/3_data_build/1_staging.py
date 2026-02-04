@@ -4,6 +4,7 @@ from models.staging._stg_censos_censo_2 import stg_censos_censo_2
 from models.staging._stg_censos_censo_1 import stg_censos_censo_1
 from models.staging._stg_base_norm_censo_1 import stg_base_norm_censo_1
 from models.staging._stg_base_norm_locales import stg_base_norm_locales
+from models.staging._src_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
 
 
 
@@ -14,6 +15,17 @@ stg_censos_2 = stg_censos_censo_2()
 stg_censos_1 = stg_censos_censo_1()
 stg_base_norm_censo_1 = stg_base_norm_censo_1()
 stg_base_norm_locales = stg_base_norm_locales()
+stg_reportes_ccu_base_2026_q1_df = stg_reportes_ccu_base_2026_q1()
+
+
+
+st.subheader("Reportes CCU")
+st.badge("reportes_ccu_base_2026_q1")
+st.write(stg_reportes_ccu_base_2026_q1_df.shape)
+st.code(stg_reportes_ccu_base_2026_q1_df.columns.tolist())
+st.dataframe(stg_reportes_ccu_base_2026_q1_df)
+
+st.divider()
 
 
 st.subheader("Locales")
