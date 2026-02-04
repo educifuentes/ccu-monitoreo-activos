@@ -2,7 +2,7 @@
   description: reportes de ccu sobre movimiento de activos y contratos.
   tables:
     - name: base_solicitada
-      filename: seeds/reportes_ccu/Base Solicitada.xlsx
+      filename: seeds/reportes_ccu/Base Solicitada.xlsx - Hoja1.csv
       description: Ultima que mando CCU, en 2026-02-04. Usar esta y comparar on base inical.
       model_name: stg_reportes_ccu_reporte_2026-Q1
       url: https://docs.google.com/spreadsheets/d/1lXoQ2bhOMb8U5dT7ozpPth64YFcGK_bO/edit?gid=732685704#gid=732685704
