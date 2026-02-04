@@ -21,7 +21,7 @@ def stg_reportes_ccu_base_2026_q1():
         "Fecha de suscripción del comodato": "fecha_suscripcion_comodato",
         "Fecha de término del contrato (de aplicar)": "fecha_termino_contrato",
         "Activos entregados": "activos_entregados",
-        "Cantidad total de salidas de schop": "salidas_totales",
+        "Cantidad total de salidas de schop": "cantidad_total_salidas_schop",
     }
 
     df.rename(columns=rename_dict, inplace=True)

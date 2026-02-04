@@ -29,6 +29,13 @@ st.badge("reportes_ccu_base_2026_q1")
 st.markdown(reportes_ccu_base_sol_source_config.get("description"))
 st.write(stg_reportes_ccu_base_2026_q1_df.shape)
 st.code(stg_reportes_ccu_base_2026_q1_df.columns.tolist())
+
+st.markdown("""
+Duda
+- es numero de salidas lo mismo Cantidad total de salidas de schop?
+""")
+
+
 st.dataframe(stg_reportes_ccu_base_2026_q1_df)
 
 st.divider()
