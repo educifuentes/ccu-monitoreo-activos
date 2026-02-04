@@ -6,6 +6,9 @@ from models.staging._stg_base_norm_censo_1 import stg_base_norm_censo_1
 from models.staging._stg_base_norm_locales import stg_base_norm_locales
 from models.staging._src_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
 
+from utilities.yaml_loader import get_table_config
+
+
 
 
 st.header("Staging")
@@ -17,10 +20,13 @@ stg_base_norm_censo_1 = stg_base_norm_censo_1()
 stg_base_norm_locales = stg_base_norm_locales()
 stg_reportes_ccu_base_2026_q1_df = stg_reportes_ccu_base_2026_q1()
 
-
+# docu
+reportes_ccu_base_sol_source_config = get_table_config(source_name="reportes_ccu", table_name="base_2026_q1")
 
 st.subheader("Reportes CCU")
 st.badge("reportes_ccu_base_2026_q1")
+
+st.markdown(reportes_ccu_base_sol_source_config.get("description"))
 st.write(stg_reportes_ccu_base_2026_q1_df.shape)
 st.code(stg_reportes_ccu_base_2026_q1_df.columns.tolist())
 st.dataframe(stg_reportes_ccu_base_2026_q1_df)
