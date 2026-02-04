@@ -1,7 +1,44 @@
-- name: reportes_ccu__comodatos
-  description: reportes trimestrales de ccu sobre aumento o termino de contrato.
-  url: https://drive.google.com/drive/folders/1teDk4Cm3E6HWVGycmAWIomsz23mEMca_
+- name: reportes_ccu
+  description: reportes de ccu sobre movimiento de activos y contratos.
   tables:
+    - name: base_solicitada
+      filename: seeds/reportes_ccu/Base Solicitada.xlsx
+      description: Ultima que mando CCU, en 2026-02-04. Usar esta y comparar on base inical.
+      model_name: stg_reportes_ccu_reporte_2026-Q1
+      url: https://docs.google.com/spreadsheets/d/1lXoQ2bhOMb8U5dT7ozpPth64YFcGK_bO/edit?gid=732685704#gid=732685704
+      columns:
+        - name: local_id
+          description: ID del cliente (no el local fisica)
+        - name: razon_social
+          description: Razón social del local.
+        - name: rut
+          description: RUT del local.
+        - name: direccion
+          description: Dirección del local.
+        - name: region
+          description: Región administrativa del local.
+        - name: ciudad
+          description: Ciudad del local.
+        - name: comuna
+          description: Comuna del local.
+        - name: nombre_fantasia
+          description: Nombre de fantasía del local.
+        - name: numero de schoperas
+          description: Cantidad de schoperas instaladas.
+        - name: numero de salidas
+          description: Cantidad de salidas de shop.
+        - name: numero de coolers
+          description: Cantidad de coolers entregados.
+        - name: ¿es local imagen?
+          description: Indicador de si el local es de tipo imagen.
+        - name: Fecha de suscripción del comodato
+          description: Fecha en que se firmó el comodato.
+        - name: Fecha de término del contrato (de aplicar)
+          description: Fecha de fin del contrato (si aplica).
+        - name: Activos entregados
+          description: Listado o detalle de activos entregados.
+        - name: Cantidad total de salidas de schop
+          description: Cantidad total de salidas de shop (acumulado/total).
     - name: aumento shop q3
       description: Raw customers data
     - name: termino shop q3
