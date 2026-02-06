@@ -1,5 +1,3 @@
-# from models.staging._stg_censos_censo_2 import stg_censos_censo_2
-
 from models.staging._stg_base_norm_locales import stg_base_norm_locales
 from models.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1
 from utilities.transformations.text_cleaning import clean_text
@@ -20,15 +18,6 @@ def int_base_norm_locales():
 
     return base_norm_locales_df   
 
-def int_reportes_ccu_locales():
-    locales_columns = ['local_id', 'razon_social', 'rut', 'direccion', 'region', 'ciudad', 'comuna', 'nombre_fantasia']
-
-    # base_norm_locales_df = stg_base_norm_locales()[locales_columns]
-    reportes_ccu_base_2026_q1_df = int_reportes_ccu_base_2026_q1()[locales_columns]
-
-    reportes_ccu_base_2026_q1_df["local_id"] = reportes_ccu_base_2026_q1_df["local_id"].astype(str)
-
-    return reportes_ccu_base_2026_q1_df
 
 
 
