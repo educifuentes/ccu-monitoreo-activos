@@ -60,25 +60,27 @@ local_contract = contratos_df[contratos_df['local_id'] == selected_local_id].ilo
 # FICHA DEL LOCAL
 # -----------------------------------------------------------------------------
 
-st.divider()
+st.subheader(f"{local_master['razon_social']}")
+st.caption(f"ID: {selected_local_id} | RUT: {local_master['rut']}")
+
 
 col1, col2 = st.columns([2, 1])
 
+
 with col1:
-    st.markdown(f"### {local_master['razon_social']}")
-    st.caption(f"ID: {selected_local_id} | RUT: {local_master['rut']}")
+    
     
     with st.container(border=True):
+
         st.markdown(f"📍 **Dirección:** {local_master['direccion']}")
         st.markdown(f"**Ciudad/Comuna:** {local_master['ciudad']}")
         st.markdown(f"**Región:** {local_master['region']}")
-        if 'fuente' in local_master:
-            st.caption(f"Fuente Maestra: {local_master['fuente']}")
+      
 
 with col2:
-    st.subheader("Estado")
     with st.container(border=True):
-        st.markdown("**Cumplimiento (Último Censo)**")
+        st.markdown("**Cumplimiento**")
+        st.markdown(f"**Último Censo:** {local_bi_censos.iloc[0]['periodo']}")
         if latest_clasificacion != "Sin Datos":
             display_compliance_badge(latest_clasificacion)
         else:
@@ -102,7 +104,7 @@ if local_contract is not None:
         if local_contract.get('es_local_imagen?') == True:
             st.info("✨ Este local tiene categoría **Local Imagen** según contrato.")
 else:
-    st.info("No se encontró información de contrato para este local en la base compartida.")
+    st.info("No se encontró información de contrato para este local")
 
 # -----------------------------------------------------------------------------
 # EVOLUCIÓN DE ACTIVOS
@@ -117,10 +119,11 @@ if not local_assets_history.empty:
     table_df['fecha'] = pd.to_datetime(table_df['fecha']).dt.strftime('%d/%m/%Y')
     
     # Select and rename columns for clarity
-    display_cols = ['fecha', 'fuente', 'schoperas', 'salidas', 'coolers']
+    display_cols = ['fecha', 'periodo', 'fuente', 'schoperas', 'salidas', 'coolers']
     table_df = table_df[display_cols].rename(columns={
         'fecha': 'Fecha',
-        'fuente': 'Fuente / Periodo',
+        'periodo': 'Periodo',
+        'fuente': 'Fuente',
         'schoperas': 'Schoperas',
         'salidas': 'Salidas',
         'coolers': 'Coolers'
@@ -132,7 +135,7 @@ if not local_assets_history.empty:
     if len(local_assets_history) > 1:
         st.markdown("---")
         st.caption("Tendencia Temporal de Activos")
-        chart_data = local_assets_history.melt(id_vars=['fecha'], value_vars=['schoperas', 'salidas', 'coolers'], var_name='Activo', value_name='Cantidad')
+        chart_data = local_assets_history.melt(id_vars=['fecha'], value_vars=['schoperas', 'salidas'], var_name='Activo', value_name='Cantidad')
         
         line_chart = alt.Chart(chart_data).mark_line(point=True).encode(
             x=alt.X('fecha:T', title='Fecha'),
