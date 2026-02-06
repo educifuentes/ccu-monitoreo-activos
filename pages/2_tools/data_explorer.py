@@ -1,26 +1,50 @@
 import streamlit as st
-from src.data_preparation import get_generated_dataframes
-
-try:
-    locales_df, censos_df, activos_df, nominas_df, contratos_df = get_generated_dataframes()
-except FileNotFoundError as e:
-    st.error(f"Error loading data file: {e}. Please make sure the files are in the 'data/raw/' directory.")
-    st.stop()
+from models.marts.gsheets.gsheets_tables import (
+    locales, 
+    censos, 
+    bases_ccu, 
+    contratos
+)
 
 st.title("Explorador de Datos")
+st.markdown("Exploración rápida de los DataFrames maestros alojados en Google Sheets.")
 
+# Create tabs for organization
+tab1, tab2, tab3, tab4 = st.tabs([
+    ":material/sports_bar: Locales",
+    ":material/checklist_rtl: Censos",
+    ":material/assignment: Bases CCU",
+    ":material/contract: Contratos"
+])
 
-st.subheader("Locales")
-st.dataframe(locales_df)
+with tab1:
+    st.header("Locales")
+    try:
+        df_locales = locales()
+        st.dataframe(df_locales, use_container_width=True)
+    except Exception as e:
+        st.error(f"Error cargando locales: {e}")
 
-st.subheader("Censos")
-st.dataframe(censos_df)
+with tab2:
+    st.header("Censos")
+    try:
+        df_censos = censos()
+        st.dataframe(df_censos, use_container_width=True)
+    except Exception as e:
+        st.error(f"Error cargando censos: {e}")
 
-st.subheader("Nominas Data")
-st.dataframe(nominas_df)
+with tab3:
+    st.header("Bases CCU")
+    try:
+        df_bases = bases_ccu()
+        st.dataframe(df_bases, use_container_width=True)
+    except Exception as e:
+        st.error(f"Error cargando bases_ccu: {e}")
 
-st.subheader("Activos Data")
-st.dataframe(activos_df)
-
-st.subheader("Contratos Data")
-st.dataframe(contratos_df)
+with tab4:
+    st.header("Contratos")
+    try:
+        df_contratos = contratos()
+        st.dataframe(df_contratos, use_container_width=True)
+    except Exception as e:
+        st.error(f"Error cargando contratos: {e}")
