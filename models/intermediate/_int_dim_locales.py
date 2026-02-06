@@ -1,7 +1,7 @@
 # from models.staging._stg_censos_censo_2 import stg_censos_censo_2
 
 from models.staging._stg_base_norm_locales import stg_base_norm_locales
-from models.staging._src_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
+from models.staging._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
 
 
 def int_base_norm_locales():
