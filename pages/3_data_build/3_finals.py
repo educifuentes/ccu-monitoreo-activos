@@ -56,8 +56,17 @@ with tab3:
 
 with tab4:
     st.header("Dim Locales")
-    st.markdown("Tabla maestra de locales comerciales con datos normalizados.")
+    st.markdown("Tabla maestra de locales comerciales (clientes) con datos consolidados.")
+    
     dim_locales_df = dim_locales()
+    
+    # Calculate counts for display
+    fuente_counts = dim_locales_df["fuente"].value_counts().to_dict()
+    fuente_str = ", ".join([f"**{k}**: {v}" for k, v in fuente_counts.items()])
+    
+    st.markdown(f"- Total locales: **{len(dim_locales_df)}**")
+    st.markdown(f"- Distribución por fuente: {fuente_str}")
+    
     render_model_ui(dim_locales_df)
 
 
