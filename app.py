@@ -21,12 +21,32 @@ analysis_page = st.Page("pages/3_data_build/analysis.py", title="Analysis", icon
 bi_tables_page = st.Page("pages/3_data_build/4_bi_tables.py", title="BI Tables", icon=":material/dashboard:")
 gsheets_page = st.Page("pages/3_data_build/5_gheets.py", title="GSheets", icon=":material/dashboard:")
 
-# current page
-pg = st.navigation({
+import os
+
+# Environment check (Local vs Cloud)
+# On local Mac dev, the USER env var is usually 'educifuentes'
+IS_LOCAL = os.getenv("USER") == "educifuentes"
+
+# Navigation Logic
+nav_dict = {
     "Vistas": [general_page, detalles_page],
     "Herramientas": [explore_page, validations_page, documentation_page],
-    "Dev - Modelos": [staging_page, intermediate_page, finals_page, gsheets_page, analysis_page, bi_tables_page, data_profilling_page, requerimientos_page]
-})
+}
+
+if IS_LOCAL:
+    nav_dict["Dev - Modelos"] = [
+        staging_page, 
+        intermediate_page, 
+        finals_page, 
+        gsheets_page, 
+        analysis_page, 
+        bi_tables_page, 
+        data_profilling_page, 
+        requerimientos_page
+    ]
+
+# current page
+pg = st.navigation(nav_dict)
 
 with st.sidebar:
     if st.button("Actualizar Datos 🔄", width='stretch', help="Forzar la recarga de datos desde Google Sheets"):
