@@ -12,13 +12,18 @@ from models.marts.fct_censos import fct_censos
 
 # from models.marts.dim_locales import marts_dim_locales
 from models.staging._stg_base_norm_locales import stg_base_norm_locales
-from models.intermediate._int_dim_locales import int_reportes_ccu_locales, compare_locales_df
+from models.intermediate._int_dim_locales import int_reportes_ccu_locales
+from models.analysis.compare_bases_ccu import compare_locales_df
 from utilities.ui_components import render_model_ui
 
 # load
 
 # locales
 locales_df = stg_base_norm_locales()
+
+int_reportes_ccu_base_2024_q1_df = int_reportes_ccu_base_2024_q1()
+int_reportes_ccu_base_2026_q1_df = int_reportes_ccu_base_2026_q1()
+
 int_reportes_ccu_locales_df = int_reportes_ccu_locales()
 comparison_locales_df = compare_locales_df()
 

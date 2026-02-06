@@ -1,7 +1,9 @@
 import streamlit as st
 
 from models.staging._stg_base_norm_locales import stg_base_norm_locales
-from models.intermediate._int_dim_locales import int_reportes_ccu_locales, compare_locales_df
+from models.intermediate._int_dim_locales import int_reportes_ccu_locales
+from models.analysis.compare_bases_ccu import compare_locales_df
+
 from models.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1
 from models.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
 
@@ -17,10 +19,12 @@ locales_df = stg_base_norm_locales()
 int_reportes_ccu_locales_df = int_reportes_ccu_locales()
 comparison_locales_df = compare_locales_df()
 
-st.subheader("Locales Comparison")
+st.subheader("Base ccu 2024 vs 2026")
 st.markdown("Inner join between `stg_base_norm_locales` and `int_reportes_ccu_locales` on `local_id`.")
 render_model_ui(comparison_locales_df)
 
+
+# ---
 
 st.subheader("Base Normalizada")
 
