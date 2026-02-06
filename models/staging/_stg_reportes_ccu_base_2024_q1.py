@@ -14,19 +14,20 @@ def stg_reportes_ccu_base_2024_q1():
         "id": "local_id",
         'N° Coolers': 'coolers',
         'N° Columnas (Schoperas)': 'schoperas',
-        'N° Salidas Schop CCU': 'salidas_schop_ccu',
+        'N° Salidas Schop CCU': 'salidas',
     }
     
    
     df.rename(columns=rename_dict, inplace=True)
 
     select_cols = [
+        # row identifiers
         "local_id",
         "periodo",
         "fecha",
         # activos
         "schoperas",
-        "salidas_schop_ccu",
+        "salidas",
         "coolers"
     ]
 
@@ -34,7 +35,7 @@ def stg_reportes_ccu_base_2024_q1():
     df["local_id"] = df["local_id"].astype(str)
     df["coolers"] = df["coolers"].astype('Int64')
     df["schoperas"] = df["schoperas"].astype('Int64')
-    df["salidas_schop_ccu"] = df["salidas_schop_ccu"].astype('Int64')
+    df["salidas"] = df["salidas"].astype('Int64')
 
     # new columns
     # note: should be done in stg model, but int model. exepction. refactir later

@@ -33,3 +33,4 @@ def render_model_ui(df, source_name=None, table_name=None):
     dtypes_str = " | ".join([f"{col}: {dtype}" for col, dtype in df.dtypes.items()])
     st.code(dtypes_str)
     st.dataframe(df)
+    st.divider()

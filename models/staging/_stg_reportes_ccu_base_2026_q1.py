@@ -26,4 +26,8 @@ def stg_reportes_ccu_base_2026_q1():
 
     df.rename(columns=rename_dict, inplace=True)
 
+    # new columns
+    df["periodo"] = "2026-Q1"
+    df["fecha"] = pd.to_datetime("2026-01-01").date() 
+
     return df

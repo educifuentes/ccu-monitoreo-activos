@@ -1,6 +1,7 @@
 import pandas as pd
-from models.intermediate._int_censos_censo_2 import int_censos_censo_2
-from models.intermediate._int_base_norm_censo_1 import int_base_norm_censo_1
+from models.marts.fct_censos import fct_censos
+
+
 from models.staging._stg_reportes_ccu_base_2024_q1 import stg_reportes_ccu_base_2024_q1
 from models.staging._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
 

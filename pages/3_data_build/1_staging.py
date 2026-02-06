@@ -21,12 +21,10 @@ stg_reportes_ccu_base_2024_q1_df = stg_reportes_ccu_base_2024_q1()
 # ---
 
 st.subheader("Reportes CCU")
+
 st.badge("reportes_ccu_base_2026_q1")
 render_model_ui(stg_reportes_ccu_base_2026_q1_df, source_name="reportes_ccu", table_name="base_2026_q1")
 
-st.divider()
-
-st.subheader("Reportes CCU")
 st.badge("reportes_ccu_base_2024_q1")
 render_model_ui(stg_reportes_ccu_base_2024_q1_df, source_name="reportes_ccu", table_name="base_2024_q1")
 
