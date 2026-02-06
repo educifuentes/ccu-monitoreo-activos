@@ -23,7 +23,15 @@ with tab1:
     st.header("Fact Contratos CCU")
     st.markdown("Información consolidada de suscripción de comodatos y términos de contrato.")
     fct_contratos_ccu_df = fct_contratos_ccu()
+    
+    multi_fecha_count = fct_contratos_ccu_df[
+        (fct_contratos_ccu_df["fecha_suscripcion_comodato_es_rango"] == True)
+    ].shape[0]
+
+    st.markdown(f"- Hay **{multi_fecha_count}** locales con multi fecha en inicio o término de contratos.")
     render_model_ui(fct_contratos_ccu_df)
+
+
 
 with tab2:
     st.header("Fact Censos")
