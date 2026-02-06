@@ -4,6 +4,8 @@ from models.marts.fct_censos import fct_censos
 from models.marts.dim_locales import dim_locales
 from models.marts.dashboard.bi_censo_locales import bi_censo_locales
 
+from utilities.ui_components import render_model_ui
+
 fct_censos_df = fct_censos()
 dim_locales_df = dim_locales()
 bi_censo_locales_df = bi_censo_locales()
@@ -11,22 +13,17 @@ bi_censo_locales_df = bi_censo_locales()
 st.header("Finales")
 
 st.markdown("### BI Censo Locales")
-st.write(bi_censo_locales_df.shape)
 st.markdown(" calcula columna clasificacion")
-st.dataframe(bi_censo_locales_df)
+render_model_ui(bi_censo_locales_df)
 
 st.divider()
 
 st.markdown("### FCT Censos")
-st.write(fct_censos_df.shape)
-st.code(fct_censos_df.columns.tolist())
+render_model_ui(fct_censos_df)
 
-st.dataframe(fct_censos_df)
-
+st.divider()
 
 st.markdown("### DIM Locales")
-st.write(dim_locales_df.shape)
-st.code(dim_locales_df.columns.tolist())
+render_model_ui(dim_locales_df)
 
-st.dataframe(dim_locales_df)
 

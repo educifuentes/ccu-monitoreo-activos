@@ -6,11 +6,7 @@ from models.staging._stg_base_norm_censo_1 import stg_base_norm_censo_1
 from models.staging._stg_base_norm_locales import stg_base_norm_locales
 from models.staging._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
 from models.staging._stg_reportes_ccu_base_2024_q1 import stg_reportes_ccu_base_2024_q1
-
-from utilities.yaml_loader import get_table_config
-
-
-
+from utilities.ui_components import render_model_ui
 
 st.header("Staging")
 
@@ -22,33 +18,18 @@ stg_base_norm_locales = stg_base_norm_locales()
 stg_reportes_ccu_base_2026_q1_df = stg_reportes_ccu_base_2026_q1()
 stg_reportes_ccu_base_2024_q1_df = stg_reportes_ccu_base_2024_q1()
 
-# docu
-reportes_ccu_base_sol_source_config = get_table_config(source_name="reportes_ccu", table_name="base_2026_q1")
+# ---
 
 st.subheader("Reportes CCU")
 st.badge("reportes_ccu_base_2026_q1")
-
-st.markdown(reportes_ccu_base_sol_source_config.get("description"))
-st.write(stg_reportes_ccu_base_2026_q1_df.shape)
-st.code(stg_reportes_ccu_base_2026_q1_df.columns.tolist())
-
-st.markdown("""
-Duda
-- es numero de salidas lo mismo Cantidad total de salidas de schop?
-""")
-
-
-st.dataframe(stg_reportes_ccu_base_2026_q1_df)
+render_model_ui(stg_reportes_ccu_base_2026_q1_df, source_name="reportes_ccu", table_name="base_2026_q1")
 
 st.divider()
 
 st.subheader("Reportes CCU")
 st.badge("reportes_ccu_base_2024_q1")
+render_model_ui(stg_reportes_ccu_base_2024_q1_df, source_name="reportes_ccu", table_name="base_2024_q1")
 
-st.write(stg_reportes_ccu_base_2024_q1_df.shape)
-st.code(stg_reportes_ccu_base_2024_q1_df.columns.tolist())
-
-st.dataframe(stg_reportes_ccu_base_2024_q1_df)
 
 
 

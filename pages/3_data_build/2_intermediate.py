@@ -8,6 +8,7 @@ from models.marts.fct_censos import fct_censos
 # from models.marts.dim_locales import marts_dim_locales
 from models.staging._stg_base_norm_locales import stg_base_norm_locales
 from models.intermediate._int_dim_locales import int_reportes_ccu_locales, compare_locales_df
+from utilities.ui_components import render_model_ui
 
 # load
 
@@ -24,20 +25,19 @@ int_censos_censo_2_df = int_censos_censo_2()
 st.header("Intermediate")
 
 st.subheader("Locales Comparison")
-st.write(comparison_locales_df.shape)
 st.markdown("Inner join between `stg_base_norm_locales` and `int_reportes_ccu_locales` on `local_id`.")
-st.dataframe(comparison_locales_df)
+render_model_ui(comparison_locales_df)
 
 st.divider()
 
 st.subheader("Locales")
-st.write(locales_df.shape)
 st.markdown("Source: Base normalizada")
 st.badge("stg_base_norm_locales")
-st.dataframe(locales_df)   
+render_model_ui(locales_df)   
 
 st.badge("int_reportes_ccu_locales")
-st.dataframe(int_reportes_ccu_locales_df)
+render_model_ui(int_reportes_ccu_locales_df)
+
 
 
 # ----
