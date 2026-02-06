@@ -26,7 +26,7 @@ def render_model_ui(df, source_name=None, table_name=None):
     #     if config and config.get("description"):
     #         st.markdown(config.get("description"))
 
-    st.markdown(f"Source: `{source_name}.{table_name}`")
+    # st.markdown(f"Source: `{source_name}.{table_name}`")
     st.write(df.shape)
     st.code(df.columns.tolist())
     # Format dtypes as a single line: col1: type1 | col2: type2
