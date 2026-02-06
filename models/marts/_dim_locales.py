@@ -46,22 +46,26 @@ def dim_locales():
 
     df = update_with_base_ccu_2026_q1()
 
-    # clean
-    df = clean_text(df, ["razon_social", "direccion", "region", "ciudad", "comuna", "nombre_fantasia"], title=True)
+    # 1. Standardize and clean text columns
+    # clean_text now handles:
+    # - Conversion to "string" dtype (modern pandas nullable strings)
+    # - Stripping whitespace
+    # - Title casing (propagates pd.NA correctly)
+    # - Converting empty strings to pd.NA
+    title_cols = ["razon_social", "direccion", "region", "ciudad", "comuna", "nombre_fantasia"]
+    df = clean_text(df, title_cols, title=True)
     df = clean_text(df, ["rut"], title=False)
     
-    # Normalize regions
+    # 2. Normalize regions using the dedicated mapper
     df = clean_region(df)
 
-    # value counts of region
-    print("Value counts of region after cleaning:")
+    # 3. Debugging/Monitoring (Optional but helpful in logs)
+    print("\n--- DIM LOCALES MONITORING ---")
+    print(f"Total records: {len(df)}")
+    print("\nSource Distribution:")
+    print(df["fuente"].value_counts())
+    
+    print("\nRegion Distribution (post-cleaning):")
     print(df["region"].value_counts(dropna=False))
-
-    # value counts of ciudad
-    print(df["ciudad"].value_counts(dropna=False))
-    # replace nan with None
-    df["ciudad"] = df["ciudad"].where(df["ciudad"].notna(), None)
-    print(df["ciudad"].value_counts(dropna=False))
-
 
     return df
