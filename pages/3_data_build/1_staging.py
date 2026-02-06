@@ -15,13 +15,13 @@ st.markdown("Tablas staging 1:1 con fuentes - Bases CCU, Contratos, Locales y Ce
 
 # Create tabs for organization
 tab1, tab2, tab3, tab4 = st.tabs([
-    "🔀 Bases CCU", 
-    "📊 Censos", 
-    "📍 Locales",
-    "📚 Original"
+    ":material/sports_bar: Locales",
+    ":material/checklist_rtl: Censos",
+    ":material/assignment: Bases CCU",
+    ":material/book: Original"
 ])
 
-with tab1:
+with tab3:
     st.header("Base CCU 2026 Q1")
     st.markdown("Carga directa desde el reporte de CCU.")
     df = stg_reportes_ccu_base_2026_q1()
@@ -41,7 +41,7 @@ with tab2:
     df1 = stg_censos_censo_1()
     render_model_ui(df1)
 
-with tab3:
+with tab1:
     st.header("Bases Normalizadas")
     
     st.subheader("Locales")

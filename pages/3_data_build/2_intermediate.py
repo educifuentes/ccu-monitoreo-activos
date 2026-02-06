@@ -18,12 +18,12 @@ st.markdown("Capa intermedia de limpieza, tipado y transformaciones de negocio."
 
 # Create tabs for organization
 tab1, tab2, tab3 = st.tabs([
-    "🔀 Bases CCU", 
-    "📊 Censos", 
-    "📍 Locales"
+    ":material/sports_bar: Locales",
+    ":material/checklist_rtl: Censos",
+    ":material/assignment: Bases CCU"
 ])
 
-with tab1:
+with tab3:
     st.header("Reportes CCU")
     
     st.subheader("Base 2026 Q1")
@@ -63,7 +63,7 @@ with tab2:
     
     render_model_ui(df_merged)
 
-with tab3:
+with tab1:
     st.header("Locales Intermediate")
     
     st.subheader("Base Normalizada")

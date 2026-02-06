@@ -10,16 +10,17 @@ from utilities.ui_components import render_model_ui
 # Page settings and header
 st.title("Finales (Marts)")
 st.markdown("Tablas de Hechos (FCT) y Dimensiones (DIM) consolidadas para el negocio.")
+st.markdown("estas son las Tabals que iran al gogole sheets y seran el punto de partida")
 
 # Create tabs for organization
 tab1, tab2, tab3, tab4 = st.tabs([
-    "📄 Contratos", 
-    "📊 Censos", 
-    "🔀 Bases CCU", 
-    "📍 Locales"
+    ":material/sports_bar: Locales",
+    ":material/checklist_rtl: Censos",
+    ":material/assignment: Bases CCU",
+    ":material/contract: Contratos"
 ])
 
-with tab1:
+with tab4:
     st.header("Fact Contratos CCU")
     st.markdown("Información consolidada de suscripción de comodatos y términos de contrato.")
     fct_contratos_ccu_df = fct_contratos_ccu()
@@ -54,7 +55,7 @@ with tab3:
     
     render_model_ui(fct_bases_ccu_df)
 
-with tab4:
+with tab1:
     st.header("Dim Locales")
     st.markdown("Tabla maestra de locales comerciales (clientes) con datos consolidados.")
     
