@@ -2,6 +2,7 @@
 
 from models.staging._stg_base_norm_locales import stg_base_norm_locales
 from models.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1
+from utilities.transformations.text_cleaning import clean_text
 
 
 def int_base_norm_locales():
@@ -11,12 +12,9 @@ def int_base_norm_locales():
 
 
     # clean and titleize
-    base_norm_locales_df["razon_social"] = base_norm_locales_df["razon_social"].str.strip().str.title()
-    base_norm_locales_df["rut"] = base_norm_locales_df["rut"].str.strip()
-    base_norm_locales_df["direccion"] = base_norm_locales_df["direccion"].str.strip().str.title()
-    base_norm_locales_df["region"] = base_norm_locales_df["region"].str.strip().str.title()
-    base_norm_locales_df["ciudad"] = base_norm_locales_df["ciudad"].str.strip().str.title()
-    base_norm_locales_df["nombre_fantasia"] = base_norm_locales_df["nombre_fantasia"].str.strip().str.title()
+    title_cols = ["razon_social", "direccion", "region", "ciudad", "nombre_fantasia"]
+    base_norm_locales_df = clean_text(base_norm_locales_df, title_cols, title=True)
+    base_norm_locales_df = clean_text(base_norm_locales_df, ["rut"], title=False)
 
     base_norm_locales_df["local_id"] = base_norm_locales_df["local_id"].astype(str)
 
