@@ -24,12 +24,11 @@ st.subheader("Base Normalizada")
 st.badge("base_norm_original")
 render_model_ui(stg_base_norm_original, source_name="base normalizada", table_name="base_normalizada_original")
 
-# st.subheader("Locales")
-# st.badge("base_norm_locales")
-# st.write(stg_base_norm_locales.shape)
-# st.dataframe(stg_base_norm_locales)
+st.subheader("Locales")
+st.badge("base_norm_locales")
 
-# st.divider()
+render_model_ui(stg_base_norm_locales, source_name="base normalizada", table_name="locales")
+
 
 # st.subheader("Censo 1")
 # st.badge("base_norm_censo1")

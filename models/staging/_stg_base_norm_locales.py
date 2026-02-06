@@ -17,7 +17,10 @@ def stg_base_norm_locales():
         "REGIÓN": "region",
         "CIUDAD":  "ciudad", 
         "Nombre de Fantasía ": "nombre_fantasia",
-        "Nombre de Fantasía 2": "nombre_fantasia_2"
+        "Nombre de Fantasía 2": "nombre_fantasia_2",
+        'N° Coolers': 'coolers',
+        'N° Columnas (Schoperas)': 'schoperas',
+        'N° Salidas Schop CCU': 'salidas'
     }
 
     df.rename(columns=rename_dict, inplace=True)
@@ -29,18 +32,19 @@ def stg_base_norm_locales():
         "direccion",
         "region",
         "ciudad",
-        "nombre_fantasia" ]
+        "nombre_fantasia",
+        "nombre_fantasia_2",
+        # activos ccu 2024
+        "coolers",
+        "schoperas",
+        "salidas" ]
 
     # data types
     df["local_id"] = df["local_id"].astype("str")
-
-    # print data types
-    print("\n--- Data Types ---")
-    print(df.dtypes)
-
-    print("\n--- List of Column Names ---")
-    for i, col in enumerate(df.columns):
-        print(f"{i}: {col}")
+    df["coolers"] = df["coolers"].astype("Int64")
+    df["schoperas"] = df["schoperas"].astype("Int64")
+    df["salidas"] = df["salidas"].astype("Int64")
+ 
 
     df = df[selected_columns]
         
