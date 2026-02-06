@@ -21,10 +21,10 @@ def render_model_ui(df, source_name=None, table_name=None):
     Includes shape, columns, and the dataframe.
     Optionally fetches and displays description from YAML config.
     """
-    if source_name and table_name:
-        config = get_table_config(source_name=source_name, table_name=table_name)
-        if config and config.get("description"):
-            st.markdown(config.get("description"))
+    # if source_name and table_name:
+    #     config = get_table_config(source_name=source_name, table_name=table_name)
+    #     if config and config.get("description"):
+    #         st.markdown(config.get("description"))
 
     st.markdown(f"Source: `{source_name}.{table_name}`")
     st.write(df.shape)

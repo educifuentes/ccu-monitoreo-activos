@@ -1,35 +1,15 @@
 import pandas as pd
 import numpy as np
 
-from utilities.yaml_loader import get_table_config
+
+
+from models.staging._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
 
 def int_reportes_ccu_base_2026_q1():
-    # Fetch configuration from YAML
-    config = get_table_config(source_name="reportes_ccu", table_name="base_2026_q1")
-    file_path = config.get('filename')
-    
-    # Load CSV
-    df = pd.read_csv(file_path)
+    # Use staging model instead of loading CSV directly
+    df = stg_reportes_ccu_base_2026_q1()
 
-    # rename
-    rename_dict = {
-        "id": "local_id",
-        "numero de schoperas": "schoperas",
-        "numero de salidas": "salidas",
-        "numero de coolers": "coolers",
-        "¿es local imagen?": "es_local_imagen?",
-        "Fecha de suscripción del comodato": "fecha_suscripcion_comodato",
-        "Fecha de término del contrato (de aplicar)": "fecha_termino_contrato",
-        "Activos entregados": "activos_entregados",
-        "Cantidad total de salidas de schop": "cantidad_total_salidas_schop",
-    }
-
-    df.rename(columns=rename_dict, inplace=True)
-
-    # data type
-    df["local_id"] = df["local_id"].astype(str)
-
-    # new columns
+    # new columns (Intermediate specific logic)
     df["periodo"] = "2026-Q1"
     df["fecha"] = pd.to_datetime("2026-01-01").date() 
 
