@@ -36,35 +36,32 @@ render_model_ui(int_reportes_ccu_locales_df)
 
 # ----
 
-# st.subheader("Censo 1")
-# st.badge("int_base_norm_censo1")
-# st.write(int_base_norm_censo_1_df.shape)
-# st.code(int_base_norm_censo_1_df.dtypes)
+st.subheader("Censo 1")
+st.badge("int_base_norm_censo1")
 
-# st.markdown("Notes")
-# st.markdown("- Dropped 20 rows with null id")
-# st.markdown("- Dropped 687 rows with null agencia")
+st.markdown("Notes")
+st.markdown("- Dropped 20 rows with null id")
+st.markdown("- Dropped 687 rows with null agencia")
 
-# st.dataframe(int_base_norm_censo_1_df) 
+render_model_ui(int_base_norm_censo_1_df) 
 
-# st.divider()
+st.divider()
 
-# st.subheader("Censo 2")
-# st.badge("int_censos_censo2")
+st.subheader("Censo 2")
+st.badge("int_censos_censo2")
 
-# st.markdown("Notes")
-# st.markdown("- asumo CANTIDAD DE SALIDAS como salidas_ccu")
+st.markdown("Notes")
+st.markdown("- asumo CANTIDAD DE SALIDAS como salidas_ccu")
 
-# st.write(int_censos_censo_2_df.shape)
-# st.dataframe(int_censos_censo_2_df)
-# st.code(int_censos_censo_2_df.dtypes)
+render_model_ui(int_censos_censo_2_df)
 
 
-# st.subheader("Censo 2 + Locales")
-# # left join int_censos_censo_2_df with locales_df
-# int_censos_censo_2_df = int_censos_censo_2_df.merge(locales_df, on="local_id", how="left", indicator=True)
+st.subheader("Censo 2 + Locales")
+# left join int_censos_censo_2_df with locales_df
+int_censos_censo_2_df = int_censos_censo_2_df.merge(locales_df, on="local_id", how="left", indicator=True)
 
-# missing_locales = int_censos_censo_2_df[int_censos_censo_2_df["_merge"] == "left_only"]
-# st.warning(f"Hay {len(missing_locales)} filas en Censo 2 que no tienen match en Locales")
+missing_locales = int_censos_censo_2_df[int_censos_censo_2_df["_merge"] == "left_only"]
+if not missing_locales.empty:
+    st.warning(f"Hay {len(missing_locales)} filas en Censo 2 que no tienen match en Locales")
 
-# st.dataframe(int_censos_censo_2_df)
+render_model_ui(int_censos_censo_2_df)
