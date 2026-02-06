@@ -1,6 +1,9 @@
 import pandas as pd
 from models.marts._fct_censos import fct_censos
 from models.marts._fct_bases_ccu import fct_bases_ccu
+from models.marts._dim_locales import dim_locales
+
+# from models.marts.gsheets.locales import locales
 
 
 
@@ -30,7 +33,8 @@ def bi_activos():
         # activos cantidades
         "schoperas",
         "salidas",
-        "coolers"
+        "coolers",
+        # locales info
     ]
 
     union_df = pd.concat([fct_censos_df, fct_bases_ccu_df], ignore_index=True)

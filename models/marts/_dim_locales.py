@@ -68,4 +68,7 @@ def dim_locales():
     print("\nRegion Distribution (post-cleaning):")
     print(df["region"].value_counts(dropna=False))
 
+    # 4. Final cleanups
+    df["nombre_fantasia"] = df["nombre_fantasia"].replace("0", pd.NA)
+
     return df

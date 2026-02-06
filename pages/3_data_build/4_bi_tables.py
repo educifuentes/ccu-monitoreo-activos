@@ -1,5 +1,6 @@
 import streamlit as st
 
+# replace later with gsheets tables
 from models.marts.dashboard.bi_censo_locales import bi_censo_locales
 from models.marts.dashboard.bi_activos import bi_activos
 
