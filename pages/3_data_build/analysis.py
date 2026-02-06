@@ -8,6 +8,8 @@ from models.marts.fct_censos import fct_censos
 # from models.marts.dim_locales import marts_dim_locales
 from models.staging._stg_base_norm_locales import stg_base_norm_locales
 from models.intermediate._int_dim_locales import int_reportes_ccu_locales, compare_locales_df
+from models.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1
+from models.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
 from utilities.ui_components import render_model_ui
 
 # load

@@ -1,12 +1,12 @@
 import pandas as pd
 
-from models.staging._stg_reportes_ccu_base_2024_q1 import stg_reportes_ccu_base_2024_q1
-from models.staging._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
+from models.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
+from models.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1
 
 
 def fct_bases_ccu():
-    stg_reportes_ccu_base_2024_q1_df = stg_reportes_ccu_base_2024_q1()
-    stg_reportes_ccu_base_2026_q1_df = stg_reportes_ccu_base_2026_q1()
+    int_reportes_ccu_base_2024_q1_df = int_reportes_ccu_base_2024_q1()
+    int_reportes_ccu_base_2026_q1_df = int_reportes_ccu_base_2026_q1()
 
     select_columns_base_2026 = [
         "local_id",
@@ -19,15 +19,15 @@ def fct_bases_ccu():
 
 
 
-    stg_reportes_ccu_base_2026_q1_df = stg_reportes_ccu_base_2026_q1_df[select_columns_base_2026]
+    int_reportes_ccu_base_2026_q1_df = int_reportes_ccu_base_2026_q1_df[select_columns_base_2026]
 
-    df = pd.concat([stg_reportes_ccu_base_2024_q1_df, stg_reportes_ccu_base_2026_q1_df], ignore_index=True)   
+    df = pd.concat([int_reportes_ccu_base_2024_q1_df, int_reportes_ccu_base_2026_q1_df], ignore_index=True)   
 
     df.sort_values(by=["local_id", "periodo"], ascending=[True, True], inplace=True)
 
     # Find the local_ids that are in both dataframes
-    ids_2024 = set(stg_reportes_ccu_base_2024_q1_df["local_id"].unique())
-    ids_2026 = set(stg_reportes_ccu_base_2026_q1_df["local_id"].unique())
+    ids_2024 = set(int_reportes_ccu_base_2024_q1_df["local_id"].unique())
+    ids_2026 = set(int_reportes_ccu_base_2026_q1_df["local_id"].unique())
     common_ids = ids_2024.intersection(ids_2026)
     
     # Add a flag for rows that belong to a local_id present in both periods

@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def stg_reportes_ccu_base_2024_q1():
+def int_reportes_ccu_base_2024_q1():
     # Define file path
     file_path = "seeds/base_normalizada/base_normalizada - locales.csv"
 

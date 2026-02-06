@@ -2,8 +2,8 @@ import pandas as pd
 from models.marts.fct_censos import fct_censos
 
 
-from models.staging._stg_reportes_ccu_base_2024_q1 import stg_reportes_ccu_base_2024_q1
-from models.staging._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
+from models.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
+from models.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1
 
 
 # unir data de censo 1 y de censo 2
@@ -14,8 +14,8 @@ def fct_activos():
     int_censos_1_df = int_base_norm_censo_1()
     int_censos_2_df = int_censos_censo_2()
     # reportes ccu
-    stg_reportes_ccu_base_2024_q1_df = stg_reportes_ccu_base_2024_q1()
-    stg_reportes_ccu_base_2026_q1_df = stg_reportes_ccu_base_2026_q1()
+    int_reportes_ccu_base_2024_q1_df = int_reportes_ccu_base_2024_q1()
+    int_reportes_ccu_base_2026_q1_df = int_reportes_ccu_base_2026_q1()
 
 
     # rename
@@ -25,8 +25,8 @@ def fct_activos():
     # new column
     int_censos_1_df["fuente"] = "Censo"
     int_censos_2_df["fuente"] = "Censo"
-    stg_reportes_ccu_base_2024_q1_df["fuente"] = "CCU"
-    stg_reportes_ccu_base_2026_q1_df["fuente"] = "CCU"
+    int_reportes_ccu_base_2024_q1_df["fuente"] = "CCU"
+    int_reportes_ccu_base_2026_q1_df["fuente"] = "CCU"
     
     
 
