@@ -22,8 +22,10 @@ def get_table_config(source_name, table_name, yaml_path='models/sources/_src_rep
     """
     config = load_yaml_config(yaml_path)
     
-    # The structure in _src_reportes_ccu.yml is a list of sources at the root
-    for source in config:
+    # Handle both a list of sources and a dict with a 'sources' key
+    sources = config if isinstance(config, list) else config.get('sources', [])
+    
+    for source in sources:
         if source.get('name') == source_name:
             for table in source.get('tables', []):
                 if table.get('name') == table_name:

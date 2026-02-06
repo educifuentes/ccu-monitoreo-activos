@@ -4,8 +4,8 @@ from models.staging._stg_censos_censo_2 import stg_censos_censo_2
 from models.staging._stg_censos_censo_1 import stg_censos_censo_1
 from models.staging._stg_base_norm_censo_1 import stg_base_norm_censo_1
 from models.staging._stg_base_norm_locales import stg_base_norm_locales
-from models.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1
-from models.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
+from models.staging._stg_base_norm_original import stg_base_norm_original
+
 from utilities.ui_components import render_model_ui
 
 st.header("Staging")
@@ -15,24 +15,14 @@ stg_censos_2 = stg_censos_censo_2()
 stg_censos_1 = stg_censos_censo_1()
 stg_base_norm_censo_1 = stg_base_norm_censo_1()
 stg_base_norm_locales = stg_base_norm_locales()
-int_reportes_ccu_base_2026_q1_df = int_reportes_ccu_base_2026_q1()
-int_reportes_ccu_base_2024_q1_df = int_reportes_ccu_base_2024_q1()
+stg_base_norm_original = stg_base_norm_original()
 
 # ---
 
-st.subheader("Reportes CCU")
+st.subheader("Base Normalizada")
 
-st.badge("reportes_ccu_base_2026_q1")
-render_model_ui(int_reportes_ccu_base_2026_q1_df, source_name="reportes_ccu", table_name="base_2026_q1")
-
-st.divider()
-
-st.subheader("Reportes CCU")
-st.badge("reportes_ccu_base_2024_q1")
-render_model_ui(int_reportes_ccu_base_2024_q1_df, source_name="reportes_ccu", table_name="base_2024_q1")
-
-
-
+st.badge("base_norm_original")
+render_model_ui(stg_base_norm_original, source_name="base normalizada", table_name="base_normalizada_original")
 
 # st.subheader("Locales")
 # st.badge("base_norm_locales")

@@ -3,6 +3,11 @@ import streamlit as st
 from models.intermediate._int_censos_censo_2 import int_censos_censo_2
 from models.intermediate._int_censos_censo_1 import int_censos_censo_1
 from models.intermediate._int_base_norm_censo_1 import int_base_norm_censo_1
+
+from models.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1
+from models.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
+
+
 from models.marts.fct_censos import fct_censos
 
 # from models.marts.dim_locales import marts_dim_locales
@@ -23,6 +28,20 @@ int_censos_censo_2_df = int_censos_censo_2()
 
 
 st.header("Intermediate")
+
+st.subheader("Reportes CCU")
+
+st.badge("reportes_ccu_base_2026_q1")
+render_model_ui(int_reportes_ccu_base_2026_q1_df, source_name="reportes_ccu", table_name="base_2026_q1")
+
+st.divider()
+
+st.subheader("Reportes CCU")
+st.badge("reportes_ccu_base_2024_q1")
+
+render_model_ui(int_reportes_ccu_base_2024_q1_df, source_name="reportes_ccu", table_name="base_2024_q1")
+
+
 
 st.subheader("Locales")
 st.markdown("Source: Base normalizada")
