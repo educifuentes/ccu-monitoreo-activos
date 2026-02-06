@@ -1,7 +1,7 @@
 from models.staging._stg_censos_censo_1 import stg_censos_censo_1
 from models.staging._stg_base_norm_censo_1 import stg_base_norm_censo_1
 
-from utilities.data_transformations import yes_no_to_boolean
+from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
 import pandas as pd
 
 def int_censos_censo_1():

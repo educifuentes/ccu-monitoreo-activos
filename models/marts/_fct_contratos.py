@@ -15,4 +15,7 @@ def fct_contratos_ccu():
 
     df = stg_reportes_ccu_base_2026_q1_df[columns_contratos]
 
+    # data types
+    df['es_local_imagen?'] = 
+
     return df

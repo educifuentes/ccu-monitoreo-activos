@@ -2,7 +2,7 @@ import pandas as pd
 
 from models.staging._stg_censos_censo_2 import stg_censos_censo_2
 
-from utilities.data_transformations import yes_no_to_boolean
+from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
 from utilities.transformations.process_marcas import process_marcas, classify_marcas
 
 def int_censos_censo_2():
