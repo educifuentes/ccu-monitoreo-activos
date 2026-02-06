@@ -1,47 +1,45 @@
 import pandas as pd
 import numpy as np
 
-def stg_base_norm_locales():
+def stg_reportes_ccu_base_2024_q1():
     # Define file path
     file_path = "seeds/base_normalizada/base_normalizada - locales.csv"
-    
+
     # Load CSV
     df = pd.read_csv(file_path)
 
-    # rename
+    # rename columns
+
     rename_dict = {
         "id": "local_id",
-        "RAZON SOCIAL": "razon_social",
-        "RUT": "rut",
-        "DIRECCIÓN": "direccion",
-        "REGIÓN": "region",
-        "CIUDAD":  "ciudad", 
-        "Nombre de Fantasía ": "nombre_fantasia",
-        "Nombre de Fantasía 2": "nombre_fantasia_2"
+        'N° Coolers': 'coolers',
+        'N° Columnas (Schoperas)': 'schoperas',
+        'N° Salidas Schop CCU': 'salidas_schop_ccu',
     }
-
+    
+   
     df.rename(columns=rename_dict, inplace=True)
 
-    selected_columns = [
+    select_cols = [
         "local_id",
-        "razon_social",
-        "rut",
-        "direccion",
-        "region",
-        "ciudad",
-        "nombre_fantasia" ]
+        "periodo",
+        "fecha",
+        # activos
+        "schoperas",
+        "salidas_schop_ccu",
+        "coolers"
+    ]
 
     # data types
-    df["local_id"] = df["local_id"].astype("str")
+    df["local_id"] = df["local_id"].astype(str)
+    df["coolers"] = df["coolers"].astype('Int64')
+    df["schoperas"] = df["schoperas"].astype('Int64')
+    df["salidas_schop_ccu"] = df["salidas_schop_ccu"].astype('Int64')
 
-    # print data types
-    print("\n--- Data Types ---")
-    print(df.dtypes)
+    # new columns
+    # note: should be done in stg model, but int model. exepction. refactir later
+    df["periodo"] = "2024-Q1"
+    df["fecha"] = pd.to_datetime("2024-01-01").date() # todo: get real date
 
-    print("\n--- List of Column Names ---")
-    for i, col in enumerate(df.columns):
-        print(f"{i}: {col}")
-
-    df = df[selected_columns]
-        
-    return df
+    
+    return df[select_cols]
