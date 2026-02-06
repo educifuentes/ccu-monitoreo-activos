@@ -1,17 +1,31 @@
-# from models.staging._stg_censos_censo_2 import stg_censos_censo_2
+import pandas as pd
 
-from models.staging._stg_base_norm_locales import stg_base_norm_locales
+from models.intermediate._int_base_norm_locales import int_base_norm_locales
+from models.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1_locales
 
+
+def updatate_with_base_ccu_2026_q1():
+    """ Actualiza loclaes ocn info de base 2026 Q1 """
+
+
+    int_reportes_ccu_base_2026_q1_locales_df = int_reportes_ccu_base_2026_q1_locales()
+
+
+    int_base_norm_locales_df = int_base_norm_locales()
+
+    # rebuild
+
+    df = int_base_norm_locales_df.merge(int_reportes_ccu_base_2026_q1_locales_df, on="local_id", how="left")
+
+    return df
+    
 
 def dim_locales():
-    locales_df = stg_base_norm_locales()
+    """
+    Locales con info consolidada de censos y contratos.
+    """
 
-    # clean and titleize
-    locales_df["razon_social"] = locales_df["razon_social"].str.strip().str.title()
-    locales_df["rut"] = locales_df["rut"].str.strip()
-    locales_df["direccion"] = locales_df["direccion"].str.strip().str.title()
-    locales_df["region"] = locales_df["region"].str.strip().str.title()
-    locales_df["ciudad"] = locales_df["ciudad"].str.strip().str.title()
-    locales_df["nombre_fantasia"] = locales_df["nombre_fantasia"].str.strip().str.title()
+    locales_df = int_base_norm_locales()
 
+   
     return locales_df
