@@ -2,6 +2,7 @@ import pandas as pd
 
 from models.intermediate._int_base_norm_locales import int_base_norm_locales
 from models.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1_locales
+
 from utilities.transformations.text_cleaning import clean_text
 from utilities.transformations.clean_region import clean_region
 
