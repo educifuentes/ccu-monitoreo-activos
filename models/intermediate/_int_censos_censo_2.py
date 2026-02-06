@@ -1,11 +1,22 @@
 import pandas as pd
+
 from models.staging._stg_censos_censo_2 import stg_censos_censo_2
+
 from utilities.data_transformations import yes_no_to_boolean
 from utilities.transformations.process_marcas import process_marcas, classify_marcas
 
 def int_censos_censo_2():
+    """
+    Intermediate model for Censo 2.
+    - Renames columns to standardized names.
+    - Process brand information.
+    - Transforms boolean flags.
+    - Calculates total outputs (salidas).
+    - Sets period and date info.
+    """
     stg_censos_2_df = stg_censos_censo_2()
 
+    # 1. Column Renamming
     rename_dict = {
         "ID PK": "id_pk",
         "ID CCU": "local_id",
@@ -14,57 +25,49 @@ def int_censos_censo_2():
         "rut Visitador": "rut_visitador",
         "Observaciones": "observaciones",
         "EL LOCAL CUENTA CON MAQUINAS SHOPERAS?": "tiene_schoperas",
-        "NÚMERO DE MÁQUINAS SCHOPERAS DE CCU(ASUMIR QUE LA SCHOPERA ES CCU SI LA MAYORÍA DE LAS MARCAS SON CCU - REVISAR TARJETERO DE APOYO)": "schoperas_ccu",
+        "NÚMERO DE MÁQUINAS SCHOPERAS DE CCU(ASUMIR QUE LA SCHOPERA ES CCU SI LA MAYORÍA DE LAS MARCAS SON CCU - REVISAR TARJETERO DE APOYO)": "schoperas",
         "CUANTAS SHOPERAS PARA DISPONIBILIZAR NUEVAS INSTALO CCU ?": "instalo",
         'CUANTAS SALIDAS DEJO LIBRE CCU EN TOTAL? s ': "disponibilizo",
         '¿CUALES DE ESTAS MARCAS SE VENDEN EN SCHOP?': "marcas"
     }
+    df = stg_censos_2_df.rename(columns=rename_dict)
 
-    # rename columns
-    int_censos_censo_2_df = stg_censos_2_df.rename(columns=rename_dict)
+    # 2. Basic Data Types
+    df["local_id"] = df["local_id"].astype("str")
 
+    # 3. Brand Processing and Classification
+    if "marcas" in df.columns:
+        df["marcas"] = df["marcas"].apply(process_marcas)
+        df = classify_marcas(df)
 
-    # Apply brand processing
-    if "marcas" in int_censos_censo_2_df.columns:
-        int_censos_censo_2_df["marcas"] = int_censos_censo_2_df["marcas"].apply(process_marcas)
-        int_censos_censo_2_df = classify_marcas(int_censos_censo_2_df)
-
-    # transfortm re parsing
-    int_censos_censo_2_df = yes_no_to_boolean(int_censos_censo_2_df, "tiene_schoperas")
+    # 4. Value Transformations
+    df = yes_no_to_boolean(df, "tiene_schoperas")
     
-
-    # new columns
-    int_censos_censo_2_df["periodo"] = "2025-S2"
-    int_censos_censo_2_df["fecha"] = pd.to_datetime("2025-10-01").date()
+    # 5. Period and Metadata
+    df["periodo"] = "2025-S2"
+    df["fecha"] = pd.to_datetime("2025-10-01").date()
     
-    # Calculate total outputs (salidas_ccu) by summing machines
-    int_censos_censo_2_df["salidas_ccu"] = 0
-    for i in range(1, 7): # check 1 to 6
+    # 6. Calculated Columns (Total outputs)
+    # Total outputs (salidas) is the sum of salidas across all machine columns
+    df["salidas"] = 0
+    for i in range(1, 7):
         col_name = f"SCHOPERA CCU {i} - NÚMERO DE SALIDAS"
         if col_name in stg_censos_2_df.columns:
-            int_censos_censo_2_df["salidas_ccu"] += pd.to_numeric(stg_censos_2_df[col_name], errors='coerce').fillna(0)
+            df["salidas"] += pd.to_numeric(stg_censos_2_df[col_name], errors='coerce').fillna(0)
 
-    # data types        
-    int_censos_censo_2_df["local_id"] = int_censos_censo_2_df["local_id"].astype("str")
-
-    # int types
-    int_censos_censo_2_df["salidas_ccu"] = pd.to_numeric(int_censos_censo_2_df["salidas_ccu"], errors='coerce').astype("Int64")
-    int_censos_censo_2_df["schoperas_ccu"] = pd.to_numeric(int_censos_censo_2_df["schoperas_ccu"], errors='coerce').astype("Int64")
-    int_censos_censo_2_df["instalo"] = pd.to_numeric(int_censos_censo_2_df["instalo"], errors='coerce').astype("Int64")
-    int_censos_censo_2_df["disponibilizo"] = pd.to_numeric(int_censos_censo_2_df["disponibilizo"], errors='coerce').astype("Int64")
+    # 7. Final Conversions to Int64 (nullable int)
+    numeric_cols = ["salidas", "schoperas", "instalo", "disponibilizo"]
+    for col in numeric_cols:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors='coerce').astype("Int64")
     
-
+    # 8. Final Column Selection
     selected_columns = [
         "local_id",
         "periodo",
         "fecha",
-        # "tipo_de_local",
-        # "visitador",
-        # "rut_visitador",
-        # "observaciones",
-        # "tiene_schoperas",
-        "schoperas_ccu",
-        "salidas_ccu",
+        "schoperas",
+        "salidas",
         "instalo",
         "disponibilizo",
         "marcas",
@@ -74,7 +77,4 @@ def int_censos_censo_2():
         "marcas_otras"
     ]
     
-    return int_censos_censo_2_df[selected_columns]
-
-if __name__ == "__main__":
-    print(int_censos_censo_2().head())
+    return df[selected_columns]

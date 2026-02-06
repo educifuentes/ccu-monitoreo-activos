@@ -3,13 +3,14 @@ import streamlit as st
 from models.analysis.compare_bases_ccu import compare_locales_df, compare_activos_df
 
 from models.intermediate._int_base_norm_locales import int_base_norm_locales
+from models.staging._stg_base_norm_original import stg_base_norm_original
 
 from utilities.ui_components import render_model_ui
 
-# dataframes
 
 # base 2024 vs 2026
 
+# dfs
 comparison_locales_df = compare_locales_df()
 comparison_activos_df = compare_activos_df()
 
@@ -23,7 +24,9 @@ render_model_ui(comparison_activos_df)
 
 
 # ---
+
 # Aanalsiis base normalizasda
+stg_base_norm_original_df = stg_base_norm_original()
 
 st.subheader("Base Normalizada")
 

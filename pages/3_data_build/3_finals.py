@@ -14,19 +14,22 @@ fct_bases_ccu_df = fct_bases_ccu()
 
 st.header("Finales")
 
-st.markdown("### BI Censo Locales")
-st.markdown(" calcula columna clasificacion")
-render_model_ui(bi_censo_locales_df)
+# st.markdown("### BI Censo Locales")
+# st.markdown(" calcula columna clasificacion")
+# render_model_ui(bi_censo_locales_df)
 
-st.divider()
+# st.divider()
 
-st.markdown("### FCT Censos")
-render_model_ui(fct_censos_df)
+# st.markdown("### FCT Censos")
+# render_model_ui(fct_censos_df)
 
 st.markdown("### FCT Bases CCU")
 render_model_ui(fct_bases_ccu_df)
 
-st.divider()
+# Locales en ambos periodos
+count_ambos = fct_bases_ccu_df[fct_bases_ccu_df["en_ambos_periodos"] == True]["local_id"].nunique()
+st.markdown(f"Locales en ambos periodos: **{count_ambos}**")
+
 
 st.markdown("### DIM Locales")
 render_model_ui(dim_locales_df)

@@ -41,15 +41,15 @@ def compare_activos_df():
         int_reportes_ccu_base_2026_q1_activos_df, 
         on="local_id", 
         how="inner", 
-        suffixes=("", "_ccu")
+        suffixes=("_2024", "_2026")
     )
 
     # Reorder columns to see them side-by-side
     ordered_columns = [
         'local_id',
-        'schoperas', 'schoperas_ccu',
-        'salidas', 'salidas_ccu',
-        'coolers', 'coolers_ccu'
+        'schoperas_2024', 'schoperas_2026',
+        'salidas_2024', 'salidas_2026',
+        'coolers_2024', 'coolers_2026'
     ]
     
     # Filter to only existing columns and return
