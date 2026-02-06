@@ -13,6 +13,7 @@ bi_censo_locales_df = bi_censo_locales()
 fct_bases_ccu_df = fct_bases_ccu()
 
 st.header("Finales")
+st.markdown("Tablas FCT y DIM finales - bases ccu, contraros, locales, censos")
 
 # st.markdown("### BI Censo Locales")
 # st.markdown(" calcula columna clasificacion")

@@ -1,8 +1,10 @@
 - name: reportes_ccu
   description: reportes de ccu sobre movimiento de activos y contratos.
+  notas: mando actaulziado con columna folio y se llama Base COMPLETA CCU el dia feb 6, 2026
   tables:
     - name: base_2026_q1
-      filename: seeds/reportes_ccu/Base Solicitada.xlsx - Hoja1.csv
+      path: seeds/reportes_ccu/Base COMPLETA CCU.xlsx - Hoja1.csv
+      path_old: seeds/reportes_ccu/Base Solicitada.xlsx - Hoja1.csv
       description: Ultima que mando CCU, en 2026-02-04. Usar esta y comparar on base inical.
       model_name: stg_reportes_ccu_reporte_2026-Q1
       url: https://docs.google.com/spreadsheets/d/1lXoQ2bhOMb8U5dT7ozpPth64YFcGK_bO/edit?gid=732685704#gid=732685704
