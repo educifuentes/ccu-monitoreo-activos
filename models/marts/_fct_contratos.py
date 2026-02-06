@@ -6,7 +6,7 @@ from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
 from utilities.transformations.date_parsing import parse_spanish_month_year
 
 
-def fct_contratos_ccu():
+def fct_contratos():
     stg_reportes_ccu_base_2026_q1_df = stg_reportes_ccu_base_2026_q1()
 
     columns_contratos = ['local_id',  
