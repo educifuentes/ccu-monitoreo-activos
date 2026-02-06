@@ -24,7 +24,7 @@ bi_tables_page = st.Page("pages/3_data_build/4_bi_tables.py", title="BI Tables",
 pg = st.navigation({
     "Vistas": [general_page, detalles_page],
     "Herramientas": [explore_page, validations_page, documentation_page],
-    "Dev - Modelos": [staging_page, intermediate_page, finals_page, data_profilling_page, requerimientos_page, analysis_page, bi_tables_page]
+    "Dev - Modelos": [staging_page, intermediate_page, finals_page, analysis_page, bi_tables_page, data_profilling_page, requerimientos_page]
 })
 
 with st.sidebar:

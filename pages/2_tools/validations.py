@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from models.marts.dim_locales import dim_locales
+from models.marts._dim_locales import dim_locales
 
 st.header("📊 Validaciones de Datos Maestros")
 st.markdown("Chequeos de calidad sobre la tabla Locales")
