@@ -19,12 +19,13 @@ data_profilling_page = st.Page("pages/3_data_build/data_profilling.py", title="D
 requerimientos_page = st.Page("pages/3_data_build/requerimientos.py", title="Requerimientos", icon=":material/dashboard:")
 analysis_page = st.Page("pages/3_data_build/analysis.py", title="Analysis", icon=":material/experiment:")
 bi_tables_page = st.Page("pages/3_data_build/4_bi_tables.py", title="BI Tables", icon=":material/dashboard:")
+gsheets_page = st.Page("pages/3_data_build/5_gheets.py", title="GSheets", icon=":material/dashboard:")
 
 # current page
 pg = st.navigation({
     "Vistas": [general_page, detalles_page],
     "Herramientas": [explore_page, validations_page, documentation_page],
-    "Dev - Modelos": [staging_page, intermediate_page, finals_page, analysis_page, bi_tables_page, data_profilling_page, requerimientos_page]
+    "Dev - Modelos": [staging_page, intermediate_page, finals_page, gsheets_page, analysis_page, bi_tables_page, data_profilling_page, requerimientos_page]
 })
 
 with st.sidebar:
