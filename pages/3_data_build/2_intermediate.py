@@ -6,79 +6,72 @@ from models.intermediate._int_censos_censo_1 import int_censos_censo_1
 from models.intermediate._int_base_norm_censo_1 import int_base_norm_censo_1
 from models.intermediate._int_base_norm_locales import int_base_norm_locales
 
-from models.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1
+from models.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1, int_reportes_ccu_base_2026_q1_locales
 from models.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
 
 
 from utilities.ui_components import render_model_ui
 
-# dataframes
-int_base_norm_locales_df = int_base_norm_locales()
+# Page settings and header
+st.title("Intermediate")
+st.markdown("Capa intermedia de limpieza, tipado y transformaciones de negocio.")
 
-int_reportes_ccu_base_2024_q1_df = int_reportes_ccu_base_2024_q1()
-int_reportes_ccu_base_2026_q1_df = int_reportes_ccu_base_2026_q1()
+# Create tabs for organization
+tab1, tab2, tab3 = st.tabs([
+    "🔀 Bases CCU", 
+    "📊 Censos", 
+    "📍 Locales"
+])
 
+with tab1:
+    st.header("Reportes CCU")
+    
+    st.subheader("Base 2026 Q1")
+    df_2026 = int_reportes_ccu_base_2026_q1()
+    render_model_ui(df_2026, source_name="reportes_ccu", table_name="base_2026_q1")
+    
+    st.divider()
+    
+    st.subheader("Base 2024 Q1")
+    df_2024 = int_reportes_ccu_base_2024_q1()
+    render_model_ui(df_2024, source_name="reportes_ccu", table_name="base_2024_q1")
 
-# censos
-int_base_norm_censo_1_df = int_base_norm_censo_1()
-int_censos_censo_2_df = int_censos_censo_2()
+with tab2:
+    st.header("Censos Intermediate")
+    
+    st.subheader("Censo 2 (2025)")
+    st.markdown("**Notas:** Se asume 'CANTIDAD DE SALIDAS' como salidas_ccu.")
+    df_c2 = int_censos_censo_2()
+    render_model_ui(df_c2)
+    
+    st.divider()
+    
+    st.subheader("Censo 1 (2024)")
+    st.markdown("**Notas:** Limpieza de IDs nulos y agencias.")
+    df_c1 = int_censos_censo_1()
+    render_model_ui(df_c1)
+    
+    st.divider()
+    
+    st.subheader("Censo 2 + Locales (Match)")
+    locales_df = int_base_norm_locales()
+    df_merged = df_c2.merge(locales_df, on="local_id", how="left", indicator=True)
+    
+    missing_locales = df_merged[df_merged["_merge"] == "left_only"]
+    if not missing_locales.empty:
+        st.warning(f"Hay {len(missing_locales)} filas en Censo 2 que no tienen match en Locales")
+    
+    render_model_ui(df_merged)
 
-# -----
-
-st.header("Intermediate")
-
-st.subheader("Reportes CCU")
-
-st.badge("reportes_ccu_base_2026_q1")
-render_model_ui(int_reportes_ccu_base_2026_q1_df, source_name="reportes_ccu", table_name="base_2026_q1")
-
-st.divider()
-
-st.subheader("Reportes CCU")
-st.badge("reportes_ccu_base_2024_q1")
-
-render_model_ui(int_reportes_ccu_base_2024_q1_df, source_name="reportes_ccu", table_name="base_2024_q1")
-
-
-
-st.subheader("Locales")
-st.markdown("Source: Base normalizada")
-st.badge("int_base_norm_locales")
-render_model_ui(int_base_norm_locales_df)   
-
-st.badge("int_reportes_ccu_locales")
-render_model_ui(int_reportes_ccu_locales_df)
-
-
-
-# ----
-
-st.subheader("Censo 1")
-st.badge("int_base_norm_censo1")
-
-st.markdown("Notes")
-st.markdown("- Dropped 20 rows with null id")
-st.markdown("- Dropped 687 rows with null agencia")
-
-render_model_ui(int_base_norm_censo_1_df) 
-
-st.divider()
-
-st.subheader("Censo 2")
-st.badge("int_censos_censo2")
-
-st.markdown("Notes")
-st.markdown("- asumo CANTIDAD DE SALIDAS como salidas_ccu")
-
-render_model_ui(int_censos_censo_2_df)
-
-
-st.subheader("Censo 2 + Locales")
-# left join int_censos_censo_2_df with locales_df
-int_censos_censo_2_df = int_censos_censo_2_df.merge(locales_df, on="local_id", how="left", indicator=True)
-
-missing_locales = int_censos_censo_2_df[int_censos_censo_2_df["_merge"] == "left_only"]
-if not missing_locales.empty:
-    st.warning(f"Hay {len(missing_locales)} filas en Censo 2 que no tienen match en Locales")
-
-render_model_ui(int_censos_censo_2_df)
+with tab3:
+    st.header("Locales Intermediate")
+    
+    st.subheader("Base Normalizada")
+    df_loc = int_base_norm_locales()
+    render_model_ui(df_loc)
+    
+    st.divider()
+    
+    st.subheader("Locales desde Reporte CCU 2026")
+    df_ccu_loc = int_reportes_ccu_base_2026_q1_locales()
+    render_model_ui(df_ccu_loc)

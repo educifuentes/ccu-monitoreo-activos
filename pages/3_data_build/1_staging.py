@@ -5,73 +5,60 @@ from models.staging._stg_censos_censo_1 import stg_censos_censo_1
 from models.staging._stg_base_norm_censo_1 import stg_base_norm_censo_1
 from models.staging._stg_base_norm_locales import stg_base_norm_locales
 from models.staging._stg_base_norm_original import stg_base_norm_original
-
 from models.staging._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
 
 from utilities.ui_components import render_model_ui
 
-st.header("Staging")
-st.markdown("Tablas staging 1:1 con soures - bases ccu, contraros, locales, censos")
+# Page settings and header
+st.title("Staging")
+st.markdown("Tablas staging 1:1 con fuentes - Bases CCU, Contratos, Locales y Censos.")
 
+# Create tabs for organization
+tab1, tab2, tab3, tab4 = st.tabs([
+    "🔀 Bases CCU", 
+    "📊 Censos", 
+    "📍 Locales",
+    "📚 Original"
+])
 
+with tab1:
+    st.header("Base CCU 2026 Q1")
+    st.markdown("Carga directa desde el reporte de CCU.")
+    df = stg_reportes_ccu_base_2026_q1()
+    render_model_ui(df)
 
-# Load the data
-stg_censos_2 = stg_censos_censo_2()
-stg_censos_1 = stg_censos_censo_1()
-stg_base_norm_censo_1 = stg_base_norm_censo_1()
-stg_base_norm_locales = stg_base_norm_locales()
-stg_base_norm_original = stg_base_norm_original()
+with tab2:
+    st.header("Censos")
+    
+    st.subheader("Censo 2 (2025)")
+    df2 = stg_censos_censo_2()
+    render_model_ui(df2)
+    
+    st.divider()
+    
+    st.subheader("Censo 1 (2024)")
+    st.warning("Data histórica - Usar con precaución.")
+    df1 = stg_censos_censo_1()
+    render_model_ui(df1)
 
-# ---
+with tab3:
+    st.header("Bases Normalizadas")
+    
+    st.subheader("Locales")
+    df_loc = stg_base_norm_locales()
+    render_model_ui(df_loc)
+    
+    st.divider()
+    
+    st.subheader("Censo 1 (Normalizado)")
+    df_c1 = stg_base_norm_censo_1()
+    render_model_ui(df_c1)
 
-# base CCU
-stg_reportes_ccu_base_2026_q1_df = stg_reportes_ccu_base_2026_q1()
-
-st.subheader("base ccu 2026 Q1")
-render_model_ui(stg_reportes_ccu_base_2026_q1_df)
-
-
-# st.subheader("Base Normalizada")
-
-# st.badge("base_norm_original")
-# render_model_ui(stg_base_norm_original, source_name="base normalizada", table_name="base_normalizada_original")
-
-# st.subheader("Locales")
-# st.badge("base_norm_locales")
-
-# render_model_ui(stg_base_norm_locales, source_name="base normalizada", table_name="locales")
-
-
-# st.subheader("Censo 1")
-# st.badge("base_norm_censo1")
-
-# st.write(stg_base_norm_censo_1.shape)
-# st.dataframe(stg_base_norm_censo_1)
-
-# st.divider()
-
-
-# st.subheader("Censo 2 - 2025")
-# st.write(stg_censos_2.shape)
-# st.badge("censos_censo2")
-
-# st.dataframe(stg_censos_2)
-
-
-
-# # ---
-
-
-# st.subheader("Descartadas")
-
-# # CENSO 1 
-# st.subheader("Censo 1 - 2024")
-# st.badge("censos_censo1")
-# st.warning ("No usar")
-
-
-# st.write(stg_censos_1.shape)
-# st.dataframe(stg_censos_1)
+with tab4:
+    st.header("Data Original")
+    st.markdown("Primera versión de la data compartida.")
+    df_orig = stg_base_norm_original()
+    render_model_ui(df_orig)
 
 
 

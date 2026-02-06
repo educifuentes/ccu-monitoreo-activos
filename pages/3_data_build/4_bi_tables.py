@@ -5,13 +5,24 @@ from models.marts.dashboard.bi_activos import bi_activos
 
 from utilities.ui_components import render_model_ui
 
-st.header("BI Tables")
+# Page settings and header
+st.title("BI Tables")
+st.markdown("Tablas procesadas con lógica de negocio específica para visualización en Dashboards.")
 
-# bi_censo_locales_df = bi_censo_locales()
-# st.markdown("### BI Censo Locales")
-# render_model_ui(bi_censo_locales_df)
+# Create tabs for organization
+tab1, tab2 = st.tabs([
+    "📊 BI Activos",
+    "📍 BI Censo Locales"
+])
 
+with tab1:
+    st.header("BI Activos")
+    st.markdown("Cálculo de variaciones y estados de activos entre periodos.")
+    df_activos = bi_activos()
+    render_model_ui(df_activos)
 
-st.markdown("### BI Activos")
-bi_activos_df = bi_activos()
-render_model_ui(bi_activos_df)
+with tab2:
+    st.header("BI Censo Locales")
+    st.markdown("Lógica de cumplimiento y cuotas basada en el último censo.")
+    df_censo = bi_censo_locales()
+    render_model_ui(df_censo)
