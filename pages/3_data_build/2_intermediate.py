@@ -24,12 +24,6 @@ int_censos_censo_2_df = int_censos_censo_2()
 
 st.header("Intermediate")
 
-st.subheader("Locales Comparison")
-st.markdown("Inner join between `stg_base_norm_locales` and `int_reportes_ccu_locales` on `local_id`.")
-render_model_ui(comparison_locales_df)
-
-st.divider()
-
 st.subheader("Locales")
 st.markdown("Source: Base normalizada")
 st.badge("stg_base_norm_locales")
