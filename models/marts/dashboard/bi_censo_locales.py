@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import math
-from models.marts.fct_censos import fct_censos
+from models.marts._fct_censos import fct_censos
 from models.marts.dim_locales import dim_locales
 
 def assign_clasificacion(row):

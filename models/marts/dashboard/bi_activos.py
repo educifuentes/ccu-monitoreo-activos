@@ -6,11 +6,13 @@ from models.marts._fct_bases_ccu import fct_bases_ccu
 
 # unir data de censo 1 y de censo 2
 
-def fct_activos():
-    # doc string
+def bi_activos():
     """
     Unir data de conteo de activos de censos con data reportes ccu.
     """
+
+    fct_censos_df = fct_censos()
+    fct_bases_ccu_df = fct_bases_ccu()
 
 
     # new column
@@ -35,4 +37,4 @@ def fct_activos():
 
 
 
-    return union_df
+    return union_df[selected_columns]

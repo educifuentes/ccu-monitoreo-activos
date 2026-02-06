@@ -1,6 +1,6 @@
 import streamlit as st
 
-from models.marts.fct_censos import fct_censos
+from models.marts._fct_censos import fct_censos
 from models.marts.dim_locales import dim_locales
 from models.marts.dashboard.bi_censo_locales import bi_censo_locales
 from models.marts._fct_bases_ccu import fct_bases_ccu
