@@ -1,58 +1,65 @@
 import pandas as pd
 import numpy as np
 import math
+
 from models.marts._fct_censos import fct_censos
 from models.marts._dim_locales import dim_locales
 
-def assign_clasificacion(row):
-    """
-    Categoriza el cumplimiento del local basado en las reglas de negocio.
-    Maneja valores nulos para evitar errores de ambigüedad.
-    """
-    # Si aplica_regla es nulo o Falso, no aplica
-    if pd.isna(row['aplica_regla']) or not row['aplica_regla']:
-        return "No aplica"
-    
-    # Si es nulo, tratamos como No en regla por defecto o podrías agregar un estado "Sin Datos"
-    if pd.isna(row['cumple_cuota']):
-        return "Sin datos"
-        
-    if row['cumple_cuota']:
-        return "En regla"
-    
-    return "No en regla"
-
 def bi_censo_locales():
     """
-    Calcula el BI de censos integrando datos de hechos y dimensiones, 
-    aplicando la lógica de cuotas para marcas externas.
+    Calculates the BI model for censos by integrating fact and dimension data.
+    
+    Business Rules:
+    - Applicability: The rule applies if 'salidas' > 3.
+    - Target: 1 outlet for competition for every 4 CCU outlets (floor(salidas / 4)).
+    - Compliance: (instalo + disponibilizo) >= Target.
     """
-    # 1. Carga y cruce de datos
-    df = pd.merge(fct_censos(), dim_locales(), on="local_id")
+    # 1. Data Loading and Integration
+    df_facts = fct_censos()
+    df_dim = dim_locales()
+    
+    # Merge on local_id (inner join to ensure we have both facts and locale info)
+    df = pd.merge(df_facts, df_dim, on="local_id", how="inner")
 
-    # Asegurar que las columnas críticas no tengan nulos para los cálculos
-    df['salidas_ccu'] = df['salidas_ccu'].fillna(0)
-    df['instalo'] = df['instalo'].fillna(0)
-    df['disponibilizo'] = df['disponibilizo'].fillna(0)
+    # 2. Critical Column Pre-processing
+    # Ensure numeric types and handle NaNs for calculation columns
+    calc_cols = ['salidas', 'instalo', 'disponibilizo']
+    for col in calc_cols:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0)
+        else:
+            df[col] = 0
 
-    # 2. Definición de Aplicabilidad
-    # La regla aplica si el local tiene más de 3 salidas de CCU.
-    df['aplica_regla'] = df['salidas_ccu'] > 3
+    # 3. Rule Applicability
+    # The regulation applies only to locals with more than 3 CCU outlets
+    df['aplica_regla'] = df['salidas'] > 3
 
-    # 3. Cálculo de Cuota (Target)
-    # Según la normativa, por cada 4 salidas de CCU, se debe disponibilizar 1 para la competencia.
+    # 4. Target Calculation (Cuota)
+    # Target is floor(salidas / 4) for applicable rows, otherwise 0
     df['salidas_objetivo'] = 0.0
-    mask = df['aplica_regla']
-    df.loc[mask, 'salidas_objetivo'] = (df.loc[mask, 'salidas_ccu'] / 4).apply(math.floor)
+    mask_applies = df['aplica_regla']
+    df.loc[mask_applies, 'salidas_objetivo'] = (df.loc[mask_applies, 'salidas'] / 4).apply(math.floor)
 
-    # 4. Cálculo de Salidas Reales para Competencia
+    # 5. Competition Results and Compliance
+    # Real outlets dedicated to competition
     df["salidas_competencia"] = df["instalo"] + df["disponibilizo"]
 
-    # 5. Verificación de Cumplimiento
+    # Compliance flag for applicable locals
     df['cumple_cuota'] = False
-    df.loc[mask, 'cumple_cuota'] = df.loc[mask, 'salidas_competencia'] >= df.loc[mask, 'salidas_objetivo']
+    df.loc[mask_applies, 'cumple_cuota'] = df.loc[mask_applies, 'salidas_competencia'] >= df.loc[mask_applies, 'salidas_objetivo']
 
-    # 6. Clasificación Final
-    df['clasificacion'] = df.apply(assign_clasificacion, axis=1)
+    # 6. Final Classification
+    # Use vectorized selection for performance and clarity
+    conditions = [
+        (~df['aplica_regla']),                                      # Case 1: Regulation doesn't apply
+        (df['aplica_regla'] & df['cumple_cuota']),                  # Case 2: Applies and complies
+        (df['aplica_regla'] & ~df['cumple_cuota'])                  # Case 3: Applies and fails
+    ]
+    choices = [
+        "No aplica",
+        "En regla",
+        "No en regla"
+    ]
+    df['clasificacion'] = np.select(conditions, choices, default="Sin datos")
 
     return df
