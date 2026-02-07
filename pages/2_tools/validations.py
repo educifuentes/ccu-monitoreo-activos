@@ -104,19 +104,19 @@ with tab1:
 
 # --- Tab 2: Censos ---
 with tab2:
-    st.header("Validación: Fact Censos")
+    st.header("Validación: Censos")
     df_censos = censos()
     
     # Check uniqueness by local_id AND censo period if combined
-    run_basic_validations(df_censos, "Fact Censos", critical_cols=['local_id', 'periodo', 'schoperas'], gid="1636479746")
+    run_basic_validations(df_censos, "Censos", critical_cols=['local_id', 'periodo', 'schoperas'], gid="1636479746")
 
 # --- Tab 3: Bases CCU ---
 with tab3:
-    st.header("Validación: Fact Bases CCU")
+    st.header("Validación: Bases CCU")
     df_bases = bases_ccu()
     
     # Note: Bases CCU has local_id unique per period
-    run_basic_validations(df_bases, "Fact Bases CCU", critical_cols=['local_id', 'periodo'], gid="524359844")
+    run_basic_validations(df_bases, "Bases CCU", critical_cols=['local_id', 'periodo'], gid="524359844")
     
     st.markdown("### 3. Validez de IDs")
     # Check for non-numeric local_id (already cleaned in model, but good to verify)

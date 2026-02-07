@@ -3,7 +3,7 @@ import streamlit as st
 from models.marts._fct_censos import fct_censos
 from models.marts._dim_locales import dim_locales
 from models.marts._fct_bases_ccu import fct_bases_ccu
-from models.marts._fct_contratos import fct_contratos_ccu
+from models.marts._fct_contratos import fct_contratos
 
 from utilities.ui_components import render_model_ui
 
@@ -21,16 +21,16 @@ tab1, tab2, tab3, tab4 = st.tabs([
 ])
 
 with tab4:
-    st.header("Fact Contratos CCU")
+    st.header("Fact Contratos")
     st.markdown("Información consolidada de suscripción de comodatos y términos de contrato.")
-    fct_contratos_ccu_df = fct_contratos_ccu()
+    fct_contratos_df = fct_contratos()
     
-    # multi_fecha_count = fct_contratos_ccu_df[
-    #     (fct_contratos_ccu_df["fecha_suscripcion_comodato_es_rango"] == True)
+    # multi_fecha_count = fct_contratos_df[
+    #     (fct_contratos_df["fecha_suscripcion_comodato_es_rango"] == True)
     # ].shape[0]
 
     # st.markdown(f"- Hay **{multi_fecha_count}** locales con multi fecha en inicio o término de contratos.")
-    render_model_ui(fct_contratos_ccu_df)
+    render_model_ui(fct_contratos_df)
 
 
 
