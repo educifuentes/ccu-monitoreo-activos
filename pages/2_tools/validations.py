@@ -3,7 +3,7 @@ import pandas as pd
 from models.marts._dim_locales import dim_locales
 from models.marts._fct_censos import fct_censos
 from models.marts._fct_bases_ccu import fct_bases_ccu
-from models.marts._fct_contratos import fct_contratos_ccu
+from models.marts._fct_contratos import fct_contratos
 
 # --- Page Config & Header ---
 st.set_page_config(page_title="Validaciones de Datos", layout="wide")
@@ -90,7 +90,7 @@ with tab3:
 # --- Tab 4: Contratos ---
 with tab4:
     st.header("Validación: Fact Contratos CCU")
-    df_contratos = fct_contratos_ccu()
+    df_contratos = fct_contratos()
     
     run_basic_validations(df_contratos, "Fact Contratos", id_col="local_id", critical_cols=['folio', 'fecha_inicio', 'fecha_termino'])
     
