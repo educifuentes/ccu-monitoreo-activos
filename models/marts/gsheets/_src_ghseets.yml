@@ -1,0 +1,13 @@
+sources:
+  - name: google sheets
+    description: data raw que comaprtio pilar fecha 26/01/2026
+    url: https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/
+    tables:
+      - name: locales
+        gid: 2068995815
+      - name: censos
+        gid: 1636479746
+      - name: bases_ccu
+        gid: 524359844
+      - name: contratos
+        gid: 2133854210
