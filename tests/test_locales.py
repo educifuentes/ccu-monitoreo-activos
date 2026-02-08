@@ -5,14 +5,13 @@ from utilities.transformations.gsheet_links import add_gsheet_link
 def validate_locales(df):
     st.header("Locales")
     gid = "2068995815"
-    critical_cols = ['razon_social', 'rut', 'direccion', 'region']
     
     total_filas = len(df)
     if total_filas == 0:
         st.warning("La tabla Dim Locales está vacía.")
         return
 
-    # 1. IDs Quality
+    # 1. Column local_id
     st.markdown("### 1. `local_id`")
     
     # Check for Null/NaN IDs
@@ -56,39 +55,69 @@ def validate_locales(df):
 
 
 
-
-    # 2. Integridad de Columnas Críticas
-    st.markdown("### 2. Integridad de Columnas Críticas")
-    nulos = df[critical_cols].isna().sum()
-    for col in critical_cols:
-        val = nulos[col]
-        label = col.replace("_", " ").title()
-        if val == 0:
-            st.write(f"✅ **{label}**: Sin nulos")
-        else:
-            st.write(f"⚠️ **{label}**: {val} nulos detectados")
-            nulos_df = df[df[col].isna()]
-            display_cols = ['row_index', 'local_id', col]
-            st.dataframe(
-                add_gsheet_link(nulos_df[['local_id', col]], gid, nulos_df['row_index']), 
-                use_container_width=True,
-                column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
-            )
-
-    st.markdown("### 3. Duplicados por Razón Social")
-    dupes_name = df[df.duplicated('razon_social', keep=False)].sort_values('razon_social')
-    if not dupes_name.empty:
-        st.warning(f"Se encontraron {len(dupes_name)} filas con Razón Social compartida.")
-        
-        # Add gsheet link for manual check
-        link = "https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit#gid=2068995815"
-        dupes_name_view = dupes_name[['local_id', 'razon_social', 'rut']].copy()
-        dupes_name_view["ir a gsheet"] = link
-        
+    # 2. Razón Social
+    st.markdown("### 2. `razon_social`")
+    
+    # Check for Nulls
+    nulos_rs = df[df['razon_social'].isna()]
+    if not nulos_rs.empty:
+        st.warning(f"⚠️ Detectados {len(nulos_rs)} locales sin Razón Social")
         st.dataframe(
-            dupes_name_view, 
+            add_gsheet_link(nulos_rs[['local_id', 'razon_social']], gid, nulos_rs['row_index']), 
             use_container_width=True,
             column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
         )
     else:
-        st.success("✅ No se encontraron Razones Sociales duplicadas.")
+        st.success("✅ Todos los locales tienen Razón Social")
+
+    # Check for Duplicates
+    non_null_rs = df[df['razon_social'].notna()]
+    dupes_rs = non_null_rs[non_null_rs.duplicated('razon_social', keep=False)].sort_values('razon_social')
+    if not dupes_rs.empty:
+        st.warning(f"⚠️ Se detectaron {len(dupes_rs)} filas con Razón Social compartida")
+        st.dataframe(
+            add_gsheet_link(dupes_rs[['local_id', 'razon_social', 'rut']], gid, dupes_rs['row_index']), 
+            use_container_width=True,
+            column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+        )
+    else:
+        st.success("✅ No se encontraron Razones Sociales duplicadas")
+
+    # 3. RUT
+    st.markdown("### 3. `rut`")
+    nulos_rut = df[df['rut'].isna()]
+    if not nulos_rut.empty:
+        st.warning(f"⚠️ Detectados {len(nulos_rut)} locales sin RUT")
+        st.dataframe(
+            add_gsheet_link(nulos_rut[['local_id', 'razon_social', 'rut']], gid, nulos_rut['row_index']), 
+            use_container_width=True,
+            column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+        )
+    else:
+        st.success("✅ Todos los locales tienen RUT")
+
+    # 4. Dirección
+    st.markdown("### 4. `direccion`")
+    nulos_dir = df[df['direccion'].isna()]
+    if not nulos_dir.empty:
+        st.warning(f"⚠️ Detectados {len(nulos_dir)} locales sin Dirección")
+        st.dataframe(
+            add_gsheet_link(nulos_dir[['local_id', 'razon_social', 'direccion']], gid, nulos_dir['row_index']), 
+            use_container_width=True,
+            column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+        )
+    else:
+        st.success("✅ Todos los locales tienen Dirección")
+
+    # 5. Región
+    st.markdown("### 5. `region`")
+    nulos_reg = df[df['region'].isna()]
+    if not nulos_reg.empty:
+        st.warning(f"⚠️ Detectados {len(nulos_reg)} locales sin Región")
+        st.dataframe(
+            add_gsheet_link(nulos_reg[['local_id', 'razon_social', 'region']], gid, nulos_reg['row_index']), 
+            use_container_width=True,
+            column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+        )
+    else:
+        st.success("✅ Todos los locales tienen Región")
