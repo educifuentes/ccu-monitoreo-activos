@@ -5,6 +5,8 @@ import pandas as pd
 from utilities.config import TTL_VALUE
 from utilities.transformations.date_parsing import parse_spanish_month_year
 from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
+from utilities.transformations.add_row_number import add_row_number
+
 
 @st.cache_data
 def load_data_gsheets():
@@ -13,7 +15,14 @@ def load_data_gsheets():
     conn = st.connection("gsheets", type=GSheetsConnection, ttl=TTL_VALUE)
     worksheets = ["locales", "censos", "bases_ccu", "contratos"]
 
-    return tuple(conn.read(worksheet=w) for w in worksheets)
+    # add row number
+    dataframes = []
+    for w in worksheets:
+        df = conn.read(worksheet=w)
+        df = add_row_number(df)
+        dataframes.append(df)
+
+    return tuple(dataframes)
 
 def locales():
     """Return the 'locales' worksheet."""

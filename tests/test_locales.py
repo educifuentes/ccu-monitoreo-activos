@@ -1,8 +1,13 @@
 import streamlit as st
 from tests.generic import run_basic_validations
 
+
+# lista
+# ids que no se puedne convertir a numero
+# ids none
+
 def validate_locales(df):
-    st.header("Validación: Dim Locales")
+    st.header("Locales")
     
     run_basic_validations(
         df, 
