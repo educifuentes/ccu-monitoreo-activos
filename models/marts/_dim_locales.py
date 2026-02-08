@@ -43,6 +43,7 @@ def update_with_base_ccu_2026_q1():
 def dim_locales():
     """
     Locales con info consolidada de censos y contratos.
+    Se hace clean de valores.
     """
 
     df = update_with_base_ccu_2026_q1()
@@ -71,5 +72,8 @@ def dim_locales():
 
     # 4. Final cleanups
     df["nombre_fantasia"] = df["nombre_fantasia"].replace("0", pd.NA)
+
+    # replace local_id wuth "nan" to None
+    df["local_id"] = df["local_id"].replace("nan", pd.NA)
 
     return df
