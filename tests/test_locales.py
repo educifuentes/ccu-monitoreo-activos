@@ -13,14 +13,15 @@ def validate_locales(df):
         return
 
     # 1. IDs Quality
-    st.markdown("### 1. Calidad de Identificadores")
+    st.markdown("### 1. `local_id`")
     
     # Check for Null/NaN IDs
     nulos_id = df[df['local_id'].isna()]
+
     if not nulos_id.empty:
-        st.error(f"❌ Detectados {len(nulos_id)} locales sin ID (None/NaN)")
+        st.error(f"❌ Detectados {len(nulos_id)} locales sin ID (None o en Blanco)")
         st.dataframe(
-            add_gsheet_link(nulos_id[['row_index', 'razon_social']], gid), 
+            add_gsheet_link(nulos_id[['local_id', 'razon_social']], gid, nulos_id['row_index']), 
             use_container_width=True,
             column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
         )
@@ -30,9 +31,9 @@ def validate_locales(df):
     # Check for Numeric IDs
     non_numeric = df[pd.to_numeric(df["local_id"], errors="coerce").isna() & df["local_id"].notna()]
     if not non_numeric.empty:
-        st.error(f"❌ Detectados {len(non_numeric)} IDs que no se pueden borrar o convertir a número")
+        st.error(f"❌ Detectados {len(non_numeric)} IDs que no se pueden convertir a número")
         st.dataframe(
-            add_gsheet_link(non_numeric[['row_index', 'local_id', 'razon_social']], gid), 
+            add_gsheet_link(non_numeric[['local_id', 'razon_social']], gid, non_numeric['row_index'] if 'row_index' in non_numeric.columns else None), 
             use_container_width=True,
             column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
         )
@@ -45,10 +46,13 @@ def validate_locales(df):
         st.error(f"❌ Se detectaron {total_filas - ids_unicos} IDs duplicados")
         dupes = df[df.duplicated('local_id', keep=False)].sort_values('local_id')
         st.dataframe(
-            add_gsheet_link(dupes[['row_index', 'local_id', 'razon_social']], gid), 
+            add_gsheet_link(dupes[['local_id', 'razon_social']], gid, dupes['row_index']), 
             use_container_width=True,
             column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
         )
+
+
+
 
     # 2. Integridad de Columnas Críticas
     st.markdown("### 2. Integridad de Columnas Críticas")
@@ -63,7 +67,7 @@ def validate_locales(df):
             nulos_df = df[df[col].isna()]
             display_cols = ['row_index', 'local_id', col]
             st.dataframe(
-                add_gsheet_link(nulos_df[display_cols], gid), 
+                add_gsheet_link(nulos_df[['local_id', col]], gid, nulos_df['row_index']), 
                 use_container_width=True,
                 column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
             )

@@ -7,7 +7,4 @@ def bi_locales():
     # new columns
     df["cerrado"] = False
 
-    
-
-
     return df

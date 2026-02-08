@@ -23,7 +23,7 @@ def validate_bases_ccu(df):
         st.error(f"❌ Se detectaron {total_filas - ids_unicos} duplicados")
         dupes = df[df.duplicated('key', keep=False)].sort_values(['local_id', 'periodo'])
         st.dataframe(
-            add_gsheet_link(dupes[['row_index', 'local_id', 'periodo']], gid), 
+            add_gsheet_link(dupes[['local_id', 'periodo']], gid, dupes['row_index']), 
             use_container_width=True,
             column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
         )
@@ -37,7 +37,7 @@ def validate_bases_ccu(df):
             st.write(f"⚠️ **{col.title()}**: {val} nulos")
             nulos_df = df[df[col].isna()]
             st.dataframe(
-                add_gsheet_link(nulos_df[['row_index', col]], gid), 
+                add_gsheet_link(nulos_df[[col]], gid, nulos_df['row_index']), 
                 use_container_width=True,
                 column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
             )
@@ -53,7 +53,7 @@ def validate_bases_ccu(df):
         st.error(f"❌ Se detectaron {len(non_numeric)} IDs no numéricos.")
         
         st.dataframe(
-            add_gsheet_link(non_numeric[['local_id', 'periodo']], gid), 
+            add_gsheet_link(non_numeric[['local_id', 'periodo']], gid, non_numeric['row_index'] if 'row_index' in non_numeric.columns else None), 
             use_container_width=True,
             column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
         )

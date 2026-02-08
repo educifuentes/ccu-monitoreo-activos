@@ -32,6 +32,10 @@ def locales():
     # cast to proper data types
     df["local_id"] = df["local_id"].astype("str")
 
+    # clean - algunos que se hacen en dim_locales hay que aplicar de nuevo al re importar de gsheets
+    # replace local_id wuth "nan" to None
+    df["local_id"] = df["local_id"].replace("nan", pd.NA)
+
     
     return df
 

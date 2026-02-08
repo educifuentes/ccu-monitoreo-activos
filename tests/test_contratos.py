@@ -20,7 +20,7 @@ def validate_contratos(df):
         st.error(f"❌ local_id: {total_filas - ids_unicos} duplicados")
         dupes = df[df.duplicated('local_id', keep=False)].sort_values('local_id')
         st.dataframe(
-            add_gsheet_link(dupes[['row_index', 'local_id', 'folio']], gid), 
+            add_gsheet_link(dupes[['local_id', 'folio']], gid, dupes['row_index']), 
             use_container_width=True,
             column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
         )
@@ -34,7 +34,7 @@ def validate_contratos(df):
             st.write(f"⚠️ **{col.replace('_', ' ').title()}**: {val} nulos")
             nulos_df = df[df[col].isna()]
             st.dataframe(
-                add_gsheet_link(nulos_df[['row_index', 'local_id', col]], gid), 
+                add_gsheet_link(nulos_df[['local_id', col]], gid, nulos_df['row_index']), 
                 use_container_width=True,
                 column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
             )
@@ -50,7 +50,7 @@ def validate_contratos(df):
         st.warning(f"⚠️ Hay {len(nulos_folio)} contratos sin Folio asignado.")
         
         st.dataframe(
-            add_gsheet_link(nulos_folio[['local_id', 'folio']], gid), 
+            add_gsheet_link(nulos_folio[['local_id', 'folio']], gid, nulos_folio['row_index'] if 'row_index' in nulos_folio.columns else None), 
             use_container_width=True,
             column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
         )
