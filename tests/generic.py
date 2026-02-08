@@ -1,10 +1,4 @@
-import streamlit as st
-import pandas as pd
-
-# todo 
-# test non null and unique id
-# test relationships
-# test accepted values
+from utilities.transformations.gsheet_links import add_gsheet_link
 
 def run_basic_validations(df, name, id_col="local_id", critical_cols=None, gid=None):
     """Executes standard uniqueness and null checks with detailed views and GSheet links."""
@@ -14,14 +8,6 @@ def run_basic_validations(df, name, id_col="local_id", critical_cols=None, gid=N
     if total_filas == 0:
         st.warning(f"La tabla {name} está vacía.")
         return
-
-    # Helper to add gsheet column
-    def add_gsheet_link(data_df):
-        if gid:
-            data_df = data_df.copy()
-            data_df["ir a gsheet"] = f"https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit#gid={gid}"
-            return data_df
-        return data_df
 
     # 1. Uniqueness
     st.markdown("### 1. Unicidad de Id de Locales")
@@ -34,7 +20,12 @@ def run_basic_validations(df, name, id_col="local_id", critical_cols=None, gid=N
         dupes = df[df.duplicated(id_col, keep=False)].sort_values(id_col)
         # Ensure unique columns for display (id_col might be in critical_cols)
         display_cols = [id_col] + [c for c in (critical_cols or []) if c in df.columns and c != id_col]
-        dupes_view = add_gsheet_link(dupes[display_cols])
+        
+        # Add 'row_index' to display if it exists, to help debug
+        if "row_index" in df.columns:
+            display_cols = ["row_index"] + display_cols
+
+        dupes_view = add_gsheet_link(dupes[display_cols], gid)
         st.dataframe(
             dupes_view, 
             use_container_width=True,
@@ -53,7 +44,12 @@ def run_basic_validations(df, name, id_col="local_id", critical_cols=None, gid=N
             else:
                 st.write(f"⚠️ **{label}**: {val} nulos detectados")
                 nulos_df = df[df[col].isna()]
-                nulos_view = add_gsheet_link(nulos_df[[id_col, col]])
+                
+                display_cols = [id_col, col]
+                if "row_index" in df.columns:
+                    display_cols = ["row_index"] + display_cols
+
+                nulos_view = add_gsheet_link(nulos_df[display_cols], gid)
                 st.dataframe(
                     nulos_view, 
                     use_container_width=True,
