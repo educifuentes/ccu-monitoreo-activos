@@ -29,6 +29,7 @@ tab1, tab2, tab3, tab4 = st.tabs([
 
 # --- Tab 1: Locales ---
 with tab1:
+    # test com
     df_loc = locales()
     validate_locales(df_loc)
 

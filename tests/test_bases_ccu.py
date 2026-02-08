@@ -22,7 +22,11 @@ def validate_bases_ccu(df):
     else:
         st.error(f"❌ Se detectaron {total_filas - ids_unicos} duplicados")
         dupes = df[df.duplicated('key', keep=False)].sort_values(['local_id', 'periodo'])
-        st.dataframe(add_gsheet_link(dupes[['row_index', 'local_id', 'periodo']], gid), use_container_width=True)
+        st.dataframe(
+            add_gsheet_link(dupes[['row_index', 'local_id', 'periodo']], gid), 
+            use_container_width=True,
+            column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+        )
 
     # 2. Integridad de Columnas Críticas
     st.markdown("### 2. Integridad de Columnas Críticas")
@@ -32,7 +36,11 @@ def validate_bases_ccu(df):
         if val > 0:
             st.write(f"⚠️ **{col.title()}**: {val} nulos")
             nulos_df = df[df[col].isna()]
-            st.dataframe(add_gsheet_link(nulos_df[['row_index', col]], gid), use_container_width=True)
+            st.dataframe(
+                add_gsheet_link(nulos_df[['row_index', col]], gid), 
+                use_container_width=True,
+                column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+            )
         else:
             st.write(f"✅ **{col.title()}**: Sin nulos")
 
@@ -44,13 +52,8 @@ def validate_bases_ccu(df):
     else:
         st.error(f"❌ Se detectaron {len(non_numeric)} IDs no numéricos.")
         
-        # Add gsheet link
-        link = "https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit#gid=524359844"
-        non_numeric_view = non_numeric[['local_id', 'periodo']].copy()
-        non_numeric_view["ir a gsheet"] = link
-        
         st.dataframe(
-            non_numeric_view, 
+            add_gsheet_link(non_numeric[['local_id', 'periodo']], gid), 
             use_container_width=True,
             column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
         )

@@ -19,7 +19,11 @@ def validate_contratos(df):
     else:
         st.error(f"❌ local_id: {total_filas - ids_unicos} duplicados")
         dupes = df[df.duplicated('local_id', keep=False)].sort_values('local_id')
-        st.dataframe(add_gsheet_link(dupes[['row_index', 'local_id', 'folio']], gid), use_container_width=True)
+        st.dataframe(
+            add_gsheet_link(dupes[['row_index', 'local_id', 'folio']], gid), 
+            use_container_width=True,
+            column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+        )
 
     # 2. Integridad de Datos
     st.markdown("### 2. Integridad de Columnas Críticas")
@@ -29,7 +33,11 @@ def validate_contratos(df):
         if val > 0:
             st.write(f"⚠️ **{col.replace('_', ' ').title()}**: {val} nulos")
             nulos_df = df[df[col].isna()]
-            st.dataframe(add_gsheet_link(nulos_df[['row_index', 'local_id', col]], gid), use_container_width=True)
+            st.dataframe(
+                add_gsheet_link(nulos_df[['row_index', 'local_id', col]], gid), 
+                use_container_width=True,
+                column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+            )
         else:
             st.write(f"✅ **{col.replace('_', ' ').title()}**: Sin nulos")
 
@@ -41,13 +49,8 @@ def validate_contratos(df):
     else:
         st.warning(f"⚠️ Hay {len(nulos_folio)} contratos sin Folio asignado.")
         
-        # Add gsheet link
-        link = "https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit#gid=2133854210"
-        nulos_folio_view = nulos_folio[['local_id', 'folio']].copy()
-        nulos_folio_view["ir a gsheet"] = link
-        
         st.dataframe(
-            nulos_folio_view, 
+            add_gsheet_link(nulos_folio[['local_id', 'folio']], gid), 
             use_container_width=True,
             column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
         )

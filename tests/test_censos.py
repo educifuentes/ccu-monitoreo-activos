@@ -21,7 +21,11 @@ def validate_censos(df):
     else:
         st.error(f"❌ Se detectaron {total_filas - ids_unicos} registros duplicados (mismo Local y Periodo)")
         dupes = df[df.duplicated('key', keep=False)].sort_values(['local_id', 'periodo'])
-        st.dataframe(add_gsheet_link(dupes[['row_index', 'local_id', 'periodo', 'schoperas']], gid), use_container_width=True)
+        st.dataframe(
+            add_gsheet_link(dupes[['row_index', 'local_id', 'periodo', 'schoperas']], gid), 
+            use_container_width=True,
+            column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+        )
 
     # 2. Integridad de Datos
     st.markdown("### 2. Integridad de Columnas Críticas")
@@ -33,7 +37,11 @@ def validate_censos(df):
         if val > 0:
             st.write(f"⚠️ **{col.title()}**: {val} nulos detectados")
             nulos_df = df[df[col].isna()]
-            st.dataframe(add_gsheet_link(nulos_df[['row_index', 'local_id', 'periodo', col]], gid), use_container_width=True)
+            st.dataframe(
+                add_gsheet_link(nulos_df[['row_index', 'local_id', 'periodo', col]], gid), 
+                use_container_width=True,
+                column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+            )
         else:
             st.write(f"✅ **{col.title()}**: Sin nulos")
 
@@ -43,6 +51,10 @@ def validate_censos(df):
         negativos = df[df['schoperas'] < 0]
         if not negativos.empty:
             st.error(f"❌ Se detectaron {len(negativos)} registros con schoperas negativas")
-            st.dataframe(add_gsheet_link(negativos[['row_index', 'local_id', 'periodo', 'schoperas']], gid), use_container_width=True)
+            st.dataframe(
+                add_gsheet_link(negativos[['row_index', 'local_id', 'periodo', 'schoperas']], gid), 
+                use_container_width=True,
+                column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+            )
         else:
             st.success("✅ No hay valores negativos en schoperas")
