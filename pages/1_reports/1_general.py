@@ -90,7 +90,7 @@ st.header("Cumplimiento por Periodo - Censos")
 # -----------------------------------------------------------------------------
 
 st.divider()
-st.header("🔍 Detalle por Local")
+st.header(":material/sports_bar: Locales")
 st.markdown("Información detallada de censos, nóminas y contratos por cada establecimiento.")
 
 # 1. Selection
