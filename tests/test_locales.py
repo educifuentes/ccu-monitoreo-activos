@@ -1,21 +1,57 @@
 import streamlit as st
-from tests.generic import run_basic_validations
-
-
-# lista
-# ids que no se puedne convertir a numero
-# ids none
+import pandas as pd
+from utilities.transformations.gsheet_links import add_gsheet_link
 
 def validate_locales(df):
     st.header("Locales")
+    gid = "2068995815"
+    critical_cols = ['razon_social', 'rut', 'direccion', 'region']
     
-    run_basic_validations(
-        df, 
-        "Dim Locales", 
-        critical_cols=['razon_social', 'rut', 'direccion', 'region'], 
-        gid="2068995815"
-    )
+    total_filas = len(df)
+    if total_filas == 0:
+        st.warning("La tabla Dim Locales está vacía.")
+        return
+
+    # 1. IDs Quality
+    st.markdown("### 1. Calidad de Identificadores")
     
+    # Check for Null/NaN IDs
+    nulos_id = df[df['local_id'].isna()]
+    if not nulos_id.empty:
+        st.error(f"❌ Detectados {len(nulos_id)} locales sin ID (None/NaN)")
+        st.dataframe(add_gsheet_link(nulos_id[['row_index', 'razon_social']], gid), use_container_width=True)
+    else:
+        st.success("✅ Todos los locales tienen ID")
+
+    # Check for Numeric IDs
+    non_numeric = df[pd.to_numeric(df["local_id"], errors="coerce").isna() & df["local_id"].notna()]
+    if not non_numeric.empty:
+        st.error(f"❌ Detectados {len(non_numeric)} IDs que no se pueden borrar o convertir a número")
+        st.dataframe(add_gsheet_link(non_numeric[['row_index', 'local_id', 'razon_social']], gid), use_container_width=True)
+
+    # Check for Uniqueness
+    ids_unicos = df['local_id'].nunique()
+    if ids_unicos == total_filas:
+        st.success(f"✅ IDs únicos ({total_filas} registros)")
+    else:
+        st.error(f"❌ Se detectaron {total_filas - ids_unicos} IDs duplicados")
+        dupes = df[df.duplicated('local_id', keep=False)].sort_values('local_id')
+        st.dataframe(add_gsheet_link(dupes[['row_index', 'local_id', 'razon_social']], gid), use_container_width=True)
+
+    # 2. Integridad de Columnas Críticas
+    st.markdown("### 2. Integridad de Columnas Críticas")
+    nulos = df[critical_cols].isna().sum()
+    for col in critical_cols:
+        val = nulos[col]
+        label = col.replace("_", " ").title()
+        if val == 0:
+            st.write(f"✅ **{label}**: Sin nulos")
+        else:
+            st.write(f"⚠️ **{label}**: {val} nulos detectados")
+            nulos_df = df[df[col].isna()]
+            display_cols = ['row_index', 'local_id', col]
+            st.dataframe(add_gsheet_link(nulos_df[display_cols], gid), use_container_width=True)
+
     st.markdown("### 3. Duplicados por Razón Social")
     dupes_name = df[df.duplicated('razon_social', keep=False)].sort_values('razon_social')
     if not dupes_name.empty:
