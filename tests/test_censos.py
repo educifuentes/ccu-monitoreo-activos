@@ -1,5 +1,5 @@
 import streamlit as st
-from .utils import run_basic_validations
+from tests.generic import run_basic_validations
 
 def validate_censos(df):
     st.header("Validación: Censos")

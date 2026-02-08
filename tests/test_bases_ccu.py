@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from .utils import run_basic_validations
+from tests.generic import run_basic_validations
 
 def validate_bases_ccu(df):
     st.header("Validación: Bases CCU")
