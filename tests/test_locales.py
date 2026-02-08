@@ -39,12 +39,15 @@ def validate_locales(df):
         )
 
     # Check for Uniqueness
-    ids_unicos = df['local_id'].nunique()
-    if ids_unicos == total_filas:
-        st.success(f"✅ IDs únicos ({total_filas} registros)")
+    non_null_df = df[df['local_id'].notna()]
+    total_non_null = len(non_null_df)
+    ids_unicos = non_null_df['local_id'].nunique()
+    
+    if ids_unicos == total_non_null:
+        st.success(f"✅ IDs únicos ({total_non_null} registros con ID)")
     else:
-        st.error(f"❌ Se detectaron {total_filas - ids_unicos} IDs duplicados")
-        dupes = df[df.duplicated('local_id', keep=False)].sort_values('local_id')
+        st.error(f"❌ Se detectaron {total_non_null - ids_unicos} IDs duplicados")
+        dupes = non_null_df[non_null_df.duplicated('local_id', keep=False)].sort_values('local_id')
         st.dataframe(
             add_gsheet_link(dupes[['local_id', 'razon_social']], gid, dupes['row_index']), 
             use_container_width=True,
