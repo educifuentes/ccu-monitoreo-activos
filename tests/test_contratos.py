@@ -22,7 +22,7 @@ def validate_contratos(df):
         st.dataframe(
             add_gsheet_link(dupes[['local_id', 'folio']], gid, dupes['row_index']), 
             use_container_width=True,
-            column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
         )
 
     # 2. Integridad de Datos
@@ -36,7 +36,7 @@ def validate_contratos(df):
             st.dataframe(
                 add_gsheet_link(nulos_df[['local_id', col]], gid, nulos_df['row_index']), 
                 use_container_width=True,
-                column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+                column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
             )
         else:
             st.write(f"✅ **{col.replace('_', ' ').title()}**: Sin nulos")
@@ -52,5 +52,5 @@ def validate_contratos(df):
         st.dataframe(
             add_gsheet_link(nulos_folio[['local_id', 'folio']], gid, nulos_folio['row_index'] if 'row_index' in nulos_folio.columns else None), 
             use_container_width=True,
-            column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
         )

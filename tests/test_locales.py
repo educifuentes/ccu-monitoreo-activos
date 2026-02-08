@@ -22,7 +22,7 @@ def validate_locales(df):
         st.dataframe(
             add_gsheet_link(nulos_id[['local_id', 'razon_social']], gid, nulos_id['row_index']), 
             use_container_width=True,
-            column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
         )
     else:
         st.success("✅ Todos los locales tienen ID")
@@ -34,7 +34,7 @@ def validate_locales(df):
         st.dataframe(
             add_gsheet_link(non_numeric[['local_id', 'razon_social']], gid, non_numeric['row_index'] if 'row_index' in non_numeric.columns else None), 
             use_container_width=True,
-            column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
         )
 
     # Check for Uniqueness
@@ -50,7 +50,7 @@ def validate_locales(df):
         st.dataframe(
             add_gsheet_link(dupes[['local_id', 'razon_social']], gid, dupes['row_index']), 
             use_container_width=True,
-            column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
         )
 
 
@@ -65,7 +65,7 @@ def validate_locales(df):
         st.dataframe(
             add_gsheet_link(nulos_rs[['local_id', 'razon_social']], gid, nulos_rs['row_index']), 
             use_container_width=True,
-            column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
         )
     else:
         st.success("✅ Todos los locales tienen Razón Social")
@@ -78,7 +78,7 @@ def validate_locales(df):
         st.dataframe(
             add_gsheet_link(dupes_rs[['local_id', 'razon_social', 'rut']], gid, dupes_rs['row_index']), 
             use_container_width=True,
-            column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
         )
     else:
         st.success("✅ No se encontraron Razones Sociales duplicadas")

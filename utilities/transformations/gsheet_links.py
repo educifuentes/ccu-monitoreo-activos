@@ -14,8 +14,8 @@ def add_gsheet_link(df, gid, row_index=None):
     
     if row_index is not None:
         # Range A{row_index} makes the link point directly to the row/cell
-        df["ir a gsheet"] = row_index.apply(lambda x: f"{base_url}&range=A{x}" if pd.notna(x) else base_url)
+        df["link"] = row_index.apply(lambda x: f"{base_url}&range=A{x}" if pd.notna(x) else base_url)
     else:
-        df["ir a gsheet"] = base_url
+        df["link"] = base_url
         
     return df

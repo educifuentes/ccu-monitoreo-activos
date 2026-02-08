@@ -25,7 +25,7 @@ def validate_bases_ccu(df):
         st.dataframe(
             add_gsheet_link(dupes[['local_id', 'periodo']], gid, dupes['row_index']), 
             use_container_width=True,
-            column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
         )
 
     # 2. Integridad de Columnas Críticas
@@ -39,7 +39,7 @@ def validate_bases_ccu(df):
             st.dataframe(
                 add_gsheet_link(nulos_df[[col]], gid, nulos_df['row_index']), 
                 use_container_width=True,
-                column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+                column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
             )
         else:
             st.write(f"✅ **{col.title()}**: Sin nulos")
@@ -55,5 +55,5 @@ def validate_bases_ccu(df):
         st.dataframe(
             add_gsheet_link(non_numeric[['local_id', 'periodo']], gid, non_numeric['row_index'] if 'row_index' in non_numeric.columns else None), 
             use_container_width=True,
-            column_config={"ir a gsheet": st.column_config.LinkColumn("ir a gsheet")}
+            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
         )
