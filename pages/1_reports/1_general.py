@@ -5,22 +5,22 @@ import altair as alt
 from models.marts.dashboard.bi_activos import bi_activos
 from models.marts.dashboard.bi_locales import bi_locales
 from models.marts.dashboard.bi_contratos import bi_contratos
+from models.marts.dashboard.bi_censos import bi_censos
 
 from utilities.ui_components import display_compliance_badge
 from utilities.config import CLASIFICACION_COLORS, MARCAS_COLORS
 
 st.set_page_config(page_title="Reportes General y Locales", layout="wide")
 
-st.title("Monitoreo de Activos - Reporte General")
+st.title("Monitoreo de Activos CCU")
 
 st.markdown("Lectura de datos desde [Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)")
-st.warning("Conexion a Google Sheets Desactivada", icon="⚠️")
-
 
 # --- Load Data (using cache) ---
 bi_activos_df = bi_activos()
 bi_locales_df = bi_locales()
 bi_contratos_df = bi_contratos()
+bi_censos_df = bi_censos()
 
 # -----------------------------------------------------------------------------
 # FILTERS
@@ -31,7 +31,7 @@ bi_contratos_df = bi_contratos()
 periodos = sorted(bi_activos_df['periodo'].unique(), reverse=True)
 selected_periodo = st.selectbox("Seleccionar Periodo", periodos, width=200)
 
-bi_activos_df_anual = bi_activos_df[bi_activos_df['periodo'] == selected_periodo]
+bi_censos_df = bi_censos_df[bi_censos_df['periodo'] == selected_periodo]
 
 
 # -----------------------------------------------------------------------------
@@ -40,12 +40,12 @@ bi_activos_df_anual = bi_activos_df[bi_activos_df['periodo'] == selected_periodo
 
 
 # Calculate KPIs based on the clasificacion of all census records.
-# clasificacion_counts = bi_activos_df_anual['clasificacion'].value_counts()
+clasificacion_counts = bi_censos_df['clasificacion'].value_counts()
 
-# en_regla = clasificacion_counts.get("En regla", 0)
-# no_en_regla = clasificacion_counts.get("No en regla", 0)
-# sin_comodato = clasificacion_counts.get("Sin comodato o terminado", 0)
-# no_aplica = clasificacion_counts.get("No aplica", 0)
+en_regla = clasificacion_counts.get("En regla", 0)
+no_en_regla = clasificacion_counts.get("No en regla", 0)
+sin_comodato = clasificacion_counts.get("Sin comodato o terminado", 0)
+no_aplica = clasificacion_counts.get("No aplica", 0)
 
 total_locales = bi_activos_df['local_id'].nunique()
 total_contratos_vigentes = 999
@@ -57,9 +57,9 @@ with col1:
 with col2:
     st.metric("Contratos Vigentes", f"{total_contratos_vigentes}")
 with col3:  
-    st.metric("Metrica a definir", f"{total_contratos_vigentes}")
+    st.metric("En regla", f"{en_regla}")
 with col4:
-    st.metric("Metrica a definir", f"{total_contratos_vigentes}")
+    st.metric("No en regla", f"{no_en_regla}")
 
 
 
@@ -70,7 +70,7 @@ with col4:
 
 st.header("Cumplimiento por Periodo - Censos")
 
-# chart = alt.Chart(bi_activos_df).mark_bar().encode(
+# chart = alt.Chart(bi_censos_df).mark_bar().encode(
 #     x=alt.X('periodo:O', title='Periodo'),
 #     y=alt.Y('count():Q', title='Número de Locales'),
 #     color=alt.Color(
