@@ -1,7 +1,7 @@
 metrics:
   - name: "Clasificación de Cumplimiento"
     column_name: "clasificacion"
-    description: "Lógica de negocio para clasificar locales según normativa de libre competencia. Se evalúa el total de 'Salidas CCU' (grifos); si este es mayor a 3, se exige una 'Cuota Objetivo' de 1 salida para la competencia por cada 4 de CCU. El cumplimiento ('En Regla') se logra si la suma de salidas instaladas o disponibilizadas para la competencia iguala o supera esta cuota; de lo contrario, se marca como 'No en Regla'."
+    description: "Se revisa el total de 'Salidas CCU; si este es mayor a 3, se exige una 'Cuota Objetivo' de 1 salida para la competencia por cada 4 de CCU. El cumplimiento ('En Regla') se logra si la suma de salidas instaladas o disponibilizadas para la competencia iguala o supera esta cuota; de lo contrario, se marca como 'No en Regla'."
     table: |
       | Clasificación | Descripción |
       | :--- | :--- |
@@ -9,7 +9,7 @@ metrics:
       | **No en Regla** | El local tiene más de 3 salidas y no alcanza la cuota mínima de competencia exigida. |
       | **No Aplica** | El local tiene 3 o menos salidas CCU, por lo que la normativa de libre competencia no le es exigible. |
 
-  - name: "Indicadores Clave (KPIs)"
+  - name: "Metricas Generales"
     description: "Métricas generales para el monitoreo del parque de activos y contratos."
     columns:
       - name: "Total Locales"
