@@ -9,13 +9,7 @@ from models.marts.dashboard.bi_censos import bi_censos
 
 from utilities.ui_components import display_compliance_badge
 from utilities.ui_config import CLASIFICACION_COLORS, MARCAS_COLORS
-
-def format_date_spanish(dt):
-    if pd.isna(dt):
-        return "N/A"
-    months = ["enero", "febrero", "marzo", "abril", "mayo", "junio", 
-              "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
-    return f"{months[dt.month - 1]} {dt.year}"
+from utilities.transformations.date_formatting import format_date_spanish
 
 st.set_page_config(page_title="Reportes General y Locales", layout="wide")
 
