@@ -179,7 +179,7 @@ else:
             termino_str = format_date_spanish(local_contract['fecha_termino']) if 'fecha_termino' in local_contract else "N/A"
             periodo_str = f"{inicio_str} - {termino_str}" if inicio_str != "N/A" or termino_str != "N/A" else "N/A"
             
-            c2.metric("Periodo contrato", periodo_str)
+            c2.markdown(f"**Periodo contrato**  \n{periodo_str}")
             c3.metric("Activos Comprometidos", f"{int(local_contract['activos_entregados'])}" if pd.notna(local_contract['activos_entregados']) else "N/A")
             
             if local_contract.get('es_local_imagen?') == True:

@@ -29,6 +29,19 @@ tab1, tab2, tab3, tab4 = st.tabs([
 with tab1:
     st.header("BI Activos")
     st.markdown("Cálculo de variaciones y estados de activos entre periodos.")
+
+    # Find local_ids that have at least 3 rows
+    st.markdown("Locales con al menos 3 filas")
+    local_ids_with_min_rows = (
+        df_activos.groupby('local_id')
+        .size()
+        .loc[lambda x: x >= 3]
+        .index.tolist()
+    )
+    
+    filtered_df = df_activos[df_activos['local_id'].isin(local_ids_with_min_rows)].sort_values('local_id')
+    st.dataframe(filtered_df, use_container_width=True)
+
     render_model_ui(df_activos)
 
 with tab2:
