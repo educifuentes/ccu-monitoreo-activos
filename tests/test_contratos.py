@@ -3,7 +3,7 @@ import pandas as pd
 from utilities.transformations.gsheet_links import add_gsheet_link
 
 def validate_contratos(df):
-    st.header("Validación: Fact Contratos CCU")
+    st.header("Contratos")
     gid = "2133854210"
 
     total_filas = len(df)
@@ -11,46 +11,72 @@ def validate_contratos(df):
         st.warning("La tabla Contratos está vacía.")
         return
 
-    # 1. Unicidad
-    st.markdown("### 1. Unicidad de Identificadores")
-    ids_unicos = df['local_id'].nunique()
-    if ids_unicos == total_filas:
-        st.success(f"✅ local_id: Único ({total_filas} registros)")
+    # 1. local_id
+    st.markdown("### 1. `local_id`")
+    
+    # Check for Null/NaN IDs
+    nulos_id = df[df['local_id'].isna()]
+    if not nulos_id.empty:
+        st.error(f":material/close: Detectados {len(nulos_id)} contratos sin local_id")
+        st.dataframe(
+            add_gsheet_link(nulos_id[['local_id', 'folio']], gid, nulos_id['row_index']), 
+            use_container_width=True,
+            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
+        )
     else:
-        st.error(f"❌ local_id: {total_filas - ids_unicos} duplicados")
-        dupes = df[df.duplicated('local_id', keep=False)].sort_values('local_id')
+        st.success(":material/check_box: Todos los contratos tienen local_id")
+
+    # Check for Uniqueness
+    non_null_df = df[df['local_id'].notna()]
+    total_non_null = len(non_null_df)
+    ids_unicos = non_null_df['local_id'].nunique()
+    
+    if ids_unicos == total_non_null:
+        st.success(f":material/check_box: Identificadores únicos ({total_non_null} registros)")
+    else:
+        st.error(f":material/close: Se detectaron {total_non_null - ids_unicos} IDs duplicados")
+        dupes = non_null_df[non_null_df.duplicated('local_id', keep=False)].sort_values('local_id')
         st.dataframe(
             add_gsheet_link(dupes[['local_id', 'folio']], gid, dupes['row_index']), 
             use_container_width=True,
             column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
         )
 
-    # 2. Integridad de Datos
-    st.markdown("### 2. Integridad de Columnas Críticas")
-    critical_cols = ['folio', 'fecha_inicio', 'fecha_termino']
-    for col in critical_cols:
-        val = df[col].isna().sum()
-        if val > 0:
-            st.write(f"⚠️ **{col.replace('_', ' ').title()}**: {val} nulos")
-            nulos_df = df[df[col].isna()]
-            st.dataframe(
-                add_gsheet_link(nulos_df[['local_id', col]], gid, nulos_df['row_index']), 
-                use_container_width=True,
-                column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
-            )
-        else:
-            st.write(f"✅ **{col.replace('_', ' ').title()}**: Sin nulos")
-
-    st.markdown("### 3. Integridad de Folios")
-    # Check Folios
+    # 2. folio
+    st.markdown("### 2. `folio`")
     nulos_folio = df[df['folio'].isna()]
-    if nulos_folio.empty:
-        st.success("✅ Todos los contratos tienen folio.")
-    else:
-        st.warning(f"⚠️ Hay {len(nulos_folio)} contratos sin Folio asignado.")
-        
+    if not nulos_folio.empty:
+        st.warning(f":material/warning: Detectados {len(nulos_folio)} contratos sin Folio")
         st.dataframe(
-            add_gsheet_link(nulos_folio[['local_id', 'folio']], gid, nulos_folio['row_index'] if 'row_index' in nulos_folio.columns else None), 
+            add_gsheet_link(nulos_folio[['local_id', 'folio']], gid, nulos_folio['row_index']), 
             use_container_width=True,
             column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
         )
+    else:
+        st.success(":material/check_box: Todos los contratos tienen Folio")
+
+    # 3. fecha_inicio
+    st.markdown("### 3. `fecha_inicio`")
+    nulos_inicio = df[df['fecha_inicio'].isna()]
+    if not nulos_inicio.empty:
+        st.warning(f"⚠️ Detectados {len(nulos_inicio)} contratos sin Fecha de Inicio")
+        st.dataframe(
+            add_gsheet_link(nulos_inicio[['local_id', 'fecha_inicio']], gid, nulos_inicio['row_index']), 
+            use_container_width=True,
+            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
+        )
+    else:
+        st.success(":material/check_box: Todas las fechas de inicio están completas")
+
+    # 4. fecha_termino
+    st.markdown("### 4. `fecha_termino`")
+    nulos_termino = df[df['fecha_termino'].isna()]
+    if not nulos_termino.empty:
+        st.warning(f":material/warning: Hay {len(nulos_termino)} registros sin fecha de término registrada")
+        st.dataframe(
+            add_gsheet_link(nulos_termino[['local_id', 'fecha_termino']], gid, nulos_termino['row_index']), 
+            use_container_width=True,
+            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
+        )
+    else:
+        st.success(":material/check_box: Todas las fechas de término están completas")
