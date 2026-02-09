@@ -58,41 +58,33 @@ no_aplica = clasificacion_counts.get("No aplica", 0)
 total_locales = bi_activos_df['local_id'].nunique()
 total_contratos_vigentes = 999
 
-col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
+col_metrics, col_chart = st.columns([1, 1.5])
 
-with col1:
-    st.metric("Locales", f"{total_locales}")
-with col2:
-    st.metric("Contratos Vigentes", f"{total_contratos_vigentes}")
-with col3:  
-    st.metric("En regla", f"{en_regla}")
-with col4:
-    st.metric("No en regla", f"{no_en_regla}")
+with col_metrics:
+    st.subheader("Métricas Generales")
+    m1, m2 = st.columns(2)
+    m1.metric("Locales", f"{total_locales}")
+    m2.metric("Contratos Vigentes", f"{total_contratos_vigentes}")
+    
+    m3, m4 = st.columns(2)
+    m3.metric("En regla", f"{en_regla}")
+    m4.metric("No en regla", f"{no_en_regla}")
 
-
-
-
-# -----------------------------------------------------------------------------
-# CENSOS
-# -----------------------------------------------------------------------------
-
-st.header("Cumplimiento por Periodo - Censos")
-st.markdown("Nota: Por ahora solo Censo 2025, el cual tiene la info para calcular el cumplimiento")
-
-chart = alt.Chart(bi_censos_2025_df).mark_bar().encode(
-    x=alt.X('periodo:O', title='Periodo'),
-    y=alt.Y('count():Q', title='Número de Locales'),
-    color=alt.Color(
-        'clasificacion:N',
-        title='Clasificacion',
-        scale=alt.Scale(
-            domain=list(CLASIFICACION_COLORS.keys()),
-            range=list(CLASIFICACION_COLORS.values())
+with col_chart:
+    st.subheader("Cumplimiento por Periodo")
+    chart = alt.Chart(bi_censos_2025_df).mark_bar().encode(
+        x=alt.X('periodo:O', title='Periodo'),
+        y=alt.Y('count():Q', title='Número de Locales'),
+        color=alt.Color(
+            'clasificacion:N',
+            title='Clasificacion',
+            scale=alt.Scale(
+                domain=list(CLASIFICACION_COLORS.keys()),
+                range=list(CLASIFICACION_COLORS.values())
+            )
         )
     )
-)
-
-st.altair_chart(chart, use_container_width=True, height=300)
+    st.altair_chart(chart, use_container_width=True, height=300)
 
 
 
