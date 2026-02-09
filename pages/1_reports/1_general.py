@@ -35,10 +35,10 @@ bi_censos_df = bi_censos()
 
 # selected_periodo = 2025
 
-periodos = sorted(bi_activos_df['periodo'].unique(), reverse=True)
-selected_periodo = st.selectbox("Seleccionar Periodo", periodos, width=200)
+# periodos = sorted(bi_activos_df['periodo'].unique(), reverse=True)
+# selected_periodo = st.selectbox("Seleccionar Periodo", periodos, width=200)
 
-bi_censos_df = bi_censos_df[bi_censos_df['periodo'] == selected_periodo]
+# bi_censos_df = bi_censos_df[bi_censos_df['periodo'] == selected_periodo]
 
 
 # -----------------------------------------------------------------------------
@@ -76,21 +76,25 @@ with col4:
 # -----------------------------------------------------------------------------
 
 st.header("Cumplimiento por Periodo - Censos")
+st.markdown("Nota: Por ahora solo Censo 2025, el cual tiene la info para calcular el cumplimiento")
 
-# chart = alt.Chart(bi_censos_df).mark_bar().encode(
-#     x=alt.X('periodo:O', title='Periodo'),
-#     y=alt.Y('count():Q', title='Número de Locales'),
-#     color=alt.Color(
-#         'clasificacion:N',
-#         title='Clasificacion',
-#         scale=alt.Scale(
-#             domain=list(CLASIFICACION_COLORS.keys()),
-#             range=list(CLASIFICACION_COLORS.values())
-#         )
-#     )
-# )
+# drop rows with periodo "2024-S2"
+bi_censos_df = bi_censos_df[bi_censos_df['periodo'] != "2024-S2"]
 
-# st.altair_chart(chart, use_container_width=True, height=300)
+chart = alt.Chart(bi_censos_df).mark_bar().encode(
+    x=alt.X('periodo:O', title='Periodo'),
+    y=alt.Y('count():Q', title='Número de Locales'),
+    color=alt.Color(
+        'clasificacion:N',
+        title='Clasificacion',
+        scale=alt.Scale(
+            domain=list(CLASIFICACION_COLORS.keys()),
+            range=list(CLASIFICACION_COLORS.values())
+        )
+    )
+)
+
+st.altair_chart(chart, use_container_width=True, height=300)
 
 
 
