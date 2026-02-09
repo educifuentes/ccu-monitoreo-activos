@@ -16,4 +16,16 @@ def calculate_general_metrics(bi_activos_df, bi_censos_2025_df, bi_contratos_df,
         "total_contratos_vigentes": bi_contratos_df['contrato_vigente'].sum()
     }
     
+    
     return metrics
+
+def get_latest_classification(local_id, bi_censos_df):
+    """
+    Retrieves the latest business classification for a specific local_id based on census data.
+    """
+    local_bi_censos = bi_censos_df[bi_censos_df['local_id'] == local_id].sort_values('periodo', ascending=False)
+    
+    if local_bi_censos.empty:
+        return "Sin Datos"
+        
+    return local_bi_censos.iloc[0]['clasificacion']

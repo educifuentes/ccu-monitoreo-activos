@@ -10,7 +10,7 @@ from models.marts.dashboard.bi_censos import bi_censos
 from utilities.ui_components import display_compliance_badge
 from utilities.ui_config import CLASIFICACION_COLORS, MARCAS_COLORS
 from utilities.transformations.date_formatting import format_date_spanish
-from models.marts.metrics.general_metrics import calculate_general_metrics
+from models.marts.metrics.general_metrics import calculate_general_metrics, get_latest_classification
 
 st.set_page_config(page_title="Reportes General y Locales", layout="wide")
 
@@ -112,13 +112,10 @@ else:
     local_master = local_master.iloc[0]
 
     # Censo BI Info (for latest classification)
-    local_bi_censos = bi_activos_df[bi_activos_df['local_id'] == selected_local_id].sort_values('periodo', ascending=False)
-
+    latest_clasificacion = get_latest_classification(selected_local_id, bi_censos_df)
     
-
-    latest_clasificacion = "no"
-
-    # latest_clasificacion = local_bi_censos.iloc[0]['clasificacion'] if not local_bi_censos.empty else "Sin Datos"
+    # Filter for display (re-using existing DF for history)
+    local_bi_censos = bi_activos_df[bi_activos_df['local_id'] == selected_local_id].sort_values('periodo', ascending=False)
 
     # Assets History (BI Activos)
     local_assets_history = bi_activos_df[bi_activos_df['local_id'] == selected_local_id].sort_values('fecha', ascending=False)
@@ -140,13 +137,12 @@ else:
 
     with col_comp:
         with st.container(border=True):
-            st.markdown("**Cumplimiento**")
-            if not local_bi_censos.empty:
-                st.markdown(f"**Último Censo:** {local_bi_censos.iloc[0]['periodo']}")
-                if latest_clasificacion != "no":
-                    display_compliance_badge(latest_clasificacion)
+            st.markdown("**Cumplimiento (Censo 2025)**") 
+            # Display based on latest classification from ANY census period check
+            if latest_clasificacion != "Sin Datos":
+                display_compliance_badge(latest_clasificacion)
             else:
-                st.warning("No hay censos registrados")
+                st.warning("No hay clasificación disponible")
 
 # -----------------------------------------------------------------------------
 # CONTRATO ACTUAL

@@ -1,17 +1,18 @@
 import streamlit as st
 
 from utilities.transformations.gsheet_links import add_gsheet_link
+from utilities.ui_icons import ICONS
 
 def display_compliance_badge(clasificacion):
     """Displays a formatted st.badge based on the classification."""
     if clasificacion == "En regla":
-        st.badge("En regla", icon="✅")
+        st.badge("En regla", icon=ICONS['check'], color="green")
     elif clasificacion == "No en regla":
-        st.badge("No en regla", icon="⚠️")
+        st.badge("No en regla", icon=ICONS['warning'], color="red")
     elif clasificacion == "No aplica":
-        st.badge("No aplica", icon="⚪")
+        st.badge("No aplica", icon=ICONS['not_apply'], color="yellow")
     elif clasificacion == "Sin comodato o terminado":
-        st.badge("Sin comodato o terminado", icon="🚫")
+        st.badge("Sin comodato o terminado", icon=ICONS['close'], color="blue")
     else:
         st.badge(clasificacion, icon="🔍")
 

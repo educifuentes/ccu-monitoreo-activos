@@ -10,5 +10,6 @@ ICONS = {
     "contratos": ":material/contract:",
     # otros
     "documentation": ":material/article:",
-    "metrics": ":material/calculate:"
+    "metrics": ":material/calculate:",
+    "not_apply": ":material/circle:"
 }
