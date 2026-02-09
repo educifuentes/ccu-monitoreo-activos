@@ -20,7 +20,7 @@ def validate_locales(df):
     if not nulos_id.empty:
         st.error(f"❌ Detectados {len(nulos_id)} locales sin ID (None o en Blanco)")
         st.dataframe(
-            add_gsheet_link(nulos_id[['local_id', 'razon_social']], gid, nulos_id['row_index']), 
+            add_gsheet_link(nulos_id[['local_id', 'razon_social', 'fuente']], gid, nulos_id['row_index']), 
             use_container_width=True,
             column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
         )
@@ -76,7 +76,7 @@ def validate_locales(df):
     if not dupes_rs.empty:
         st.warning(f"⚠️ Se detectaron {len(dupes_rs)} filas con Razón Social compartida")
         st.dataframe(
-            add_gsheet_link(dupes_rs[['local_id', 'razon_social', 'rut']], gid, dupes_rs['row_index']), 
+            add_gsheet_link(dupes_rs[['local_id', 'razon_social', 'rut', 'fuente']], gid, dupes_rs['row_index']), 
             use_container_width=True,
             column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
         )

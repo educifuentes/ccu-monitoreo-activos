@@ -189,7 +189,17 @@ else:
             'coolers': 'Coolers'
         })
         
-        st.dataframe(table_df, use_container_width=True, hide_index=True)
+        st.dataframe(table_df, use_container_width=True, hide_index=True, column_config={
+            "Fuente": st.column_config.MultiselectColumn(
+                "Fuente",
+                help="Fuente de la informacion",
+                options=[
+                    "Censo",
+                    "CCU"
+                ],
+                color=["#ffa421", "#803df5"],
+            )
+        })
         
         # Mini trend chart if there is enough data
         if len(local_assets_history) > 1:
