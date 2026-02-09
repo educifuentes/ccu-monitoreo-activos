@@ -27,11 +27,11 @@ def update_with_base_ccu_2026_q1():
     df_ccu = df_ccu[locales_columns]
 
     # 1. Start with CCU 2026 records
-    df_ccu["fuente"] = "base_ccu_2026"
+    df_ccu["fuente"] = "Base CCU 2026"
     
     # 2. Find records in base_norm that are NOT in base_ccu_2026
     missing_ids = df_norm[~df_norm["local_id"].isin(df_ccu["local_id"])].copy()
-    missing_ids["fuente"] = "base_norm"
+    missing_ids["fuente"] = "Base Normalizada"
     print(f"Locales en base_norm no presentes en CCU 2026: {len(missing_ids)}")
 
     # 3. Concatenate (Union)
