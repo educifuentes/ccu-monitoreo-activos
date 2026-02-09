@@ -46,7 +46,9 @@ with tab2:
 # --- Tab 3: Bases CCU ---
 with tab3:
     df_bases = bases_ccu()
-    validate_bases_ccu(df_bases)
+    if 'df_loc' not in locals():
+        df_loc = locales()
+    validate_bases_ccu(df_bases, df_loc)
 
 # --- Tab 4: Contratos ---
 with tab4:
