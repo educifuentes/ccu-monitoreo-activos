@@ -10,6 +10,3 @@ MARCAS_COLORS = {
     "Otros": "#00c0f2"
 }
 
-# data connections
-# google sheets TTL
-TTL_VALUE = "5m" # 5 minutes 

@@ -3,7 +3,7 @@ import numpy as np
 import math
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
-from utilities.config import TTL_VALUE
+from utilities.data_connection_config import TTL_VALUE
 
 
 # =============================================================================
