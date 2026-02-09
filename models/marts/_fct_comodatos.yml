@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: Comodatos CCU
+  - name: Bases CCU
     model_name: fct_comodatos
     description: Informacion trimestral de los comodatos de CCU. Movimeintos en la cantidad de activos (salidas y shoperas) e info de termino de contrato.
     columns:

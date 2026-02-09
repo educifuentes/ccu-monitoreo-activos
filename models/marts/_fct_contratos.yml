@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: Contratos Imagen CCU
+  - name: Contratos
     model_name: fct_contratos
     description: Contratos imagen con los locales. Info entregada por CCU.
     columns:
