@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from utilities.transformations.gsheet_links import add_gsheet_link
+from utilities.ui_components import render_troubled_rows
 from utilities.ui_icons import ICONS
 
 def validate_censos(df, df_locales):
@@ -22,11 +22,7 @@ def validate_censos(df, df_locales):
     else:
         st.error(f"{ICONS['close']} Se detectaron {total_filas - ids_unicos} registros duplicados (mismo Local y Periodo)")
         dupes = df[df.duplicated('key', keep=False)].sort_values(['local_id', 'periodo'])
-        st.dataframe(
-            add_gsheet_link(dupes[['local_id', 'periodo', 'schoperas']], gid, dupes['row_index']), 
-            use_container_width=True,
-            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
-        )
+        render_troubled_rows(dupes[['local_id', 'periodo', 'schoperas']], gid, dupes['row_index'])
 
     # check if local_id exists in locales
     
@@ -42,11 +38,7 @@ def validate_censos(df, df_locales):
     else:
         st.error(f"{ICONS['close']} Se detectaron {len(ids_faltantes)} `local_id` que NO existen en Locales")
         missing_df = df[df['local_id'].isin(ids_faltantes)]
-        st.dataframe(
-            add_gsheet_link(missing_df[['local_id', 'periodo']].drop_duplicates(), gid, None),
-            use_container_width=True,
-            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
-        )
+        render_troubled_rows(missing_df[['local_id', 'periodo']].drop_duplicates(), gid, None)
 
     # 2. schoperas
     st.markdown("### 2. `schoperas`")
@@ -56,11 +48,7 @@ def validate_censos(df, df_locales):
     if nulos > 0:
         st.warning(f"{ICONS['warning']} {nulos} registros con 'schoperas' nulo")
         nulos_df = df[df['schoperas'].isna()]
-        st.dataframe(
-            add_gsheet_link(nulos_df[['local_id', 'periodo', 'schoperas']], gid, nulos_df['row_index']), 
-            use_container_width=True,
-            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
-        )
+        render_troubled_rows(nulos_df[['local_id', 'periodo', 'schoperas']], gid, nulos_df['row_index'])
     else:
         st.success(f"{ICONS['check']} 'schoperas': Sin nulos")
 
@@ -68,11 +56,7 @@ def validate_censos(df, df_locales):
     negativos = df[df['schoperas'] < 0]
     if not negativos.empty:
         st.error(f"{ICONS['close']} Se detectaron {len(negativos)} registros con schoperas negativas")
-        st.dataframe(
-            add_gsheet_link(negativos[['local_id', 'periodo', 'schoperas']], gid, negativos['row_index']), 
-            use_container_width=True,
-            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
-        )
+        render_troubled_rows(negativos[['local_id', 'periodo', 'schoperas']], gid, negativos['row_index'])
     else:
         st.success(f"{ICONS['check']} No hay valores negativos en schoperas")
 
@@ -84,11 +68,7 @@ def validate_censos(df, df_locales):
     if nulos_sal > 0:
         st.warning(f"{ICONS['warning']} {nulos_sal} registros con 'salidas' nulo")
         nulos_df = df[df['salidas'].isna()]
-        st.dataframe(
-            add_gsheet_link(nulos_df[['local_id', 'periodo', 'salidas']], gid, nulos_df['row_index']), 
-            use_container_width=True,
-            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
-        )
+        render_troubled_rows(nulos_df[['local_id', 'periodo', 'salidas']], gid, nulos_df['row_index'])
     else:
         st.success(f"{ICONS['check']} 'salidas': Sin nulos")
 
@@ -96,11 +76,7 @@ def validate_censos(df, df_locales):
     negativos_sal = df[df['salidas'] < 0]
     if not negativos_sal.empty:
         st.error(f"{ICONS['close']} Se detectaron {len(negativos_sal)} registros con salidas negativas")
-        st.dataframe(
-            add_gsheet_link(negativos_sal[['local_id', 'periodo', 'salidas']], gid, negativos_sal['row_index']), 
-            use_container_width=True,
-            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
-        )
+        render_troubled_rows(negativos_sal[['local_id', 'periodo', 'salidas']], gid, negativos_sal['row_index'])
     else:
         st.success(f"{ICONS['check']} No hay valores negativos en salidas")
 
@@ -120,11 +96,7 @@ def validate_censos(df, df_locales):
         if nulos_ins > 0:
             st.warning(f"{ICONS['warning']} {nulos_ins} registros con 'instalo' nulo")
             nulos_df = df_2025[df_2025['instalo'].isna()]
-            st.dataframe(
-                add_gsheet_link(nulos_df[['local_id', 'periodo', 'instalo']], gid, nulos_df['row_index']), 
-                use_container_width=True,
-                column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
-            )
+            render_troubled_rows(nulos_df[['local_id', 'periodo', 'instalo']], gid, nulos_df['row_index'])
         else:
             st.success(f"{ICONS['check']} 'instalo': Sin nulos")
 
@@ -132,11 +104,7 @@ def validate_censos(df, df_locales):
         negativos_ins = df_2025[df_2025['instalo'] < 0]
         if not negativos_ins.empty:
             st.error(f"{ICONS['close']} Se detectaron {len(negativos_ins)} registros con instalo negativos")
-            st.dataframe(
-                add_gsheet_link(negativos_ins[['local_id', 'periodo', 'instalo']], gid, negativos_ins['row_index']), 
-                use_container_width=True,
-                column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
-            )
+            render_troubled_rows(negativos_ins[['local_id', 'periodo', 'instalo']], gid, negativos_ins['row_index'])
         else:
             st.success(f"{ICONS['check']} No hay valores negativos en instalo")
 
@@ -149,11 +117,7 @@ def validate_censos(df, df_locales):
         if nulos_disp > 0:
             st.warning(f"{ICONS['warning']} {nulos_disp} registros con 'disponibilizo' nulo")
             nulos_df = df_2025[df_2025['disponibilizo'].isna()]
-            st.dataframe(
-                add_gsheet_link(nulos_df[['local_id', 'periodo', 'disponibilizo']], gid, nulos_df['row_index']), 
-                use_container_width=True,
-                column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
-            )
+            render_troubled_rows(nulos_df[['local_id', 'periodo', 'disponibilizo']], gid, nulos_df['row_index'])
         else:
             st.success(f"{ICONS['check']} 'disponibilizo': Sin nulos")
 
@@ -161,10 +125,6 @@ def validate_censos(df, df_locales):
         negativos_disp = df_2025[df_2025['disponibilizo'] < 0]
         if not negativos_disp.empty:
             st.error(f"{ICONS['close']} Se detectaron {len(negativos_disp)} registros con disponibilizo negativos")
-            st.dataframe(
-                add_gsheet_link(negativos_disp[['local_id', 'periodo', 'disponibilizo']], gid, negativos_disp['row_index']), 
-                use_container_width=True,
-                column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
-            )
+            render_troubled_rows(negativos_disp[['local_id', 'periodo', 'disponibilizo']], gid, negativos_disp['row_index'])
         else:
             st.success(f"{ICONS['check']} No hay valores negativos en disponibilizo")
