@@ -55,7 +55,7 @@ total_contratos_vigentes = 999
 col_metrics, col_chart = st.columns([1, 1.5])
 
 with col_metrics:
-    st.subheader("Métricas Generales")
+    st.subheader("Métricas")
     m1, m2 = st.columns(2)
     m1.metric("Locales", f"{total_locales}")
     m2.metric("Contratos Vigentes", f"{total_contratos_vigentes}")
@@ -65,7 +65,7 @@ with col_metrics:
     m4.metric("No en regla", f"{no_en_regla}")
 
 with col_chart:
-    st.subheader("Cumplimiento por Periodo")
+    st.subheader("Cumplimiento - Censos")
     chart = alt.Chart(bi_censos_2025_df).mark_bar().encode(
         x=alt.X('periodo:O', title='Periodo'),
         y=alt.Y('count():Q', title='Número de Locales'),
@@ -78,7 +78,7 @@ with col_chart:
             )
         )
     )
-    st.altair_chart(chart, use_container_width=True, height=300)
+    st.altair_chart(chart, use_container_width=True, height=250)
 
 
 
@@ -150,8 +150,11 @@ else:
             else:
                 st.warning("No hay censos registrados")
 
-    # 4. CONTRATO ACTUAL
-    st.subheader("📄 Contrato Actual")
+# -----------------------------------------------------------------------------
+# CONTRATO ACTUAL
+# -----------------------------------------------------------------------------
+
+    st.subheader(":material/contract: Contrato")
     if local_contract is not None:
         with st.container(border=True):
             c1, c2, c3 = st.columns(3)
@@ -170,7 +173,7 @@ else:
         st.info("No se encontró información de contrato para este local")
 
     # 5. EVOLUCIÓN DE ACTIVOS
-    st.subheader("📈 Evolución de Activos")
+    st.subheader(":material/monitoring: Evolución de Activos")
     st.markdown("Cronología de activos (Schoperas, Salidas, Coolers) según Censos y Nóminas CCU.")
 
     if not local_assets_history.empty:
