@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from utilities.transformations.gsheet_links import add_gsheet_link
+from utilities.ui_components import render_troubled_rows
 from utilities.ui_icons import ICONS
 
 def validate_bases_ccu(df, df_locales):
@@ -23,11 +23,7 @@ def validate_bases_ccu(df, df_locales):
     else:
         st.error(f"{ICONS['close']} Se detectaron {total_filas - ids_unicos} duplicados")
         dupes = df[df.duplicated('key', keep=False)].sort_values(['local_id', 'periodo'])
-        st.dataframe(
-            add_gsheet_link(dupes[['local_id', 'periodo']], gid, dupes['row_index']), 
-            use_container_width=True,
-            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
-        )
+        render_troubled_rows(dupes[['local_id', 'periodo']], gid, dupes['row_index'])
 
     # Check Foreign Key (local_id exists in Locales)
     st.markdown("### 1.1 `local_id` en tabla de locales")
@@ -40,25 +36,22 @@ def validate_bases_ccu(df, df_locales):
     else:
         st.error(f"{ICONS['close']} Se detectaron {len(ids_faltantes)} `local_id` que NO existen en Locales")
         missing_df = df[df['local_id'].isin(ids_faltantes)]
-        st.dataframe(
-            add_gsheet_link(missing_df[['local_id', 'periodo']].drop_duplicates(), gid, None),
-            use_container_width=True,
-            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
+        render_troubled_rows(
+            missing_df[['local_id', 'periodo']].drop_duplicates(), 
+            gid, 
+            None
         )
 
-    # Check Foreign Key (local_id exists in Locales)
-    st.markdown("### 1.1 `local_id` en tabla de locales")
-    ids_maestros = set(df_locales['local_id'].unique())
-    ids_censos = set(df['local_id'].unique())
-    ids_faltantes = ids_censos - ids_maestros
-
-    if not ids_faltantes:
-        st.success(f"{ICONS['check']} Todos los `local_id` existen en la tabla Locales")
+    # 2. Validez de Identificadores
+    st.markdown("### 2. Validez de Identificadores")
+    # Check for non-numeric local_id
+    non_numeric = df[pd.to_numeric(df["local_id"], errors="coerce").isna()]
+    if non_numeric.empty:
+        st.success(f"{ICONS['check']} Todos los IDs son numéricos válidos.")
     else:
-        st.error(f"{ICONS['close']} Se detectaron {len(ids_faltantes)} `local_id` que NO existen en Locales")
-        missing_df = df[df['local_id'].isin(ids_faltantes)]
-        st.dataframe(
-            add_gsheet_link(missing_df[['local_id', 'periodo']].drop_duplicates(), gid, None),
-            use_container_width=True,
-            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
+        st.error(f"{ICONS['close']} Se detectaron {len(non_numeric)} IDs no numéricos.")
+        render_troubled_rows(
+            non_numeric[['local_id', 'periodo']], 
+            gid, 
+            non_numeric['row_index'] if 'row_index' in non_numeric.columns else None
         )

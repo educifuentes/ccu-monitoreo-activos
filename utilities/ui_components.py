@@ -1,6 +1,6 @@
 import streamlit as st
 
-from utilities.yaml_loader import get_table_config
+from utilities.transformations.gsheet_links import add_gsheet_link
 
 def display_compliance_badge(clasificacion):
     """Displays a formatted st.badge based on the classification."""
@@ -34,3 +34,29 @@ def render_model_ui(df, source_name=None, table_name=None):
     st.code(dtypes_str)
     st.dataframe(df)
     st.divider()
+
+def render_troubled_rows(df, gid, row_indices=None):
+    """
+    Renders a dataframe of troubled rows with a configured Google Sheet link.
+    
+    Args:
+        df (pd.DataFrame): The dataframe containing the rows to display.
+        gid (str): The Google Sheet Grid ID.
+        row_indices (pd.Series or list, optional): The original row indices for linking. 
+                                                   If None, tries to use df['row_index'].
+    """
+    if row_indices is None:
+        if 'row_index' in df.columns:
+            row_indices = df['row_index']
+    
+    # We pass None for row_indices if we can't find them, add_gsheet_link handles it (or we should ensure it does)
+    # Looking at add_gsheet_link usage, it expects row_indices. 
+    # If df has row_index, we use it. 
+    
+    df_with_links = add_gsheet_link(df, gid, row_indices)
+    
+    st.dataframe(
+        df_with_links, 
+        use_container_width=True,
+        column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
+    )

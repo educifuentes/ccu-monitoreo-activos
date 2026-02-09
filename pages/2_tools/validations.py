@@ -16,7 +16,7 @@ from tests.test_contratos import validate_contratos
 # --- Page Config & Header ---
 st.set_page_config(page_title="Validaciones", layout="wide")
 st.title(":material/fact_check: Validaciones")
-st.markdown("Chequeos automáticos sobre las tablas maestras (Marts) para asegurar la integridad de los reportes.")
+st.markdown("Chequeos automáticos sobre las tablas fuente de Google Sheets para asegurar la integridad de los reportes.")
 
 
 # --- Tab Layout ---
