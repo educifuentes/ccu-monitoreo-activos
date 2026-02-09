@@ -36,7 +36,12 @@ with tab1:
 # --- Tab 2: Censos ---
 with tab2:
     df_censos = censos()
-    validate_censos(df_censos)
+    # We reuse df_loc from tab1, but ensuring it's loaded if tab1 wasn't run is safer, 
+    # though streamlit runs top-down. 
+    # Better to load it if not present, but here we can assume it's available or reload.
+    if 'df_loc' not in locals():
+        df_loc = locales()
+    validate_censos(df_censos, df_loc)
 
 # --- Tab 3: Bases CCU ---
 with tab3:
