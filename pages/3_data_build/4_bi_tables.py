@@ -12,20 +12,36 @@ from utilities.ui_components import render_model_ui
 st.title("BI Tables")
 st.markdown("Tablas procesadas con lógica de negocio específica para visualización en Dashboards.")
 
-# Create tabs for organization
-tab1, tab2 = st.tabs([
-    "📊 BI Activos",
-    "📍 BI Censo Locales"
+# --- Load Data (Top Level) ---
+df_activos = bi_activos()
+df_censos = bi_censos()
+df_locales = bi_locales()
+df_contratos = bi_contratos()
+
+# Create tabs for organization using Material Icons
+tab1, tab2, tab3, tab4 = st.tabs([
+    ":material/sports_bar: Activos",
+    ":material/assignment: Censos",
+    ":material/store: Locales",
+    ":material/description: Contratos"
 ])
 
 with tab1:
     st.header("BI Activos")
     st.markdown("Cálculo de variaciones y estados de activos entre periodos.")
-    df_activos = bi_activos()
     render_model_ui(df_activos)
 
 with tab2:
-    st.header("BI Censo Locales")
-    st.markdown("Lógica de cumplimiento y cuotas basada en el último censo.")
-    df_censo = bi_censo_locales()
-    render_model_ui(df_censo)
+    st.header("BI Censos")
+    st.markdown("Lógica de cumplimiento y cuotas basada en censos por periodo.")
+    render_model_ui(df_censos)
+
+with tab3:
+    st.header("BI Locales")
+    st.markdown("Información detallada de locales monitoreados.")
+    render_model_ui(df_locales)
+
+with tab4:
+    st.header("BI Contratos")
+    st.markdown("Información de contratos y activos comprometidos.")
+    render_model_ui(df_contratos)
