@@ -1,7 +1,7 @@
 CLASIFICACION_COLORS = {
-    "En regla": "#83c9ff", 
-    "No en regla": "#ffabab",
-    "No aplica": "#CBDCEB"
+    "En regla": "#427A43", 
+    "No en regla": "#E6501B",
+    "No aplica": "#FAB95B"
 }
 
 MARCAS_COLORS = {

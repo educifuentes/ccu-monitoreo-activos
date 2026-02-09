@@ -45,9 +45,10 @@ bi_censos_df = bi_censos()
 # PANEL METRICAS
 # -----------------------------------------------------------------------------
 
+bi_censos_2025_df = bi_censos_df[bi_censos_df['periodo'] == "2025-S2"]
 
 # Calculate KPIs based on the clasificacion of all census records.
-clasificacion_counts = bi_censos_df['clasificacion'].value_counts()
+clasificacion_counts = bi_censos_2025_df['clasificacion'].value_counts()
 
 en_regla = clasificacion_counts.get("En regla", 0)
 no_en_regla = clasificacion_counts.get("No en regla", 0)
@@ -78,10 +79,7 @@ with col4:
 st.header("Cumplimiento por Periodo - Censos")
 st.markdown("Nota: Por ahora solo Censo 2025, el cual tiene la info para calcular el cumplimiento")
 
-# drop rows with periodo "2024-S2"
-bi_censos_df = bi_censos_df[bi_censos_df['periodo'] != "2024-S2"]
-
-chart = alt.Chart(bi_censos_df).mark_bar().encode(
+chart = alt.Chart(bi_censos_2025_df).mark_bar().encode(
     x=alt.X('periodo:O', title='Periodo'),
     y=alt.Y('count():Q', title='Número de Locales'),
     color=alt.Color(
