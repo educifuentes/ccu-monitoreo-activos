@@ -5,33 +5,34 @@ from models.marts.gsheets.gsheets_tables import (
     bases_ccu, 
     contratos
 )
+from utilities.ui_icons import ICONS
 
 st.title("Explorador de Datos")
-st.markdown("Exploración rápida de los DataFrames maestros alojados en Google Sheets.")
+st.markdown("Exploración rápida de los tablas en Google Sheets.")
 
-def render_data_info(df):
-    """Renders a human-readable info panel for the dataframe."""
-    col1, col2 = st.columns(2)
-    with col1:
-        st.metric("Total Registros", f"{len(df):,}")
-    with col2:
-        st.metric("Columnas", len(df.columns))
+def safe_render(df):
+    """
+    Renders the data info and dataframe, safely dropping 'row_index' if present.
+    """
+    if 'row_index' in df.columns:
+        df = df.drop(columns=['row_index'])
+    
+    st.dataframe(df, use_container_width=True)
 
 
 # Create tabs for organization
 tab1, tab2, tab3, tab4 = st.tabs([
-    ":material/sports_bar: Locales",
-    ":material/checklist_rtl: Censos",
-    ":material/assignment: Bases CCU",
-    ":material/contract: Contratos"
+    f"{ICONS['locales']} Locales",
+    f"{ICONS['censos']} Censos",
+    f"{ICONS['bases_ccu']} Bases CCU",
+    f"{ICONS['contratos']} Contratos"
 ])
 
 with tab1:
     st.header("Locales")
     try:
-        df_locales = locales()
-        render_data_info(df_locales)
-        st.dataframe(df_locales, use_container_width=True)
+        st.metric("Total Registros", f"{len(locales()):,}")
+        safe_render(locales())
     except Exception as e:
         st.error(f"Error cargando locales: {e}")
 
@@ -39,25 +40,31 @@ with tab2:
     st.header("Censos")
     try:
         df_censos = censos()
-        render_data_info(df_censos)
-        st.dataframe(df_censos, use_container_width=True)
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Total", f"{len(df_censos):,}")
+        col2.metric("2024-S2", f"{len(df_censos[df_censos['periodo'] == '2024-S2']):,}")
+        col3.metric("2025-S2", f"{len(df_censos[df_censos['periodo'] == '2025-S2']):,}")
+
+        safe_render(df_censos)
     except Exception as e:
         st.error(f"Error cargando censos: {e}")
 
 with tab3:
     st.header("Bases CCU")
     try:
-        df_bases = bases_ccu()
-        render_data_info(df_bases)
-        st.dataframe(df_bases, use_container_width=True)
+        df_bases_ccu = bases_ccu()
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Total", f"{len(df_bases_ccu):,}")
+        col2.metric("2024-Q1", f"{len(df_bases_ccu[df_bases_ccu['periodo'] == '2024-Q1']):,}")
+        col3.metric("2026-Q1", f"{len(df_bases_ccu[df_bases_ccu['periodo'] == '2026-Q1']):,}")
+        safe_render(df_bases_ccu)
     except Exception as e:
         st.error(f"Error cargando bases_ccu: {e}")
 
 with tab4:
     st.header("Contratos")
     try:
-        df_contratos = contratos()
-        render_data_info(df_contratos)
-        st.dataframe(df_contratos, use_container_width=True)
+        st.metric("Total Registros", f"{len(contratos()):,}")
+        safe_render(contratos())
     except Exception as e:
         st.error(f"Error cargando contratos: {e}")
