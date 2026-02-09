@@ -75,3 +75,96 @@ def validate_censos(df, df_locales):
         )
     else:
         st.success(f"{ICONS['check']} No hay valores negativos en schoperas")
+
+    # 3. salidas
+    st.markdown("### 3. `salidas`")
+    
+    # Check for Nulls
+    nulos_sal = df['salidas'].isna().sum()
+    if nulos_sal > 0:
+        st.warning(f"{ICONS['warning']} {nulos_sal} registros con 'salidas' nulo")
+        nulos_df = df[df['salidas'].isna()]
+        st.dataframe(
+            add_gsheet_link(nulos_df[['local_id', 'periodo', 'salidas']], gid, nulos_df['row_index']), 
+            use_container_width=True,
+            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
+        )
+    else:
+        st.success(f"{ICONS['check']} 'salidas': Sin nulos")
+
+    # Check for Negative Values
+    negativos_sal = df[df['salidas'] < 0]
+    if not negativos_sal.empty:
+        st.error(f"{ICONS['close']} Se detectaron {len(negativos_sal)} registros con salidas negativas")
+        st.dataframe(
+            add_gsheet_link(negativos_sal[['local_id', 'periodo', 'salidas']], gid, negativos_sal['row_index']), 
+            use_container_width=True,
+            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
+        )
+    else:
+        st.success(f"{ICONS['check']} No hay valores negativos en salidas")
+
+
+# solo 2025
+    df_2025 = df[df['periodo'] == '2025-S2']
+
+    if df_2025.empty:
+        st.warning("No hay datos para el periodo 2025-S2")
+    else:
+        # 4. instalo
+        st.markdown("#### 4. `instalo`")
+        st.info("Nota: Solo aplica a registros del periodo 2025-S2")
+        
+        # Check for Nulls
+        nulos_ins = df_2025['instalo'].isna().sum()
+        if nulos_ins > 0:
+            st.warning(f"{ICONS['warning']} {nulos_ins} registros con 'instalo' nulo")
+            nulos_df = df_2025[df_2025['instalo'].isna()]
+            st.dataframe(
+                add_gsheet_link(nulos_df[['local_id', 'periodo', 'instalo']], gid, nulos_df['row_index']), 
+                use_container_width=True,
+                column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
+            )
+        else:
+            st.success(f"{ICONS['check']} 'instalo': Sin nulos")
+
+        # Check for Negative Values
+        negativos_ins = df_2025[df_2025['instalo'] < 0]
+        if not negativos_ins.empty:
+            st.error(f"{ICONS['close']} Se detectaron {len(negativos_ins)} registros con instalo negativos")
+            st.dataframe(
+                add_gsheet_link(negativos_ins[['local_id', 'periodo', 'instalo']], gid, negativos_ins['row_index']), 
+                use_container_width=True,
+                column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
+            )
+        else:
+            st.success(f"{ICONS['check']} No hay valores negativos en instalo")
+
+        # 5. disponibilizo
+        st.markdown("#### 5. `disponibilizo`")
+        st.info("Nota: Solo aplica a registros del periodo 2025-S2")
+        
+        # Check for Nulls
+        nulos_disp = df_2025['disponibilizo'].isna().sum()
+        if nulos_disp > 0:
+            st.warning(f"{ICONS['warning']} {nulos_disp} registros con 'disponibilizo' nulo")
+            nulos_df = df_2025[df_2025['disponibilizo'].isna()]
+            st.dataframe(
+                add_gsheet_link(nulos_df[['local_id', 'periodo', 'disponibilizo']], gid, nulos_df['row_index']), 
+                use_container_width=True,
+                column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
+            )
+        else:
+            st.success(f"{ICONS['check']} 'disponibilizo': Sin nulos")
+
+        # Check for Negative Values
+        negativos_disp = df_2025[df_2025['disponibilizo'] < 0]
+        if not negativos_disp.empty:
+            st.error(f"{ICONS['close']} Se detectaron {len(negativos_disp)} registros con disponibilizo negativos")
+            st.dataframe(
+                add_gsheet_link(negativos_disp[['local_id', 'periodo', 'disponibilizo']], gid, negativos_disp['row_index']), 
+                use_container_width=True,
+                column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
+            )
+        else:
+            st.success(f"{ICONS['check']} No hay valores negativos en disponibilizo")
