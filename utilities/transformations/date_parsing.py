@@ -48,5 +48,8 @@ def parse_spanish_month_year(df, column_name):
     processed = df[column_name].apply(process_val)
     df[column_name] = processed.apply(lambda x: x[0])
     df[f"{column_name}_es_rango"] = processed.apply(lambda x: x[1])
+
+    # drop the "es_rango" column
+    df = df.drop(columns=[f"{column_name}_es_rango"])
     
     return df

@@ -7,6 +7,9 @@ from models.marts.gsheets.gsheets_tables import (
 )
 from utilities.ui_icons import ICONS
 
+
+st.set_page_config(page_title="Explorador de Datos", layout="wide")
+
 st.title("Explorador de Datos")
 st.markdown("Exploración rápida de los tablas en Google Sheets.")
 
