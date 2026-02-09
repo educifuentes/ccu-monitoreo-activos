@@ -10,6 +10,13 @@ from models.marts.dashboard.bi_censos import bi_censos
 from utilities.ui_components import display_compliance_badge
 from utilities.config import CLASIFICACION_COLORS, MARCAS_COLORS
 
+def format_date_spanish(dt):
+    if pd.isna(dt):
+        return "N/A"
+    months = ["enero", "febrero", "marzo", "abril", "mayo", "junio", 
+              "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+    return f"{months[dt.month - 1]} {dt.year}"
+
 st.set_page_config(page_title="Reportes General y Locales", layout="wide")
 
 st.title("Monitoreo de Activos CCU")
@@ -85,6 +92,9 @@ st.header("Cumplimiento por Periodo - Censos")
 
 # st.altair_chart(chart, use_container_width=True, height=300)
 
+
+
+
 # -----------------------------------------------------------------------------
 # SECCIÓN LOCALES (Detalle por Establecimiento)
 # -----------------------------------------------------------------------------
@@ -158,11 +168,13 @@ else:
         with st.container(border=True):
             c1, c2, c3 = st.columns(3)
             c1.metric("Folio", local_contract['folio'] if pd.notna(local_contract['folio']) else "N/A")
-            c2.metric("Inicio", local_contract['fecha_inicio'].strftime('%Y-%m') if pd.notna(local_contract['fecha_inicio']) else "N/A")
-            c3.metric("Activos Comprometidos", f"{int(local_contract['activos_entregados'])}" if pd.notna(local_contract['activos_entregados']) else "N/A")
             
-            if 'fecha_termino' in local_contract and pd.notna(local_contract['fecha_termino']):
-                st.markdown(f"📅 **Término de Contrato:** {local_contract['fecha_termino'].strftime('%d/%m/%Y')}")
+            inicio_str = format_date_spanish(local_contract['fecha_inicio']) if 'fecha_inicio' in local_contract else "N/A"
+            termino_str = format_date_spanish(local_contract['fecha_termino']) if 'fecha_termino' in local_contract else "N/A"
+            periodo_str = f"{inicio_str} - {termino_str}" if inicio_str != "N/A" or termino_str != "N/A" else "N/A"
+            
+            c2.metric("Periodo contrato", periodo_str)
+            c3.metric("Activos Comprometidos", f"{int(local_contract['activos_entregados'])}" if pd.notna(local_contract['activos_entregados']) else "N/A")
             
             if local_contract.get('es_local_imagen?') == True:
                 st.info("✨ Este local tiene categoría **Local Imagen** según contrato.")
