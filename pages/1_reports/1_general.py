@@ -8,7 +8,7 @@ from models.marts.dashboard.bi_contratos import bi_contratos
 from models.marts.dashboard.bi_censos import bi_censos
 
 from utilities.ui_components import display_compliance_badge
-from utilities.config import CLASIFICACION_COLORS, MARCAS_COLORS
+from utilities.ui_config import CLASIFICACION_COLORS, MARCAS_COLORS
 
 def format_date_spanish(dt):
     if pd.isna(dt):
