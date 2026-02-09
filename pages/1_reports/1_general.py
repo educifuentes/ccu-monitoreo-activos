@@ -76,7 +76,12 @@ with col_chart:
                 domain=list(CLASIFICACION_COLORS.keys()),
                 range=list(CLASIFICACION_COLORS.values())
             )
-        )
+        ),
+        tooltip=[
+            alt.Tooltip('periodo:O', title='Periodo'),
+            alt.Tooltip('count():Q', title='Número de Locales'),
+            alt.Tooltip('clasificacion:N', title='Clasificación')
+        ]
     )
     st.altair_chart(chart, use_container_width=True, height=250)
 
