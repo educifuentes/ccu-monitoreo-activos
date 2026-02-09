@@ -1,16 +1,18 @@
 import streamlit as st
 import os
 from utilities.render_docs import render_model_docs
+from utilities.ui_icons import ICONS
 
-st.title("📚 Documentación")
+st.title(f"{ICONS['documentation']} Documentación")
 
 
 # Create tabs for organization
-tab1, tab2, tab3, tab4 = st.tabs([
-    ":material/sports_bar: Locales",
-    ":material/checklist_rtl: Censos",
-    ":material/assignment: Bases CCU",
-    ":material/contract: Contratos"
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    f"{ICONS['locales']} Locales",
+    f"{ICONS['censos']} Censos",
+    f"{ICONS['bases_ccu']} Bases CCU",
+    f"{ICONS['contratos']} Contratos",
+    f"{ICONS['metrics']} Metricas"
 ])
 
 with tab1:
@@ -32,3 +34,8 @@ with tab4:
     st.header("Fact Contratos")
     fct_contratos_path = os.path.abspath("models/marts/_fct_contratos.yml")
     render_model_docs(fct_contratos_path)
+
+with tab5:
+    st.header("Métricas")
+    fct_metricas_path = os.path.abspath("models/marts/metrics/_metrics_docs.yml")
+    render_model_docs(fct_metricas_path, kind="metrics")

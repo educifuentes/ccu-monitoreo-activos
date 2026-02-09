@@ -2,7 +2,7 @@ import streamlit as st
 import yaml
 import os
 
-def render_model_docs(yaml_path):
+def render_model_docs(yaml_path, kind="table"):
     """
     Lee un archivo YAML de documentación (formato dbt) y lo renderiza
     con un diseño limpio y profesional en Streamlit.
@@ -18,11 +18,13 @@ def render_model_docs(yaml_path):
         st.error(f"❌ Error al cargar el archivo YAML: {e}")
         return
 
-    if not data or 'models' not in data:
-        st.warning("No se encontró información de modelos en el archivo.")
+    if not data or ('models' not in data and 'metrics' not in data):
+        st.warning("No se encontró información de modelos o métricas en el archivo.")
         return
 
-    for model in data.get('models', []):
+    items = data.get('models', []) + data.get('metrics', [])
+
+    for model in items:
         model_name = model.get('name', 'Sin Nombre')
         description = model.get('description', 'Sin descripción disponible.')
         
@@ -32,7 +34,10 @@ def render_model_docs(yaml_path):
             
             if 'columns' in model:                
                 # Preparar datos para la tabla
-                table_content = "| Columna | Descripción | Tipo |\n| :--- | :--- | :--- |\n"
+                if kind == "metrics":
+                    table_content = "| Columna | Descripción |\n| :--- | :--- |\n"
+                else:
+                    table_content = "| Columna | Descripción | Tipo |\n| :--- | :--- | :--- |\n"
                 
                 def get_simple_type(t):
                     if not t: return "---"
@@ -46,10 +51,17 @@ def render_model_docs(yaml_path):
                 for col in model['columns']:
                     name = f"`{col.get('name', '')}`"
                     desc = col.get('description', '---')
-                    raw_type = col.get('data_type') or col.get('type', '')
-                    tipo = get_simple_type(raw_type)
-                    table_content += f"| {name} | {desc} | {tipo} |\n"
+                    
+                    if kind == "metrics":
+                        table_content += f"| {name} | {desc} |\n"
+                    else:
+                        raw_type = col.get('data_type') or col.get('type', '')
+                        tipo = get_simple_type(raw_type)
+                        table_content += f"| {name} | {desc} | {tipo} |\n"
                 
                 st.markdown(table_content)
+            
+            if 'table' in model:
+                st.markdown(model['table'])
             
             st.divider()
