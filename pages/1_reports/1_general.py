@@ -10,6 +10,7 @@ from models.marts.dashboard.bi_censos import bi_censos
 from utilities.ui_components import display_compliance_badge
 from utilities.ui_config import CLASIFICACION_COLORS, MARCAS_COLORS
 from utilities.transformations.date_formatting import format_date_spanish
+from models.marts.metrics.general_metrics import calculate_general_metrics
 
 st.set_page_config(page_title="Reportes General y Locales", layout="wide")
 
@@ -41,28 +42,20 @@ bi_censos_df = bi_censos()
 
 bi_censos_2025_df = bi_censos_df[bi_censos_df['periodo'] == "2025-S2"]
 
-# Calculate KPIs based on the clasificacion of all census records.
-clasificacion_counts = bi_censos_2025_df['clasificacion'].value_counts()
-
-en_regla = clasificacion_counts.get("En regla", 0)
-no_en_regla = clasificacion_counts.get("No en regla", 0)
-sin_comodato = clasificacion_counts.get("Sin comodato o terminado", 0)
-no_aplica = clasificacion_counts.get("No aplica", 0)
-
-total_locales = bi_activos_df['local_id'].nunique()
-total_contratos_vigentes = 999
+# Calculate KPIs using the metrics module
+metrics = calculate_general_metrics(bi_activos_df, bi_censos_2025_df, bi_contratos_df, bi_locales_df)
 
 col_metrics, col_chart = st.columns([1, 1.5])
 
 with col_metrics:
     st.subheader("Métricas")
     m1, m2 = st.columns(2)
-    m1.metric("Locales", f"{total_locales}")
-    m2.metric("Contratos Vigentes", f"{total_contratos_vigentes}")
+    m1.metric("Locales", f"{metrics['total_locales']}")
+    m2.metric("Contratos Vigentes", f"{metrics['total_contratos_vigentes']}")
     
     m3, m4 = st.columns(2)
-    m3.metric("En regla", f"{en_regla}")
-    m4.metric("No en regla", f"{no_en_regla}")
+    m3.metric("En regla", f"{metrics['en_regla']}")
+    m4.metric("No en regla", f"{metrics['no_en_regla']}")
 
 with col_chart:
     st.subheader("Cumplimiento - Censos")
