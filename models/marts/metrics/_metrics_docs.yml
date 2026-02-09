@@ -1,5 +1,5 @@
 metrics:
-  - name: "Clasificación de Cumplimiento (Reglas de Negocio)"
+  - name: "Clasificación de Cumplimiento"
     column_name: "clasificacion"
     description: "Lógica de negocio para clasificar locales según normativa de libre competencia. Se evalúa el total de 'Salidas CCU' (grifos); si este es mayor a 3, se exige una 'Cuota Objetivo' de 1 salida para la competencia por cada 4 de CCU. El cumplimiento ('En Regla') se logra si la suma de salidas instaladas o disponibilizadas para la competencia iguala o supera esta cuota; de lo contrario, se marca como 'No en Regla'."
     table: |

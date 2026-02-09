@@ -29,7 +29,10 @@ def render_model_docs(yaml_path, kind="table"):
         description = model.get('description', 'Sin descripción disponible.')
         
         with st.container():
-            st.subheader(f"Tabla: {model_name}")
+            if kind == "metrics":
+                st.subheader(f"{model_name}")
+            else:
+                st.subheader(f"Tabla: {model_name}")
             st.info(description)
             
             if 'columns' in model:                
