@@ -93,12 +93,12 @@ def validate_locales(df):
     else:
         st.success(f"{ICONS['check']} Todos los locales tienen Región")
 
-    # 6. ciudad
-    st.markdown("### 6. `ciudad`")
-    nulos_ciudad = df[df['ciudad'].isna()]
-    if not nulos_ciudad.empty:
-        st.warning(f"{ICONS['warning']} Detectados {len(nulos_ciudad)} locales sin Ciudad")
-        render_troubled_rows(nulos_ciudad[['local_id', 'razon_social', 'ciudad']], gid, nulos_ciudad['row_index'])
+    # 6. comuna
+    st.markdown("### 6. `comuna`")
+    nulos_comuna = df[df['comuna'].isna()]
+    if not nulos_comuna.empty:
+        st.warning(f"{ICONS['warning']} Detectados {len(nulos_comuna)} locales sin comuna")
+        render_troubled_rows(nulos_comuna[['local_id', 'razon_social', 'comuna']], gid, nulos_comuna['row_index'])
     else:
-        st.success(f"{ICONS['check']} Todos los locales tienen Ciudad")
+        st.success(f"{ICONS['check']} Todos los locales tienen comuna")
     
