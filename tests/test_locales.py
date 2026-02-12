@@ -84,6 +84,19 @@ def validate_locales(df):
     else:
         st.success(f"{ICONS['check']} Todos los locales tienen Dirección")
 
+    # Check for Duplicates in 'direccion'
+    non_null_dir = df[df['direccion'].notna()].copy()
+    # Normalize address for comparison
+    non_null_dir['direccion_std'] = non_null_dir['direccion'].astype(str).str.lower().str.strip().str.replace(r'\s+', ' ', regex=True)
+    
+    dupes_dir = non_null_dir[non_null_dir.duplicated('direccion_std', keep=False)].sort_values('direccion_std')
+    
+    if not dupes_dir.empty:
+        st.warning(f"{ICONS['warning']} Se detectaron {len(dupes_dir)} filas con Dirección duplicada")
+        render_troubled_rows(dupes_dir[['local_id', 'razon_social', 'direccion']], gid, dupes_dir['row_index'])
+    else:
+        st.success(f"{ICONS['check']} No se encontraron Direcciones duplicadas")
+
     # 5. Región
     st.markdown("### 5. `region`")
     nulos_reg = df[df['region'].isna()]
