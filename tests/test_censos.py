@@ -22,7 +22,7 @@ def validate_censos(df, df_locales):
     else:
         st.error(f"{ICONS['close']} Se detectaron {total_filas - ids_unicos} registros duplicados (mismo Local y Periodo)")
         dupes = df[df.duplicated('key', keep=False)].sort_values(['local_id', 'periodo'])
-        render_troubled_rows(dupes[['local_id', 'periodo', 'schoperas']], gid, dupes['row_index'])
+        render_troubled_rows(dupes[['local_id', 'periodo', 'schoperas', 'row_index']], gid)
 
     # check if local_id exists in locales
     
@@ -38,7 +38,7 @@ def validate_censos(df, df_locales):
     else:
         st.error(f"{ICONS['close']} Se detectaron {len(ids_faltantes)} `local_id` que NO existen en Locales")
         missing_df = df[df['local_id'].isin(ids_faltantes)]
-        render_troubled_rows(missing_df[['local_id', 'periodo']].drop_duplicates(), gid, None)
+        render_troubled_rows(missing_df[['local_id', 'periodo', 'row_index']].drop_duplicates(), gid)
 
     # 2. schoperas
     st.markdown("### 2. `schoperas`")
@@ -48,7 +48,7 @@ def validate_censos(df, df_locales):
     if nulos > 0:
         st.warning(f"{ICONS['warning']} {nulos} registros con 'schoperas' nulo")
         nulos_df = df[df['schoperas'].isna()]
-        render_troubled_rows(nulos_df[['local_id', 'periodo', 'schoperas']], gid, nulos_df['row_index'])
+        render_troubled_rows(nulos_df[['local_id', 'periodo', 'schoperas', 'row_index']], gid)
     else:
         st.success(f"{ICONS['check']} 'schoperas': Sin nulos")
 
@@ -68,7 +68,7 @@ def validate_censos(df, df_locales):
     if nulos_sal > 0:
         st.warning(f"{ICONS['warning']} {nulos_sal} registros con 'salidas' nulo")
         nulos_df = df[df['salidas'].isna()]
-        render_troubled_rows(nulos_df[['local_id', 'periodo', 'salidas']], gid, nulos_df['row_index'])
+        render_troubled_rows(nulos_df[['local_id', 'periodo', 'salidas', 'row_index']], gid)
     else:
         st.success(f"{ICONS['check']} 'salidas': Sin nulos")
 
@@ -76,7 +76,7 @@ def validate_censos(df, df_locales):
     negativos_sal = df[df['salidas'] < 0]
     if not negativos_sal.empty:
         st.error(f"{ICONS['close']} Se detectaron {len(negativos_sal)} registros con salidas negativas")
-        render_troubled_rows(negativos_sal[['local_id', 'periodo', 'salidas']], gid, negativos_sal['row_index'])
+        render_troubled_rows(negativos_sal[['local_id', 'periodo', 'salidas', 'row_index']], gid)
     else:
         st.success(f"{ICONS['check']} No hay valores negativos en salidas")
 
@@ -96,7 +96,7 @@ def validate_censos(df, df_locales):
         if nulos_ins > 0:
             st.warning(f"{ICONS['warning']} {nulos_ins} registros con 'instalo' nulo")
             nulos_df = df_2025[df_2025['instalo'].isna()]
-            render_troubled_rows(nulos_df[['local_id', 'periodo', 'instalo']], gid, nulos_df['row_index'])
+            render_troubled_rows(nulos_df[['local_id', 'periodo', 'instalo', 'row_index']], gid)
         else:
             st.success(f"{ICONS['check']} 'instalo': Sin nulos")
 
@@ -104,7 +104,7 @@ def validate_censos(df, df_locales):
         negativos_ins = df_2025[df_2025['instalo'] < 0]
         if not negativos_ins.empty:
             st.error(f"{ICONS['close']} Se detectaron {len(negativos_ins)} registros con instalo negativos")
-            render_troubled_rows(negativos_ins[['local_id', 'periodo', 'instalo']], gid, negativos_ins['row_index'])
+            render_troubled_rows(negativos_ins[['local_id', 'periodo', 'instalo', 'row_index']], gid)
         else:
             st.success(f"{ICONS['check']} No hay valores negativos en instalo")
 
@@ -117,7 +117,7 @@ def validate_censos(df, df_locales):
         if nulos_disp > 0:
             st.warning(f"{ICONS['warning']} {nulos_disp} registros con 'disponibilizo' nulo")
             nulos_df = df_2025[df_2025['disponibilizo'].isna()]
-            render_troubled_rows(nulos_df[['local_id', 'periodo', 'disponibilizo']], gid, nulos_df['row_index'])
+            render_troubled_rows(nulos_df[['local_id', 'periodo', 'disponibilizo', 'row_index']], gid)
         else:
             st.success(f"{ICONS['check']} 'disponibilizo': Sin nulos")
 
@@ -125,6 +125,6 @@ def validate_censos(df, df_locales):
         negativos_disp = df_2025[df_2025['disponibilizo'] < 0]
         if not negativos_disp.empty:
             st.error(f"{ICONS['close']} Se detectaron {len(negativos_disp)} registros con disponibilizo negativos")
-            render_troubled_rows(negativos_disp[['local_id', 'periodo', 'disponibilizo']], gid, negativos_disp['row_index'])
+            render_troubled_rows(negativos_disp[['local_id', 'periodo', 'disponibilizo', 'row_index']], gid)
         else:
             st.success(f"{ICONS['check']} No hay valores negativos en disponibilizo")

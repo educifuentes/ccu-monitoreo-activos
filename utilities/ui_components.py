@@ -50,14 +50,15 @@ def render_troubled_rows(df, gid, row_indices=None):
         if 'row_index' in df.columns:
             row_indices = df['row_index']
     
-    # We pass None for row_indices if we can't find them, add_gsheet_link handles it (or we should ensure it does)
-    # Looking at add_gsheet_link usage, it expects row_indices. 
-    # If df has row_index, we use it. 
-    
     df_with_links = add_gsheet_link(df, gid, row_indices)
     
+    # Drop row_index from display if it exists
+    display_df = df_with_links.copy()
+    if 'row_index' in display_df.columns:
+        display_df = display_df.drop(columns=['row_index'])
+
     st.dataframe(
-        df_with_links, 
+        display_df, 
         use_container_width=True,
         column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
     )
