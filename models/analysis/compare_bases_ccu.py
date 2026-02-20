@@ -1,6 +1,6 @@
 import pandas as pd
-from models.intermediate._int_base_norm_locales import int_base_norm_locales
-from models.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1_locales, int_reportes_ccu_base_2026_q1_activos
+from models.raw.intermediate._int_base_norm_locales import int_base_norm_locales
+from models.raw.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1_locales, int_reportes_ccu_base_2026_q1_activos
 
 def compare_locales_df():
     # Load dataframes

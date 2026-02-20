@@ -1,12 +1,12 @@
 import streamlit as st
 from utilities.widgets.explorer_de_datos import explorer_de_datos
 
-from models.intermediate._int_censos_censo_2 import int_censos_censo_2
-from models.intermediate._int_censos_censo_1 import int_censos_censo_1
-from models.intermediate._int_base_norm_censo_1 import int_base_norm_censo_1
-from models.intermediate._int_base_norm_locales import int_base_norm_locales
-from models.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1, int_reportes_ccu_base_2026_q1_locales
-from models.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
+from models.raw.intermediate._int_censos_censo_2 import int_censos_censo_2
+from models.raw.intermediate._int_censos_censo_1 import int_censos_censo_1
+from models.raw.intermediate._int_base_norm_censo_1 import int_base_norm_censo_1
+from models.raw.intermediate._int_base_norm_locales import int_base_norm_locales
+from models.raw.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1, int_reportes_ccu_base_2026_q1_locales
+from models.raw.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
 
 from utilities.ui_components import render_model_ui
 

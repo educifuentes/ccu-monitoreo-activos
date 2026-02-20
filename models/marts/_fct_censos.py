@@ -1,6 +1,6 @@
 import pandas as pd
-from models.intermediate._int_censos_censo_2 import int_censos_censo_2
-from models.intermediate._int_base_norm_censo_1 import int_base_norm_censo_1
+from models.raw.intermediate._int_censos_censo_2 import int_censos_censo_2
+from models.raw.intermediate._int_base_norm_censo_1 import int_base_norm_censo_1
 
 
 def fct_censos():

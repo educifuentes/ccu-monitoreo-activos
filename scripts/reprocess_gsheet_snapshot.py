@@ -2,8 +2,8 @@
 
 import pandas as pd
 
-from models.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1_contratos_imagen, int_reportes_ccu_base_2026_q1_activos
-from models.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
+from models.raw.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1_contratos_imagen, int_reportes_ccu_base_2026_q1_activos
+from models.raw.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
 
 from utilities.transformations.date_parsing import parse_spanish_month_year
 from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
