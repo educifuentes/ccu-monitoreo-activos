@@ -1,11 +1,11 @@
 import streamlit as st
 
-from models.staging._stg_censos_censo_2 import stg_censos_censo_2
-from models.staging._stg_censos_censo_1 import stg_censos_censo_1
-from models.staging._stg_base_norm_censo_1 import stg_base_norm_censo_1
-from models.staging._stg_base_norm_locales import stg_base_norm_locales
-from models.staging._stg_base_norm_original import stg_base_norm_original
-from models.staging._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
+from models.staging.censos._stg_censos_censo_2 import stg_censos_censo_2
+from models.staging.censos._stg_censos_censo_1 import stg_censos_censo_1
+from models.staging.base_normalizada._stg_base_norm_censo_1 import stg_base_norm_censo_1
+from models.staging.base_normalizada._stg_base_norm_locales import stg_base_norm_locales
+from models.staging.base_normalizada._stg_base_norm_original import stg_base_norm_original
+from models.staging.bases_ccu._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
 
 from utilities.ui_components import render_model_ui
 

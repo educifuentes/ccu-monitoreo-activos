@@ -1,4 +1,4 @@
-from models.staging._stg_base_norm_censo_1 import stg_base_norm_censo_1
+from models.staging.base_normalizada._stg_base_norm_censo_1 import stg_base_norm_censo_1
 import pandas as pd
 from utilities.transformations.process_marcas import process_marcas, classify_marcas
 

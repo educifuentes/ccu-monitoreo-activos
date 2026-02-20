@@ -3,7 +3,7 @@ import numpy as np
 
 
 
-from models.staging._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
+from models.staging.bases_ccu._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
 
 def int_reportes_ccu_base_2026_q1():
     # Use staging model instead of loading CSV directly
