@@ -44,20 +44,4 @@ def validate_contratos(df):
     else:
         st.success(f"{ICONS['check']} Todos los contratos tienen Folio")
 
-    # 3. fecha_inicio
-    st.markdown("### 3. `fecha_inicio`")
-    nulos_inicio = df[df['fecha_inicio'].isna()]
-    if not nulos_inicio.empty:
-        st.warning(f"{ICONS['warning']} Detectados {len(nulos_inicio)} contratos sin Fecha de Inicio")
-        render_troubled_rows(nulos_inicio[['local_id', 'fecha_inicio']], gid, nulos_inicio['row_index'])
-    else:
-        st.success(f"{ICONS['check']} Todas las fechas de inicio están completas")
-
-    # 4. fecha_termino
-    st.markdown("### 4. `fecha_termino`")
-    nulos_termino = df[df['fecha_termino'].isna()]
-    if not nulos_termino.empty:
-        st.warning(f"{ICONS['warning']} Hay {len(nulos_termino)} registros sin fecha de término registrada")
-        render_troubled_rows(nulos_termino[['local_id', 'fecha_termino']], gid, nulos_termino['row_index'])
-    else:
-        st.success(f"{ICONS['check']} Todas las fechas de término están completas")
+  
