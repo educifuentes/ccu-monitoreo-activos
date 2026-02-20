@@ -2,11 +2,11 @@ import pandas as pd
 
 from models.gsheets.staging.gsheets_tables import censos
 
-from models.marts.metrics.clasification_censo import clasify_censo
+from models.raw.marts.metrics.clasification_censo import clasify_censo
 
 def bi_censos():
     """
-    Uses the classification logic defined in models.marts.metrics.clasification_censo.
+    Uses the classification logic defined in models.raw.marts.metrics.clasification_censo.
     """
     # 1. Data Loading and Integration
     df = censos()

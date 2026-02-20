@@ -1,9 +1,9 @@
 import streamlit as st
 
-from models.marts._fct_censos import fct_censos
-from models.marts._dim_locales import dim_locales
-from models.marts._fct_bases_ccu import fct_bases_ccu
-from models.marts._fct_contratos import fct_contratos
+from models.raw.marts._fct_censos import fct_censos
+from models.raw.marts._dim_locales import dim_locales
+from models.raw.marts._fct_bases_ccu import fct_bases_ccu
+from models.raw.marts._fct_contratos import fct_contratos
 
 from utilities.ui_components import render_model_ui
 

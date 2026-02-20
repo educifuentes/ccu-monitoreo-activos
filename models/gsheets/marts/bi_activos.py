@@ -1,7 +1,7 @@
 import pandas as pd
 
-from models.marts._fct_censos import fct_censos
-from models.marts._fct_bases_ccu import fct_bases_ccu
+from models.raw.marts._fct_censos import fct_censos
+from models.raw.marts._fct_bases_ccu import fct_bases_ccu
 
 from models.gsheets.staging.gsheets_tables import bases_ccu, censos
 

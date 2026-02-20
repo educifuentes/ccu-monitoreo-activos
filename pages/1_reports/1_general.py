@@ -7,7 +7,7 @@ from models.gsheets.marts.bi_locales import bi_locales
 from models.gsheets.marts.bi_contratos import bi_contratos
 from models.gsheets.marts.bi_censos import bi_censos
 
-from models.marts.metrics.general_metrics import calculate_general_metrics, get_latest_classification
+from models.raw.marts.metrics.general_metrics import calculate_general_metrics, get_latest_classification
 
 from utilities.ui_components import display_compliance_badge
 from utilities.ui_config import CLASIFICACION_COLORS, MARCAS_COLORS
