@@ -1,7 +1,7 @@
 import streamlit as st
 
 from models.analysis.compare_bases_ccu import compare_locales_df, compare_activos_df
-from models.raw.base_normalizada._stg_base_norm_original import stg_base_norm_original
+from models.raw.staging.base_normalizada._stg_base_norm_original import stg_base_norm_original
 
 from utilities.ui_components import render_model_ui
 

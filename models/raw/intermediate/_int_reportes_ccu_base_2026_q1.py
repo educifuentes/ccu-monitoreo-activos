@@ -6,7 +6,7 @@ from utilities.transformations.date_parsing import parse_spanish_month_year
 
 
 
-from models.raw.bases_ccu._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
+from models.raw.staging.bases_ccu._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
 
 def int_reportes_ccu_base_2026_q1():
     # Use staging model instead of loading CSV directly
