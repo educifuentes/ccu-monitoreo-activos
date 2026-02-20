@@ -36,12 +36,7 @@ nav_dict = {
 }
 
 if IS_LOCAL:
-    nav_dict["Dev - Modelos - RAW"] = [
-        staging_page, 
-        intermediate_page, 
-        finals_page, 
-    
-    ]
+
 
     nav_dict["Dev - Modelos - Gsheets"] = [
         gsheets_stg_page, 
@@ -49,11 +44,18 @@ if IS_LOCAL:
         bi_tables_page, 
     ]
 
-    nav_dict["Dev - Otros"] = [
-        analysis_page,
-        data_profilling_page,
-        requerimientos_page,
-    ]
+    # nav_dict["Dev - Otros"] = [
+    #     analysis_page,
+    #     data_profilling_page,
+    #     requerimientos_page,
+    # ]
+
+    # nav_dict["Dev - Modelos - RAW"] = [
+    #     staging_page, 
+    #     intermediate_page, 
+    #     finals_page, 
+    
+    # ]
 
 # current page
 pg = st.navigation(nav_dict)
