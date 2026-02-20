@@ -38,7 +38,7 @@ nav_dict = {
 if IS_LOCAL:
 
 
-    nav_dict["Dev - Modelos - Gsheets"] = [
+    nav_dict["Dev - Gsheets"] = [
         gsheets_stg_page, 
         reprocess_sheets_page,
         bi_tables_page, 
@@ -50,7 +50,7 @@ if IS_LOCAL:
     #     requerimientos_page,
     # ]
 
-    nav_dict["Dev - Modelos - RAW"] = [
+    nav_dict["Dev - RAW"] = [
         staging_page, 
         intermediate_page, 
         finals_page, 
