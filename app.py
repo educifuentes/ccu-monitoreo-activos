@@ -17,8 +17,10 @@ finals_page = st.Page("pages/3_data_build/3_finals.py", title="Finals", icon=":m
 data_profilling_page = st.Page("pages/3_data_build/data_profilling.py", title="Data Profiling", icon=":material/dashboard:")
 requerimientos_page = st.Page("pages/3_data_build/requerimientos.py", title="Requerimientos", icon=":material/dashboard:")
 analysis_page = st.Page("pages/3_data_build/analysis.py", title="Analysis", icon=":material/experiment:")
+
+# fase 2 gsheets
 bi_tables_page = st.Page("pages/3_data_build/4_bi_tables.py", title="BI Tables", icon=":material/dashboard:")
-gsheets_page = st.Page("pages/3_data_build/5_gheets.py", title="GSheets", icon=":material/dashboard:")
+gsheets_stg_page = st.Page("pages/3_data_build/5_gheets.py", title="GSheets Staging", icon=":material/dashboard:")
 reprocess_sheets_page = st.Page("pages/3_data_build/6_reprocess_sheets.py", title="Reprocess Sheets", icon=":material/dashboard:")
 
 import os
@@ -34,16 +36,23 @@ nav_dict = {
 }
 
 if IS_LOCAL:
-    nav_dict["Dev - Modelos"] = [
+    nav_dict["Dev - Modelos - RAW"] = [
         staging_page, 
         intermediate_page, 
         finals_page, 
-        gsheets_page, 
+    
+    ]
+
+    nav_dict["Dev - Modelos - Gsheets"] = [
+        gsheets_stg_page, 
         reprocess_sheets_page,
-        analysis_page, 
         bi_tables_page, 
-        data_profilling_page, 
-        requerimientos_page
+    ]
+
+    nav_dict["Dev - Otros"] = [
+        analysis_page,
+        data_profilling_page,
+        requerimientos_page,
     ]
 
 # current page
