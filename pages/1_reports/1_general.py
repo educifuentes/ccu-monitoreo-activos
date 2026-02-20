@@ -170,7 +170,7 @@ else:
                 st.warning("No hay clasificación disponible")
 
     # 4. Contract Section
-    st.subheader(":material/contract: Contrato")
+    st.subheader(":material/contract: Contrato Imagen")
     if has_contrato_imagen:
         st.success("✅ Tiene contrato Imagen")
         if 'folio' in local_contract and pd.notna(local_contract['folio']):

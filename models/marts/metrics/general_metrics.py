@@ -13,7 +13,7 @@ def calculate_general_metrics(bi_activos_df, bi_censos_2025_df, bi_contratos_df,
         "sin_comodato": clasificacion_counts.get("Sin comodato o terminado", 0),
         "no_aplica": clasificacion_counts.get("No aplica", 0),
         "total_locales": bi_locales_df['local_id'].nunique(),
-        "total_contratos_imagen": bi_contratos_df[bi_contratos_df['contrato_vigente'] == True]['local_id'].nunique()
+        "total_contratos_imagen": bi_contratos_df['local_id'].nunique()
     }
     
     
