@@ -55,3 +55,27 @@ def validate_bases_ccu(df, df_locales):
             gid, 
             non_numeric['row_index'] if 'row_index' in non_numeric.columns else None
         )
+
+    # 3. Test for base 2024
+    st.markdown("### 3. Activos Vacíos en 2024-Q1")
+    df_2024 = df[df["periodo"] == "2024-Q1"]
+    
+    # Check if 'schoperas', 'coolers', and 'salidas' are all null
+    empty_activos = df_2024[
+        df_2024["schoperas"].isna() & 
+        df_2024["coolers"].isna() & 
+        df_2024["salidas"].isna()
+    ]
+    
+    if empty_activos.empty:
+        st.success(f"{ICONS['check']} Todos los registros de 2024-Q1 tienen al menos un activo válido.")
+    else:
+        st.error(f"{ICONS['close']} Se detectaron {len(empty_activos)} registros en 2024-Q1 sin ningún activo reportado (schoperas, coolers, salidas).")
+        cols_to_show = ["local_id", "periodo", "schoperas", "coolers", "salidas"]
+        render_troubled_rows(
+            empty_activos[cols_to_show], 
+            gid, 
+            empty_activos["row_index"] if "row_index" in empty_activos.columns else None
+        )
+
+    # test for base 2024
