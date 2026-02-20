@@ -1,9 +1,9 @@
 import streamlit as st
 from pygwalker.api.streamlit import StreamlitRenderer
-from models.staging.censos._stg_censos_censo_2 import stg_censos_censo_2
-from models.staging.censos._stg_censos_censo_1 import stg_censos_censo_1
+from models.raw.censos._stg_censos_censo_2 import stg_censos_censo_2
+from models.raw.censos._stg_censos_censo_1 import stg_censos_censo_1
 
-from models.staging.base_normalizada._stg_base_norm_censo_1 import stg_base_norm_censo_1
+from models.raw.base_normalizada._stg_base_norm_censo_1 import stg_base_norm_censo_1
 
 st.header("Data Profiling")
 

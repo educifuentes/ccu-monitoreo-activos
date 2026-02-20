@@ -1,5 +1,5 @@
-from models.staging.censos._stg_censos_censo_1 import stg_censos_censo_1
-from models.staging.base_normalizada._stg_base_norm_censo_1 import stg_base_norm_censo_1
+from models.raw.censos._stg_censos_censo_1 import stg_censos_censo_1
+from models.raw.base_normalizada._stg_base_norm_censo_1 import stg_base_norm_censo_1
 
 from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
 import pandas as pd

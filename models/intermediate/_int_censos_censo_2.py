@@ -1,6 +1,6 @@
 import pandas as pd
 
-from models.staging.censos._stg_censos_censo_2 import stg_censos_censo_2
+from models.raw.censos._stg_censos_censo_2 import stg_censos_censo_2
 
 from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
 from utilities.transformations.process_marcas import process_marcas, classify_marcas

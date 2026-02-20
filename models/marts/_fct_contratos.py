@@ -1,6 +1,6 @@
 import pandas as pd
 
-from models.staging.bases_ccu._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
+from models.raw.bases_ccu._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
 
 from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
 from utilities.transformations.date_parsing import parse_spanish_month_year
