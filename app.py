@@ -44,17 +44,17 @@ if IS_LOCAL:
         bi_tables_page, 
     ]
 
-    # nav_dict["Dev - Otros"] = [
-    #     analysis_page,
-    #     data_profilling_page,
-    #     requerimientos_page,
-    # ]
+ 
 
     nav_dict["Dev - RAW"] = [
-        staging_page, 
+        staging_page,       
         intermediate_page, 
         finals_page, 
     
+    ]
+
+    nav_dict["Dev - Otros"] = [
+        analysis_page
     ]
 
 # current page
