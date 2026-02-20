@@ -65,6 +65,9 @@ def bases_ccu():
     df["coolers"] = df["coolers"].astype("Int64")
     df["schoperas"] = df["schoperas"].astype("Int64")
     df["salidas"] = df["salidas"].astype("Int64")
+
+    # clean
+    df["local_id"] = df["local_id"].replace("nan", pd.NA)
     
     return df
 
