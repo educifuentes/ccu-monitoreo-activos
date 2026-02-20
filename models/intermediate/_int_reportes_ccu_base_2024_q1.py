@@ -25,6 +25,9 @@ def int_reportes_ccu_base_2024_q1():
     df["schoperas"] = df["schoperas"].astype('Int64')
     df["salidas"] = df["salidas"].astype('Int64')
 
+    # clean
+    df["local_id"] = df["local_id"].replace("nan", None)
+
     # new columns
     # note: should be done in stg model, but int model. exepction. refactir later
     df["periodo"] = "2024-Q1"
