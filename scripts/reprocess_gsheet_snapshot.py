@@ -54,3 +54,22 @@ def reprocessed_sheets():
 
     return df_bases_ccu, df_contratos
 
+
+if __name__ == "__main__":
+    import os
+    print("Reprocessing sheets...")
+    df_bases_ccu, df_contratos = reprocessed_sheets()
+    
+    out_dir = "seeds/gsheets_snapshots/outputs"
+    os.makedirs(out_dir, exist_ok=True)
+    
+    bases_ccu_path = f"{out_dir}/2026-02-20 - Activos CCU - bases_ccu.csv"
+    contratos_path = f"{out_dir}/2026-02-20 - Activos CCU - contratos.csv"
+    
+    print(f"Exporting to {bases_ccu_path}...")
+    df_bases_ccu.to_csv(bases_ccu_path, index=False)
+    
+    print(f"Exporting to {contratos_path}...")
+    df_contratos.to_csv(contratos_path, index=False)
+    
+    print("Done!")
