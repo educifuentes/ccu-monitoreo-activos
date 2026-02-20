@@ -1,5 +1,5 @@
 import streamlit as st
-from utilities.explorer_de_datos import explorer_de_datos
+from utilities.widgets.explorer_de_datos import explorer_de_datos
 
 from models.intermediate._int_censos_censo_2 import int_censos_censo_2
 from models.intermediate._int_censos_censo_1 import int_censos_censo_1
@@ -23,18 +23,20 @@ tab1, tab2, tab3 = st.tabs([
     ":material/assignment: Bases CCU"
 ])
 
-with tab3:
-    st.header("Reportes CCU")
+with tab1:
+    st.header("Locales Intermediate")
     
-    st.subheader("Base 2026 Q1")
-    df_2026 = int_reportes_ccu_base_2026_q1()
-    render_model_ui(df_2026, source_name="reportes_ccu", table_name="base_2026_q1")
+    st.subheader("Base Normalizada")
+    df_loc = int_base_norm_locales()
+    filtered_df_loc = explorer_de_datos(df_loc)
+    st.dataframe(filtered_df_loc, use_container_width=True)
     
     st.divider()
     
-    st.subheader("Base 2024 Q1")
-    df_2024 = int_reportes_ccu_base_2024_q1()
-    render_model_ui(df_2024, source_name="reportes_ccu", table_name="base_2024_q1")
+    st.subheader("Locales desde Reporte CCU 2026")
+    df_ccu_loc = int_reportes_ccu_base_2026_q1_locales()
+    filtered_df_ccu_loc = explorer_de_datos(df_ccu_loc)
+    st.dataframe(filtered_df_ccu_loc, use_container_width=True)
 
 with tab2:
     st.header("Censos Intermediate")
@@ -63,17 +65,18 @@ with tab2:
     
     render_model_ui(df_merged)
 
-with tab1:
-    st.header("Locales Intermediate")
+with tab3:
+    st.header("Reportes CCU")
     
-    st.subheader("Base Normalizada")
-    df_loc = int_base_norm_locales()
-    filtered_df_loc = explorer_de_datos(df_loc)
-    st.dataframe(filtered_df_loc, use_container_width=True)
+    st.subheader("Base 2026 Q1")
+    df_2026 = int_reportes_ccu_base_2026_q1()
+    render_model_ui(df_2026, source_name="reportes_ccu", table_name="base_2026_q1")
     
     st.divider()
     
-    st.subheader("Locales desde Reporte CCU 2026")
-    df_ccu_loc = int_reportes_ccu_base_2026_q1_locales()
-    filtered_df_ccu_loc = explorer_de_datos(df_ccu_loc)
-    st.dataframe(filtered_df_ccu_loc, use_container_width=True)
+    st.subheader("Base 2024 Q1")
+    df_2024 = int_reportes_ccu_base_2024_q1()
+    render_model_ui(df_2024, source_name="reportes_ccu", table_name="base_2024_q1")
+
+
+
