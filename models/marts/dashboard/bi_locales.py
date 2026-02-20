@@ -1,4 +1,4 @@
-from models.staging.gsheets.gsheets_tables import locales  
+from models.gsheets.staging.gsheets_tables import locales  
 
 def bi_locales():
 

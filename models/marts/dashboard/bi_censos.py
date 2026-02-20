@@ -1,6 +1,6 @@
 import pandas as pd
 
-from models.staging.gsheets.gsheets_tables import censos
+from models.gsheets.staging.gsheets_tables import censos
 
 from models.marts.metrics.clasification_censo import clasify_censo
 

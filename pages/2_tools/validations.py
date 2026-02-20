@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-from models.staging.gsheets.gsheets_tables import (
+from models.gsheets.staging.gsheets_tables import (
     locales, 
     censos, 
     bases_ccu, 
