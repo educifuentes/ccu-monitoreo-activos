@@ -22,6 +22,14 @@ def safe_render(df):
     
     st.dataframe(df, use_container_width=True)
 
+def apply_local_id_filter(df, key_suffix):
+    """
+    Adds a text input to filter the given DataFrame by local_id.
+    """
+    filter_local_id = st.text_input("Filtrar por local_id", key=f"filter_{key_suffix}")
+    if filter_local_id and "local_id" in df.columns:
+        df = df[df["local_id"].astype(str).str.contains(filter_local_id, na=False)]
+    return df
 
 # Create tabs for organization
 tab1, tab2, tab3, tab4 = st.tabs([
@@ -34,8 +42,11 @@ tab1, tab2, tab3, tab4 = st.tabs([
 with tab1:
     st.header("Locales")
     try:
-        st.metric("Total Registros", f"{len(locales()):,}")
-        safe_render(locales())
+        df_locales = locales()
+        df_locales = apply_local_id_filter(df_locales, "locales")
+            
+        st.metric("Total Registros", f"{len(df_locales):,}")
+        safe_render(df_locales)
     except Exception as e:
         st.error(f"Error cargando locales: {e}")
 
@@ -43,6 +54,8 @@ with tab2:
     st.header("Censos")
     try:
         df_censos = censos()
+        df_censos = apply_local_id_filter(df_censos, "censos")
+        
         col1, col2, col3 = st.columns(3)
         col1.metric("Total", f"{len(df_censos):,}")
         col2.metric("2024-S2", f"{len(df_censos[df_censos['periodo'] == '2024-S2']):,}")
@@ -56,6 +69,8 @@ with tab3:
     st.header("Bases CCU")
     try:
         df_bases_ccu = bases_ccu()
+        df_bases_ccu = apply_local_id_filter(df_bases_ccu, "bases_ccu")
+        
         col1, col2, col3 = st.columns(3)
         col1.metric("Total", f"{len(df_bases_ccu):,}")
         col2.metric("2024-Q1", f"{len(df_bases_ccu[df_bases_ccu['periodo'] == '2024-Q1']):,}")
@@ -67,7 +82,10 @@ with tab3:
 with tab4:
     st.header("Contratos")
     try:
-        st.metric("Total Registros", f"{len(contratos()):,}")
-        safe_render(contratos())
+        df_contratos = contratos()
+        df_contratos = apply_local_id_filter(df_contratos, "contratos")
+        
+        st.metric("Total Registros", f"{len(df_contratos):,}")
+        safe_render(df_contratos)
     except Exception as e:
         st.error(f"Error cargando contratos: {e}")
