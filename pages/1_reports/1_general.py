@@ -49,7 +49,7 @@ with col_metrics:
     st.subheader("Métricas")
     m1, m2 = st.columns(2)
     m1.metric("Locales", f"{metrics['total_locales']}")
-    m2.metric("Contratos Vigentes", f"{metrics['total_contratos_vigentes']}")
+    m2.metric("Contratos Imagen", f"{metrics['total_contratos_imagen']}")
     
     m3, m4 = st.columns(2)
     m3.metric("En regla", f"{metrics['en_regla']}")
@@ -146,7 +146,8 @@ else:
     local_assets_history = bi_activos_df[bi_activos_df['local_id'] == selected_local_id].sort_values('fecha', ascending=False)
 
     # Contract Info
-    local_contract = bi_contratos_df[bi_contratos_df['local_id'] == selected_local_id].iloc[0] if selected_local_id in bi_contratos_df['local_id'].values else None
+    has_contrato_imagen = selected_local_id in bi_contratos_df['local_id'].values
+    local_contract = bi_contratos_df[bi_contratos_df['local_id'] == selected_local_id].iloc[0] if has_contrato_imagen else None
 
     # 3. Local Card (Ficha)
     st.subheader(f"Ficha: {local_master['razon_social']}")
@@ -170,22 +171,12 @@ else:
 
     # 4. Contract Section
     st.subheader(":material/contract: Contrato")
-    if local_contract is not None:
-        with st.container(border=True):
-            c1, c2, c3 = st.columns(3)
-            c1.metric("Folio", local_contract['folio'] if pd.notna(local_contract['folio']) else "N/A")
-            
-            inicio_str = format_date_spanish(local_contract['fecha_inicio']) if 'fecha_inicio' in local_contract else "N/A"
-            termino_str = format_date_spanish(local_contract['fecha_termino']) if 'fecha_termino' in local_contract else "N/A"
-            periodo_str = f"{inicio_str} - {termino_str}" if inicio_str != "N/A" or termino_str != "N/A" else "N/A"
-            
-            c2.markdown(f"**Periodo contrato**  \n{periodo_str}")
-            c3.metric("Activos Comprometidos", f"{int(local_contract['activos_entregados'])}" if pd.notna(local_contract['activos_entregados']) else "N/A")
-            
-            if local_contract.get('es_local_imagen?') == True:
-                st.info("✨ Este local tiene categoría **Local Imagen** según contrato.")
+    if has_contrato_imagen:
+        st.success("✅ Tiene contrato Imagen")
+        if 'folio' in local_contract and pd.notna(local_contract['folio']):
+            st.markdown(f"**Folio:** {local_contract['folio']}")
     else:
-        st.info("No se encontró información de contrato para este local")
+        st.info("No tiene contrato Imagen")
 
     # 5. Assets Evolution
     st.subheader(":material/monitoring: Evolución de Activos")
