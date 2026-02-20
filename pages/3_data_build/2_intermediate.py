@@ -1,14 +1,12 @@
 import streamlit as st
+from utilities.explorer_de_datos import explorer_de_datos
 
 from models.intermediate._int_censos_censo_2 import int_censos_censo_2
 from models.intermediate._int_censos_censo_1 import int_censos_censo_1
-
 from models.intermediate._int_base_norm_censo_1 import int_base_norm_censo_1
 from models.intermediate._int_base_norm_locales import int_base_norm_locales
-
 from models.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1, int_reportes_ccu_base_2026_q1_locales
 from models.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
-
 
 from utilities.ui_components import render_model_ui
 
@@ -70,10 +68,12 @@ with tab1:
     
     st.subheader("Base Normalizada")
     df_loc = int_base_norm_locales()
-    render_model_ui(df_loc)
+    filtered_df_loc = explorer_de_datos(df_loc)
+    st.dataframe(filtered_df_loc, use_container_width=True)
     
     st.divider()
     
     st.subheader("Locales desde Reporte CCU 2026")
     df_ccu_loc = int_reportes_ccu_base_2026_q1_locales()
-    render_model_ui(df_ccu_loc)
+    filtered_df_ccu_loc = explorer_de_datos(df_ccu_loc)
+    st.dataframe(filtered_df_ccu_loc, use_container_width=True)
