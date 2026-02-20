@@ -3,7 +3,7 @@ import pandas as pd
 from models.marts._fct_censos import fct_censos
 from models.marts._fct_bases_ccu import fct_bases_ccu
 
-from models.marts.gsheets.gsheets_tables import bases_ccu, censos
+from models.staging.gsheets.gsheets_tables import bases_ccu, censos
 
 
 # unir data de censo 1 y de censo 2

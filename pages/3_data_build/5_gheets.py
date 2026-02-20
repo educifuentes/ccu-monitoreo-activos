@@ -1,5 +1,5 @@
 import streamlit as st
-from models.marts.gsheets.gsheets_tables import (
+from models.staging.gsheets.gsheets_tables import (
     locales, 
     censos, 
     bases_ccu, 
