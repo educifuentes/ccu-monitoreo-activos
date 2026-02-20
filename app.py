@@ -19,6 +19,7 @@ requerimientos_page = st.Page("pages/3_data_build/requerimientos.py", title="Req
 analysis_page = st.Page("pages/3_data_build/analysis.py", title="Analysis", icon=":material/experiment:")
 bi_tables_page = st.Page("pages/3_data_build/4_bi_tables.py", title="BI Tables", icon=":material/dashboard:")
 gsheets_page = st.Page("pages/3_data_build/5_gheets.py", title="GSheets", icon=":material/dashboard:")
+reprocess_sheets_page = st.Page("pages/3_data_build/6_reprocess_sheets.py", title="Reprocess Sheets", icon=":material/dashboard:")
 
 import os
 
@@ -38,6 +39,7 @@ if IS_LOCAL:
         intermediate_page, 
         finals_page, 
         gsheets_page, 
+        reprocess_sheets_page,
         analysis_page, 
         bi_tables_page, 
         data_profilling_page, 

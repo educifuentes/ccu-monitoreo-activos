@@ -16,20 +16,8 @@ def int_reportes_ccu_base_2024_q1():
         'N° Columnas (Schoperas)': 'schoperas',
         'N° Salidas Schop CCU': 'salidas',
     }
-    
    
     df.rename(columns=rename_dict, inplace=True)
-
-    select_cols = [
-        # row identifiers
-        "local_id",
-        "periodo",
-        "fecha",
-        # activos
-        "schoperas",
-        "salidas",
-        "coolers"
-    ]
 
     # data types
     df["local_id"] = df["local_id"].astype(str)
@@ -40,7 +28,27 @@ def int_reportes_ccu_base_2024_q1():
     # new columns
     # note: should be done in stg model, but int model. exepction. refactir later
     df["periodo"] = "2024-Q1"
-    df["fecha"] = pd.to_datetime("2024-01-01").date() # todo: get real date
+    df["fecha"] = pd.to_datetime("2024-01-01").date() 
+
+    # nuevas columns de fecha - pedido el feb 19, 2026
+    df["fecha_suscripcion_comodato"] = pd.to_datetime("2024-01-01").date() 
+    df["fecha_termino_contrato"] = pd.NA
+    df["activos_entregados"] = pd.NA
+
+    selected_columns = [
+        # row identifiers
+        "local_id",
+        "periodo",
+        "fecha",
+        # activos
+        "schoperas",
+        "salidas",
+        "coolers",
+        # fechas
+        "fecha_suscripcion_comodato",
+        "fecha_termino_contrato",
+        "activos_entregados"
+    ]
 
     
-    return df[select_cols]
+    return df[selected_columns]

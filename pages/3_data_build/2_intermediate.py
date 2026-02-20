@@ -13,12 +13,14 @@ from models.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_
 from utilities.ui_components import render_model_ui
 
 # Page settings and header
+st.set_page_config(page_title="Intermediate", layout="wide")
+
 st.title("Intermediate")
 st.markdown("Capa intermedia de limpieza, tipado y transformaciones de negocio.")
 
 # Create tabs for organization
 tab1, tab2, tab3 = st.tabs([
-    ":material/sports_bar: Locales",
+    ":material/sports_bar: Locales",    
     ":material/checklist_rtl: Censos",
     ":material/assignment: Bases CCU"
 ])
