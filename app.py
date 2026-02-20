@@ -50,12 +50,12 @@ if IS_LOCAL:
     #     requerimientos_page,
     # ]
 
-    # nav_dict["Dev - Modelos - RAW"] = [
-    #     staging_page, 
-    #     intermediate_page, 
-    #     finals_page, 
+    nav_dict["Dev - Modelos - RAW"] = [
+        staging_page, 
+        intermediate_page, 
+        finals_page, 
     
-    # ]
+    ]
 
 # current page
 pg = st.navigation(nav_dict)
