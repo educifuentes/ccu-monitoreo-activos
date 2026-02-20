@@ -8,7 +8,7 @@ def stg_base_norm_original():
     config = get_table_config(
         source_name="base normalizada", 
         table_name="base_normalizada_original", 
-        yaml_path="models/sources/_src_base_normalizada.yml"
+        yaml_path="models/raw/sources/_src_base_normalizada.yml"
     )
     file_path = config.get('path')
     

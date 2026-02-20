@@ -16,7 +16,7 @@ def load_yaml_config(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         return yaml.safe_load(f)
 
-def get_table_config(source_name, table_name, yaml_path='models/sources/_src_reportes_ccu.yml'):
+def get_table_config(source_name, table_name, yaml_path='models/raw/sources/_src_reportes_ccu.yml'):
     """
     Retrieves the configuration for a specific table from a YAML source file.
     """
