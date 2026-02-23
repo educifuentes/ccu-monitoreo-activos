@@ -72,7 +72,7 @@ with tab3:
     df_2024 = int_reportes_ccu_base_2024_q1()
     render_model_ui(df_2024, source_name="reportes_ccu", table_name="base_2024_q1")
 
-    # isnoect
+    # inspect
     empty_activos = df_2024[
         df_2024["schoperas"].isna() & 
         df_2024["coolers"].isna() & 

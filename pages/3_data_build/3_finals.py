@@ -20,41 +20,6 @@ tab1, tab2, tab3, tab4 = st.tabs([
     ":material/contract: Contratos"
 ])
 
-with tab4:
-    st.header("Fact Contratos")
-    st.markdown("Información consolidada de suscripción de comodatos y términos de contrato.")
-    fct_contratos_df = fct_contratos()
-    
-    # multi_fecha_count = fct_contratos_df[
-    #     (fct_contratos_df["fecha_suscripcion_comodato_es_rango"] == True)
-    # ].shape[0]
-
-    # st.markdown(f"- Hay **{multi_fecha_count}** locales con multi fecha en inicio o término de contratos.")
-    render_model_ui(fct_contratos_df)
-
-
-
-with tab2:
-    st.header("Fact Censos")
-    st.markdown("Unión de los censos 2024-S2 y 2025-S2 con estandarización de columnas.")
-    fct_censos_df = fct_censos()
-    render_model_ui(fct_censos_df)
-
-with tab3:
-    st.header("Fact Bases CCU")
-    st.markdown("Comparativa de activos entre los periodos reportados por CCU.")
-    fct_bases_ccu_df = fct_bases_ccu()
-    
-    # Key Metrics for this section
-    count_ambos = fct_bases_ccu_df[fct_bases_ccu_df["en_ambos_periodos"] == True]["local_id"].nunique()
-    total_locales = fct_bases_ccu_df["local_id"].nunique()
-    
-    col1, col2 = st.columns(2)
-    col1.metric("Locales en ambos periodos", count_ambos)
-    col2.metric("Total Locales Únicos", total_locales)
-    
-    render_model_ui(fct_bases_ccu_df)
-
 with tab1:
     st.header("Dim Locales")
     st.markdown("Tabla maestra de locales comerciales (clientes) con datos consolidados.")
@@ -70,6 +35,27 @@ with tab1:
     
     render_model_ui(dim_locales_df)
 
+with tab2:
+    st.header("Fact Censos")
+    st.markdown("Unión de los censos 2024-S2 y 2025-S2 con estandarización de columnas.")
+    fct_censos_df = fct_censos()
+    render_model_ui(fct_censos_df)
+
+with tab3:
+    st.header("Fact Bases CCU")
+    st.markdown("Comparativa de activos entre los periodos reportados por CCU.")
+    st.markdown("este es el input para el gsheets")
+    fct_bases_ccu_df = fct_bases_ccu()
+    
+    # Key Metrics for this section
+    st.dataframe(fct_bases_ccu_df["periodo"].value_counts().reset_index())
 
 
+    
+    render_model_ui(fct_bases_ccu_df)
 
+with tab4:
+    st.header("Fact Contratos")
+    st.markdown("Información consolidada de suscripción de comodatos y términos de contrato.")
+    fct_contratos_df = fct_contratos()
+    render_model_ui(fct_contratos_df)
