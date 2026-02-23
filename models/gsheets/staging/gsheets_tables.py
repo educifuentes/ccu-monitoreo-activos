@@ -30,7 +30,7 @@ def locales():
     df = load_data_gsheets()[0]
 
     # cast to proper data types
-    df["local_id"] = df["local_id"].astype("str")
+    df["local_id"] = df["local_id"].astype(str).str.replace(r'\.0$', '', regex=True)
 
     # clean - algunos que se hacen en dim_locales hay que aplicar de nuevo al re importar de gsheets
     # replace local_id wuth "nan" to None
@@ -45,7 +45,7 @@ def censos():
     df = load_data_gsheets()[1]
 
     # cast to proper data types
-    df["local_id"] = df["local_id"].astype("str")
+    df["local_id"] = df["local_id"].astype(str).str.replace(r'\.0$', '', regex=True)
     df["fecha"] = pd.to_datetime(df["fecha"], dayfirst=True, errors="coerce").dt.date
 
     df["schoperas"] = df["schoperas"].astype("Int64")
@@ -59,15 +59,12 @@ def bases_ccu():
     df = load_data_gsheets()[2]
 
     # cast to proper data types
-    df["local_id"] = df["local_id"].astype("str")
+    df["local_id"] = df["local_id"].astype(str).str.replace(r'\.0$', '', regex=True)
     df["fecha"] = pd.to_datetime(df["fecha"], dayfirst=True, errors="coerce").dt.date
     
     df["coolers"] = df["coolers"].astype("Int64")
     df["schoperas"] = df["schoperas"].astype("Int64")
     df["salidas"] = df["salidas"].astype("Int64")
-
-    # clean
-    df["local_id"] = df["local_id"].replace("nan", pd.NA)
     
     return df
 
@@ -77,6 +74,6 @@ def contratos():
     df = load_data_gsheets()[3]
 
     # cast to proper data types
-    df["local_id"] = df["local_id"].astype("str")
+    df["local_id"] = df["local_id"].astype(str).str.replace(r'\.0$', '', regex=True)
     
     return df

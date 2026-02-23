@@ -11,6 +11,7 @@ from utilities.ui_components import render_model_ui
 st.title("Google Sheets Data")
 st.markdown("Tablas  en Google Sheets que actúan como **Puntos de Partida**.")
 st.markdown("Fuente de datos principal para el desarrollo de los modelos debe ser 1 a 1 con las generadas en Finals Marts")
+st.set_page_config(layout="wide")
 
 # --- Tab Layout ---
 tab1, tab2, tab3, tab4 = st.tabs([
