@@ -1,12 +1,11 @@
 import pandas as pd
 import numpy as np
 
-def int_reportes_ccu_base_2024_q1():
-    # Define file path
-    file_path = "seeds/base_normalizada/base_normalizada - locales.csv"
+from models.raw.staging.bases_ccu._stg_reportes_ccu_base_2024_q1 import stg_reportes_ccu_base_2024_q1
 
+def int_reportes_ccu_base_2024_q1():
     # Load CSV
-    df = pd.read_csv(file_path)
+    df = stg_reportes_ccu_base_2024_q1()
 
     # rename columns
 

@@ -67,16 +67,25 @@ with tab2:
 
 with tab3:
     st.header("Reportes CCU")
-    
-    st.subheader("Base 2026 Q1")
-    df_2026 = int_reportes_ccu_base_2026_q1()
-    render_model_ui(df_2026, source_name="reportes_ccu", table_name="base_2026_q1")
-    
-    st.divider()
-    
+
     st.subheader("Base 2024 Q1")
     df_2024 = int_reportes_ccu_base_2024_q1()
     render_model_ui(df_2024, source_name="reportes_ccu", table_name="base_2024_q1")
 
+    # isnoect
+    empty_activos = df_2024[
+        df_2024["schoperas"].isna() & 
+        df_2024["coolers"].isna() & 
+        df_2024["salidas"].isna()
+    ]
+    st.write(f"Rows with None in schoperas, coolers, and salidas: {len(empty_activos)}")
+    st.dataframe(empty_activos)
+
+
+    st.divider()
+    
+    st.subheader("Base 2026 Q1")
+    df_2026 = int_reportes_ccu_base_2026_q1()
+    render_model_ui(df_2026, source_name="reportes_ccu", table_name="base_2026_q1")
 
 
