@@ -12,8 +12,8 @@ def validate_censos(df, df_locales):
         st.warning("La tabla Censos está vacía.")
         return
 
-    # 1. Keys and Integrity
-    st.markdown("### 1. Integridad de Claves")
+    # 1. Generales
+    st.markdown("### 1. Generales")
     
     # 1.1 Uniqueness
     st.markdown("#### 1.1 Unicidad (`local_id` + `periodo`)")
@@ -39,9 +39,6 @@ def validate_censos(df, df_locales):
         st.error(f"{ICONS['close']} Se detectaron {len(ids_faltantes)} `local_id` que NO existen en Locales")
         missing_df = df[df['local_id'].isin(ids_faltantes)]
         render_troubled_rows(missing_df[['local_id', 'periodo', 'row_index']].drop_duplicates(), gid)
-
-    # 2. General Validations
-    st.markdown("### 2. Validaciones Ambos Censos)")
 
     # 2.1 Check for Negative Values
     st.markdown("#### 2.1 Valores negativos en `salidas`")
