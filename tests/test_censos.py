@@ -12,8 +12,11 @@ def validate_censos(df, df_locales):
         st.warning("La tabla Censos está vacía.")
         return
 
-    # 1. local_id + periodo
-    st.markdown("### 1. `local_id` + `periodo`")
+    # 1. Keys and Integrity
+    st.markdown("### 1. Integridad de Claves")
+    
+    # 1.1 Uniqueness
+    st.markdown("#### 1.1 Unicidad (`local_id` + `periodo`)")
     df['key'] = df['local_id'].astype(str) + "_" + df['periodo'].astype(str)
     ids_unicos = df['key'].nunique()
     
@@ -24,11 +27,8 @@ def validate_censos(df, df_locales):
         dupes = df[df.duplicated('key', keep=False)].sort_values(['local_id', 'periodo'])
         render_troubled_rows(dupes[['local_id', 'periodo', 'schoperas', 'row_index']], gid)
 
-    # check if local_id exists in locales
-    
-
-    # Check Foreign Key (local_id exists in Locales)
-    st.markdown("### 1.1 `local_id` en tabla de locales")
+    # 1.2 Check Foreign Key (local_id exists in Locales)
+    st.markdown("#### 1.2 Integridad Referencial (`local_id` en Locales)")
     ids_maestros = set(df_locales['local_id'].unique())
     ids_censos = set(df['local_id'].unique())
     ids_faltantes = ids_censos - ids_maestros
@@ -40,39 +40,11 @@ def validate_censos(df, df_locales):
         missing_df = df[df['local_id'].isin(ids_faltantes)]
         render_troubled_rows(missing_df[['local_id', 'periodo', 'row_index']].drop_duplicates(), gid)
 
-    # 2. schoperas
-    st.markdown("### 2. `schoperas`")
-    
-    # Check for Nulls
-    nulos = df['schoperas'].isna().sum()
-    if nulos > 0:
-        st.warning(f"{ICONS['warning']} {nulos} registros con 'schoperas' nulo")
-        nulos_df = df[df['schoperas'].isna()]
-        render_troubled_rows(nulos_df[['local_id', 'periodo', 'schoperas', 'row_index']], gid)
-    else:
-        st.success(f"{ICONS['check']} 'schoperas': Sin nulos")
+    # 2. General Validations
+    st.markdown("### 2. Validaciones Ambos Censos)")
 
-    # Check for Negative Values
-    negativos = df[df['schoperas'] < 0]
-    if not negativos.empty:
-        st.error(f"{ICONS['close']} Se detectaron {len(negativos)} registros con schoperas negativas")
-        render_troubled_rows(negativos[['local_id', 'periodo', 'schoperas']], gid, negativos['row_index'])
-    else:
-        st.success(f"{ICONS['check']} No hay valores negativos en schoperas")
-
-    # 3. salidas
-    st.markdown("### 3. `salidas`")
-    
-    # Check for Nulls
-    nulos_sal = df['salidas'].isna().sum()
-    if nulos_sal > 0:
-        st.warning(f"{ICONS['warning']} {nulos_sal} registros con 'salidas' nulo")
-        nulos_df = df[df['salidas'].isna()]
-        render_troubled_rows(nulos_df[['local_id', 'periodo', 'salidas', 'row_index']], gid)
-    else:
-        st.success(f"{ICONS['check']} 'salidas': Sin nulos")
-
-    # Check for Negative Values
+    # 2.1 Check for Negative Values
+    st.markdown("#### 2.1 Valores negativos en `salidas`")
     negativos_sal = df[df['salidas'] < 0]
     if not negativos_sal.empty:
         st.error(f"{ICONS['close']} Se detectaron {len(negativos_sal)} registros con salidas negativas")
@@ -81,15 +53,15 @@ def validate_censos(df, df_locales):
         st.success(f"{ICONS['check']} No hay valores negativos en salidas")
 
 
-# solo 2025
+    # 3. Censo 2 (2025-S2) Validations
+    st.markdown("### 3. Validaciones - Censo 2 - 2025-S2")
     df_2025 = df[df['periodo'] == '2025-S2']
 
     if df_2025.empty:
         st.warning("No hay datos para el periodo 2025-S2")
     else:
-        # 4. instalo
-        st.markdown("#### 4. `instalo`")
-        st.info("Nota: Solo aplica a registros del periodo 2025-S2")
+        # 3.1 instalo
+        st.markdown("#### 3.1 Nulos y negativos en `instalo`")
         
         # Check for Nulls
         nulos_ins = df_2025['instalo'].isna().sum()
@@ -108,9 +80,8 @@ def validate_censos(df, df_locales):
         else:
             st.success(f"{ICONS['check']} No hay valores negativos en instalo")
 
-        # 5. disponibilizo
-        st.markdown("#### 5. `disponibilizo`")
-        st.info("Nota: Solo aplica a registros del periodo 2025-S2")
+        # 3.2 disponibilizo
+        st.markdown("#### 3.2 Nulos y negativos en `disponibilizo`")
         
         # Check for Nulls
         nulos_disp = df_2025['disponibilizo'].isna().sum()
