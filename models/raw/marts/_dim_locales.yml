@@ -23,11 +23,14 @@ models:
       - name: ciudad
         description: Ciudad donde se ubica el local.
         data_type: varchar
+      - name: comuna
+        description: Comuna donde se ubica el local.
+        data_type: varchar
       - name: nombre_fantasia
         description: Nombre comercial o de fantasía del local.
         data_type: varchar
-      - name: cerro
-        description: Indicador de si el local está cerrado o cesó actividades.
-        data_type: boolean
+      - name: fuente
+        description: Origen de los datos (Base Normalizada o Base CCU).
+        data_type: varchar
     pending:
       - falta razon social, no esta en censo 2 raw data

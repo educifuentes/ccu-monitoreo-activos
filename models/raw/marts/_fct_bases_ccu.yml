@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: Bases CCU
+    model_name: fct_bases_ccu
+    description: Informacion consolidada de bases CCU por periodo, detallando el stock de activos y detalles de contratos.
+    columns:
+      - name: local_id
+        description: Identificador único del local.
+        data_type: varchar
+      - name: periodo
+        description: Período (trimestre/año) del reporte de CCU.
+        data_type: varchar
+      - name: fecha
+        description: Fecha aproximada a la que hace referencia del registro de la base.
+        data_type: date
+      - name: schoperas
+        description: Cantidad de máquinas schoperas instaladas por CCU.
+        data_type: int
+      - name: salidas
+        description: Cantidad de salidas (grifos) instaladas por CCU.
+        data_type: int
+      - name: coolers
+        description: Cantidad de coolers instalados por CCU.
+        data_type: int
+      - name: fecha_suscripcion_comodato
+        description: Fecha en la que se suscribió el comodato actual.
+        data_type: date
+      - name: fecha_termino_contrato
+        description: Fecha de término del contrato de comodato.
+        data_type: date
+      - name: activos_entregados
+        description: Descripción de los activos entregados en la suscripción del comodato.
+        data_type: varchar

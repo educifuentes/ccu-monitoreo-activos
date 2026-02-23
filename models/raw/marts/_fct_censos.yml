@@ -14,10 +14,10 @@ models:
       - name: fecha
         description: Fecha en que se realizó la encuesta.
         data_type: date
-      - name: schoperas_ccu
+      - name: schoperas
         description: Número de máquinas schoperas de CCU.
         data_type: number
-      - name: salidas_ccu
+      - name: salidas
         description: Número de salidas de CCU.
         data_type: number
       - name: instalo
@@ -34,6 +34,9 @@ models:
         data_type: boolean
       - name: marcas_kross
         description: Si local ofrece alguna marca de Kross en schop.
+        data_type: boolean
+      - name: marcas_ccu
+        description: Si local ofrece alguna marca de CCU en schop.
         data_type: boolean
       - name: marcas_otras
         description: Si local ofrece alguna marca de otras marcas en shop.
