@@ -62,14 +62,7 @@ def stg_base_norm_original_censo_2024():
         "CANTIDAD DE SALIDAS",
         "CANTIDAD DE SHOPERAS COMPETENCIA ",
         "CCU/ABINBEV/OTRAS MARCAS COMPETENCIA"
-    ]    # drop rows based on  where CATEGORÍA CENSO 1 column:  "NO CENSADO" , None or NaN, and CCU/Cuestionados 
-    df = df[df["CATEGORÍA CENSO 1"] != "NO CENSADO"]
-    df = df[df["CATEGORÍA CENSO 1"] != "CCU/Cuestionados"]
-    df = df.dropna(subset=["CATEGORÍA CENSO 1"])
-
-    # drop wrows here column Censo 1 is "SIN CENSO"
-    df = df[df["Censo 1"] != "SIN CENSO"]
- 
+    ]    
 
     df = df[selected_columns]
     return df

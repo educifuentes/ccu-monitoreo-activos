@@ -5,9 +5,29 @@ from models.raw.staging.base_normalizada._stg_base_norm_original import stg_base
 
 from utilities.transformations.process_marcas import process_marcas, classify_marcas
 
-def int_base_norm_original_censo_2024():
+def clean_base_norm_original_censo_2024():
     df = stg_base_norm_original_censo_2024()
 
+    # clean
+    # drop rows based on  where CATEGORÍA CENSO 1 column:  "NO CENSADO" , None or NaN, and CCU/Cuestionados 
+    df = df[df["CATEGORÍA CENSO 1"] != "NO CENSADO"]
+    df = df[df["CATEGORÍA CENSO 1"] != "CCU/Cuestionados"]
+    df = df.dropna(subset=["CATEGORÍA CENSO 1"])
+
+    # drop wrows here column Censo 1 is "SIN CENSO"
+    df = df[df["Censo 1"] != "SIN CENSO"]
+
+    # drop local_ids none or nan
+    df = df.dropna(subset=["ID CLIENTE"])
+
+    return df
+
+
+
+def int_base_norm_original_censo_2024():
+    df = clean_base_norm_original_censo_2024()
+
+    # rename
     rename_dict = {
         "ID CLIENTE": "local_id",
         "CATEGORÍA CENSO 1": "categoria_censo_1",
@@ -23,7 +43,7 @@ def int_base_norm_original_censo_2024():
     df["periodo"] = "2024-S2"
     df["fecha"] = pd.to_datetime("2024-10-01").date()
 
-    # dummry creates
+    # dummy creates
     df["instalo"] = pd.NA
     df["disponibilizo"] = pd.NA
 
@@ -56,18 +76,39 @@ def int_base_norm_original_censo_2024():
 
     df = df[selected_columns]
 
-
     return df
 
 
+def clean_df_summary_censo_2024():
+    df = stg_base_norm_original_censo_2024()
+    summary_data = []
+
+    initial_len = len(df)
+    
+    step1_df = df[df["CATEGORÍA CENSO 1"] != "NO CENSADO"]
+    summary_data.append({"Filtro": "CATEGORÍA CENSO 1 == 'NO CENSADO'", "Filas Eliminadas": initial_len - len(step1_df)})
+    initial_len = len(step1_df)
+    
+    step2_df = step1_df[step1_df["CATEGORÍA CENSO 1"] != "CCU/Cuestionados"]
+    summary_data.append({"Filtro": "CATEGORÍA CENSO 1 == 'CCU/Cuestionados'", "Filas Eliminadas": initial_len - len(step2_df)})
+    initial_len = len(step2_df)
+    
+    step3_df = step2_df.dropna(subset=["CATEGORÍA CENSO 1"])
+    summary_data.append({"Filtro": "CATEGORÍA CENSO 1 es NA", "Filas Eliminadas": initial_len - len(step3_df)})
+    initial_len = len(step3_df)
+    
+    step4_df = step3_df[step3_df["Censo 1"] != "SIN CENSO"]
+    summary_data.append({"Filtro": "Censo 1 == 'SIN CENSO'", "Filas Eliminadas": initial_len - len(step4_df)})
+    initial_len = len(step4_df)
+    
+    step5_df = step4_df.dropna(subset=["ID CLIENTE"])
+    summary_data.append({"Filtro": "ID CLIENTE es NA", "Filas Eliminadas": initial_len - len(step5_df)})
+
+    return pd.DataFrame(summary_data)
+
+
 def int_base_norm_censo_1():
-
     df = stg_base_norm_censo_1()
-
-
-
-
-
 
     # Apply brand processing
     brands_col = "CCU/ABINBEV/OTRAS MARCAS COMPETENCIA"
@@ -96,7 +137,6 @@ def int_base_norm_censo_1():
     # new columns
     df["periodo"] = "2024-S2"
     df["fecha"] = pd.to_datetime("2024-10-01").date()
-
 
     selected_columns = [
         "local_id",

@@ -3,8 +3,9 @@ from utilities.widgets.explorer_de_datos import explorer_de_datos
 
 from models.raw.intermediate._int_censos_censo_2 import int_censos_censo_2
 from models.raw.intermediate._int_censos_censo_1 import int_censos_censo_1
-from models.raw.intermediate._int_base_norm_censo_1 import int_base_norm_censo_1
+from models.raw.intermediate._int_base_norm_censo_1 import int_base_norm_censo_1, clean_df_summary_censo_2024
 from models.raw.intermediate._int_base_norm_locales import int_base_norm_locales
+
 from models.raw.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1, int_reportes_ccu_base_2026_q1_locales
 from models.raw.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
 
@@ -46,6 +47,9 @@ with tab2:
     st.subheader("Censo 1 (2024) Original")
     df_c1_orig = int_base_norm_original_censo_2024()
     render_model_ui(df_c1_orig)
+
+    st.markdown("Summary of cleaning")
+    st.dataframe(clean_df_summary_censo_2024())
     
     st.subheader("Censo 2 (2025)")
     st.markdown("**Notas:** Se asume 'CANTIDAD DE SALIDAS' como salidas_ccu.")
