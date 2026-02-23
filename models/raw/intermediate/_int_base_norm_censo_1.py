@@ -1,23 +1,73 @@
-from models.raw.staging.base_normalizada._stg_base_norm_censo_1 import stg_base_norm_censo_1
 import pandas as pd
+
+from models.raw.staging.base_normalizada._stg_base_norm_censo_1 import stg_base_norm_censo_1
+from models.raw.staging.base_normalizada._stg_base_norm_original import stg_base_norm_original_censo_2024
+
 from utilities.transformations.process_marcas import process_marcas, classify_marcas
+
+def int_base_norm_original_censo_2024():
+    df = stg_base_norm_original_censo_2024()
+
+    rename_dict = {
+        "ID CLIENTE": "local_id",
+        "CATEGORÍA CENSO 1": "categoria_censo_1",
+        "Censo 1": "censo_1",
+        "CANTIDAD DE SCHOPERAS CCU": "schoperas",
+        "CANTIDAD DE SALIDAS": "salidas",
+        "CCU/ABINBEV/OTRAS MARCAS COMPETENCIA": "marcas"
+    }
+
+    df = df.rename(columns=rename_dict)
+
+    # new columns
+    df["periodo"] = "2024-S2"
+    df["fecha"] = pd.to_datetime("2024-10-01").date()
+
+    # dummry creates
+    df["instalo"] = pd.NA
+    df["disponibilizo"] = pd.NA
+
+    # data types
+    df["salidas"] = pd.to_numeric(df["salidas"], errors='coerce').astype("Int64")
+    df["schoperas"] = pd.to_numeric(df["schoperas"], errors='coerce').astype("Int64")
+
+    # apply brand processing
+    brands_col = "marcas"
+    if brands_col in df.columns:
+        df["marcas"] = df[brands_col].apply(process_marcas)
+        df = classify_marcas(df)
+
+    selected_columns = [
+        "local_id",
+        "periodo",
+        "fecha",  
+        # activos  
+        "schoperas",
+        "salidas",
+        "instalo",
+        "disponibilizo",
+        # marcas
+        "marcas",
+        "marcas_abinbev",
+        "marcas_kross",
+        "marcas_ccu",
+        "marcas_otras"
+    ]
+
+    df = df[selected_columns]
+
+
+    return df
 
 
 def int_base_norm_censo_1():
 
     df = stg_base_norm_censo_1()
 
-    # drop rows with null value on id
-    initial_rows = len(df)
-    df = df.dropna(subset=["id"])
-    dropped_rows = initial_rows - len(df)
-    print(f"Dropped {dropped_rows} rows with null id")
 
-    # drop rows with null value on agencia column
-    initial_rows = len(df)
-    df = df.dropna(subset=["agencia"])
-    dropped_rows = initial_rows - len(df)
-    print(f"Dropped {dropped_rows} rows with null agencia")
+
+
+
 
     # Apply brand processing
     brands_col = "CCU/ABINBEV/OTRAS MARCAS COMPETENCIA"

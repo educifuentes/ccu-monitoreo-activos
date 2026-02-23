@@ -5,7 +5,7 @@ from models.raw.staging.censos._stg_censos_censo_1 import stg_censos_censo_1
 from models.raw.staging.base_normalizada._stg_base_norm_censo_1 import stg_base_norm_censo_1
 from models.raw.staging.base_normalizada._stg_base_norm_locales import stg_base_norm_locales
 
-from models.raw.staging.base_normalizada._stg_base_norm_original import stg_base_norm_original, stg_base_norm_original_base_ccu_2024
+from models.raw.staging.base_normalizada._stg_base_norm_original import stg_base_norm_original, stg_base_norm_original_base_ccu_2024, stg_base_norm_original_censo_2024
 
 from models.raw.staging.bases_ccu._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
 
@@ -77,13 +77,19 @@ with tab4:
     filtered_df_orig = explorer_de_datos(df_orig)
     render_model_ui(filtered_df_orig)
 
+    # metrics
+
+    # Key Metrics for this section
+    st.markdown("Categoría Censo 1")
+    st.dataframe(df_orig["CATEGORÍA CENSO 1"].value_counts().reset_index())
+
     st.subheader("Base CCU 2024 Q1")
     df_base_ccu_2024 = stg_base_norm_original_base_ccu_2024()
     render_model_ui(df_base_ccu_2024)
 
-    # st.subheader("Censo 2024 Q1")
-    # df_censo_2024 = stg_base_norm_original_censo_2024()
-    # render_model_ui(df_censo_2024)
+    st.subheader("Censo 2024 Q1")
+    df_censo_2024 = stg_base_norm_original_censo_2024()
+    render_model_ui(df_censo_2024)
 
 
 

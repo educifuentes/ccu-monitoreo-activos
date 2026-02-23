@@ -11,6 +11,7 @@ from utilities.ui_components import render_model_ui
 st.title("Finales (Marts)")
 st.markdown("Tablas de Hechos (FCT) y Dimensiones (DIM) consolidadas para el negocio.")
 st.markdown("estas son las Tabals que iran al gogole sheets y seran el punto de partida")
+st.set_page_config(layout="wide")
 
 # Create tabs for organization
 tab1, tab2, tab3, tab4 = st.tabs([
@@ -36,9 +37,18 @@ with tab1:
     render_model_ui(dim_locales_df)
 
 with tab2:
-    st.header("Fact Censos")
+
+
+    st.header("Fct Censos")
     st.markdown("Unión de los censos 2024-S2 y 2025-S2 con estandarización de columnas.")
+
     fct_censos_df = fct_censos()
+    
+    counts_df = fct_censos_df["periodo"].value_counts().reset_index()
+    counts_df.columns = ["periodo", "count"]
+    counts_df.loc[len(counts_df)] = ["Total", counts_df["count"].sum()]
+    st.dataframe(counts_df)
+
     render_model_ui(fct_censos_df)
 
 with tab3:

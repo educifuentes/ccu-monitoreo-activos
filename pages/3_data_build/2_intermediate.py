@@ -8,6 +8,8 @@ from models.raw.intermediate._int_base_norm_locales import int_base_norm_locales
 from models.raw.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1, int_reportes_ccu_base_2026_q1_locales
 from models.raw.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
 
+from models.raw.intermediate._int_base_norm_censo_1 import int_base_norm_original_censo_2024
+
 from utilities.ui_components import render_model_ui
 
 # Page settings and header
@@ -40,6 +42,10 @@ with tab1:
 
 with tab2:
     st.header("Censos Intermediate")
+
+    st.subheader("Censo 1 (2024) Original")
+    df_c1_orig = int_base_norm_original_censo_2024()
+    render_model_ui(df_c1_orig)
     
     st.subheader("Censo 2 (2025)")
     st.markdown("**Notas:** Se asume 'CANTIDAD DE SALIDAS' como salidas_ccu.")
