@@ -16,7 +16,7 @@ def validate_censos(df, df_locales):
     st.markdown("### 1. Generales")
     
     # 1.1 Uniqueness
-    st.markdown("#### 1.1 Unicidad (`local_id` + `periodo`)")
+    st.markdown("#### 1.1 `local_id` + `periodo` duplicados")
     df['key'] = df['local_id'].astype(str) + "_" + df['periodo'].astype(str)
     ids_unicos = df['key'].nunique()
     
@@ -28,7 +28,7 @@ def validate_censos(df, df_locales):
         render_troubled_rows(dupes[['local_id', 'periodo', 'schoperas', 'row_index']], gid)
 
     # 1.2 Check Foreign Key (local_id exists in Locales)
-    st.markdown("#### 1.2 Integridad Referencial (`local_id` en Locales)")
+    st.markdown("#### 1.2 `local_id` de censos no presente en tabla Locales")
     ids_maestros = set(df_locales['local_id'].unique())
     ids_censos = set(df['local_id'].unique())
     ids_faltantes = ids_censos - ids_maestros
@@ -51,7 +51,7 @@ def validate_censos(df, df_locales):
 
 
     # 3. Censo 2 (2025-S2) Validations
-    st.markdown("### 3. Validaciones - Censo 2 - 2025-S2")
+    st.markdown("### 3. Validaciones para Censo 2 - 2025-S2")
     df_2025 = df[df['periodo'] == '2025-S2']
 
     if df_2025.empty:
