@@ -26,7 +26,7 @@ def validate_bases_ccu(df, df_locales):
         render_troubled_rows(dupes[['local_id', 'periodo']], gid, dupes['row_index'])
 
     # Check Foreign Key (local_id exists in Locales)
-    st.markdown("### 1.1 `local_id` en tabla de locales")
+    st.markdown("### 1.1 local_id de Bases CCU no presente en tabla Locales")
     ids_maestros = set(df_locales['local_id'].unique())
     ids_bases = set(df['local_id'].unique())
     ids_faltantes = ids_bases - ids_maestros
