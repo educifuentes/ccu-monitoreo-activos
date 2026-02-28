@@ -58,43 +58,24 @@ echo "Uploading contents of $SECRETS_FILE..."
 gcloud secrets versions add "$SECRET_NAME" --data-file="$SECRETS_FILE" --project="$PROJECT_ID" --quiet
 
 # 2. Grant Access
-echo -e "\n${YELLOW}--- Step 2: Granting Access to Cloud Run Service Account ---${NC}"
+echo -e "\n${YELLOW}--- Step 2: Granting Access to Cloud Build and Compute Service Accounts ---${NC}"
 
-# Attempt to get the service account from the running service
-# We capture stderr to null to avoid noise if the service doesn't exist yet or other errors
-EXISTING_SA=$(gcloud run services describe "$SERVICE_NAME" --region="$REGION" --project="$PROJECT_ID" --format="value(spec.template.spec.serviceAccountName)" --quiet 2>/dev/null || true)
+PROJECT_NUMBER=$(gcloud projects describe "$PROJECT_ID" --format="value(projectNumber)" --quiet)
+COMPUTE_SA="${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
+CLOUDBUILD_SA="${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com"
 
-if [ -n "$EXISTING_SA" ]; then
-    SERVICE_ACCOUNT="$EXISTING_SA"
-    echo "Found configured Service Account: $SERVICE_ACCOUNT"
-else
-    # Fallback: Construct the default compute service account
-    echo "Could not retrieve service account (service might not exist yet)."
-    echo "Fetching project number to determine default compute service account..."
-    PROJECT_NUMBER=$(gcloud projects describe "$PROJECT_ID" --format="value(projectNumber)" --quiet)
-    SERVICE_ACCOUNT="${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
-    echo -e "${YELLOW}Using default Compute Engine Service Account: $SERVICE_ACCOUNT${NC}"
-fi
-
-echo "Granting 'roles/secretmanager.secretAccessor' to $SERVICE_ACCOUNT..."
+echo "Granting 'roles/secretmanager.secretAccessor' to Compute SA: $COMPUTE_SA..."
 gcloud secrets add-iam-policy-binding "$SECRET_NAME" \
-    --member="serviceAccount:$SERVICE_ACCOUNT" \
+    --member="serviceAccount:$COMPUTE_SA" \
     --role="roles/secretmanager.secretAccessor" \
     --project="$PROJECT_ID" \
     --quiet >/dev/null
 
-# 3. Update Cloud Run Service
-echo -e "\n${YELLOW}--- Step 3: Updating Cloud Run Service to Mount Secret ---${NC}"
+echo "Granting 'roles/secretmanager.secretAccessor' to Cloud Build SA: $CLOUDBUILD_SA..."
+gcloud secrets add-iam-policy-binding "$SECRET_NAME" \
+    --member="serviceAccount:$CLOUDBUILD_SA" \
+    --role="roles/secretmanager.secretAccessor" \
+    --project="$PROJECT_ID" \
+    --quiet >/dev/null
 
-if gcloud run services describe "$SERVICE_NAME" --region="$REGION" --project="$PROJECT_ID" --quiet >/dev/null 2>&1; then
-    echo "Updating Cloud Run service to mount the secret at /app/.streamlit/secrets.toml..."
-    gcloud run services update "$SERVICE_NAME" \
-        --region="$REGION" \
-        --project="$PROJECT_ID" \
-        --set-secrets="/app/.streamlit/secrets.toml=${SECRET_NAME}:latest" \
-        --quiet
-    echo -e "\n${GREEN}✅ Secrets updated and service re-deployed successfully!${NC}"
-else
-    echo -e "\n${YELLOW}Service '$SERVICE_NAME' does not exist yet. Skipping service update. It will be configured during initial deployment.${NC}"
-    echo -e "\n${GREEN}✅ Secrets uploaded and ready for initial deployment!${NC}"
-fi
+echo -e "\n${GREEN}✅ Secrets uploaded and access granted successfully! Target service will pick up changes on next deployment via Cloud Build.${NC}"

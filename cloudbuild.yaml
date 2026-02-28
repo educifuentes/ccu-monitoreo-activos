@@ -37,11 +37,5 @@ images:
   - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:$TAG_NAME"
   - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:latest"
 
-substitutions:
-  _REGION: "southamerica-west1"
-  _SERVICE_NAME: "time-track-dashboard"
-  _REPO_NAME: "cloud-run-source-deploy"
-  _SECRET_NAME: "time-track-dashboard-secrets"
-
 options:
   logging: CLOUD_LOGGING_ONLY

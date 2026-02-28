@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Load configuration from central config file
 SCRIPT_DIR=$(dirname "$0")
@@ -16,12 +17,11 @@ SECRET_NAME=$(get_config_value "secret_name")
 REPO_NAME=$(get_config_value "repo_name")
 PROJECT_ID=$(get_config_value "project_id")
 PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID --format="value(projectNumber)")
-IMAGE_NAME="${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${SERVICE_NAME}:latest"
 SERVICE_ACCOUNT="${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
 
-echo "🚀 Starting Deployment Process..."
+echo "�� Starting Deployment Process..."
 
-# 1. Upload and Configure Secrets
+# 1. Upload Secrets
 echo "--- Step 1: Uploading Secrets & Granting Access ---"
 ./scripts/update_cloud_run_secrets.sh
 
@@ -34,18 +34,27 @@ gcloud artifacts repositories create $REPO_NAME \
     --description="Repository for Cloud Run images" \
     --project=$PROJECT_ID
 
-# 3. Build the Image using Cloud Build
-echo "--- Step 3: Building Image with Cloud Build ---"
-gcloud builds submit --project=$PROJECT_ID --tag $IMAGE_NAME .
+# 3. Grant Cloud Build permission to Run
+echo "--- Step 3: Granting Cloud Build permissions ---"
+# Give Cloud Build standard service account access to Run the service
+CLOUDBUILD_SA="${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com"
 
-# 4. Deploy to Cloud Run
-echo "--- Step 4: Deploying to Cloud Run ---"
-gcloud run deploy $SERVICE_NAME \
-    --image $IMAGE_NAME \
-    --region $REGION \
-    --project $PROJECT_ID \
-    --allow-unauthenticated \
-    --set-secrets="/app/.streamlit/secrets.toml=${SECRET_NAME}:latest" \
-    --port 8080
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:$CLOUDBUILD_SA" \
+    --role="roles/run.admin" \
+    --quiet >/dev/null
 
-echo "✅ Deployment complete!"
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:$CLOUDBUILD_SA" \
+    --role="roles/iam.serviceAccountUser" \
+    --quiet >/dev/null
+
+
+# 4. Trigger build
+echo "--- Step 4: Submitting manual build to emulate CD trigger ---"
+gcloud builds submit \
+    --project=$PROJECT_ID \
+    --config cloudbuild.yaml \
+    --substitutions=_REGION=$REGION,_SERVICE_NAME=$SERVICE_NAME,_REPO_NAME=$REPO_NAME,_SECRET_NAME=$SECRET_NAME,TAG_NAME=latest .
+
+echo "✅ Manual deployment complete! The continuous deployment trigger should use identical steps."
