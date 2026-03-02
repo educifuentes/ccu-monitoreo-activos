@@ -3,7 +3,7 @@ import streamlit as st
 # Page configuration
 
 # Section - Reports
-general_page = st.Page("pages/1_reports/1_general.py", title="General", icon=":material/dashboard:")
+general_page = st.Page("pages/1_reports/1_overview.py", title="General", icon=":material/dashboard:")
 
 # Section - Tools
 explore_page = st.Page("pages/2_tools/data_explorer.py", title="Explorador de Datos", icon=":material/search:")

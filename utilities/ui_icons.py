@@ -1,4 +1,6 @@
 ICONS = {
+    # branding
+    
     # VALIDATIONS   
     "check": ":material/check_box:",
     "warning": ":material/warning:",
