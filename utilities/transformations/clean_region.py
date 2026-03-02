@@ -62,6 +62,14 @@ REGION_MAP = {
     "Ñuble": "16 - Ñuble",
 }
 
+# Add integer mappings mapping '1' and 1 to '1 - Tarapaca'
+_extra_mappings = {}
+for val in REGION_MAP.values():
+    num_str = val.split(" - ")[0]
+    _extra_mappings[int(num_str)] = val
+    _extra_mappings[num_str] = val
+REGION_MAP.update(_extra_mappings)
+
 def clean_region(df):
     """
     Cleans the region column in a DataFrame using the REGION_MAP.
@@ -70,10 +78,38 @@ def clean_region(df):
     if "region" not in df.columns:
         return df
 
-    # Replace using map
-    df["region"] = df["region"].replace(REGION_MAP)
+    def normalize_region(val):
+        if pd.isna(val):
+            return None
+            
+        # Try direct match
+        if val in REGION_MAP:
+            return REGION_MAP[val]
+            
+        # Clean string variations
+        if isinstance(val, str):
+            val = val.strip()
+            # Strip trailing .0 if it represents a float
+            if val.endswith(".0"):
+                val = val[:-2]
+            
+            if val in REGION_MAP:
+                return REGION_MAP[val]
+                
+        # Handle floats/strings that can be cast to int
+        try:
+            val_int = int(float(val))
+            if val_int in REGION_MAP:
+                return REGION_MAP[val_int]
+        except (ValueError, TypeError):
+            pass
+            
+        # Fallback to returning original value if no mapping found
+        return val
+        
+    df["region"] = df["region"].apply(normalize_region)
     
-    # Convert NaN to None
+    # Convert remaining NaN explicitly to None
     df["region"] = df["region"].where(df["region"].notna(), None)
     
     return df

@@ -5,6 +5,7 @@ from models.raw.staging.censos._stg_censos_censo_2026_1 import stg_censos_censo_
 from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
 from utilities.transformations.process_marcas import process_marcas, classify_marcas
 from utilities.transformations.text_cleaning import clean_text
+from utilities.transformations.clean_region import clean_region
 
 def int_censos_censo_2026_1():
 
@@ -13,7 +14,6 @@ def int_censos_censo_2026_1():
     # 1. Column Renamming
     rename_dict = {
         "ID Cliente": "local_id",
-        "cliente": "razon_social",
         "Dirección": "direccion",
         "Región": "region",
         "Comuna": "comuna",
@@ -46,6 +46,8 @@ def int_censos_censo_2026_1():
     # 5. Period and Metadata
     df["periodo"] = "2026-S1"
     df["fecha"] = pd.to_datetime("2026-02-01").date()
+    # dummy razon social
+    df["razon_social"] = None
     
     # 6. Calculated Columns (Total outputs)
     # Total outputs (salidas) is the sum of salidas across all machine columns
@@ -63,6 +65,9 @@ def int_censos_censo_2026_1():
 
     # clean text values nombre_fantasia, direccion
     df = clean_text(df, ["nombre_fantasia", "direccion"], title=True)
+
+    # region
+    df = clean_region(df)
     
     # 8. Final Column Selection
     selected_columns = [
