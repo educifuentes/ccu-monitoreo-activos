@@ -55,12 +55,13 @@ with tab2:
     try:
         df_censos = censos()
         df_censos = apply_local_id_filter(df_censos, "censos")
-        
-        col1, col2, col3 = st.columns(3)
-        col1.metric("Total", f"{len(df_censos):,}")
-        col2.metric("2024-S2", f"{len(df_censos[df_censos['periodo'] == '2024-S2']):,}")
-        col3.metric("2025-S2", f"{len(df_censos[df_censos['periodo'] == '2025-S2']):,}")
 
+        counts_df = df_censos["periodo"].value_counts().reset_index()
+        counts_df.columns = ["periodo", "count"]
+        counts_df = counts_df.sort_values(by="periodo", ascending=False).reset_index(drop=True)
+        counts_df.loc[len(counts_df)] = ["Total", counts_df["count"].sum()]
+        st.dataframe(counts_df, hide_index=True, width=400)
+        
         safe_render(df_censos)
     except Exception as e:
         st.error(f"Error cargando censos: {e}")
