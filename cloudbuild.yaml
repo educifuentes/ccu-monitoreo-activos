@@ -39,3 +39,9 @@ images:
 
 options:
   logging: CLOUD_LOGGING_ONLY
+
+substitutions:
+  _REGION: "southamerica-west1"
+  _REPO_NAME: "ccu-monitoreo-activos"
+  _SERVICE_NAME: "ccu-monitoreo-activos"
+  _SECRET_NAME: "ccu-monitoreo-activos-secrets"
