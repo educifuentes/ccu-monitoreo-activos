@@ -32,14 +32,14 @@ with tab1:
     st.subheader("Base Normalizada")
     df_loc = int_base_norm_locales()
     filtered_df_loc = explorer_de_datos(df_loc)
-    st.dataframe(filtered_df_loc, use_container_width=True)
+    st.dataframe(filtered_df_loc, width='stretch')
     
     st.divider()
     
     st.subheader("Locales desde Reporte CCU 2026")
     df_ccu_loc = int_reportes_ccu_base_2026_q1_locales()
     filtered_df_ccu_loc = explorer_de_datos(df_ccu_loc)
-    st.dataframe(filtered_df_ccu_loc, use_container_width=True)
+    st.dataframe(filtered_df_ccu_loc, width='stretch')
 
 with tab2:
     st.header("Censos Intermediate")

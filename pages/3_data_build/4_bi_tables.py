@@ -40,7 +40,7 @@ with tab1:
     )
     
     filtered_df = df_activos[df_activos['local_id'].isin(local_ids_with_min_rows)].sort_values('local_id')
-    st.dataframe(filtered_df, use_container_width=True)
+    st.dataframe(filtered_df, width='stretch')
 
     render_model_ui(df_activos)
 

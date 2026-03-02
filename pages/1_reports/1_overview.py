@@ -74,7 +74,7 @@ with col_chart:
             alt.Tooltip('clasificacion:N', title='Clasificación')
         ]
     )
-    st.altair_chart(chart, use_container_width=True, height=250)
+    st.altair_chart(chart, width='stretch', height=250)
 
 
 # -----------------------------------------------------------------------------
@@ -198,7 +198,7 @@ else:
             'coolers': 'Coolers'
         })
         
-        st.dataframe(table_df, use_container_width=True, hide_index=True, column_config={
+        st.dataframe(table_df, width='stretch', hide_index=True, column_config={
             "Fuente": st.column_config.MultiselectColumn(
                 "Fuente",
                 help="Fuente de la informacion",
@@ -220,6 +220,6 @@ else:
                 tooltip=['fecha', 'Activo', 'Cantidad']
             ).properties(height=250)
             
-            st.altair_chart(line_chart, use_container_width=True)
+            st.altair_chart(line_chart, width='stretch')
     else:
         st.warning("No hay registros históricos de activos para este local.")

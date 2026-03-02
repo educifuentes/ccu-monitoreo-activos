@@ -20,7 +20,7 @@ def safe_render(df):
     if 'row_index' in df.columns:
         df = df.drop(columns=['row_index'])
     
-    st.dataframe(df, use_container_width=True)
+    st.dataframe(df, width='stretch')
 
 def apply_local_id_filter(df, key_suffix):
     """

@@ -59,6 +59,6 @@ def render_troubled_rows(df, gid, row_indices=None):
 
     st.dataframe(
         display_df, 
-        use_container_width=True,
+        width='stretch',
         column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
     )
