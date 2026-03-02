@@ -51,10 +51,10 @@ with tab2:
     filtered_df2026_1 = explorer_de_datos(df2026_1)
     render_model_ui(filtered_df2026_1)
         
-    st.subheader("Censo 2 (2025)")
-    df2 = stg_censos_censo_2()
-    filtered_df2 = explorer_de_datos(df2)
-    render_model_ui(filtered_df2)
+    # st.subheader("Censo 2 (2025)")
+    # df2 = stg_censos_censo_2()
+    # filtered_df2 = explorer_de_datos(df2)
+    # render_model_ui(filtered_df2)
     
     
     # st.subheader("Censo 1 (2024)")

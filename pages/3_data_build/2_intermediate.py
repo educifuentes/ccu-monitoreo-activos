@@ -6,6 +6,8 @@ from models.raw.intermediate._int_censos_censo_1 import int_censos_censo_1
 from models.raw.intermediate._int_base_norm_censo_1 import int_base_norm_censo_1, clean_df_summary_censo_2024
 from models.raw.intermediate._int_base_norm_locales import int_base_norm_locales
 
+from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1
+
 from models.raw.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1, int_reportes_ccu_base_2026_q1_locales
 from models.raw.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
 
@@ -24,7 +26,7 @@ tab1, tab2, tab3 = st.tabs([
     ":material/sports_bar: Locales",    
     ":material/checklist_rtl: Censos",
     ":material/assignment: Bases CCU"
-])
+], default= ":material/checklist_rtl: Censos")
 
 with tab1:
     st.header("Locales Intermediate")
@@ -42,38 +44,41 @@ with tab1:
     st.dataframe(filtered_df_ccu_loc, width='stretch')
 
 with tab2:
-    st.header("Censos Intermediate")
 
-    st.subheader("Censo 1 (2024) Original")
-    df_c1_orig = int_base_norm_original_censo_2024()
-    render_model_ui(df_c1_orig)
+    st.subheader("Censo 2026_1")
+    df_c2026_1 = int_censos_censo_2026_1()
+    render_model_ui(df_c2026_1) 
 
-    st.markdown("Summary of cleaning")
-    st.dataframe(clean_df_summary_censo_2024())
+    # st.subheader("Censo 1 (2024) Original")
+    # df_c1_orig = int_base_norm_original_censo_2024()
+    # render_model_ui(df_c1_orig)
+
+    # st.markdown("Summary of cleaning")
+    # st.dataframe(clean_df_summary_censo_2024())
     
-    st.subheader("Censo 2 (2025)")
-    st.markdown("**Notas:** Se asume 'CANTIDAD DE SALIDAS' como salidas_ccu.")
-    df_c2 = int_censos_censo_2()
-    render_model_ui(df_c2)
+    # st.subheader("Censo 2 (2025)")
+    # st.markdown("**Notas:** Se asume 'CANTIDAD DE SALIDAS' como salidas_ccu.")
+    # df_c2 = int_censos_censo_2()
+    # render_model_ui(df_c2)
     
-    st.divider()
+    # st.divider()
     
-    st.subheader("Censo 1 (2024)")
-    st.markdown("**Notas:** Limpieza de IDs nulos y agencias.")
-    df_c1 = int_censos_censo_1()
-    render_model_ui(df_c1)
+    # st.subheader("Censo 1 (2024)")
+    # st.markdown("**Notas:** Limpieza de IDs nulos y agencias.")
+    # df_c1 = int_censos_censo_1()
+    # render_model_ui(df_c1)
     
-    st.divider()
+    # st.divider()
     
-    st.subheader("Censo 2 + Locales (Match)")
-    locales_df = int_base_norm_locales()
-    df_merged = df_c2.merge(locales_df, on="local_id", how="left", indicator=True)
+    # st.subheader("Censo 2 + Locales (Match)")
+    # locales_df = int_base_norm_locales()
+    # df_merged = df_c2.merge(locales_df, on="local_id", how="left", indicator=True)
     
-    missing_locales = df_merged[df_merged["_merge"] == "left_only"]
-    if not missing_locales.empty:
-        st.warning(f"Hay {len(missing_locales)} filas en Censo 2 que no tienen match en Locales")
+    # missing_locales = df_merged[df_merged["_merge"] == "left_only"]
+    # if not missing_locales.empty:
+    #     st.warning(f"Hay {len(missing_locales)} filas en Censo 2 que no tienen match en Locales")
     
-    render_model_ui(df_merged)
+    # render_model_ui(df_merged)
 
 with tab3:
     st.header("Reportes CCU")
