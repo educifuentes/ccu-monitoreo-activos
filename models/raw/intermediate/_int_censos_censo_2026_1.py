@@ -4,6 +4,7 @@ from models.raw.staging.censos._stg_censos_censo_2026_1 import stg_censos_censo_
 
 from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
 from utilities.transformations.process_marcas import process_marcas, classify_marcas
+from utilities.transformations.text_cleaning import clean_text
 
 def int_censos_censo_2026_1():
 
@@ -12,6 +13,11 @@ def int_censos_censo_2026_1():
     # 1. Column Renamming
     rename_dict = {
         "ID Cliente": "local_id",
+        "cliente": "razon_social",
+        "Dirección": "direccion",
+        "Región": "region",
+        "Comuna": "comuna",
+        "Nombre fantasía": "nombre_fantasia",
         "Visitador": "visitador",
         "rut Visitador": "rut_visitador",
         "Observaciones": "observaciones",
@@ -54,6 +60,9 @@ def int_censos_censo_2026_1():
     for col in numeric_cols:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors='coerce').astype("Int64")
+
+    # clean text values nombre_fantasia, direccion
+    df = clean_text(df, ["nombre_fantasia", "direccion"], title=True)
     
     # 8. Final Column Selection
     selected_columns = [
@@ -69,6 +78,12 @@ def int_censos_censo_2026_1():
         "marcas_kross",
         "marcas_ccu",
         "marcas_otras",
+        # locales cols
+        "razon_social",
+        "direccion",
+        "region",
+        "comuna",
+        "nombre_fantasia",
         # otros
         # "tiene_schoperas",
         # "observaciones",

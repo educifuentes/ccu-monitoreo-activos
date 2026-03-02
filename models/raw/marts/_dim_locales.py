@@ -2,6 +2,7 @@ import pandas as pd
 
 from models.raw.intermediate._int_base_norm_locales import int_base_norm_locales
 from models.raw.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1_locales
+from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1
 
 from utilities.transformations.text_cleaning import clean_text
 from utilities.transformations.clean_region import clean_region
@@ -38,6 +39,33 @@ def update_with_base_ccu_2026_q1():
     df_final = pd.concat([df_ccu, missing_ids], ignore_index=True)
 
     return df_final
+
+def _new_locales_censo_2026_1():
+    """
+    Extracts locales from the 2026-1 Census that are NOT currently in the base dataframe.
+    """
+    df = update_with_base_ccu_2026_q1()
+        
+    censo_2026_1 = int_censos_censo_2026_1()
+
+    # Define standard columns
+    locales_columns = ["local_id", "razon_social", "rut", "direccion", "region", "ciudad", "comuna", "nombre_fantasia"]
+
+    # Add empty columns that don't exist in census to match standard layout
+    if "rut" not in censo_2026_1.columns:
+        censo_2026_1["rut"] = pd.NA
+    if "ciudad" not in censo_2026_1.columns:
+        censo_2026_1["ciudad"] = pd.NA
+
+    censo_2026_1 = censo_2026_1[locales_columns]
+
+    # Find census locales missing from our main df
+    missing_ids = censo_2026_1[~censo_2026_1["local_id"].isin(df["local_id"])].copy()
+    missing_ids["fuente"] = "Censo 2026-1"
+    
+    print(f"Locales en censo_2026_1 no presentes en info base: {len(missing_ids)}")
+
+    return missing_ids
     
 
 def dim_locales():
@@ -47,6 +75,11 @@ def dim_locales():
     """
 
     df = update_with_base_ccu_2026_q1()
+
+    # add new locales from censo 2026-1 (23 locales)
+    df_censo = _new_locales_censo_2026_1()
+    
+    df = pd.concat([df, df_censo], ignore_index=True)
 
     # 1. Standardize and clean text columns
     # clean_text now handles:
@@ -61,16 +94,7 @@ def dim_locales():
     # 2. Normalize regions using the dedicated mapper
     df = clean_region(df)
 
-    # 3. Debugging/Monitoring (Optional but helpful in logs)
-    print("\n--- DIM LOCALES MONITORING ---")
-    print(f"Total records: {len(df)}")
-    print("\nSource Distribution:")
-    print(df["fuente"].value_counts())
-    
-    print("\nRegion Distribution (post-cleaning):")
-    print(df["region"].value_counts(dropna=False))
-
-    # 4. Final cleanups
+    # 3. Final cleanups
     df["nombre_fantasia"] = df["nombre_fantasia"].replace("0", pd.NA)
 
     # replace local_id wuth "nan" to None
