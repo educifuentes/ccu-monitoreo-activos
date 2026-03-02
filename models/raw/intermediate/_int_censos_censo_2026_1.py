@@ -68,7 +68,12 @@ def int_censos_censo_2026_1():
         "marcas_abinbev",
         "marcas_kross",
         "marcas_ccu",
-        "marcas_otras"
+        "marcas_otras",
+        # otros
+        # "tiene_schoperas",
+        # "observaciones",
+        # "visitador",
+        # "rut_visitador"
     ]
     
     return df[selected_columns]

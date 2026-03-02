@@ -19,7 +19,7 @@ tab1, tab2, tab3, tab4 = st.tabs([
     ":material/checklist_rtl: Censos",
     ":material/assignment: Bases CCU",
     ":material/contract: Contratos"
-])
+], default= ":material/checklist_rtl: Censos")
 
 with tab1:
     st.header("Dim Locales")
@@ -47,7 +47,7 @@ with tab2:
     counts_df = fct_censos_df["periodo"].value_counts().reset_index()
     counts_df.columns = ["periodo", "count"]
     counts_df.loc[len(counts_df)] = ["Total", counts_df["count"].sum()]
-    st.dataframe(counts_df)
+    st.dataframe(counts_df.sort_values(by="periodo", ascending=False))
 
     render_model_ui(fct_censos_df)
 

@@ -49,36 +49,9 @@ with tab2:
     df_c2026_1 = int_censos_censo_2026_1()
     render_model_ui(df_c2026_1) 
 
-    # st.subheader("Censo 1 (2024) Original")
-    # df_c1_orig = int_base_norm_original_censo_2024()
-    # render_model_ui(df_c1_orig)
-
-    # st.markdown("Summary of cleaning")
-    # st.dataframe(clean_df_summary_censo_2024())
-    
-    # st.subheader("Censo 2 (2025)")
-    # st.markdown("**Notas:** Se asume 'CANTIDAD DE SALIDAS' como salidas_ccu.")
-    # df_c2 = int_censos_censo_2()
-    # render_model_ui(df_c2)
-    
-    # st.divider()
-    
-    # st.subheader("Censo 1 (2024)")
-    # st.markdown("**Notas:** Limpieza de IDs nulos y agencias.")
-    # df_c1 = int_censos_censo_1()
-    # render_model_ui(df_c1)
-    
-    # st.divider()
-    
-    # st.subheader("Censo 2 + Locales (Match)")
-    # locales_df = int_base_norm_locales()
-    # df_merged = df_c2.merge(locales_df, on="local_id", how="left", indicator=True)
-    
-    # missing_locales = df_merged[df_merged["_merge"] == "left_only"]
-    # if not missing_locales.empty:
-    #     st.warning(f"Hay {len(missing_locales)} filas en Censo 2 que no tienen match en Locales")
-    
-    # render_model_ui(df_merged)
+    st.subheader("Censo 2025_2")
+    df_c2025_2 = int_censos_censo_2()
+    render_model_ui(df_c2025_2) 
 
 with tab3:
     st.header("Reportes CCU")

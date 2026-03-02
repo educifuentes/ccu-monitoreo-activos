@@ -75,6 +75,11 @@ def int_censos_censo_2():
         "marcas_kross",
         "marcas_ccu",
         "marcas_otras"
+        # # quizas mas adelante agregar
+        # "tiene_schoperas",
+        # "observaciones",
+        # "visitador",
+        # "rut_visitador"
     ]
     
     return df[selected_columns]
