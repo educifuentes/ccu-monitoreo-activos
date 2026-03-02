@@ -57,6 +57,8 @@ if IS_LOCAL:
         analysis_page
     ]
 
+from utilities.app_version import get_app_version
+
 # current page
 pg = st.navigation(nav_dict)
 
@@ -64,6 +66,13 @@ with st.sidebar:
     if st.button("Actualizar Datos 🔄", width='stretch', help="Forzar la recarga de datos desde Google Sheets"):
         st.cache_data.clear()
         st.rerun()
+    
+    st.divider()
+    # Logo and version
+    app_version = get_app_version()
+    st.image("utilities/assets/logo_gotomarket.png", use_container_width=True)
+    st.caption(f"Version: {app_version}")
 
 pg.run()
+
 

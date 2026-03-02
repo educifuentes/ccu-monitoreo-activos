@@ -1,5 +1,7 @@
 # Release Process (CalVer)
 
+^v.\*$
+
 This project uses [Calendar Versioning (CalVer)](https://calver.org/) to track releases. The format we use is `YY.MM.DD`.
 
 Whenever a new git tag is pushed to the repository in this format (prefixed with a `v`), Google Cloud Build will automatically trigger a deployment to Cloud Run.
