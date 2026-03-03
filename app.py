@@ -34,7 +34,7 @@ IS_LOCAL = os.getenv("USER") == "educifuentes"
 nav_dict = {
     "Vistas": [
         general_page, 
-        # censos_page
+        censos_page
     ],
     "Herramientas": [explore_page, validations_page, documentation_page],
 }

@@ -19,7 +19,7 @@ from utilities.transformations.date_formatting import format_date_spanish
 st.set_page_config(page_title="Reportes General y Locales", layout="wide")
 st.title("Monitoreo de Activos CCU")
 st.markdown("Lectura de datos desde [Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)")
-
+st.markdown(" ")
 # -----------------------------------------------------------------------------
 # DATA LOADING
 # -----------------------------------------------------------------------------
@@ -43,44 +43,18 @@ bi_censos_df = bi_censos()
 bi_censos_2025_df = bi_censos_df[bi_censos_df['periodo'] == "2025-S2"]
 metrics = calculate_general_metrics(bi_activos_df, bi_censos_2025_df, bi_contratos_df, bi_locales_df)
 
-col_metrics, col_chart = st.columns([1, 1.5])
+m1, m2, m3, m4 = st.columns(4)
+m1.metric("Locales", f"{metrics['total_locales']}")
+m2.metric("Contratos Imagen", f"{metrics['total_contratos_imagen']}")
+m3.metric("En regla", f"{metrics['en_regla']}")
+m4.metric("No en regla", f"{metrics['no_en_regla']}")
 
-with col_metrics:
-    st.subheader("Métricas")
-    m1, m2 = st.columns(2)
-    m1.metric("Locales", f"{metrics['total_locales']}")
-    m2.metric("Contratos Imagen", f"{metrics['total_contratos_imagen']}")
-    
-    m3, m4 = st.columns(2)
-    m3.metric("En regla", f"{metrics['en_regla']}")
-    m4.metric("No en regla", f"{metrics['no_en_regla']}")
-
-with col_chart:
-    st.subheader("Cumplimiento - Censos")
-    chart = alt.Chart(bi_censos_2025_df).mark_bar().encode(
-        x=alt.X('periodo:O', title='Periodo'),
-        y=alt.Y('count():Q', title='Número de Locales'),
-        color=alt.Color(
-            'clasificacion:N',
-            title='Clasificacion',
-            scale=alt.Scale(
-                domain=list(CLASIFICACION_COLORS.keys()),
-                range=list(CLASIFICACION_COLORS.values())
-            )
-        ),
-        tooltip=[
-            alt.Tooltip('periodo:O', title='Periodo'),
-            alt.Tooltip('count():Q', title='Número de Locales'),
-            alt.Tooltip('clasificacion:N', title='Clasificación')
-        ]
-    )
-    st.altair_chart(chart, width='stretch', height=250)
 
 
 # -----------------------------------------------------------------------------
 # LOCAL DETAILS SECTION
 # -----------------------------------------------------------------------------
-st.divider()
+
 st.header(":material/sports_bar: Locales")
 st.markdown("Información detallada de censos, nóminas y contratos por cada establecimiento.")
 

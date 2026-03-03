@@ -8,8 +8,8 @@ from utilities.ui_config import CLASIFICACION_COLORS
 
 st.set_page_config(page_title="Censos", layout="wide")
 
-st.title("Reporte de Censos")
-st.markdown("Tabla de resumen por región y gráfico de cumplimiento según los datos de censos.")
+st.title("Censos")
+
 
 # 1. Data Loading
 try:
@@ -39,6 +39,13 @@ with col_filt1:
         index=1 if len(unique_periodos) > 0 else 0
     )
 
+with col_filt2:
+    counts_df = df_censos["periodo"].value_counts().reset_index()
+    counts_df.columns = ["periodo", "count"]
+    counts_df = counts_df.sort_values(by="periodo", ascending=False).reset_index(drop=True)
+    counts_df.loc[len(counts_df)] = ["Total", counts_df["count"].sum()]
+    st.dataframe(counts_df, hide_index=True, width=400)
+
 if selected_periodo != "Todos":
     df_filtered = df_censos[df_censos["periodo"] == selected_periodo]
 else:
@@ -53,20 +60,25 @@ st.divider()
 col_table, col_chart = st.columns([1, 1.5])
 
 with col_table:
-    st.subheader(f"Resumen por Región - {selected_periodo}")
+    st.subheader(f"por Región - {selected_periodo}")
     if "region" in df_filtered.columns:
         counts_df = df_filtered["region"].value_counts().reset_index()
         counts_df.columns = ["Región", "Cantidad"]
-        counts_df = counts_df.sort_values(by="Cantidad", ascending=False).reset_index(drop=True)
-        counts_df.loc[len(counts_df)] = ["Total", counts_df["Cantidad"].sum()]
+        counts_df = counts_df.sort_values(
+            by="Región", 
+            ascending=True,
+            key=lambda x: pd.to_numeric(x.str.extract(r'^(\d+)', expand=False), errors="coerce")
+        )
         st.dataframe(counts_df, hide_index=True, use_container_width=True)
     else:
         st.info("La columna 'region' no está disponible en los datos.")
 
 with col_chart:
     st.subheader("Cumplimiento - Censos")
-    if "clasificacion" in df_filtered.columns and "periodo" in df_filtered.columns:
-        chart = alt.Chart(df_filtered).mark_bar().encode(
+    # filter out rows with fecha before 2025
+    df_filtered_no_2024_s2 = df_censos[pd.to_datetime(df_censos["fecha"], errors='coerce').dt.year >= 2025]
+    if "clasificacion" in df_filtered_no_2024_s2.columns and "periodo" in df_filtered_no_2024_s2.columns:
+        chart = alt.Chart(df_filtered_no_2024_s2).mark_bar().encode(
             x=alt.X('periodo:O', title='Periodo'),
             y=alt.Y('count():Q', title='Número de Locales'),
             color=alt.Color(

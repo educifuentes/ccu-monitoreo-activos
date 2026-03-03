@@ -47,12 +47,6 @@ with tab2:
     try:
         df_censos = censos()
         df_censos = explorer_de_datos(df_censos, key_prefix="censos")
-
-        counts_df = df_censos["periodo"].value_counts().reset_index()
-        counts_df.columns = ["periodo", "count"]
-        counts_df = counts_df.sort_values(by="periodo", ascending=False).reset_index(drop=True)
-        counts_df.loc[len(counts_df)] = ["Total", counts_df["count"].sum()]
-        st.dataframe(counts_df, hide_index=True, width=400)
         
         safe_render(df_censos)
     except Exception as e:
