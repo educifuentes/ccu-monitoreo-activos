@@ -4,6 +4,7 @@ import streamlit as st
 
 # Section - Reports
 general_page = st.Page("pages/1_reports/1_overview.py", title="General", icon=":material/dashboard:")
+censos_page = st.Page("pages/1_reports/2_censos.py", title="Censos", icon=":material/article:")
 
 # Section - Tools
 explore_page = st.Page("pages/2_tools/data_explorer.py", title="Explorador de Datos", icon=":material/search:")
@@ -31,7 +32,10 @@ IS_LOCAL = os.getenv("USER") == "educifuentes"
 
 # Navigation Logic
 nav_dict = {
-    "Vistas": [general_page],
+    "Vistas": [
+        general_page, 
+        # censos_page
+    ],
     "Herramientas": [explore_page, validations_page, documentation_page],
 }
 
