@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def stg_censos_censo_2():
+def stg_censos_censo_2025_2():
     # Define file path
     file_path = "seeds/censos/CENSO CCU PK 27JULIO ID 260725-2 - Hoja1.csv"
     

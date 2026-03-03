@@ -1,10 +1,10 @@
 sources:
-  - name: censo_2
+  - name: censo_2025_2
     description: El segundo que se hizo sera el definitivo de esstrucutra.
     path: seeds/censos/CENSO CCU PK 27JULIO ID 260725-2 - Hoja1.csv
     url: https://docs.google.com/spreadsheets/d/1XSTe86lIuoVuigm2YtpeCTcoJwqlLpn6664-Nodw4ds/
     tables:
-      - name: censo_2
+      - name: censo_2025_2
         sheet_name: Hoja1
         cuestionario_url: https://docs.google.com/spreadsheets/d/11SN4LAVZvaeeUVIlpulDUQXayFFE0CEAxuPlNLuOU7c/edit?gid=2030001645#gid=2030001645
         columns:

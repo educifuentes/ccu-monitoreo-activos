@@ -10,10 +10,10 @@ sources:
       - name: locales
         url: https://docs.google.com/spreadsheets/d/1w9F7pvef-eOMT1fqHZ4K2OofzY8hoF20bluBo8wIYPE/edit?gid=581899419#gid=581899419
         path: seeds/base_normalizada/base_normalizada - locales.csv
-      - name: censo_1
+      - name: censo_2024_2
         url: https://docs.google.com/spreadsheets/d/1w9F7pvef-eOMT1fqHZ4K2OofzY8hoF20bluBo8wIYPE/edit?gid=1341712522#gid=1341712522
-        path: seeds/base_normalizada/base_normalizada - censo_1.csv
-      - name: censo_2
+        path: seeds/base_normalizada/base_normalizada - censo_2024_2.csv
+      - name: censo_2025_2
       - name: contratos
         url: https://docs.google.com/spreadsheets/d/1w9F7pvef-eOMT1fqHZ4K2OofzY8hoF20bluBo8wIYPE/edit?gid=216900586#gid=216900586
       - name: reporte_comodatos

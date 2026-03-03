@@ -1,6 +1,6 @@
 import streamlit as st
 
-from scripts.reprocess_gsheet_snapshot import reprocessed_sheets
+from scripts.data_ingestion.reprocess_gsheet_snapshot import reprocessed_sheets
 from utilities.ui_components import render_model_ui
 
 # Page settings and header

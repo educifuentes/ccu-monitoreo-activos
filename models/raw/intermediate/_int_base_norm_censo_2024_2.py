@@ -1,6 +1,6 @@
 import pandas as pd
 
-from models.raw.staging.base_normalizada._stg_base_norm_censo_1 import stg_base_norm_censo_1
+from models.raw.staging.base_normalizada._stg_base_norm_censo_2024_2 import stg_base_norm_censo_2024_2
 from models.raw.staging.base_normalizada._stg_base_norm_original import stg_base_norm_original_censo_2024
 
 from utilities.transformations.process_marcas import process_marcas, classify_marcas
@@ -30,8 +30,8 @@ def int_base_norm_original_censo_2024():
     # rename
     rename_dict = {
         "ID CLIENTE": "local_id",
-        "CATEGORÍA CENSO 1": "categoria_censo_1",
-        "Censo 1": "censo_1",
+        "CATEGORÍA CENSO 1": "categoria_censo_2024_2",
+        "Censo 1": "censo_2024_2",
         "CANTIDAD DE SCHOPERAS CCU": "schoperas",
         "CANTIDAD DE SALIDAS": "salidas",
         "CCU/ABINBEV/OTRAS MARCAS COMPETENCIA": "marcas"
@@ -107,8 +107,8 @@ def clean_df_summary_censo_2024():
     return pd.DataFrame(summary_data)
 
 
-def int_base_norm_censo_1():
-    df = stg_base_norm_censo_1()
+def int_base_norm_censo_2024_2():
+    df = stg_base_norm_censo_2024_2()
 
     # Apply brand processing
     brands_col = "CCU/ABINBEV/OTRAS MARCAS COMPETENCIA"

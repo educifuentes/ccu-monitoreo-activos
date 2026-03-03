@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def stg_censos_censo_1():
+def stg_censos_censo_2024_2():
     # Define file path
     file_path = "seeds/censos/corpa- Go to market - Censo Restaurantes PDV BBDD FINAL - BBDD.csv"
     

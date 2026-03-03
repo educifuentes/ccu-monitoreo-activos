@@ -38,6 +38,6 @@ def get_source_path(table_name, yaml_path='models/staging/_src_censos.yml'):
 
 if __name__ == "__main__":
     # Test cases
-    target_table = "censo_2"
+    target_table = "censo_2025_2"
     path = get_source_path(target_table)
     print(f"Path for '{target_table}': {path}")

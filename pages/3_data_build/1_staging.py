@@ -1,10 +1,10 @@
 import streamlit as st
 
-from models.raw.staging.censos._stg_censos_censo_2 import stg_censos_censo_2
-from models.raw.staging.censos._stg_censos_censo_1 import stg_censos_censo_1
+from models.raw.staging.censos._stg_censos_censo_2025_2 import stg_censos_censo_2025_2
+from models.raw.staging.censos._stg_censos_censo_2024_2 import stg_censos_censo_2024_2
 from models.raw.staging.censos._stg_censos_censo_2026_1 import stg_censos_censo_2026_1
 
-from models.raw.staging.base_normalizada._stg_base_norm_censo_1 import stg_base_norm_censo_1
+from models.raw.staging.base_normalizada._stg_base_norm_censo_2024_2 import stg_base_norm_censo_2024_2
 from models.raw.staging.base_normalizada._stg_base_norm_locales import stg_base_norm_locales
 
 from models.raw.staging.base_normalizada._stg_base_norm_original import stg_base_norm_original, stg_base_norm_original_base_ccu_2024, stg_base_norm_original_censo_2024
@@ -39,7 +39,7 @@ with tab1:
     st.divider()
     
     st.subheader("Censo 1 (Normalizado)")
-    df_c1 = stg_base_norm_censo_1()
+    df_c1 = stg_base_norm_censo_2024_2()
     filtered_df_c1 = explorer_de_datos(df_c1)
     render_model_ui(filtered_df_c1)
 
@@ -52,14 +52,14 @@ with tab2:
     render_model_ui(filtered_df2026_1)
         
     # st.subheader("Censo 2 (2025)")
-    # df2 = stg_censos_censo_2()
+    # df2 = stg_censos_censo_2025_2()
     # filtered_df2 = explorer_de_datos(df2)
     # render_model_ui(filtered_df2)
     
     
     # st.subheader("Censo 1 (2024)")
     # st.warning("Data histórica - Usar con precaución.")
-    # df1 = stg_censos_censo_1()
+    # df1 = stg_censos_censo_2024_2()
     # filtered_df1 = explorer_de_datos(df1)
     # render_model_ui(filtered_df1)
 
@@ -92,8 +92,8 @@ with tab4:
     render_model_ui(df_base_ccu_2024)
 
     st.subheader("Censo 2024 Q1")
-    df_censo_2024 = stg_base_norm_original_censo_2024()
-    render_model_ui(df_censo_2024)
+    df_censo_2024_2 = stg_base_norm_original_censo_2024()
+    render_model_ui(df_censo_2024_2)
 
 
 

@@ -1,11 +1,11 @@
 import pandas as pd
 
-from models.raw.staging.censos._stg_censos_censo_2 import stg_censos_censo_2
+from models.raw.staging.censos._stg_censos_censo_2025_2 import stg_censos_censo_2025_2
 
 from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
 from utilities.transformations.process_marcas import process_marcas, classify_marcas
 
-def int_censos_censo_2():
+def int_censos_censo_2025_2():
     """
     Intermediate model for Censo 2.
     - Renames columns to standardized names.
@@ -14,7 +14,7 @@ def int_censos_censo_2():
     - Calculates total outputs (salidas).
     - Sets period and date info.
     """
-    stg_censos_2_df = stg_censos_censo_2()
+    stg_censos_2_df = stg_censos_censo_2025_2()
 
     # 1. Column Renamming
     rename_dict = {
