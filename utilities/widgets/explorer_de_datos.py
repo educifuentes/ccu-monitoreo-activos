@@ -7,7 +7,7 @@ from pandas.api.types import (
     is_object_dtype,
 )
 
-def explorer_de_datos(df: pd.DataFrame) -> pd.DataFrame:
+def explorer_de_datos(df: pd.DataFrame, key_prefix: str = "") -> pd.DataFrame:
     """
     Versión en español de dataframe_explorer.
     Permite filtrar un dataframe con una interfaz en español.
@@ -29,7 +29,8 @@ def explorer_de_datos(df: pd.DataFrame) -> pd.DataFrame:
         columnas_a_filtrar = st.multiselect(
             "Filtrar dataframe por:", 
             df.columns,
-            placeholder="Selecciona columnas..."
+            placeholder="Selecciona columnas...",
+            key=f"{key_prefix}_columnas" if key_prefix else None
         )
         
         for col in columnas_a_filtrar:
@@ -39,6 +40,7 @@ def explorer_de_datos(df: pd.DataFrame) -> pd.DataFrame:
                     f"Valores para {col}",
                     df[col].unique(),
                     default=list(df[col].unique()),
+                    key=f"{key_prefix}_{col}_cat" if key_prefix else None
                 )
                 df = df[df[col].isin(seleccion)]
                 
@@ -54,6 +56,7 @@ def explorer_de_datos(df: pd.DataFrame) -> pd.DataFrame:
                     max_value=_max,
                     value=(_min, _max),
                     step=paso,
+                    key=f"{key_prefix}_{col}_num" if key_prefix else None
                 )
                 df = df[df[col].between(*valores)]
                 
@@ -62,6 +65,7 @@ def explorer_de_datos(df: pd.DataFrame) -> pd.DataFrame:
                 rango_fechas = st.date_input(
                     f"Rango de fechas para {col}",
                     value=(df[col].min().to_pydatetime(), df[col].max().to_pydatetime()),
+                    key=f"{key_prefix}_{col}_date" if key_prefix else None
                 )
                 if len(rango_fechas) == 2:
                     start, end = pd.to_datetime(rango_fechas[0]), pd.to_datetime(rango_fechas[1])
@@ -69,7 +73,10 @@ def explorer_de_datos(df: pd.DataFrame) -> pd.DataFrame:
             
             # Texto / Otros
             else:
-                busqueda = st.text_input(f"Buscar patrón en {col}")
+                busqueda = st.text_input(
+                    f"Buscar patrón en {col}",
+                    key=f"{key_prefix}_{col}_text" if key_prefix else None
+                )
                 if busqueda:
                     df = df[df[col].astype(str).str.contains(busqueda, case=False)]
 

@@ -10,4 +10,7 @@ Whenever you make changes to your code or secrets and want to push them to the l
 
 ```bash
 ./scripts/deploy.sh
+
+
+./scripts/release.sh
 ```

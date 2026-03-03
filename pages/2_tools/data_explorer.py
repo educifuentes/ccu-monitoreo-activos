@@ -6,6 +6,7 @@ from models.gsheets.staging.gsheets_tables import (
     contratos
 )
 from utilities.ui_icons import ICONS
+from utilities.widgets.explorer_de_datos import explorer_de_datos
 
 
 st.set_page_config(page_title="Explorador de Datos", layout="wide")
@@ -22,15 +23,6 @@ def safe_render(df):
     
     st.dataframe(df, width='stretch')
 
-def apply_local_id_filter(df, key_suffix):
-    """
-    Adds a text input to filter the given DataFrame by local_id.
-    """
-    filter_local_id = st.text_input("Filtrar por local_id", key=f"filter_{key_suffix}")
-    if filter_local_id and "local_id" in df.columns:
-        df = df[df["local_id"].astype(str).str.contains(filter_local_id, na=False)]
-    return df
-
 # Create tabs for organization
 tab1, tab2, tab3, tab4 = st.tabs([
     f"{ICONS['locales']} Locales",
@@ -43,7 +35,7 @@ with tab1:
     st.header("Locales")
     try:
         df_locales = locales()
-        df_locales = apply_local_id_filter(df_locales, "locales")
+        df_locales = explorer_de_datos(df_locales, key_prefix="locales")
             
         st.metric("Total Registros", f"{len(df_locales):,}")
         safe_render(df_locales)
@@ -54,7 +46,7 @@ with tab2:
     st.header("Censos")
     try:
         df_censos = censos()
-        df_censos = apply_local_id_filter(df_censos, "censos")
+        df_censos = explorer_de_datos(df_censos, key_prefix="censos")
 
         counts_df = df_censos["periodo"].value_counts().reset_index()
         counts_df.columns = ["periodo", "count"]
@@ -70,7 +62,7 @@ with tab3:
     st.header("Bases CCU")
     try:
         df_bases_ccu = bases_ccu()
-        df_bases_ccu = apply_local_id_filter(df_bases_ccu, "bases_ccu")
+        df_bases_ccu = explorer_de_datos(df_bases_ccu, key_prefix="bases_ccu")
         
         col1, col2, col3 = st.columns(3)
         col1.metric("Total", f"{len(df_bases_ccu):,}")
@@ -84,7 +76,7 @@ with tab4:
     st.header("Contratos")
     try:
         df_contratos = contratos()
-        df_contratos = apply_local_id_filter(df_contratos, "contratos")
+        df_contratos = explorer_de_datos(df_contratos, key_prefix="contratos")
         
         st.metric("Total Registros", f"{len(df_contratos):,}")
         safe_render(df_contratos)
