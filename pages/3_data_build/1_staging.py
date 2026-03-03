@@ -4,11 +4,12 @@ from models.raw.staging.censos._stg_censos_censo_2025_2 import stg_censos_censo_
 from models.raw.staging.censos._stg_censos_censo_2024_2 import stg_censos_censo_2024_2
 from models.raw.staging.censos._stg_censos_censo_2026_1 import stg_censos_censo_2026_1
 
+from models.raw.staging.censos._stg_censos_fne_listado_2026_1 import stg_censos_fne_listado_2026_1
+
 from models.raw.staging.base_normalizada._stg_base_norm_censo_2024_2 import stg_base_norm_censo_2024_2
 from models.raw.staging.base_normalizada._stg_base_norm_locales import stg_base_norm_locales
 
 from models.raw.staging.base_normalizada._stg_base_norm_original import stg_base_norm_original, stg_base_norm_original_base_ccu_2024, stg_base_norm_original_censo_2024
-
 from models.raw.staging.bases_ccu._stg_reportes_ccu_base_2026_q1 import stg_reportes_ccu_base_2026_q1
 
 from utilities.widgets.explorer_de_datos import explorer_de_datos
@@ -47,9 +48,14 @@ with tab2:
     st.header("Censos")
 
     st.subheader("Censo 2026_1")
-    df2026_1 = stg_censos_censo_2026_1()
-    filtered_df2026_1 = explorer_de_datos(df2026_1)
-    render_model_ui(filtered_df2026_1)
+    # df2026_1 = stg_censos_censo_2026_1()
+    # filtered_df2026_1 = explorer_de_datos(df2026_1)
+    # render_model_ui(filtered_df2026_1)
+
+    st.subheader("Censo 2026_1 FNE")
+    df2026_1_fne = stg_censos_fne_listado_2026_1()
+    filtered_df2026_1_fne = explorer_de_datos(df2026_1_fne)
+    render_model_ui(filtered_df2026_1_fne)
         
     # st.subheader("Censo 2 (2025)")
     # df2 = stg_censos_censo_2025_2()

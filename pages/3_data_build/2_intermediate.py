@@ -6,6 +6,8 @@ from models.raw.intermediate._int_censos_censo_2024_2 import int_censos_censo_20
 from models.raw.intermediate._int_base_norm_censo_2024_2 import int_base_norm_censo_2024_2, clean_df_summary_censo_2024
 from models.raw.intermediate._int_base_norm_locales import int_base_norm_locales
 
+from models.raw.marts._dim_locales import _new_locales_censo_2026_1
+
 from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1
 
 from models.raw.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1, int_reportes_ccu_base_2026_q1_locales
@@ -30,18 +32,21 @@ tab1, tab2, tab3 = st.tabs([
 
 with tab1:
     st.header("Locales Intermediate")
+
+    df = _new_locales_censo_2026_1()
+    render_model_ui(df)
     
-    st.subheader("Base Normalizada")
-    df_loc = int_base_norm_locales()
-    filtered_df_loc = explorer_de_datos(df_loc)
-    st.dataframe(filtered_df_loc, width='stretch')
+    # st.subheader("Base Normalizada")
+    # df_loc = int_base_norm_locales()
+    # filtered_df_loc = explorer_de_datos(df_loc)
+    # st.dataframe(filtered_df_loc, width='stretch')
     
-    st.divider()
+    # st.divider()
     
-    st.subheader("Locales desde Reporte CCU 2026")
-    df_ccu_loc = int_reportes_ccu_base_2026_q1_locales()
-    filtered_df_ccu_loc = explorer_de_datos(df_ccu_loc)
-    st.dataframe(filtered_df_ccu_loc, width='stretch')
+    # st.subheader("Locales desde Reporte CCU 2026")
+    # df_ccu_loc = int_reportes_ccu_base_2026_q1_locales()
+    # filtered_df_ccu_loc = explorer_de_datos(df_ccu_loc)
+    # st.dataframe(filtered_df_ccu_loc, width='stretch')
 
 with tab2:
 

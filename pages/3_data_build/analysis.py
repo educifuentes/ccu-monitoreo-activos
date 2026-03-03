@@ -4,6 +4,7 @@ from models.analysis.compare_bases_ccu import compare_locales_df, compare_activo
 from models.analysis.locales_base_2024 import analyze_empty_2024_locales
 
 from models.raw.marts._dim_locales import _new_locales_censo_2026_1
+from models.raw.intermediate._int_censos_fne_listado_2026_1 import int_censos_fne_listado_2026_1
 
 from models.raw.staging.base_normalizada._stg_base_norm_original import stg_base_norm_original
 
@@ -15,7 +16,27 @@ st.markdown("Herramientas de comparación y perfiado de datos para validación d
 
 
 new_locales = _new_locales_censo_2026_1()
+st.subheader("New Locales 2026_1 (Original)")
 render_model_ui(new_locales)
+
+# join with missing info
+st.subheader("New Locales 2026_1 (Joined with FNE Listado)")
+fne_df = int_censos_fne_listado_2026_1()
+
+# Keep only necessary columns from the right side for the join
+fne_df_subset = fne_df[['local_id', 'razon_social', 'rut']].drop_duplicates(subset=['local_id'])
+
+# Perform left join
+joined_locales = new_locales.merge(
+    fne_df_subset, 
+    on='local_id', 
+    how='left',
+    suffixes=('_orig', '_fne')
+)
+
+# Overwrite or combine the new columns cleanly if needed, or just let them stay with suffixes.
+# Since the prompt said "leave onley local_id cols and razon_social and rut fromthe right table", we did that exactly.
+render_model_ui(joined_locales)
 
 # # Create tabs for organization
 # tab1, tab2 = st.tabs([

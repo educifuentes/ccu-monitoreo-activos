@@ -4,6 +4,9 @@ from models.raw.intermediate._int_base_norm_locales import int_base_norm_locales
 from models.raw.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1_locales
 from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1
 
+from models.raw.intermediate._int_censos_fne_listado_2026_1 import int_censos_fne_listado_2026_1
+
+
 from utilities.transformations.text_cleaning import clean_text
 from utilities.transformations.clean_region import clean_region
 
@@ -64,6 +67,24 @@ def _new_locales_censo_2026_1():
     missing_ids["fuente"] = "Censo 2026-1"
     
     print(f"Locales en censo_2026_1 no presentes en info base: {len(missing_ids)}")
+
+    # add missing info from fne listado
+    fne_df = int_censos_fne_listado_2026_1()
+    
+    # Keep only necessary columns from the right side for the join
+    fne_df_subset = fne_df[['local_id', 'razon_social', 'rut']].drop_duplicates(subset=['local_id'])
+    
+    # Drop existing 'razon_social' and 'rut' to replace them entirely with FNE data
+    missing_ids = missing_ids.drop(columns=['razon_social', 'rut'])
+    
+    # Perform left join to bring in reasonably clean FNE data
+    missing_ids = missing_ids.merge(fne_df_subset, on='local_id', how='left')
+
+    # clean
+    missing_ids = clean_text(missing_ids, ["razon_social"], title=True)
+
+    # reorder columns
+    missing_ids = missing_ids[locales_columns]
 
     return missing_ids
     
