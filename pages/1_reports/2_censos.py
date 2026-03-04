@@ -69,7 +69,7 @@ with col_table:
             ascending=True,
             key=lambda x: pd.to_numeric(x.str.extract(r'^(\d+)', expand=False), errors="coerce")
         )
-        st.dataframe(counts_df, hide_index=True, use_container_width=True)
+        st.dataframe(counts_df, hide_index=True, width='stretch')
     else:
         st.info("La columna 'region' no está disponible en los datos.")
 
