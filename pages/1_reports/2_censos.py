@@ -1,9 +1,11 @@
 import streamlit as st
 import altair as alt
 import pandas as pd
-
 from models.gsheets.marts.bi_censos import bi_censos
 from utilities.ui_config import CLASIFICACION_COLORS
+from utilities.widgets.explorer_de_datos import explorer_de_datos
+from utilities.widgets.display_df_censos import display_df_censos
+
 
 
 st.set_page_config(page_title="Censos", layout="wide")
@@ -69,12 +71,12 @@ with col_table:
             ascending=True,
             key=lambda x: pd.to_numeric(x.str.extract(r'^(\d+)', expand=False), errors="coerce")
         )
-        st.dataframe(counts_df, hide_index=True, width='stretch')
+        st.dataframe(counts_df, hide_index=True, width='stretch', height=500)
     else:
         st.info("La columna 'region' no está disponible en los datos.")
 
 with col_chart:
-    st.subheader("Cumplimiento - Censos")
+    st.subheader("Cumplimiento")
     # filter out rows with fecha before 2025
     df_filtered_no_2024_s2 = df_censos[pd.to_datetime(df_censos["fecha"], errors='coerce').dt.year >= 2025]
     if "clasificacion" in df_filtered_no_2024_s2.columns and "periodo" in df_filtered_no_2024_s2.columns:
@@ -98,3 +100,13 @@ with col_chart:
         st.altair_chart(chart, width='stretch', height=250)
     else:
         st.info("Las columnas 'clasificacion' o 'periodo' no están disponibles en los datos de censos.")
+
+st.subheader("Detalles")
+
+censo_columns = ["periodo", "local_id", "razon_social", "marcas",  "instalo", "disponibilizo", "salidas", "clasificacion"]
+
+censo_df_display = df_filtered[censo_columns]
+
+explorer_de_datos(censo_df_display)
+
+display_df_censos(censo_df_display)
