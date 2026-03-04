@@ -37,7 +37,7 @@ def int_censos_censo_2025_2():
 
     # 3. Brand Processing and Classification
     if "marcas" in df.columns:
-        df["marcas"] = df["marcas"].apply(process_marcas)
+        df = process_marcas(df)
         df = classify_marcas(df)
 
     # 4. Value Transformations

@@ -100,3 +100,33 @@ BRAND_COLORS = [
     BRAND_GROUPS_COLORS.get(BRANDS_MAPPING.get(brand), BRAND_GROUPS_COLORS[BRAND_GROUP[3]])
     for brand in BRANDS
 ]
+
+FREE_TEXT_MAPPINGS = {
+    "bloomon": "BLUE MOON",
+    "bluemoon": "BLUE MOON",
+    "blue moon": "BLUE MOON",
+    "chester beer artesanal": "CHESTER",
+    "chester beer": "CHESTER",
+    "chester": "CHESTER",
+    "kross": "KROSS",
+    "estrella damn": "ESTRELLA DAMM",
+    "estrella damm": "ESTRELLA DAMM",
+    "estrella": "ESTRELLA DAMM",
+    "mahou": "MAHOU",
+    "mahon": "MAHOU",
+    "peroni": "PERONI",
+    "peronni": "PERONI",
+    "peruani": "PERONI",
+    "tubiinger": "TUBINGER",
+    "tubinger": "TUBINGER",
+    "alambra": "ALHAMBRA",
+    "alhambra": "ALHAMBRA",
+    "tropera": "TROPERA",
+    "las troperas": "TROPERA",
+}
+
+IGNORE_FREE_TEXT = {
+    "no", "ninguna", "ninguna otra", "sin comentario", "ninguna otra marca",
+    "0", "no hay otra", "no tienen cervezas a la venta , estan solo las maquinas",
+    "no hay", "ok", ".", "no tiene", "si. comentarios"
+}

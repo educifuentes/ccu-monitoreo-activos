@@ -10,3 +10,4 @@ def stg_censos_censo_2026_1():
     # Load CSV using the second row as header
     df = pd.read_csv(file_path)
     return df
+

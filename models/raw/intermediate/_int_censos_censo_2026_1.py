@@ -28,8 +28,10 @@ def int_censos_censo_2026_1():
         "CUANTAS SHOPERAS NUEVAS INSTALO CCU PARA MARCAS ARTESANALES?": "instalo",
         'CUANTAS SALIDAS DEJO LIBRE CCU PARA MARCAS ARTESANALES? s ': "disponibilizo",
         # marcas
-        '¿CUALES DE ESTAS MARCAS SE VENDEN EN SCHOP?': "marcas"
+        '¿CUALES DE ESTAS MARCAS SE VENDEN EN SCHOP?': "marcas",
+        " OTRA MARCA, ESPECIFIQUE": "marcas_texto_libre"
     }
+
     df = stg_censos_2_df.rename(columns=rename_dict)
 
     # 2. Basic Data Types
@@ -37,7 +39,7 @@ def int_censos_censo_2026_1():
 
     # 3. Brand Processing and Classification
     if "marcas" in df.columns:
-        df["marcas"] = df["marcas"].apply(process_marcas)
+        df = process_marcas(df)
         df = classify_marcas(df)
 
     # 4. Value Transformations

@@ -52,6 +52,8 @@ with tab2:
     filtered_df2026_1 = explorer_de_datos(df2026_1)
     render_model_ui(filtered_df2026_1)
 
+    st.dataframe(df2026_1[" OTRA MARCA, ESPECIFIQUE"])
+
     # st.subheader("Censo 2026_1 FNE")
     # df2026_1_fne = stg_censos_fne_listado_2026_1()
     # filtered_df2026_1_fne = explorer_de_datos(df2026_1_fne)

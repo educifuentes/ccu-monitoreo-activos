@@ -54,7 +54,8 @@ def int_base_norm_original_censo_2024():
     # apply brand processing
     brands_col = "marcas"
     if brands_col in df.columns:
-        df["marcas"] = df[brands_col].apply(process_marcas)
+        df["marcas"] = df[brands_col]
+        df = process_marcas(df)
         df = classify_marcas(df)
 
     selected_columns = [
@@ -113,7 +114,8 @@ def int_base_norm_censo_2024_2():
     # Apply brand processing
     brands_col = "CCU/ABINBEV/OTRAS MARCAS COMPETENCIA"
     if brands_col in df.columns:
-        df["marcas"] = df[brands_col].apply(process_marcas)
+        df["marcas"] = df[brands_col]
+        df = process_marcas(df)
         df = classify_marcas(df)
 
     # # rename
