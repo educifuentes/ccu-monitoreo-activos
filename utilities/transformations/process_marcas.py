@@ -105,12 +105,20 @@ def process_marcas_questionnaire_version(df):
         active_brands = []
         for col in brand_cols:
             if col in df.columns:
-                # Check if the value is 1 (handle both int and string '1')
                 val = row[col]
-                if pd.notna(val) and str(val).strip() == '1':
-                    # Extract the brand name, e.g. "P42 - Austral" -> "Austral"
-                    brand_name = col.replace("P42 - ", "").title()
-                    active_brands.append(brand_name)
+                if pd.notna(val):
+                    is_present = False
+                    try:
+                        if float(val) > 0:
+                            is_present = True
+                    except ValueError:
+                        if str(val).strip().lower() in ['1', '1.0', 'true', 'yes', 'si']:
+                            is_present = True
+                            
+                    if is_present:
+                        # Extract the brand name, e.g. "P42 - Austral" -> "Austral"
+                        brand_name = col.replace("P42 - ", "").title()
+                        active_brands.append(brand_name)
         return ", ".join(active_brands) if active_brands else None
 
     # We store the active brands list in "marcas"
