@@ -57,6 +57,7 @@ def fct_censos_2026():
         # locales info
         "razon_social",
         "direccion",
+        "rut",
         "region",
         "comuna",
         "nombre_fantasia",

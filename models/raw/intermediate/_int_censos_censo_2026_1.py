@@ -40,6 +40,8 @@ def int_censos_censo_2026_1():
     # 2. Basic Data Types
     df["local_id"] = df["local_id"].astype("str")
 
+    df["rut"] = None
+
 
         # 5. Period and Metadata
     df["periodo"] = "2026-S1"
@@ -89,7 +91,7 @@ def int_censos_censo_2026_1():
         # locales cols
         "razon_social",
         "nombre_fantasia",
-        # "rut",
+        "rut",
         "direccion",
         "region",
         "comuna",

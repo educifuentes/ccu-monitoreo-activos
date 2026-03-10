@@ -73,6 +73,10 @@ def report_censo_2026():
     missing_mask = df_fct['razon_social'].isna()
     if missing_mask.any() and 'razon_social' in df_locales.columns:
         df_fct.loc[df_fct.index[missing_mask], 'razon_social'] = df_locales['razon_social']
+        
+    missing_mask_rut = df_fct['rut'].isna()
+    if missing_mask_rut.any() and 'rut' in df_locales.columns:
+        df_fct.loc[df_fct.index[missing_mask_rut], 'rut'] = df_locales['rut']
     
     df_fct = df_fct.reset_index()
     
