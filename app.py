@@ -8,6 +8,7 @@ from utilities.app_version import get_app_version
 # Section - Reports
 general_page = st.Page("pages/1_reports/1_overview.py", title="General", icon=":material/dashboard:")
 censos_page = st.Page("pages/1_reports/2_censos.py", title="Censos", icon=":material/article:")
+reportes_page = st.Page("pages/1_reports/3_reportes.py", title="Reportes", icon=":material/article:")
 
 # Section - Tools
 explore_page = st.Page("pages/2_tools/data_explorer.py", title="Explorador de Datos", icon=":material/search:")
@@ -37,7 +38,8 @@ IS_LOCAL = os.getenv("USER") == "educifuentes"
 nav_dict = {
     "Vistas": [
         general_page, 
-        censos_page
+        censos_page,
+        reportes_page
     ],
     "Herramientas": [explore_page, validations_page, documentation_page],
 }
