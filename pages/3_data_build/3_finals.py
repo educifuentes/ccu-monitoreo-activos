@@ -1,6 +1,6 @@
 import streamlit as st
 
-from models.raw.marts._fct_censos import fct_censos
+from models.raw.marts._fct_censos import fct_censos, fct_censos_2026
 from models.raw.marts._dim_locales import dim_locales
 from models.raw.marts._fct_bases_ccu import fct_bases_ccu
 from models.raw.marts._fct_contratos import fct_contratos
@@ -38,18 +38,22 @@ with tab1:
 
 with tab2:
 
+    df_censos_2026 = fct_censos_2026()
 
-    st.header("Fct Censos")
-    st.markdown("Unión de los censos 2024-S2 y 2025-S2 con estandarización de columnas.")
+    render_model_ui(df_censos_2026)
 
-    fct_censos_df = fct_censos()
+
+    # st.header("Fct Censos")
+    # st.markdown("Unión de los censos 2024-S2 y 2025-S2 con estandarización de columnas.")
+
+    # fct_censos_df = fct_censos()
     
-    counts_df = fct_censos_df["periodo"].value_counts().reset_index()
-    counts_df.columns = ["periodo", "count"]
-    counts_df.loc[len(counts_df)] = ["Total", counts_df["count"].sum()]
-    st.dataframe(counts_df.sort_values(by="periodo", ascending=False))
+    # counts_df = fct_censos_df["periodo"].value_counts().reset_index()
+    # counts_df.columns = ["periodo", "count"]
+    # counts_df.loc[len(counts_df)] = ["Total", counts_df["count"].sum()]
+    # st.dataframe(counts_df.sort_values(by="periodo", ascending=False))
 
-    render_model_ui(fct_censos_df)
+    # render_model_ui(fct_censos_df)
 
 with tab3:
     st.header("Fact Bases CCU")
