@@ -1,5 +1,8 @@
 import streamlit as st
 
+from utilities.app_version import get_app_version
+
+
 # Page configuration
 
 # Section - Reports
@@ -61,7 +64,6 @@ if IS_LOCAL:
         analysis_page
     ]
 
-from utilities.app_version import get_app_version
 
 # current page
 pg = st.navigation(nav_dict)
