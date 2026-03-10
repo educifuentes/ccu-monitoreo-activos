@@ -16,7 +16,7 @@ def display_compliance_badge(clasificacion):
     else:
         st.badge(clasificacion, icon="🔍")
 
-def render_model_ui(df, source_name=None, table_name=None):
+def render_model_ui(df, table_name=None):
     """
     Renders a standard UI component for a data model summary.
     Includes shape, columns, and the dataframe.
@@ -27,7 +27,7 @@ def render_model_ui(df, source_name=None, table_name=None):
     #     if config and config.get("description"):
     #         st.markdown(config.get("description"))
 
-    # st.markdown(f"Source: `{source_name}.{table_name}`")
+    st.markdown(f"Tabla: `{table_name}`")
     st.write(df.shape)
     st.code("\n".join(df.columns))
     # Format dtypes as a single line: col1: type1 | col2: type2

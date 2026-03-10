@@ -1,6 +1,7 @@
 import yaml
 import os
 import sys
+import pandas as pd
 
 # Add project root to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -35,6 +36,40 @@ def get_source_path(table_name, yaml_path='models/staging/_src_censos.yml'):
                 return table.get('path') or table.get('google_sheet_url') or source_path
                 
     return None
+
+def load_source(name: str, src_yaml_path: str) -> pd.DataFrame:
+    """
+    Looks up a source by `name` in the given YAML file, resolves its `path`,
+    and returns the CSV loaded as a pandas DataFrame.
+
+    Args:
+        name: The source name to look for (matches the top-level `name` field
+              under `sources` in the YAML).
+        src_yaml_path: Path to the YAML source file (absolute or relative to
+                       project root).
+
+    Returns:
+        A pandas DataFrame with the CSV contents.
+
+    Raises:
+        ValueError: If no source with the given name is found.
+        FileNotFoundError: If the resolved CSV path does not exist.
+    """
+    config = read_yaml_config(src_yaml_path)
+    root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+    for source in config.get('sources', []):
+        if source.get('name') == name:
+            csv_path = source.get('path')
+            if csv_path is None:
+                raise ValueError(f"Source '{name}' has no 'path' defined in {src_yaml_path}")
+            # Resolve relative paths from the project root
+            if not os.path.isabs(csv_path):
+                csv_path = os.path.join(root_path, csv_path)
+            return pd.read_csv(csv_path)
+
+    raise ValueError(f"Source '{name}' not found in {src_yaml_path}")
+
 
 if __name__ == "__main__":
     # Test cases

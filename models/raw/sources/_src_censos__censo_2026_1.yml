@@ -1,7 +1,7 @@
 sources:
   - name: censo_2026
     description: El segundo que se hizo sera el definitivo de esstrucutra.
-    path: seeds/censos/CENSO CCU PK 27JULIO ID 260725-2 - Hoja1.csv
+    path: seeds/censos/CCU2026 PK - CCU_2026_29_V34.csv
     url: https://docs.google.com/spreadsheets/d/1u7K9nqzU6v8y9vhhuU2_9d5RMr7DeSG7E5MMWpkyLGk/edit?gid=1317594973#gid=1317594973
     tables:
       - name: censo_2026
@@ -71,7 +71,7 @@ sources:
     url: https://docs.google.com/spreadsheets/d/1TEk5xkf3Y0NQ4bXx4UztdNGfzWw4gwit/edit?gid=1812778402#gid=1812778402
     date_received: 2026-03-10
     description: agencia nueva que hay que cargar. Recibida dia 10 marzo 2026
-  - name: censo 2026 corregido
+  - name: censo_2026_1 corregido
     path: seeds/censos/censo_2026_1/CCU 10_03_26.xlsx - CCU_2026_03_10 .csv
     url: https://docs.google.com/spreadsheets/d/166joXpmTS0fsyuvFSTFzaDk0BGJ1cePS/edit?gid=1499687421#gid=1499687421
     description: censo 2026 corregido. Recibida dia 10 marzo 2026
