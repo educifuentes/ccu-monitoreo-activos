@@ -87,10 +87,10 @@ def int_censos_censo_2026_1():
         "local_id",
         # locales cols
         "razon_social",
+        "nombre_fantasia",
         "direccion",
         "region",
         "comuna",
-        "nombre_fantasia",
         # censo metadata
         "periodo",
         "fecha",
@@ -208,6 +208,8 @@ def int_censos_censo_2026_1_agencia_nueva():
         # metadata
         "periodo",
         "fecha",
+        "permite_censo",
+        # activos
         "schoperas",
         "salidas",
         # accion

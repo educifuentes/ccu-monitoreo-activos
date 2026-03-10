@@ -54,7 +54,7 @@ with tab2:
 
     render_model_ui(df_agencia_nueva, table_name="censo_2026_1_agencia_nueva")
 
-    st.dataframe(df_agencia_nueva.value_counts("accion_ccu"))
+    # st.dataframe(df_agencia_nueva.value_counts("accion_ccu"))
 
     df_c2026_1 = int_censos_censo_2026_1()
     render_model_ui(df_c2026_1) 
