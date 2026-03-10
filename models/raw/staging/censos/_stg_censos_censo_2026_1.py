@@ -3,6 +3,7 @@ import numpy as np
 
 from utilities.yaml_loader import load_yaml_config
 from utilities.load_sources import load_source
+from utilities.transformations.clean_column_names import clean_column_name
 
 SOURCE_YAML_PATH = "models/raw/sources/_src_censos__censo_2026_1.yml"
 
@@ -20,6 +21,8 @@ def stg_censos_censo_2026_1_agencia_nueva():
         src_yaml_path=SOURCE_YAML_PATH
     )
 
+    df = clean_column_name(df)
+
     return df
 
 def stg_censos_censo_2026_1_corregido():
@@ -27,6 +30,8 @@ def stg_censos_censo_2026_1_corregido():
         name="censo_2026_1 corregido",
         src_yaml_path=SOURCE_YAML_PATH
     )
+
+    df = clean_column_name(df)
 
     return df
 

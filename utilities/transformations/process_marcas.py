@@ -82,6 +82,60 @@ def process_marcas(df):
     
     return df
 
+def process_marcas_questionnaire_version(df):
+    """
+    Alternative to process_marcas that reads from specific 'P42 - Brand' indicator columns.
+    If the column value is 1, the brand is considered present.
+    Creates a 'marcas' column with a comma-separated list of active brands.
+    """
+    brand_cols = [
+        "P42 - Austral", "P42 - Baltica", "P42 - Becks", "P42 - Becker", 
+        "P42 - Brahma", "P42 - Bud light", "P42 - Budweiser", "P42 - Busch", 
+        "P42 - Corona", "P42 - Coronita", "P42 - Cristal", "P42 - Cusquena", 
+        "P42 - Dolbek", "P42 - Escudo", "P42 - Goose island", "P42 - Guayacan", 
+        "P42 - Heineken", "P42 - Hoegaarden", "P42 - Kilometro 24.7", "P42 - Kuntsmann", 
+        "P42 - Leffe", "P42 - Malta del sur", "P42 - Michelob ultra", "P42 - Modelo", 
+        "P42 - Pacena", "P42 - Patagonia", "P42 - Pilsen", "P42 - Pilsen del sur", 
+        "P42 - Quilmes", "P42 - Royal guard", "P42 - Stella artois", "P42 - Loa", 
+        "P42 - Estrella de galicia", "P42 - Kross", "P42 - Mestra", "P42 - Cuello negro", 
+        "P42 - Totem", "P42 - Erdinger"
+    ]
+    
+    def get_brands_for_row(row):
+        active_brands = []
+        for col in brand_cols:
+            if col in df.columns:
+                # Check if the value is 1 (handle both int and string '1')
+                val = row[col]
+                if pd.notna(val) and str(val).strip() == '1':
+                    # Extract the brand name, e.g. "P42 - Austral" -> "Austral"
+                    brand_name = col.replace("P42 - ", "").title()
+                    active_brands.append(brand_name)
+        return ", ".join(active_brands) if active_brands else None
+
+    # We store the active brands list in "marcas"
+    df["marcas"] = df.apply(get_brands_for_row, axis=1)
+    
+    # Process free text if it exists and append
+    if "marcas_texto_libre" in df.columns:
+        extracted_libre = df["marcas_texto_libre"].apply(_extract_free_text_brands)
+        
+        def combine_row(row):
+            existing = [b.strip() for b in str(row["marcas"]).split(",")] if pd.notna(row["marcas"]) else []
+            libre = row["extracted_libre"] if isinstance(row["extracted_libre"], list) else []
+            combined = existing + libre
+            # remove duplicates but preserve order
+            combined = list(dict.fromkeys(combined))
+            return ", ".join(combined) if combined else None
+            
+        temp_df = pd.DataFrame({
+            "marcas": df["marcas"],
+            "extracted_libre": extracted_libre
+        })
+        df["marcas"] = temp_df.apply(combine_row, axis=1)
+
+    return df
+
 
 def classify_marcas(df, marcas_col="marcas"):
     """

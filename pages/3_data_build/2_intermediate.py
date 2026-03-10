@@ -8,7 +8,7 @@ from models.raw.intermediate._int_base_norm_locales import int_base_norm_locales
 
 from models.raw.marts._dim_locales import _new_locales_censo_2026_1
 
-from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1
+from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1, int_censos_censo_2026_1_agencia_nueva
 
 from models.raw.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1, int_reportes_ccu_base_2026_q1_locales
 from models.raw.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
@@ -50,13 +50,15 @@ with tab1:
 
 with tab2:
 
+    render_model_ui(int_censos_censo_2026_1_agencia_nueva(), table_name="censo_2026_1_agencia_nueva")
+
     st.subheader("Censo 2026_1")
     df_c2026_1 = int_censos_censo_2026_1()
     render_model_ui(df_c2026_1) 
 
-    st.subheader("Censo 2025_2")
-    df_c2025_2 = int_censos_censo_2025_2()
-    render_model_ui(df_c2025_2) 
+    # st.subheader("Censo 2025_2")
+    # df_c2025_2 = int_censos_censo_2025_2()
+    # render_model_ui(df_c2025_2) 
 
 with tab3:
     st.header("Reportes CCU")
