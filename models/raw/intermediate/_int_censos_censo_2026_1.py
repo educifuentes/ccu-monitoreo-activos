@@ -18,7 +18,8 @@ def int_censos_censo_2026_1():
         "ID Cliente": "local_id",
         "Dirección": "direccion",
         "Región": "region",
-        "Comuna": "comuna",
+        "Comuna": "comuna", 
+        # "RUT": "rut",
         "Nombre fantasía": "nombre_fantasia",
         "Visitador": "visitador",
         "rut Visitador": "rut_visitador",
@@ -88,6 +89,7 @@ def int_censos_censo_2026_1():
         # locales cols
         "razon_social",
         "nombre_fantasia",
+        # "rut",
         "direccion",
         "region",
         "comuna",
@@ -123,6 +125,7 @@ def int_censos_censo_2026_1_agencia_nueva():
         # info local
         "DIRECCIÓN": "direccion",
         "REGIÓN": "region",
+        "RUT": "rut",
         "COMUNA": "comuna",
         "LOCAL": "nombre_fantasia",
         "Razón social": "razon_social",
@@ -202,6 +205,7 @@ def int_censos_censo_2026_1_agencia_nueva():
         # locales cols
         "razon_social",
         "nombre_fantasia",
+        "rut",
         "direccion",
         "region",
         "comuna",
