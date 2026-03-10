@@ -29,10 +29,12 @@ def render_model_ui(df, table_name=None):
 
     st.markdown(f"Tabla: `{table_name}`")
     st.write(df.shape)
-    st.code("\n".join(df.columns))
+    with st.expander("Columnas"):
+        st.code("\n".join(df.columns))
     # Format dtypes as a single line: col1: type1 | col2: type2
-    dtypes_str = " | ".join([f"{col}: {dtype}" for col, dtype in df.dtypes.items()])
-    st.code(dtypes_str)
+    with st.expander("Data Types"):
+        dtypes_str = " | ".join([f"{col}: {dtype}" for col, dtype in df.dtypes.items()])
+        st.code(dtypes_str)
     st.dataframe(df)
     st.divider()
 

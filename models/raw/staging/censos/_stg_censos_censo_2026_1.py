@@ -10,14 +10,14 @@ SOURCE_YAML_PATH = "models/raw/sources/_src_censos__censo_2026_1.yml"
 
 def stg_censos_censo_2026_1():
     df = load_source(
-        name="censo_2026",
+        name="censo_2026_1_corregido",
         src_yaml_path=SOURCE_YAML_PATH
     )
     return df
 
 def stg_censos_censo_2026_1_agencia_nueva():
     df = load_source(
-        name="censo_2026_1 agencia nueva",
+        name="censo_2026_1_agencia_nueva",
         src_yaml_path=SOURCE_YAML_PATH
     )
 
@@ -27,7 +27,7 @@ def stg_censos_censo_2026_1_agencia_nueva():
 
 def stg_censos_censo_2026_1_corregido():
     df = load_source(
-        name="censo_2026_1 corregido",
+        name="censo_2026_1_corregido",
         src_yaml_path=SOURCE_YAML_PATH
     )
 

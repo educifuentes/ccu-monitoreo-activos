@@ -54,8 +54,8 @@ with tab2:
 
     # --
 
-    df_censo_corregido = stg_censos_censo_2026_1_corregido()
-    render_model_ui(df_censo_corregido, table_name="censo_2026_1 corregido")
+    # df_censo_corregido = stg_censos_censo_2026_1_corregido()
+    # render_model_ui(df_censo_corregido, table_name="censo_2026_1 corregido")
 
     # ---
 

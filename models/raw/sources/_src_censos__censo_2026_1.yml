@@ -66,12 +66,12 @@ sources:
           - name: "¿LE PROHÍBE CCU ALMACENAR CERVEZA DE OTROS PROVEEDORES EN SU COOLER?"
           - name: "COMENTARIO"
           - name: "COMENTARIOS GENERALES DE LAS FOTOS"
-  - name: censo_2026_1 agencia nueva
+  - name: censo_2026_1_agencia_nueva
     path: seeds/censos/censo_2026_1/BBDD - Nuevo Censo Corpa - 05-03-2.xlsx - Sheet1.csv
     url: https://docs.google.com/spreadsheets/d/1TEk5xkf3Y0NQ4bXx4UztdNGfzWw4gwit/edit?gid=1812778402#gid=1812778402
     date_received: 2026-03-10
     description: agencia nueva que hay que cargar. Recibida dia 10 marzo 2026
-  - name: censo_2026_1 corregido
+  - name: censo_2026_1_corregido
     path: seeds/censos/censo_2026_1/CCU 10_03_26.xlsx - CCU_2026_03_10 .csv
     url: https://docs.google.com/spreadsheets/d/166joXpmTS0fsyuvFSTFzaDk0BGJ1cePS/edit?gid=1499687421#gid=1499687421
     description: censo 2026 corregido. Recibida dia 10 marzo 2026
