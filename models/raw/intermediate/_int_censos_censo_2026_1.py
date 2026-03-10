@@ -139,8 +139,7 @@ def int_censos_censo_2026_1_agencia_nueva():
         "CUANTAS SHOPERAS NUEVAS INSTALO CCU PARA MARCAS ARTESANALES?": "instalo",
         'CUANTAS SALIDAS DEJO LIBRE CCU PARA MARCAS ARTESANALES? s ': "disponibilizo",
         # marcas
-        '¿CUALES DE ESTAS MARCAS SE VENDEN EN SCHOP?': "marcas",
-        " OTRA MARCA, ESPECIFIQUE": "marcas_texto_libre"
+        "OTRA MARCA, ESPECIFIQUE.1": "marcas_texto_libre"
     }
 
     df = df.rename(columns=rename_dict)
@@ -217,6 +216,7 @@ def int_censos_censo_2026_1_agencia_nueva():
         "disponibilizo",
         # marcas
         "marcas",
+        "marcas_texto_libre",
         "marcas_abinbev",
         "marcas_kross",
         "marcas_ccu",
