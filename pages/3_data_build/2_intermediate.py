@@ -50,9 +50,12 @@ with tab1:
 
 with tab2:
 
-    render_model_ui(int_censos_censo_2026_1_agencia_nueva(), table_name="censo_2026_1_agencia_nueva")
+    df_agencia_nueva = int_censos_censo_2026_1_agencia_nueva()
 
-    st.subheader("Censo 2026_1")
+    render_model_ui(df_agencia_nueva, table_name="censo_2026_1_agencia_nueva")
+
+    st.dataframe(df_agencia_nueva.value_counts("accion_ccu"))
+
     df_c2026_1 = int_censos_censo_2026_1()
     render_model_ui(df_c2026_1) 
 
@@ -65,7 +68,7 @@ with tab3:
 
     st.subheader("Base 2024 Q1")
     df_2024 = int_reportes_ccu_base_2024_q1()
-    render_model_ui(df_2024, source_name="reportes_ccu", table_name="base_2024_q1")
+    render_model_ui(df_2024, table_name="base_2024_q1")
 
     # inspect
     empty_activos = df_2024[
@@ -81,6 +84,6 @@ with tab3:
     
     st.subheader("Base 2026 Q1")
     df_2026 = int_reportes_ccu_base_2026_q1()
-    render_model_ui(df_2026, source_name="reportes_ccu", table_name="base_2026_q1")
+    render_model_ui(df_2026, table_name="base_2026_q1")
 
 

@@ -7,6 +7,8 @@ from utilities.transformations.process_marcas import process_marcas, classify_ma
 from utilities.transformations.text_cleaning import clean_text
 from utilities.transformations.clean_region import clean_region
 
+
+
 def int_censos_censo_2026_1():
 
     df = stg_censos_censo_2026_1()
@@ -37,6 +39,14 @@ def int_censos_censo_2026_1():
     # 2. Basic Data Types
     df["local_id"] = df["local_id"].astype("str")
 
+
+        # 5. Period and Metadata
+    df["periodo"] = "2026-S1"
+    df["fecha"] = pd.to_datetime("2026-02-01").date()
+
+    #. censo metadata columns
+    df["permite_censo"] = None
+
     # 3. Brand Processing and Classification
     if "marcas" in df.columns:
         df = process_marcas(df)
@@ -44,10 +54,11 @@ def int_censos_censo_2026_1():
 
     # 4. Value Transformations
     df = yes_no_to_boolean(df, "tiene_schoperas")
+
+    # accion columns
+    df["accion_ccu"] = None
     
-    # 5. Period and Metadata
-    df["periodo"] = "2026-S1"
-    df["fecha"] = pd.to_datetime("2026-02-01").date()
+
     # dummy razon social
     df["razon_social"] = None
     
@@ -74,12 +85,21 @@ def int_censos_censo_2026_1():
     # 8. Final Column Selection
     selected_columns = [
         "local_id",
+        # locales cols
+        "razon_social",
+        "direccion",
+        "region",
+        "comuna",
+        "nombre_fantasia",
         # censo metadata
         "periodo",
         "fecha",
+        "permite_censo",
         # activos
         "schoperas",
         "salidas",
+        # accion
+        "accion_ccu",
         "instalo",
         "disponibilizo",
         # marcas
@@ -88,13 +108,6 @@ def int_censos_censo_2026_1():
         "marcas_kross",
         "marcas_ccu",
         "marcas_otras",
-        # locales cols
-        "razon_social",
-        "direccion",
-        "region",
-        "comuna",
-        "nombre_fantasia",
-
     ]
     
     return df[selected_columns]
@@ -112,6 +125,7 @@ def int_censos_censo_2026_1_agencia_nueva():
         "REGIÓN": "region",
         "COMUNA": "comuna",
         "LOCAL": "nombre_fantasia",
+        "Razón social": "razon_social",
         "¿EL LOCAL SE ENCUENTRA...?": "estado_local",
         # censo metadata
         "NOMBRE DEL ENCUESTADO": "visitador",
@@ -133,6 +147,7 @@ def int_censos_censo_2026_1_agencia_nueva():
 
     # 2. Basic Data Types
     df["local_id"] = df["local_id"].astype("str")
+
 
     # 3. Brand Processing and Classification
 
@@ -168,12 +183,30 @@ def int_censos_censo_2026_1_agencia_nueva():
     df["instalo"] = None
     df["disponibilizo"] = None
 
+    # Mapping logic for accion_ccu
+    if "accion_ccu" in df.columns:
+        accion = df["accion_ccu"].astype(str).str.lower()
+        mask_instalo = accion.str.contains(r"instaló|instalo", regex=True, na=False)
+        mask_disponibilizo = accion.str.contains(r"disponibilizó|disponibilizo", regex=True, na=False)
+
+        df.loc[mask_instalo, "instalo"] = 1
+        df.loc[mask_disponibilizo, "disponibilizo"] = 1
+
+    
+
     # region
     df = clean_region(df)
     
     # 8. Final Column Selection
     selected_columns = [
         "local_id",
+        # locales cols
+        "razon_social",
+        "nombre_fantasia",
+        "direccion",
+        "region",
+        "comuna",
+        # metadata
         "periodo",
         "fecha",
         "schoperas",
@@ -182,18 +215,12 @@ def int_censos_censo_2026_1_agencia_nueva():
         "accion_ccu",
         "instalo",
         "disponibilizo",
+        # marcas
         "marcas",
         "marcas_abinbev",
         "marcas_kross",
         "marcas_ccu",
-        "marcas_otras",
-        # locales cols,
-        # locales info
-        # "razon_social",
-        "direccion",
-        "region",
-        "comuna"
-        # "nombre_fantasia",
+        "marcas_otras"
     ]
 
     df = df[selected_columns]

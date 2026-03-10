@@ -1,7 +1,7 @@
 import pandas as pd
 
 from models.raw.intermediate._int_censos_censo_2025_2 import int_censos_censo_2025_2
-from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1
+from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1, stg_censos_censo_2026_1_agencia_nueva
 
 from models.raw.intermediate._int_base_norm_censo_2024_2 import int_base_norm_original_censo_2024
 
@@ -15,15 +15,21 @@ def fct_censos():
     df_censo_2024_2 = int_base_norm_original_censo_2024()
     df_censo_2025_2 = int_censos_censo_2025_2()
     df_censo_2026_1 = int_censos_censo_2026_1()
+    df_censo_2026_1_agencia_nueva = stg_censos_censo_2026_1_agencia_nueva()
 
     selected_columns = [
         "local_id",
+        # metadata
         "periodo",
         "fecha",
+        # activos
         "schoperas",
         "salidas",
+        # accion
+        "accion_ccu",
         "instalo",
         "disponibilizo",
+        # marcas
         "marcas",
         "marcas_abinbev",
         "marcas_kross",
@@ -31,13 +37,50 @@ def fct_censos():
         "marcas_otras"
         # # quizas mas adelante agregar
         # "tiene_schoperas",
-        # "observaciones",
-        # "visitador",
-        # "rut_visitador"
+
     ]
 
     # 5. Union and Final Processing
     df = pd.concat([df_censo_2024_2, df_censo_2025_2, df_censo_2026_1], ignore_index=True)
+
+    df = df[selected_columns]
+
+    return df
+
+def fct_censos_2026():
+
+    df_censo_2026_1 = int_censos_censo_2026_1()
+    df_censo_2026_1_agencia_nueva = stg_censos_censo_2026_1_agencia_nueva()
+
+    selected_columns = [
+        "local_id",
+        # locales info
+        "razon_social",
+        "direccion",
+        "region",
+        "comuna",
+        "nombre_fantasia",
+        # metadata
+        "periodo",
+        "fecha",
+        # activos
+        "schoperas",
+        "salidas",
+        # accion
+        "accion_ccu",
+        "instalo",
+        "disponibilizo",
+        # marcas
+        "marcas",
+        "marcas_abinbev",
+        "marcas_kross",
+        "marcas_ccu",
+        "marcas_otras"
+
+    ]
+
+    # 5. Union and Final Processing
+    df = pd.concat([df_censo_2026_1, df_censo_2026_1_agencia_nueva], ignore_index=True)
 
     df = df[selected_columns]
 
