@@ -9,7 +9,7 @@ from utilities.transformations.clean_region import clean_region
 
 def int_censos_censo_2026_1():
 
-    stg_censos_2_df = stg_censos_censo_2026_1()
+    df = stg_censos_censo_2026_1()
 
     # 1. Column Renamming
     rename_dict = {
@@ -32,7 +32,7 @@ def int_censos_censo_2026_1():
         " OTRA MARCA, ESPECIFIQUE": "marcas_texto_libre"
     }
 
-    df = stg_censos_2_df.rename(columns=rename_dict)
+    df = df.rename(columns=rename_dict)
 
     # 2. Basic Data Types
     df["local_id"] = df["local_id"].astype("str")
@@ -56,8 +56,8 @@ def int_censos_censo_2026_1():
     df["salidas"] = 0
     for i in range(1, 7):
         col_name = f"SCHOPERA CCU {i} - NÚMERO DE SALIDAS"
-        if col_name in stg_censos_2_df.columns:
-            df["salidas"] += pd.to_numeric(stg_censos_2_df[col_name], errors='coerce').fillna(0)
+        if col_name in df.columns:
+            df["salidas"] += pd.to_numeric(df[col_name], errors='coerce').fillna(0)
 
     # 7. Final Conversions to Int64 (nullable int)
     numeric_cols = ["salidas", "schoperas", "instalo", "disponibilizo"]
@@ -74,12 +74,15 @@ def int_censos_censo_2026_1():
     # 8. Final Column Selection
     selected_columns = [
         "local_id",
+        # censo metadata
         "periodo",
         "fecha",
+        # activos
         "schoperas",
         "salidas",
         "instalo",
         "disponibilizo",
+        # marcas
         "marcas",
         "marcas_abinbev",
         "marcas_kross",
@@ -91,11 +94,7 @@ def int_censos_censo_2026_1():
         "region",
         "comuna",
         "nombre_fantasia",
-        # otros
-        # "tiene_schoperas",
-        # "observaciones",
-        # "visitador",
-        # "rut_visitador"
+
     ]
     
     return df[selected_columns]
@@ -114,8 +113,11 @@ def int_censos_censo_2026_1_agencia_nueva():
         "COMUNA": "comuna",
         "LOCAL": "nombre_fantasia",
         "¿EL LOCAL SE ENCUENTRA...?": "estado_local",
-        # encuesta datos
+        # censo metadata
         "NOMBRE DEL ENCUESTADO": "visitador",
+        "rut Visitador": "rut_visitador",
+        "Observaciones": "observaciones",
+        "PERMITE AUDITORÍA": "permite_censo",
         # activos
         "NÚMERO DE MÁQUINAS SCHOPERAS DE CCU": "schoperas",
         # accion
@@ -161,6 +163,11 @@ def int_censos_censo_2026_1_agencia_nueva():
     # clean text values nombre_fantasia, direccion
     df = clean_text(df, ["nombre_fantasia", "direccion"], title=True)
 
+    # accion columns
+
+    df["instalo"] = None
+    df["disponibilizo"] = None
+
     # region
     df = clean_region(df)
     
@@ -171,9 +178,10 @@ def int_censos_censo_2026_1_agencia_nueva():
         "fecha",
         "schoperas",
         "salidas",
+        # accion
         "accion_ccu",
-        # "instalo",
-        # "disponibilizo",
+        "instalo",
+        "disponibilizo",
         "marcas",
         "marcas_abinbev",
         "marcas_kross",
