@@ -151,6 +151,8 @@ def int_censos_censo_2026_1_agencia_nueva():
         'CUANTAS SALIDAS DEJO LIBRE CCU PARA MARCAS ARTESANALES? s ': "disponibilizo",
         # marcas
         "OTRA MARCA, ESPECIFIQUE.1": "marcas_texto_libre",
+        # comptencia en salida
+        "¿HAY ALGUNA MARCA DE LA COMPETENCIA DE CCU, QUE ESTÉ INSTALADA EN ESA SALIDA O SCHOPERA NUEVA?": "hay_competencia_en_salida",
         "¿CUÁL?": "marca_instalada_en_salida"
     }
 
@@ -203,7 +205,12 @@ def int_censos_censo_2026_1_agencia_nueva():
         df.loc[mask_instalo, "instalo"] = 1
         df.loc[mask_disponibilizo, "disponibilizo"] = 1
 
-    
+    # Competencia en salida
+
+    if "hay_competencia_en_salida" in df.columns:
+        df["hay_competencia_en_salida"] = df["hay_competencia_en_salida"].map(
+            {"Sí, ¿cuál?": True, "No": False}
+        )
 
     # region
     df = clean_region(df)
@@ -229,7 +236,6 @@ def int_censos_censo_2026_1_agencia_nueva():
         "accion_ccu",
         "instalo",
         "disponibilizo",
-        "marca_instalada_en_salida",
         # marcas
         "marcas",
         "marcas_texto_libre",
@@ -242,6 +248,9 @@ def int_censos_censo_2026_1_agencia_nueva():
         "marcas_kross_listado",
         "marcas_ccu_listado",
         "marcas_otras_listado",
+        # competencia en salida
+        "hay_competencia_en_salida",
+        "marca_instalada_en_salida"
     ]
 
     df = df[selected_columns]
