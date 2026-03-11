@@ -25,3 +25,13 @@ def stg_censos_censo_2026_1_agencia_pkl_agencia_corpa():
 
     return df
 
+def stg_censos_censo_2026_1_agencia_corpa_sistematizado():
+    df = load_source(
+        name="censo_2026_1_agencia_corpa_sistematizado",
+        src_yaml_path=SOURCE_YAML_PATH
+    )
+
+    df = clean_column_name(df)
+
+    return df
+

@@ -38,9 +38,7 @@ with tab1:
 
 with tab2:
 
-    df_censos_2026 = fct_censos_2026()
-
-    render_model_ui(df_censos_2026)
+    render_model_ui(fct_censos_2026(), table_name="fct_censos_2026")
 
 
     # st.header("Fct Censos")

@@ -1,6 +1,6 @@
 import pandas as pd
 
-from models.raw.staging.censos._stg_censos_censo_2026_1 import stg_censos_censo_2026_1_agencia_pkl, stg_censos_censo_2026_1_agencia_pkl_agencia_corpa
+from models.raw.staging.censos._stg_censos_censo_2026_1 import stg_censos_censo_2026_1_agencia_pkl, stg_censos_censo_2026_1_agencia_pkl_agencia_corpa, stg_censos_censo_2026_1_agencia_corpa_sistematizado
 from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
 from utilities.transformations.process_marcas import process_marcas, classify_marcas, process_marcas_questionnaire_version, correct_brand_names
 from utilities.transformations.text_cleaning import clean_text
@@ -8,7 +8,7 @@ from utilities.transformations.clean_region import clean_region
 
 
 
-def int_censos_censo_2026_1():
+def int_censos_censo_2026_1_agencia_pk():
 
     df = stg_censos_censo_2026_1_agencia_pkl()
 
@@ -48,6 +48,9 @@ def int_censos_censo_2026_1():
 
     #. censo metadata columns
     df["permite_censo"] = None
+    df["motivo_no_censo"] = None
+    df["agencia"] = "pk"
+
 
     # 3. Brand Processing and Classification
     if "marcas" in df.columns:
@@ -102,6 +105,8 @@ def int_censos_censo_2026_1():
         "periodo",
         "fecha",
         "permite_censo",
+        "motivo_no_censo",
+        "agencia",
         # activos
         "schoperas",
         "salidas",
@@ -183,6 +188,8 @@ def int_censos_censo_2026_1_agencia_corpa():
     # 5. Period and Metadata
     df["periodo"] = "2026-S1"
     df["fecha"] = pd.to_datetime("2026-02-01").date()
+    df["agencia"] = "corpa"
+    df["motivo_no_censo"] = None
     
     # 6. Calculated Columns (Total outputs)
     # Total outputs (salidas) is the sum of salidas across all machine columns
@@ -238,7 +245,9 @@ def int_censos_censo_2026_1_agencia_corpa():
         # metadata
         "periodo",
         "fecha",
+        "agencia",
         "permite_censo",
+        "motivo_no_censo",
         # activos
         "schoperas",
         "salidas",
@@ -264,5 +273,33 @@ def int_censos_censo_2026_1_agencia_corpa():
     ]
 
     df = df[selected_columns]
+
+    # agregar columnas faltantes
+    df_sistematizado = stg_censos_censo_2026_1_agencia_corpa_sistematizado()
+
+    # rename
+    rename_dict_sistematizado = {
+        "ID CLIENTE": "local_id",
+        "Permite censo (SI/NO)": "permite_censo",
+        "[Si corresponde] Motivo por el que no pudo ser censado (local cerrado, no permite ingreso, etc)": "motivo_no_censo"
+    }
+
+    df_sistematizado = df_sistematizado.rename(columns=rename_dict_sistematizado)
+
+    # select columns
+    columns_sistematizado = ["local_id", "permite_censo", "motivo_no_censo"]
+
+    # types
+    df_sistematizado["local_id"] = df_sistematizado["local_id"].astype("str")
+
+    # join 
+    if "permite_censo" in df.columns:
+        df = df.drop(columns=["permite_censo"])
+
+    df = df.merge(
+        df_sistematizado[columns_sistematizado],
+        on="local_id",
+        how="left"
+    )
     
     return df

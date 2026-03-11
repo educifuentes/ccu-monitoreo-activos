@@ -2,7 +2,7 @@ import pandas as pd
 
 from models.raw.intermediate._int_base_norm_locales import int_base_norm_locales
 from models.raw.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1_locales
-from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1
+from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1_agencia_pk
 
 from models.raw.intermediate._int_censos_fne_listado_2026_1 import int_censos_fne_listado_2026_1
 
@@ -49,7 +49,7 @@ def _new_locales_censo_2026_1():
     """
     df = update_with_base_ccu_2026_q1()
         
-    censo_2026_1 = int_censos_censo_2026_1()
+    censo_2026_1 = int_censos_censo_2026_1_agencia_pk()
 
     # Define standard columns
     locales_columns = ["local_id", "razon_social", "rut", "direccion", "region", "ciudad", "comuna", "nombre_fantasia"]
