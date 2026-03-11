@@ -52,7 +52,8 @@ def report_censo_2026():
         "CCH (Si/No)": "marcas_abinbev",
         "Kross (Si/No)": "marcas_kross",
         "Otras (indicar cuáles)": "marcas_otras_listado",
-        "Competencia en salida CCU (Sí/No)": "PENDING", 
+        # marcas en salidas nuevas
+        "Competencia en salida CCU (Sí/No)": "PENDING",  # se calcula
         "Indicar nombre de competidor en salida CCU": "marca_instalada_en_salida"
     }
 
