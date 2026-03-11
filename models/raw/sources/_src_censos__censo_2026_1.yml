@@ -13,3 +13,8 @@ sources:
     path: seeds/censos/censo_2026_1/CCU 10_03_26.xlsx - CCU_2026_03_10 .csv
     url: https://docs.google.com/spreadsheets/d/166joXpmTS0fsyuvFSTFzaDk0BGJ1cePS/edit?gid=1499687421#gid=1499687421
     date_received: 2026-03-10
+  - name: censo_2026_1_agencia_corpa_sistematizado
+    description: faltaba columnas de permite censo y motivo.
+    path: seeds/censos/censo_2026_1/Modelo sistematización información CORPA - 11 marzo.xlsx - Hoja1.csv
+    url: https://docs.google.com/spreadsheets/d/1TrcTkKPbP97Psb7mfwilAFYBDy3tlLlJ/edit?gid=1788066507#gid=1788066507
+    date_received: 2026-03-11
