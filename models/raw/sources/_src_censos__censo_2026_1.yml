@@ -1,78 +1,15 @@
 sources:
   - name: censo_2026
-    description: El segundo que se hizo sera el definitivo de esstrucutra.
+    description: deprecar
     path: seeds/censos/CCU2026 PK - CCU_2026_29_V34.csv
     url: https://docs.google.com/spreadsheets/d/1u7K9nqzU6v8y9vhhuU2_9d5RMr7DeSG7E5MMWpkyLGk/edit?gid=1317594973#gid=1317594973
-    tables:
-      - name: censo_2026
-        sheet_name: CCU_2026_29_V34
-        columns:
-          - name: "ID PK"
-          - name: "tipo_de_local"
-          - name: "cambiar id en carpeta"
-          - name: "ID CCU"
-          - name: "rut Visitador"
-          - name: "Visitador"
-          - name: "Cuenta"
-          - name: "Campaña"
-          - name: "ID Punto"
-          - name: "Punto"
-          - name: "Dirección"
-          - name: "Dirección 2"
-          - name: "Región"
-          - name: "Comuna"
-          - name: "cliente"
-          - name: "Ruta"
-          - name: "Inicio"
-          - name: "Fin"
-          - name: "Estado"
-          - name: "Latitud"
-          - name: "Longitud"
-          - name: "Observaciones"
-          - name: "NOMBRE LOCAL FANTASIA"
-          - name: "DIRECCION "
-          - name: "NOMBRE DE LA PERSONA ENCUESTADA"
-          - name: "CARGO"
-          - name: "TELEFONO del Local o personal"
-          - name: "MAIL del local o personal"
-          - name: "Pagina Web y/o Instagram en caso que tenga u otro en web"
-          - name: "¿QUÉ MARCAS DE CERVEZA VENDE? BOTELLAS, SHOP Y LATAS (todos los formatos)"
-          - name: "QUE OTRA MARCA, ESPECIFIQUE "
-          - name: "EL LOCAL CUENTA CON MAQUINAS SHOPERAS?"
-          - name: "¿CUALES DE ESTAS MARCAS SE VENDEN EN SCHOP?"
-          - name: " OTRA MARCA, ESPECIFIQUE"
-          - name: "NÚMERO TOTAL DE MÁQUINAS SCHOPERAS EN EL LOCAL"
-          - name: "NÚMERO DE MÁQUINAS SCHOPERAS DE CCU(ASUMIR QUE LA SCHOPERA ES CCU SI LA MAYORÍA DE LAS MARCAS SON CCU - REVISAR TARJETERO DE APOYO)"
-          - name: "SCHOPERA CCU 1 - NÚMERO DE SALIDAS"
-          - name: "SCHOPERA CCU 1 ¿QUÉ MARCA DE CERVEZA SALE DE CADA SALIDA?"
-          - name: "SCHOPERA CCU 2 - NÚMERO DE SALIDAS"
-          - name: "SCHOPERA CCU 2 ¿QUÉ MARCA DE CERVEZA SALE DE CADA SALIDA?"
-          - name: "SCHOPERA CCU 3 - NÚMERO DE SALIDAS"
-          - name: "SCHOPERA CCU 3 ¿QUÉ MARCA DE CERVEZA SALE DE CADA SALIDA?"
-          - name: "SCHOPERA CCU 4 - NÚMERO DE SALIDAS"
-          - name: "SCHOPERA CCU 4 ¿QUÉ MARCA DE CERVEZA SALE DE CADA SALIDA?"
-          - name: "SCHOPERA CCU 5 - NÚMERO DE SALIDAS"
-          - name: "SCHOPERA CCU 5 ¿QUÉ MARCA DE CERVEZA SALE DE CADA SALIDA?"
-          - name: "SCHOPERA CCU 6 - NÚMERO DE SALIDAS"
-          - name: "SCHOPERA CCU 6 ¿QUÉ MARCA DE CERVEZA SALE DE CADA SALIDA?"
-          - name: "CUANTAS SHOPERAS PARA DISPONIBILIZAR NUEVAS INSTALO CCU ?"
-          - name: "CUANTAS SALIDAS DEJO LIBRE CCU EN TOTAL? s "
-          - name: "¿HAY ALGUNA(S) MARCA(S) DE LA COMPETENCIA DE CCU, QUE ESTÉ INSTALADA EN ESA SALIDA(S) Y/ O SCHOPERA(S)  NUEVA(S)?"
-          - name: "¿CUÁL(ES) MARCAS?"
-          - name: "EN CASO DE TENER UNA SCHOPERA O SALIDA LIBRE ¿POR QUÉ MOTIVO NO LA ESTÁ USANDO?"
-          - name: "NÚMERO DE MÁQUINAS SCHOPERAS QUE NO SEAN DE CCU"
-          - name: "¿LE PROHIBE CCU VENDER OTRAS MARCAS DE CERVEZA?"
-          - name: "¿TIENE ALGÚN EQUIPO COOLER ENTREGADO POR CCU? "
-          - name: "¿LE PROHÍBE CCU ALMACENAR CERVEZA DE OTROS PROVEEDORES EN SU COOLER?"
-          - name: "COMENTARIO"
-          - name: "COMENTARIOS GENERALES DE LAS FOTOS"
-  - name: censo_2026_1_agencia_nueva
+  - name: censo_2026_1_agencia_corpa
+    description: agencia nueva que hay que cargar. Recibida dia 10 marzo 2026. Son 241 locales.
     path: seeds/censos/censo_2026_1/BBDD - Nuevo Censo Corpa - 05-03-2.xlsx - Sheet1.csv
     url: https://docs.google.com/spreadsheets/d/1TEk5xkf3Y0NQ4bXx4UztdNGfzWw4gwit/edit?gid=1812778402#gid=1812778402
     date_received: 2026-03-10
-    description: agencia nueva que hay que cargar. Recibida dia 10 marzo 2026
-  - name: censo_2026_1_corregido
+  - name: censo_2026_1_agencia_pk
+    description: censo 2026 corregido. Recibida dia 10 marzo 2026. Son 900 aprox locales. Se mando corregida.
     path: seeds/censos/censo_2026_1/CCU 10_03_26.xlsx - CCU_2026_03_10 .csv
     url: https://docs.google.com/spreadsheets/d/166joXpmTS0fsyuvFSTFzaDk0BGJ1cePS/edit?gid=1499687421#gid=1499687421
-    description: censo 2026 corregido. Recibida dia 10 marzo 2026
     date_received: 2026-03-10

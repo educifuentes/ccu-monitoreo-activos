@@ -1,21 +1,18 @@
 import pandas as pd
 
 from models.raw.intermediate._int_censos_censo_2025_2 import int_censos_censo_2025_2
-from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1, int_censos_censo_2026_1_agencia_nueva
+from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1, int_censos_censo_2026_1_agencia_corpa
 
 from models.raw.intermediate._int_base_norm_censo_2024_2 import int_base_norm_original_censo_2024
 
 
 def fct_censos():
-    """
-    Combines Censo 1 and Censo 2 data into a single fact table.
-    Standardizes columns across both datasets to ensure a consistent schema.
-    """
+
     # 1. Load intermediate models
     df_censo_2024_2 = int_base_norm_original_censo_2024()
     df_censo_2025_2 = int_censos_censo_2025_2()
     df_censo_2026_1 = int_censos_censo_2026_1()
-    df_censo_2026_1_agencia_nueva = stg_censos_censo_2026_1_agencia_nueva()
+    df_censo_2026_1_agencia_corpa = int_censos_censo_2026_1_agencia_corpa()
 
     selected_columns = [
         "local_id",
@@ -54,7 +51,7 @@ def fct_censos():
 def fct_censos_2026():
 
     df_censo_2026_1 = int_censos_censo_2026_1()
-    df_censo_2026_1_agencia_nueva = int_censos_censo_2026_1_agencia_nueva()
+    df_censo_2026_1_agencia_corpa = int_censos_censo_2026_1_agencia_corpa()
 
     selected_columns = [
         "local_id",
@@ -94,7 +91,7 @@ def fct_censos_2026():
     ]
 
     # 5. Union and Final Processing
-    df = pd.concat([df_censo_2026_1, df_censo_2026_1_agencia_nueva], ignore_index=True)
+    df = pd.concat([df_censo_2026_1, df_censo_2026_1_agencia_corpa], ignore_index=True)
 
     df = df[selected_columns]
 

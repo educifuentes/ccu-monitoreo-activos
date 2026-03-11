@@ -1,7 +1,6 @@
 import pandas as pd
 
-from models.raw.staging.censos._stg_censos_censo_2026_1 import stg_censos_censo_2026_1, stg_censos_censo_2026_1_agencia_nueva, stg_censos_censo_2026_1_corregido
-
+from models.raw.staging.censos._stg_censos_censo_2026_1 import stg_censos_censo_2026_1_agencia_pkl, stg_censos_censo_2026_1_agencia_pkl_agencia_corpa
 from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
 from utilities.transformations.process_marcas import process_marcas, classify_marcas, process_marcas_questionnaire_version, correct_brand_names
 from utilities.transformations.text_cleaning import clean_text
@@ -11,7 +10,7 @@ from utilities.transformations.clean_region import clean_region
 
 def int_censos_censo_2026_1():
 
-    df = stg_censos_censo_2026_1()
+    df = stg_censos_censo_2026_1_agencia_pkl()
 
     # 1. Column Renamming
     rename_dict = {
@@ -126,9 +125,9 @@ def int_censos_censo_2026_1():
     return df[selected_columns]
 
 
-def int_censos_censo_2026_1_agencia_nueva():
+def int_censos_censo_2026_1_agencia_corpa():
 
-    df = stg_censos_censo_2026_1_agencia_nueva()
+    df = stg_censos_censo_2026_1_agencia_pkl_agencia_corpa()
 
     # 1. Column Renamming
     rename_dict = {
