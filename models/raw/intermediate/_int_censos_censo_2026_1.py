@@ -60,6 +60,7 @@ def int_censos_censo_2026_1():
 
     # accion columns
     df["accion_ccu"] = None
+    df["marca_instalada_en_salida"] = None
     
 
     # dummy razon social
@@ -112,6 +113,11 @@ def int_censos_censo_2026_1():
         "marcas_kross",
         "marcas_ccu",
         "marcas_otras",
+        # listados
+        "marcas_abinbev_listado",
+        "marcas_kross_listado",
+        "marcas_ccu_listado",
+        "marcas_otras_listado"
     ]
     
     return df[selected_columns]
@@ -144,7 +150,8 @@ def int_censos_censo_2026_1_agencia_nueva():
         "CUANTAS SHOPERAS NUEVAS INSTALO CCU PARA MARCAS ARTESANALES?": "instalo",
         'CUANTAS SALIDAS DEJO LIBRE CCU PARA MARCAS ARTESANALES? s ': "disponibilizo",
         # marcas
-        "OTRA MARCA, ESPECIFIQUE.1": "marcas_texto_libre"
+        "OTRA MARCA, ESPECIFIQUE.1": "marcas_texto_libre",
+        "¿CUÁL?": "marca_instalada_en_salida"
     }
 
     df = df.rename(columns=rename_dict)
@@ -222,13 +229,19 @@ def int_censos_censo_2026_1_agencia_nueva():
         "accion_ccu",
         "instalo",
         "disponibilizo",
+        "marca_instalada_en_salida",
         # marcas
         "marcas",
         "marcas_texto_libre",
         "marcas_abinbev",
         "marcas_kross",
         "marcas_ccu",
-        "marcas_otras"
+        "marcas_otras",
+        # listados
+        "marcas_abinbev_listado",
+        "marcas_kross_listado",
+        "marcas_ccu_listado",
+        "marcas_otras_listado",
     ]
 
     df = df[selected_columns]

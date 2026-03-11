@@ -37,12 +37,13 @@ def report_censo_2026():
         "RUT": "rut",
         "REGIÓN": "region",
         "COMUNA": "comuna",
-        "DIRECCIÓN": "direcion",
+        "DIRECCIÓN": "direccion",
         # censo metadta
-        "Permite censo (SI/NO)": "PENDING",
-        "[Si corresponde] Motivo por el que no pudo ser censado (local cerrado, no permite ingreso, etc)": "PENDING",
+        "Permite censo (SI/NO)": "permite_censo",
+        # pending
+        "[Si corresponde] Motivo por el que no pudo ser censado (local cerrado, no permite ingreso, etc)": "motivo_no_censo",
         # activos
-        "Presencia de schopera comodato de CCU (SI/NO)": "schoperas",  # Might need boolean transformation
+        "Presencia de schopera comodato de CCU (SI/NO)": "schoperas",  
         "Número de salidas totales de schop en máquinas CCU": "salidas",
         # accion
         "Instala schopera adicional (Sí/No)": "instalo",
@@ -50,46 +51,56 @@ def report_censo_2026():
         # marcas
         "CCH (Si/No)": "marcas_abinbev",
         "Kross (Si/No)": "marcas_kross",
-        "Otras (indicar cuáles)": "marcas_otras",
-        "Competencia en salida CCU (Sí/No)": "PENDING",  # Assuming abinbev/otras means competence
-        "Indicar nombre de competidor en salida CCU": "PENDING"
+        "Otras (indicar cuáles)": "marcas_otras_listado",
+        "Competencia en salida CCU (Sí/No)": "PENDING", 
+        "Indicar nombre de competidor en salida CCU": "marca_instalada_en_salida"
     }
 
-    df_fct = fct_censos_2026()
+    df_fct_censos = fct_censos_2026()
     df_locales = dim_locales()
 
     # Ensure local_id has the same type
-    df_fct["local_id"] = df_fct["local_id"].astype(str)
+    df_fct_censos["local_id"] = df_fct_censos["local_id"].astype(str)
     df_locales["local_id"] = df_locales["local_id"].astype(str)
+
+    # adapt
+    df_fct_censos["schoperas"] = df_fct_censos["schoperas"] > 1
+    df_fct_censos["instalo"] = df_fct_censos["instalo"] > 0
+    
 
     # Drop duplicate local_ids from the lookup dataframe
     df_locales = df_locales.drop_duplicates(subset=["local_id"], keep="last")
     
     # Set index to local_id to align the update
-    df_fct = df_fct.set_index('local_id')
+    df_fct_censos = df_fct_censos.set_index('local_id')
     df_locales = df_locales.set_index('local_id')
     
     # Update only missing values
-    missing_mask = df_fct['razon_social'].isna()
+    missing_mask = df_fct_censos['razon_social'].isna()
     if missing_mask.any() and 'razon_social' in df_locales.columns:
-        df_fct.loc[df_fct.index[missing_mask], 'razon_social'] = df_locales['razon_social']
+        df_fct_censos.loc[df_fct_censos.index[missing_mask], 'razon_social'] = df_locales['razon_social']
         
-    missing_mask_rut = df_fct['rut'].isna()
+    missing_mask_rut = df_fct_censos['rut'].isna()
     if missing_mask_rut.any() and 'rut' in df_locales.columns:
-        df_fct.loc[df_fct.index[missing_mask_rut], 'rut'] = df_locales['rut']
+        df_fct_censos.loc[df_fct_censos.index[missing_mask_rut], 'rut'] = df_locales['rut']
     
-    df_fct = df_fct.reset_index()
+    df_fct_censos = df_fct_censos.reset_index()
     
     # Initialize an empty DataFrame with our target columns
     out_df = pd.DataFrame(columns=final_columns)
+
+    # transformations
     
     # Map the columns
     for final_col, source_col in COLUMN_MAPPING.items():
-        if source_col == "PENDING" or source_col not in df_fct.columns:
+        if source_col == "PENDING" or source_col not in df_fct_censos.columns:
             # We don't have this mapping yet, leave it empty
             out_df[final_col] = None
         else:
             # Pull the data from the source column
-            out_df[final_col] = df_fct[source_col]
+            out_df[final_col] = df_fct_censos[source_col]
+
+    # more transformations
+    out_df["Competencia en salida CCU (Sí/No)"] = df_fct_censos["instalo"] | df_fct_censos["disponibilizo"] >= 1
             
     return out_df

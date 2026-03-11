@@ -148,37 +148,56 @@ def process_marcas_questionnaire_version(df):
 def classify_marcas(df, marcas_col="marcas"):
     """
     Categorize entries in the marcas column into boolean columns based on corporate parent.
+    Also creates '_listado' columns with comma-separated lists of the specific brands found for each category.
     """
     if marcas_col not in df.columns:
         return df
         
-    # Setup: Initialize columns as False
-    df["marcas_abinbev"] = False
-    df["marcas_kross"] = False
-    df["marcas_ccu"] = False
-    df["marcas_otras"] = False
-    
-
-
-    # Classification Logic
-    marcas_upper = df[marcas_col].astype(str).str.upper()
-    
-    for brand, col in BRANDS_MAPPING.items():
-        mask = marcas_upper.str.contains(brand, regex=False, na=False)
-        df.loc[mask, col] = True
-
-    # Identify "OTRAS": if marcas is not null but none of the mapped columns is True
-    # Or more precisely, if there's a brand in the comma-separated list that isn't in the mapping keys
-    def check_otras(val):
+    def classify_row(val):
+        res = {
+            "marcas_abinbev": False, "marcas_kross": False, "marcas_ccu": False, "marcas_otras": False,
+            "marcas_abinbev_listado": None, "marcas_kross_listado": None, "marcas_ccu_listado": None, "marcas_otras_listado": None
+        }
         if pd.isna(val) or val == "":
-            return False
-        brands_in_row = [b.strip().upper() for b in str(val).split(",")]
+            return pd.Series(res)
+            
+        brands_in_row = [b.strip() for b in str(val).split(",")]
+        
+        lists = {
+            "marcas_abinbev": [],
+            "marcas_kross": [],
+            "marcas_ccu": [],
+            "marcas_otras": []
+        }
+        
         for b in brands_in_row:
-            if b not in BRANDS_MAPPING:
-                return True
-        return False
+            if not b: continue
+            b_upper = b.upper()
+            if b_upper in BRANDS_MAPPING:
+                target_col = BRANDS_MAPPING[b_upper]
+                if target_col in lists:
+                    lists[target_col].append(b)
+                else:
+                    # In case there's a mapped col not in our list
+                    res[target_col] = res.get(target_col, False)
+                    res[f"{target_col}_listado"] = res.get(f"{target_col}_listado", None)
+                    lists[target_col] = [b]
+            else:
+                lists["marcas_otras"].append(b)
+                
+        for col_name, brand_list in lists.items():
+            if brand_list:
+                res[col_name] = True
+                # Remove duplicates while preserving order
+                unique_brands = list(dict.fromkeys(brand_list))
+                res[f"{col_name}_listado"] = ", ".join(unique_brands)
+                
+        return pd.Series(res)
 
-    df["marcas_otras"] = df[marcas_col].apply(check_otras)
-    
+    new_cols = df[marcas_col].apply(classify_row)
+    for col in new_cols.columns:
+        df[col] = new_cols[col]
+        
     return df
+
 

@@ -1,7 +1,7 @@
 import pandas as pd
 
 from models.raw.intermediate._int_censos_censo_2025_2 import int_censos_censo_2025_2
-from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1, stg_censos_censo_2026_1_agencia_nueva
+from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1, int_censos_censo_2026_1_agencia_nueva
 
 from models.raw.intermediate._int_base_norm_censo_2024_2 import int_base_norm_original_censo_2024
 
@@ -29,14 +29,19 @@ def fct_censos():
         "accion_ccu",
         "instalo",
         "disponibilizo",
+        # "marca_instalada_en_salida",
         # marcas
         "marcas",
         "marcas_abinbev",
         "marcas_kross",
         "marcas_ccu",
-        "marcas_otras"
-        # # quizas mas adelante agregar
-        # "tiene_schoperas",
+        "marcas_otras",
+        # listados
+        "marcas_abinbev_listado",
+        "marcas_kross_listado",
+        "marcas_ccu_listado",
+        "marcas_otras_listado"
+     
 
     ]
 
@@ -50,7 +55,7 @@ def fct_censos():
 def fct_censos_2026():
 
     df_censo_2026_1 = int_censos_censo_2026_1()
-    df_censo_2026_1_agencia_nueva = stg_censos_censo_2026_1_agencia_nueva()
+    df_censo_2026_1_agencia_nueva = int_censos_censo_2026_1_agencia_nueva()
 
     selected_columns = [
         "local_id",
@@ -64,6 +69,7 @@ def fct_censos_2026():
         # metadata
         "periodo",
         "fecha",
+        "permite_censo",
         # activos
         "schoperas",
         "salidas",
@@ -71,12 +77,18 @@ def fct_censos_2026():
         "accion_ccu",
         "instalo",
         "disponibilizo",
+        "marca_instalada_en_salida",
         # marcas
         "marcas",
         "marcas_abinbev",
         "marcas_kross",
         "marcas_ccu",
-        "marcas_otras"
+        "marcas_otras",
+        # listados
+        "marcas_abinbev_listado",
+        "marcas_kross_listado",
+        "marcas_ccu_listado",
+        "marcas_otras_listado"
 
     ]
 
