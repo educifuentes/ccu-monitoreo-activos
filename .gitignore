@@ -6,7 +6,6 @@ data_scripts/outputs/
 prompts/
 src/__pycache__/
 seeds/gsheets_snapshots/*
-seeds/reportes_ccu/*
 models/staging/__pycache__
 models/intermediate/__pycache__
 models/marts/__pycache__
