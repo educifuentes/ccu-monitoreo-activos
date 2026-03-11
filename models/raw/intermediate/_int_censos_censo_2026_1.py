@@ -174,6 +174,12 @@ def int_censos_censo_2026_1_agencia_nueva():
 
     # 4. Value Transformations
     # df = yes_no_to_boolean(df, "tiene_schoperas")
+
+    if "permite_censo" in df.columns:
+        df["permite_censo"] = df["permite_censo"].map(
+            {"Si acepta": True, "No acepta/ rechaza": False}
+        )
+
     
     # 5. Period and Metadata
     df["periodo"] = "2026-S1"
