@@ -60,7 +60,10 @@ def int_censos_censo_2026_1():
 
     # accion columns
     df["accion_ccu"] = None
+
+    # comptenencia instalada
     df["marca_instalada_en_salida"] = None
+    df["hay_competencia_en_salida"] = None
     
 
     # dummy razon social

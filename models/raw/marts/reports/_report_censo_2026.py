@@ -53,7 +53,7 @@ def report_censo_2026():
         "Kross (Si/No)": "marcas_kross",
         "Otras (indicar cuáles)": "marcas_otras_listado",
         # marcas en salidas nuevas
-        "Competencia en salida CCU (Sí/No)": "PENDING",  # se calcula
+        "Competencia en salida CCU (Sí/No)": "hay_competencia_en_salida", 
         "Indicar nombre de competidor en salida CCU": "marca_instalada_en_salida"
     }
 
@@ -101,7 +101,5 @@ def report_censo_2026():
             # Pull the data from the source column
             out_df[final_col] = df_fct_censos[source_col]
 
-    # more transformations
-    out_df["Competencia en salida CCU (Sí/No)"] = df_fct_censos["instalo"] | df_fct_censos["disponibilizo"] >= 1
             
     return out_df

@@ -77,7 +77,6 @@ def fct_censos_2026():
         "accion_ccu",
         "instalo",
         "disponibilizo",
-        "marca_instalada_en_salida",
         # marcas
         "marcas",
         "marcas_abinbev",
@@ -88,7 +87,10 @@ def fct_censos_2026():
         "marcas_abinbev_listado",
         "marcas_kross_listado",
         "marcas_ccu_listado",
-        "marcas_otras_listado"
+        "marcas_otras_listado",
+        # competencia
+        "marca_instalada_en_salida",
+        "hay_competencia_en_salida"
 
     ]
 
