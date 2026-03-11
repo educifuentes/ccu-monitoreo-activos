@@ -3,7 +3,7 @@ import pandas as pd
 from models.raw.staging.censos._stg_censos_censo_2026_1 import stg_censos_censo_2026_1, stg_censos_censo_2026_1_agencia_nueva, stg_censos_censo_2026_1_corregido
 
 from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
-from utilities.transformations.process_marcas import process_marcas, classify_marcas, process_marcas_questionnaire_version
+from utilities.transformations.process_marcas import process_marcas, classify_marcas, process_marcas_questionnaire_version, correct_brand_names
 from utilities.transformations.text_cleaning import clean_text
 from utilities.transformations.clean_region import clean_region
 
@@ -166,6 +166,8 @@ def int_censos_censo_2026_1_agencia_nueva():
 
     df = process_marcas_questionnaire_version(df)
     df = classify_marcas(df)
+
+    df["marca_instalada_en_salida"] = correct_brand_names(df["marca_instalada_en_salida"])
 
     # 4. Value Transformations
     # df = yes_no_to_boolean(df, "tiene_schoperas")

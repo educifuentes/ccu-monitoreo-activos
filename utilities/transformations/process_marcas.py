@@ -2,6 +2,7 @@ import pandas as pd
 
 from utilities.constants.brands import BRANDS, BRANDS_MAPPING, FREE_TEXT_MAPPINGS, IGNORE_FREE_TEXT
 import re
+import difflib
 
 def _extract_brands_list(val):
     if pd.isna(val) or val == "":
@@ -199,5 +200,29 @@ def classify_marcas(df, marcas_col="marcas"):
         df[col] = new_cols[col]
         
     return df
+# correct brand names
+def correct_brand_names(series):
+    """
+    Corrects brand names with typos in a pandas Series using FREE_TEXT_MAPPINGS
+    and the BRANDS list as a reference for close matches.
+    Overrides typos with corrected strings, but leaves valid/unmapped names as they are.
+    """
+    def _correct(val):
+        if pd.isna(val) or val == "":
+            return val
+        
+        val_str = str(val).strip()
+        val_lower = val_str.lower()
+        val_upper = val_str.upper()
+        
+        if val_lower in FREE_TEXT_MAPPINGS:
+            return FREE_TEXT_MAPPINGS[val_lower]
+            
+        # Try to find a close match in the BRANDS list
+        matches = difflib.get_close_matches(val_upper, BRANDS, n=1, cutoff=0.8)
+        if matches:
+            return matches[0]
+            
+        return val
 
-
+    return series.apply(_correct)
