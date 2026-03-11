@@ -9,6 +9,7 @@ def report_censo_2026():
     to the final user-facing schema.
     """
     final_columns = [
+        "AGENCIA",
         "ID CLIENTE",
         "NOMBRE FANTASÍA",
         "RAZÓN SOCIAL",
@@ -30,6 +31,8 @@ def report_censo_2026():
     ]
 
     COLUMN_MAPPING = {
+        # agencia
+        "AGENCIA": "agencia",
         # locales info
         "ID CLIENTE": "local_id",
         "NOMBRE FANTASÍA": "nombre_fantasia", 
