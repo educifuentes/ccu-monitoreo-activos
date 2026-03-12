@@ -28,7 +28,8 @@ def fct_censos_2026():
         "permite_censo",
         "motivo_no_censo",
         # activos
-        "schoperas",
+        "schoperas_total",
+        "schoperas_ccu",
         "salidas",
         # accion
         "accion_ccu",

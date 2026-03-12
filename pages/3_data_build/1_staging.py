@@ -3,7 +3,7 @@ import streamlit as st
 from models.raw.staging.censos._stg_censos_censo_2025_2 import stg_censos_censo_2025_2
 from models.raw.staging.censos._stg_censos_censo_2024_2 import stg_censos_censo_2024_2
 
-from models.raw.staging.censos._stg_censos_censo_2026_1 import stg_censos_censo_2026_1_agencia_pkl, stg_censos_censo_2026_1_agencia_pkl_agencia_corpa, stg_censos_censo_2026_1_agencia_corpa_sistematizado
+from models.raw.staging.censos._stg_censos_censo_2026_1 import stg_censos_censo_2026_1_agencia_pk, stg_censos_censo_2026_1_agencia_pk_agencia_corpa, stg_censos_censo_2026_1_agencia_corpa_sistematizado
 
 from models.raw.staging.censos._stg_censos_fne_listado_2026_1 import stg_censos_fne_listado_2026_1
 
@@ -48,18 +48,18 @@ with tab1:
 with tab2:
     st.header("Censos")
 
-    render_model_ui(stg_censos_censo_2026_1_agencia_pkl_agencia_corpa(), table_name="censo_2026_1_agencia_corpa")
+    render_model_ui(stg_censos_censo_2026_1_agencia_pk_agencia_corpa(), table_name="censo_2026_1_agencia_corpa")
 
     render_model_ui(stg_censos_censo_2026_1_agencia_corpa_sistematizado(), table_name="censo_2026_1_agencia_corpa_sistematizado")
 
     # --
 
-    # df_censo_corregido = stg_censos_censo_2026_1_agencia_pkl_agencia_pk()
+    # df_censo_corregido = stg_censos_censo_2026_1_agencia_pk_agencia_pk()
     # render_model_ui(df_censo_corregido, table_name="censo_2026_1 corregido")
 
     # ---
 
-    df2026_1 = stg_censos_censo_2026_1_agencia_pkl()
+    df2026_1 = stg_censos_censo_2026_1_agencia_pk()
     render_model_ui(df2026_1, table_name="censo_2026_1_agencia_pk")
 
     # st.dataframe(df2026_1[" OTRA MARCA, ESPECIFIQUE"])

@@ -8,14 +8,14 @@ from utilities.transformations.clean_column_names import clean_column_name
 SOURCE_YAML_PATH = "models/raw/sources/_src_censos__censo_2026_1.yml"
 
 
-def stg_censos_censo_2026_1_agencia_pkl():
+def stg_censos_censo_2026_1_agencia_pk():
     df = load_source(
         name="censo_2026_1_agencia_pk",
         src_yaml_path=SOURCE_YAML_PATH
     )
     return df
 
-def stg_censos_censo_2026_1_agencia_pkl_agencia_corpa():
+def stg_censos_censo_2026_1_agencia_pk_agencia_corpa():
     df = load_source(
         name="censo_2026_1_agencia_corpa",
         src_yaml_path=SOURCE_YAML_PATH

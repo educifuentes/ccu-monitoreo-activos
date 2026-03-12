@@ -1,6 +1,6 @@
 import pandas as pd
 
-from models.raw.staging.censos._stg_censos_censo_2026_1 import stg_censos_censo_2026_1_agencia_pkl, stg_censos_censo_2026_1_agencia_pkl_agencia_corpa, stg_censos_censo_2026_1_agencia_corpa_sistematizado
+from models.raw.staging.censos._stg_censos_censo_2026_1 import stg_censos_censo_2026_1_agencia_pk, stg_censos_censo_2026_1_agencia_pk_agencia_corpa, stg_censos_censo_2026_1_agencia_corpa_sistematizado
 from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
 from utilities.transformations.process_marcas import process_marcas, classify_marcas, process_marcas_questionnaire_version, correct_brand_names
 from utilities.transformations.text_cleaning import clean_text
@@ -10,7 +10,7 @@ from utilities.transformations.clean_region import clean_region
 def int_censos_censo_2026_1_agencia_pk():
 
     # 1. Load Data
-    df = stg_censos_censo_2026_1_agencia_pkl()
+    df = stg_censos_censo_2026_1_agencia_pk()
 
     # 2. Column Renaming
     rename_dict = {
@@ -24,7 +24,8 @@ def int_censos_censo_2026_1_agencia_pk():
         "Observaciones": "observaciones",
         # activos
         "EL LOCAL CUENTA CON MAQUINAS SHOPERAS?": "tiene_schoperas",
-        "NÚMERO DE MÁQUINAS SCHOPERAS DE CCU(ASUMIR QUE LA SCHOPERA ES CCU SI LA MAYORÍA DE LAS MARCAS SON CCU - REVISAR TARJETERO DE APOYO)": "schoperas",
+        "NÚMERO TOTAL DE MÁQUINAS SCHOPERAS EN EL LOCAL": "schoperas_total",
+        "NÚMERO DE MÁQUINAS SCHOPERAS DE CCU(ASUMIR QUE LA SCHOPERA ES CCU SI LA MAYORÍA DE LAS MARCAS SON CCU - REVISAR TARJETERO DE APOYO)": "schoperas_ccu",
         # accion
         "CUANTAS SHOPERAS NUEVAS INSTALO CCU PARA MARCAS ARTESANALES?": "instalo",
         'CUANTAS SALIDAS DEJO LIBRE CCU PARA MARCAS ARTESANALES? s ': "disponibilizo",
@@ -98,7 +99,8 @@ def int_censos_censo_2026_1_agencia_pk():
         "motivo_no_censo",
         "agencia",
         # activos
-        "schoperas",
+        "schoperas_total",
+         "schoperas_ccu",
         "salidas",
         # accion
         "accion_ccu",
@@ -126,7 +128,7 @@ def int_censos_censo_2026_1_agencia_pk():
 def int_censos_censo_2026_1_agencia_corpa():
 
     # 1. Load Data
-    df = stg_censos_censo_2026_1_agencia_pkl_agencia_corpa()
+    df = stg_censos_censo_2026_1_agencia_pk_agencia_corpa()
 
     # 2. Column Renaming
     rename_dict = {
@@ -145,7 +147,8 @@ def int_censos_censo_2026_1_agencia_corpa():
         "Observaciones": "observaciones",
         "PERMITE AUDITORÍA": "permite_censo",
         # activos
-        "NÚMERO DE MÁQUINAS SCHOPERAS DE CCU": "schoperas",
+        "NÚMERO TOTAL DE MÁQUINAS SCHOPERAS EN EL LOCAL": "schoperas_total",
+        "NÚMERO DE MÁQUINAS SCHOPERAS DE CCU": "schoperas_ccu",
         # accion
         "EN CASO DE QUE CCU TENGA MÁS DE 3 SALIDAS, ¿INSTALÓ O DISPONBILIZÓ CCU UN SCHOPERA?": "accion_ccu",
         "CUANTAS SHOPERAS NUEVAS INSTALO CCU PARA MARCAS ARTESANALES?": "instalo",
@@ -231,7 +234,8 @@ def int_censos_censo_2026_1_agencia_corpa():
         "fecha",
         "agencia",
         # activos
-        "schoperas",
+        "schoperas_total",
+        "schoperas_ccu",
         "salidas",
         # accion
         "accion_ccu",

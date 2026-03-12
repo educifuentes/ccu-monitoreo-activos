@@ -27,7 +27,10 @@ def report_censo_2026():
         "Kross (Si/No)",
         "Otras (indicar cuáles)",
         "Competencia en salida CCU (Sí/No)",
-        "Indicar nombre de competidor en salida CCU"
+        "Indicar nombre de competidor en salida CCU",
+        # extras nuevas
+        "schoperas_total",
+        "schoperas_ccu"
     ]
 
     COLUMN_MAPPING = {
@@ -57,7 +60,10 @@ def report_censo_2026():
         "Otras (indicar cuáles)": "marcas_otras_listado",
         # marcas en salidas nuevas
         "Competencia en salida CCU (Sí/No)": "hay_competencia_en_salida", 
-        "Indicar nombre de competidor en salida CCU": "marca_instalada_en_salida"
+        "Indicar nombre de competidor en salida CCU": "marca_instalada_en_salida",
+         # extras nuevas
+        "schoperas_total": "schoperas_total",
+        "schoperas_ccu": "schoperas_ccu"
     }
 
     df_fct_censos = fct_censos_2026()
@@ -68,7 +74,6 @@ def report_censo_2026():
     df_locales["local_id"] = df_locales["local_id"].astype(str)
 
     # adapt
-    df_fct_censos["schoperas"] = df_fct_censos["schoperas"] > 1
     df_fct_censos["instalo"] = df_fct_censos["instalo"] > 0
     
 
