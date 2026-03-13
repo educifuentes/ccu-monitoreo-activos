@@ -1,6 +1,7 @@
 import pandas as pd
 from models.raw.marts._fct_censos import fct_censos_2026
 from models.raw.marts._dim_locales import dim_locales
+from utilities.constants.brands import BRAND_CORPORATE_MAPPING, CORPORATE_GROUPS
 
 def report_censo_2026():
     """
@@ -109,5 +110,27 @@ def report_censo_2026():
             # Pull the data from the source column
             out_df[final_col] = df_fct_censos[source_col]
 
-            
+
+
+
+    # Clean marcas_otras_listado: keep only brands that belong to CORPORATE_GROUPS[3] ("marcas_otras")
+    _otras_brands = {
+        brand for brand, group in BRAND_CORPORATE_MAPPING.items()
+        if group == CORPORATE_GROUPS[3]
+    }
+
+    def _filter_otras_brands(cell):
+        if pd.isna(cell) or str(cell).strip() == "":
+            return cell
+        tokens = [t.strip().upper() for t in str(cell).split(",")]
+        filtered = [t for t in tokens if t in _otras_brands]
+        return ", ".join(filtered) if filtered else None
+
+    out_df["Otras (indicar cuáles)"] = (
+        out_df["Otras (indicar cuáles)"]
+        .str.upper()
+        .str.strip()
+        .apply(_filter_otras_brands)
+    )
+
     return out_df
