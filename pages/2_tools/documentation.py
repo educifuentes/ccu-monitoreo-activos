@@ -8,6 +8,16 @@ st.set_page_config(page_title="Documentación", layout="wide")
 st.title(f"{ICONS['documentation']} Documentación")
 
 
+
+st.subheader("Marcas y Grupos Corporativos")
+with open("documentation/_marcas_table.md", "r", encoding="utf-8") as f:
+    st.markdown(f.read())
+
+
+st.divider()
+
+st.subheader("Tablas")
+
 # Create tabs for organization
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     f"{ICONS['locales']} Locales",
@@ -16,6 +26,8 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
     f"{ICONS['contratos']} Contratos",
     f"{ICONS['metrics']} Metricas"
 ])
+
+
 
 with tab1:
     dim_locales_path = os.path.abspath("models/raw/marts/_dim_locales.yml")
