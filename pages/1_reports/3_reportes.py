@@ -8,6 +8,7 @@ st.set_page_config(page_title="Reportes", layout="wide")
 
 
 st.header("Reporte Censo 2026")
+st.markdown("Última actualización: 2026-03-13")
 
 col1, col2 = st.columns(2)
 
