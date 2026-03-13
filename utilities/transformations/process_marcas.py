@@ -1,6 +1,6 @@
 import pandas as pd
 
-from utilities.constants.brands import BRANDS, BRANDS_MAPPING, FREE_TEXT_MAPPINGS, IGNORE_FREE_TEXT
+from utilities.constants.brands import BRAND_CORPORATE_MAPPING, FREE_TEXT_MAPPINGS, IGNORE_FREE_TEXT
 import re
 import difflib
 
@@ -11,7 +11,7 @@ def _extract_brands_list(val):
     found_brands = []
     val_upper = str(val).upper()
     
-    for brand in BRANDS:
+    for brand in BRAND_CORPORATE_MAPPING:
         pos = val_upper.find(brand)
         if pos != -1:
             # Store (position, TitleizedBrand)
@@ -174,8 +174,8 @@ def classify_marcas(df, marcas_col="marcas"):
         for b in brands_in_row:
             if not b: continue
             b_upper = b.upper()
-            if b_upper in BRANDS_MAPPING:
-                target_col = BRANDS_MAPPING[b_upper]
+            if b_upper in BRAND_CORPORATE_MAPPING:
+                target_col = BRAND_CORPORATE_MAPPING[b_upper]
                 if target_col in lists:
                     lists[target_col].append(b)
                 else:
@@ -219,7 +219,7 @@ def correct_brand_names(series):
             return FREE_TEXT_MAPPINGS[val_lower]
             
         # Try to find a close match in the BRANDS list
-        matches = difflib.get_close_matches(val_upper, BRANDS, n=1, cutoff=0.8)
+        matches = difflib.get_close_matches(val_upper, list(BRAND_CORPORATE_MAPPING.keys()), n=1, cutoff=0.8)
         if matches:
             return matches[0]
             
