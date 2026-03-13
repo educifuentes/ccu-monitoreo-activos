@@ -1,5 +1,6 @@
-| Grupo              | Marcas Incluidas                                                        |
-| :----------------- | :---------------------------------------------------------------------- |
-| **marcas_ccu**     | Cristal, Royal Guard, Guayacán, Heineken, Patagonia, Austral, Kunstmann |
-| **marcas_abinbev** | Budweiser, Stella Artois                                                |
-| **marcas_kross**   | Kross                                                                   |
+| Grupo              | Marcas Incluidas                                                                                                                                                                             |
+| :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **marcas_ccu**     | Austral, Cristal, D'olbek, Escudo, Guayacán, Heineken, Kunstmann, Patagonia, Royal Guard                                                                                                     |
+| **marcas_abinbev** | Baltica, Becker, Budweiser, Corona, Cusqueña, Goose Island, Hoegaarden, Kilometro 24,7, Quilmes, Stella Artois                                                                             |
+| **marcas_kross**   | Kross                                                                                                                                                                                        |
+| **marcas_otras**   | Alhambra, Blue Moon, Chester, Cuello Negro, Erdinger, Estrella Damm, Estrella de Galicia, Loa, Mahou, Mestra, Peroni, Totem, Tropera, Tubinger                                              |
