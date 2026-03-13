@@ -48,7 +48,7 @@ with tab1:
 with tab2:
     st.header("Censos")
 
-    render_model_ui(stg_censos_censo_2026_1_agencia_pk_agencia_corpa(), table_name="censo_2026_1_agencia_corpa")
+    render_model_ui(stg_censos_censo_2026_1_agencia_pk_agencia_corpa(), table_name="censo_2026_1_agencia_corpa - ver marzo 13")
 
     render_model_ui(stg_censos_censo_2026_1_agencia_corpa_sistematizado(), table_name="censo_2026_1_agencia_corpa_sistematizado")
 

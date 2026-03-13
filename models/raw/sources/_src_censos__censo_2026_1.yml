@@ -5,9 +5,10 @@ sources:
     url: https://docs.google.com/spreadsheets/d/1u7K9nqzU6v8y9vhhuU2_9d5RMr7DeSG7E5MMWpkyLGk/edit?gid=1317594973#gid=1317594973
   - name: censo_2026_1_agencia_corpa
     description: agencia nueva que hay que cargar. Recibida dia 10 marzo 2026. Son 241 locales.
-    path: seeds/censos/censo_2026_1/BBDD - Nuevo Censo Corpa - 05-03-2.xlsx - Sheet1.csv
+    notes: se reenvio de nuevo marzo 13, 2026 porque tenia errores.
+    path: seeds/censos/censo_2026_1/BBDD - Nuevo Censo - 05-03-3_version_marzo_13.xlsx - Sheet1.csv
     url: https://docs.google.com/spreadsheets/d/1TEk5xkf3Y0NQ4bXx4UztdNGfzWw4gwit/edit?gid=1812778402#gid=1812778402
-    date_received: 2026-03-10
+    date_received: 2026-03-13
   - name: censo_2026_1_agencia_pk
     description: censo 2026 corregido. Recibida dia 10 marzo 2026. Son 900 aprox locales. Se mando corregida.
     path: seeds/censos/censo_2026_1/CCU 10_03_26.xlsx - CCU_2026_03_10 .csv
