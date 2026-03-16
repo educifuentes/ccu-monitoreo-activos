@@ -37,7 +37,11 @@ with tab1:
     render_model_ui(dim_locales_df)
 
 with tab2:
+    st.header("Fct Censos")
+    
+    render_model_ui(fct_censos(), table_name="fct_censos")
 
+    
     render_model_ui(fct_censos_2026(), table_name="fct_censos_2026")
 
 

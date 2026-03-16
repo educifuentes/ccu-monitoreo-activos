@@ -52,10 +52,6 @@ with tab2:
 
     render_model_ui(stg_censos_censo_2026_1_agencia_corpa_sistematizado(), table_name="censo_2026_1_agencia_corpa_sistematizado")
 
-    # --
-
-    # df_censo_corregido = stg_censos_censo_2026_1_agencia_pk_agencia_pk()
-    # render_model_ui(df_censo_corregido, table_name="censo_2026_1 corregido")
 
     # ---
 

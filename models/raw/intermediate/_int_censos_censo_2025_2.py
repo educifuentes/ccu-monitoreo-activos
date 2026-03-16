@@ -25,7 +25,7 @@ def int_censos_censo_2025_2():
         "rut Visitador": "rut_visitador",
         "Observaciones": "observaciones",
         "EL LOCAL CUENTA CON MAQUINAS SHOPERAS?": "tiene_schoperas",
-        "NÚMERO DE MÁQUINAS SCHOPERAS DE CCU(ASUMIR QUE LA SCHOPERA ES CCU SI LA MAYORÍA DE LAS MARCAS SON CCU - REVISAR TARJETERO DE APOYO)": "schoperas",
+        "NÚMERO DE MÁQUINAS SCHOPERAS DE CCU(ASUMIR QUE LA SCHOPERA ES CCU SI LA MAYORÍA DE LAS MARCAS SON CCU - REVISAR TARJETERO DE APOYO)": "schoperas_ccu",
         "CUANTAS SHOPERAS PARA DISPONIBILIZAR NUEVAS INSTALO CCU ?": "instalo",
         'CUANTAS SALIDAS DEJO LIBRE CCU EN TOTAL? s ': "disponibilizo",
         '¿CUALES DE ESTAS MARCAS SE VENDEN EN SCHOP?': "marcas"
@@ -46,6 +46,7 @@ def int_censos_censo_2025_2():
     # 5. Period and Metadata
     df["periodo"] = "2025-S2"
     df["fecha"] = pd.to_datetime("2025-10-01").date()
+    df["agencia"] = "pk"
     
     # 6. Calculated Columns (Total outputs)
     # Total outputs (salidas) is the sum of salidas across all machine columns
@@ -56,7 +57,7 @@ def int_censos_censo_2025_2():
             df["salidas"] += pd.to_numeric(stg_censos_2_df[col_name], errors='coerce').fillna(0)
 
     # 7. Final Conversions to Int64 (nullable int)
-    numeric_cols = ["salidas", "schoperas", "instalo", "disponibilizo"]
+    numeric_cols = ["salidas", "schoperas_ccu", "instalo", "disponibilizo"]
     for col in numeric_cols:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors='coerce').astype("Int64")
@@ -64,22 +65,26 @@ def int_censos_censo_2025_2():
     # 8. Final Column Selection
     selected_columns = [
         "local_id",
+        # metadata censo
         "periodo",
         "fecha",
-        "schoperas",
+        "agencia",
+        # quizas mas adelante agregar
+        # "observaciones",
+        # "visitador",
+        # "rut_visitador"
+        # activos
+        "schoperas_ccu",
         "salidas",
         "instalo",
         "disponibilizo",
+        # marcas
         "marcas",
         "marcas_abinbev",
         "marcas_kross",
         "marcas_ccu",
         "marcas_otras"
-        # # quizas mas adelante agregar
-        # "tiene_schoperas",
-        # "observaciones",
-        # "visitador",
-        # "rut_visitador"
+
     ]
     
     return df[selected_columns]

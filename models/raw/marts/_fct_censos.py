@@ -4,7 +4,7 @@ from utilities.transformations.dataframe_alignment import safe_concat_with_colum
 from models.raw.intermediate._int_censos_censo_2025_2 import int_censos_censo_2025_2
 from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1_agencia_pk, int_censos_censo_2026_1_agencia_corpa
 
-from models.raw.intermediate._int_base_norm_censo_2024_2 import int_base_norm_original_censo_2024
+from models.raw.intermediate._int_censos_censo_2024_2 import int_base_norm_original_censo_2024
 
 
 def fct_censos_2026():

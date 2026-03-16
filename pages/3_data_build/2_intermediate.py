@@ -1,20 +1,14 @@
 import streamlit as st
-from utilities.widgets.explorer_de_datos import explorer_de_datos
 
 from models.raw.intermediate._int_censos_censo_2025_2 import int_censos_censo_2025_2
 from models.raw.intermediate._int_censos_censo_2024_2 import int_censos_censo_2024_2
-from models.raw.intermediate._int_base_norm_censo_2024_2 import int_base_norm_censo_2024_2, clean_df_summary_censo_2024
 from models.raw.intermediate._int_base_norm_locales import int_base_norm_locales
-
 from models.raw.marts._dim_locales import _new_locales_censo_2026_1
-
 from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1_agencia_pk, int_censos_censo_2026_1_agencia_corpa
-
 from models.raw.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1, int_reportes_ccu_base_2026_q1_locales
 from models.raw.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
 
-from models.raw.intermediate._int_base_norm_censo_2024_2 import int_base_norm_original_censo_2024
-
+from utilities.widgets.explorer_de_datos import explorer_de_datos
 from utilities.ui_components import render_model_ui
 
 # Page settings and header
@@ -36,10 +30,16 @@ with tab1:
     render_model_ui(_new_locales_censo_2026_1())
     
 with tab2:
+    st.header("Censos")
 
     render_model_ui(int_censos_censo_2026_1_agencia_corpa(), table_name="censo_2026_1_agencia_corpa")
 
     render_model_ui(int_censos_censo_2026_1_agencia_pk(), table_name="censo_2026_1_agencia_pk") 
+
+    render_model_ui(int_censos_censo_2025_2(), table_name="censo_2025_2")
+
+    render_model_ui(int_censos_censo_2024_2(), table_name="censo_2024_2")
+
 
 with tab3:
     st.header("Reportes CCU")
