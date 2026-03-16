@@ -4,7 +4,7 @@ from utilities.transformations.dataframe_alignment import safe_concat_with_colum
 from models.raw.intermediate._int_censos_censo_2025_2 import int_censos_censo_2025_2
 from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1_agencia_pk, int_censos_censo_2026_1_agencia_corpa
 
-from models.raw.intermediate._int_censos_censo_2024_2 import int_base_norm_original_censo_2024
+from models.raw.intermediate._int_censos_censo_2024_2 import int_censos_censo_2024_2
 
 
 def fct_censos_2026():
@@ -61,9 +61,8 @@ def fct_censos_2026():
 def fct_censos():
 
     # 1. Load intermediate models
-    df_censo_2024_2 = int_base_norm_original_censo_2024()
+    df_censo_2024_2 = int_censos_censo_2024_2()
     df_censo_2025_2 = int_censos_censo_2025_2()
-
     df_censo_2026_1 = fct_censos_2026()
 
     selected_columns = [
@@ -92,6 +91,12 @@ def fct_censos():
         "marcas_otras_listado"
     
     ]
+
+    # df_censo_2024_2 = df_censo_2024_2[selected_columns]
+    # df_censo_2025_2 = df_censo_2025_2[selected_columns]
+    # df_censo_2026_1 = df_censo_2026_1[selected_columns]
+
+    # df = pd.concat([df_censo_2024_2, df_censo_2025_2, df_censo_2026_1], ignore_index=True)
 
 
     # 5. Union and Final Processing

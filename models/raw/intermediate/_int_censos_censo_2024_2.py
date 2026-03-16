@@ -11,7 +11,81 @@ from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
 # se usa finalmente int_base_norm_original_censo_2024
 
 
+
 def int_censos_censo_2024_2():
+    # orifnal name: int_base_norm_original_censo_2024
+    #mviene de base normalizada original
+
+    df = stg_base_norm_original_censo_2024()
+
+    # clean
+    # drop rows based on  where CATEGORÍA CENSO 1 column:  "NO CENSADO" , None or NaN, and CCU/Cuestionados 
+    df = df[df["CATEGORÍA CENSO 1"] != "NO CENSADO"]
+    df = df[df["CATEGORÍA CENSO 1"] != "CCU/Cuestionados"]
+    df = df.dropna(subset=["CATEGORÍA CENSO 1"])
+
+    # drop wrows here column Censo 1 is "SIN CENSO"
+    df = df[df["Censo 1"] != "SIN CENSO"]
+
+    # drop local_ids none or nan
+    df = df.dropna(subset=["ID CLIENTE"])
+
+
+    # rename
+    rename_dict = {
+        "ID CLIENTE": "local_id",
+        "CATEGORÍA CENSO 1": "categoria_censo_2024_2",
+        "Censo 1": "censo_2024_2",
+        "CANTIDAD DE SCHOPERAS CCU": "schoperas_ccu",
+        "CANTIDAD DE SALIDAS": "salidas",
+        "CCU/ABINBEV/OTRAS MARCAS COMPETENCIA": "marcas"
+    }
+
+    df = df.rename(columns=rename_dict)
+
+    # new columns
+    df["periodo"] = "2024-S2"
+    df["fecha"] = pd.to_datetime("2024-10-01").date()
+
+    # dummy creates
+    df["instalo"] = pd.NA
+    df["disponibilizo"] = pd.NA
+
+    # data types
+    df["salidas"] = pd.to_numeric(df["salidas"], errors='coerce').astype("Int64")
+    df["schoperas_ccu"] = pd.to_numeric(df["schoperas_ccu"], errors='coerce').astype("Int64")
+
+    # apply brand processing
+    brands_col = "marcas"
+    if brands_col in df.columns:
+        df["marcas"] = df[brands_col]
+        df = process_marcas(df)
+        df = classify_marcas(df)
+
+    selected_columns = [
+        "local_id",
+        # metadata
+        "periodo",
+        "fecha",  
+        # activos  
+        "schoperas_ccu",
+        "salidas",
+        # accion
+        "instalo",
+        "disponibilizo",
+        # marcas
+        "marcas",
+        "marcas_abinbev",
+        "marcas_kross",
+        "marcas_ccu",
+        "marcas_otras"
+    ]
+
+    df = df[selected_columns]
+
+    return df
+
+def int_censos_censo_2024_2_deprecated():
     # viene de l censo base orignal que no se uso
 
     stg_censos_1_df = stg_censos_censo_2024_2()
@@ -81,83 +155,6 @@ def int_censos_censo_2024_2():
     return int_censos_censo_2024_2_df[available_columns]
 
 
-
-
-def clean_base_norm_original_censo_2024():
-    df = stg_base_norm_original_censo_2024()
-
-    # clean
-    # drop rows based on  where CATEGORÍA CENSO 1 column:  "NO CENSADO" , None or NaN, and CCU/Cuestionados 
-    df = df[df["CATEGORÍA CENSO 1"] != "NO CENSADO"]
-    df = df[df["CATEGORÍA CENSO 1"] != "CCU/Cuestionados"]
-    df = df.dropna(subset=["CATEGORÍA CENSO 1"])
-
-    # drop wrows here column Censo 1 is "SIN CENSO"
-    df = df[df["Censo 1"] != "SIN CENSO"]
-
-    # drop local_ids none or nan
-    df = df.dropna(subset=["ID CLIENTE"])
-
-    return df
-
-
-
-def int_base_norm_original_censo_2024():
-    df = clean_base_norm_original_censo_2024()
-
-    # rename
-    rename_dict = {
-        "ID CLIENTE": "local_id",
-        "CATEGORÍA CENSO 1": "categoria_censo_2024_2",
-        "Censo 1": "censo_2024_2",
-        "CANTIDAD DE SCHOPERAS CCU": "shoperas_ccu",
-        "CANTIDAD DE SALIDAS": "salidas",
-        "CCU/ABINBEV/OTRAS MARCAS COMPETENCIA": "marcas"
-    }
-
-    df = df.rename(columns=rename_dict)
-
-    # new columns
-    df["periodo"] = "2024-S2"
-    df["fecha"] = pd.to_datetime("2024-10-01").date()
-
-    # dummy creates
-    df["instalo"] = pd.NA
-    df["disponibilizo"] = pd.NA
-
-    # data types
-    df["salidas"] = pd.to_numeric(df["salidas"], errors='coerce').astype("Int64")
-    df["shoperas_ccu"] = pd.to_numeric(df["shoperas_ccu"], errors='coerce').astype("Int64")
-
-    # apply brand processing
-    brands_col = "marcas"
-    if brands_col in df.columns:
-        df["marcas"] = df[brands_col]
-        df = process_marcas(df)
-        df = classify_marcas(df)
-
-    selected_columns = [
-        "local_id",
-        # metadata
-        "periodo",
-        "fecha",  
-        # activos  
-        "shoperas_ccu",
-        "salidas",
-        # accion
-        "instalo",
-        "disponibilizo",
-        # marcas
-        "marcas",
-        "marcas_abinbev",
-        "marcas_kross",
-        "marcas_ccu",
-        "marcas_otras"
-    ]
-
-    df = df[selected_columns]
-
-    return df
 
 
 def clean_df_summary_censo_2024():

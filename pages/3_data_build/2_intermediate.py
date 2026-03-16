@@ -1,13 +1,15 @@
 import streamlit as st
 
+# censos
+from models.raw.intermediate._int_censos_censo_2024_2 import int_censos_censo_2024_2
 from models.raw.intermediate._int_censos_censo_2025_2 import int_censos_censo_2025_2
-from models.raw.intermediate._int_censos_censo_2024_2 import int_censos_censo_2024_2, int_base_norm_original_censo_2024
-from models.raw.marts._dim_locales import _new_locales_censo_2026_1
 from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1_agencia_pk, int_censos_censo_2026_1_agencia_corpa
+
+# reportes ccu
 from models.raw.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1, int_reportes_ccu_base_2026_q1_locales
 from models.raw.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
 
-from utilities.widgets.explorer_de_datos import explorer_de_datos
+
 from utilities.ui_components import render_model_ui
 
 # Page settings and header
@@ -26,7 +28,6 @@ tab1, tab2, tab3 = st.tabs([
 with tab1:
     st.header("Locales Intermediate")
 
-    render_model_ui(_new_locales_censo_2026_1())
     
 with tab2:
     st.header("Censos")
@@ -37,7 +38,7 @@ with tab2:
 
     render_model_ui(int_censos_censo_2025_2(), table_name="censo_2025_2")
 
-    render_model_ui(int_base_norm_original_censo_2024(), table_name="censo_2024_2")
+    render_model_ui(int_censos_censo_2024_2(), table_name="censo_2024_2")
 
 
 with tab3:
