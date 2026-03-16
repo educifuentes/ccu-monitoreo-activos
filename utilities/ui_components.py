@@ -22,20 +22,16 @@ def render_model_ui(df, table_name=None):
     Includes shape, columns, and the dataframe.
     Optionally fetches and displays description from YAML config.
     """
-    # if source_name and table_name:
-    #     config = get_table_config(source_name=source_name, table_name=table_name)
-    #     if config and config.get("description"):
-    #         st.markdown(config.get("description"))
 
-    st.markdown(f"Tabla: `{table_name}`")
-    st.write(df.shape)
-    with st.expander("Columnas"):
-        st.code("\n".join(df.columns))
-    # Format dtypes as a single line: col1: type1 | col2: type2
-    with st.expander("Data Types"):
-        dtypes_str = " | ".join([f"{col}: {dtype}" for col, dtype in df.dtypes.items()])
-        st.code(dtypes_str)
-    st.dataframe(df)
+
+    with st.expander(f"Tabla: `{table_name}`"):
+        st.write(df.shape)
+        with st.expander("Columnas"):
+            st.code("\n".join(df.columns))
+        with st.expander("Data Types"):
+            dtypes_str = " | ".join([f"{col}: {dtype}" for col, dtype in df.dtypes.items()])
+            st.code(dtypes_str)
+        st.dataframe(df)
     st.divider()
 
 def render_troubled_rows(df, gid, row_indices=None):
