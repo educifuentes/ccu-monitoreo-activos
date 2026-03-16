@@ -1,8 +1,7 @@
 import streamlit as st
 
 from models.raw.intermediate._int_censos_censo_2025_2 import int_censos_censo_2025_2
-from models.raw.intermediate._int_censos_censo_2024_2 import int_censos_censo_2024_2
-from models.raw.intermediate._int_base_norm_locales import int_base_norm_locales
+from models.raw.intermediate._int_censos_censo_2024_2 import int_censos_censo_2024_2, int_base_norm_original_censo_2024
 from models.raw.marts._dim_locales import _new_locales_censo_2026_1
 from models.raw.intermediate._int_censos_censo_2026_1 import int_censos_censo_2026_1_agencia_pk, int_censos_censo_2026_1_agencia_corpa
 from models.raw.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1, int_reportes_ccu_base_2026_q1_locales
@@ -38,7 +37,7 @@ with tab2:
 
     render_model_ui(int_censos_censo_2025_2(), table_name="censo_2025_2")
 
-    render_model_ui(int_censos_censo_2024_2(), table_name="censo_2024_2")
+    render_model_ui(int_base_norm_original_censo_2024(), table_name="censo_2024_2")
 
 
 with tab3:

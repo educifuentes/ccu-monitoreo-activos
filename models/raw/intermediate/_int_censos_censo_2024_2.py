@@ -1,13 +1,15 @@
+import pandas as pd
+
 from models.raw.staging.censos._stg_censos_censo_2024_2 import stg_censos_censo_2024_2
 from models.raw.staging.base_normalizada._stg_base_norm_censo_2024_2 import stg_base_norm_censo_2024_2
 from models.raw.staging.base_normalizada._stg_base_norm_original import stg_base_norm_original_censo_2024
 
 from utilities.transformations.process_marcas import process_marcas, classify_marcas
 from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
-import pandas as pd
 
 # nota
 # se usa finalmente int_base_norm_original_censo_2024
+
 
 def int_censos_censo_2024_2():
     # viene de l censo base orignal que no se uso
@@ -108,7 +110,7 @@ def int_base_norm_original_censo_2024():
         "ID CLIENTE": "local_id",
         "CATEGORÍA CENSO 1": "categoria_censo_2024_2",
         "Censo 1": "censo_2024_2",
-        "CANTIDAD DE SCHOPERAS CCU": "schoperas",
+        "CANTIDAD DE SCHOPERAS CCU": "shoperas_ccu",
         "CANTIDAD DE SALIDAS": "salidas",
         "CCU/ABINBEV/OTRAS MARCAS COMPETENCIA": "marcas"
     }
@@ -125,7 +127,7 @@ def int_base_norm_original_censo_2024():
 
     # data types
     df["salidas"] = pd.to_numeric(df["salidas"], errors='coerce').astype("Int64")
-    df["schoperas"] = pd.to_numeric(df["schoperas"], errors='coerce').astype("Int64")
+    df["shoperas_ccu"] = pd.to_numeric(df["shoperas_ccu"], errors='coerce').astype("Int64")
 
     # apply brand processing
     brands_col = "marcas"
@@ -136,11 +138,13 @@ def int_base_norm_original_censo_2024():
 
     selected_columns = [
         "local_id",
+        # metadata
         "periodo",
         "fecha",  
         # activos  
-        "schoperas",
+        "shoperas_ccu",
         "salidas",
+        # accion
         "instalo",
         "disponibilizo",
         # marcas

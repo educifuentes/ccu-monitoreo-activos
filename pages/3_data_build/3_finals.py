@@ -40,22 +40,9 @@ with tab2:
     st.header("Fct Censos")
     
     render_model_ui(fct_censos(), table_name="fct_censos")
-
     
     render_model_ui(fct_censos_2026(), table_name="fct_censos_2026")
 
-
-    # st.header("Fct Censos")
-    # st.markdown("Unión de los censos 2024-S2 y 2025-S2 con estandarización de columnas.")
-
-    # fct_censos_df = fct_censos()
-    
-    # counts_df = fct_censos_df["periodo"].value_counts().reset_index()
-    # counts_df.columns = ["periodo", "count"]
-    # counts_df.loc[len(counts_df)] = ["Total", counts_df["count"].sum()]
-    # st.dataframe(counts_df.sort_values(by="periodo", ascending=False))
-
-    # render_model_ui(fct_censos_df)
 
 with tab3:
     st.header("Fact Bases CCU")
