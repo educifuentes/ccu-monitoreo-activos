@@ -3,6 +3,8 @@ import streamlit as st
 from utilities.transformations.gsheet_links import add_gsheet_link
 from utilities.ui_icons import ICONS
 
+from utilities.widgets.explorer_de_datos import explorer_de_datos
+
 def display_compliance_badge(clasificacion):
     """Displays a formatted st.badge based on the classification."""
     if clasificacion == "En regla":
@@ -31,6 +33,7 @@ def render_model_ui(df, table_name=None):
         with st.expander("Data Types"):
             dtypes_str = " | ".join([f"{col}: {dtype}" for col, dtype in df.dtypes.items()])
             st.code(dtypes_str)
+        df = explorer_de_datos(df)
         st.dataframe(df)
     st.divider()
 
