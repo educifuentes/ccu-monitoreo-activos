@@ -1,9 +1,17 @@
 import pandas as pd
 import numpy as np
 
+from helpers.utilities.get_source_metadata import get_source_metadata
+
+
 def stg_censos__censo_2024_2():
+
     # Define file path
-    file_path = "seeds/censos/corpa- Go to market - Censo Restaurantes PDV BBDD FINAL - BBDD.csv"
+
+    file_path = get_source_metadata(
+        "censo_2024_2",
+        "models/sources/_src_censos__censo_2024_2.yml"
+    )
     
     # Load CSV
     df = pd.read_csv(file_path)

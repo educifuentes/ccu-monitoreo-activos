@@ -4,6 +4,8 @@ import numpy as np
 from utilities.yaml_loader import get_table_config
 
 def stg_base_normalizada__original():
+
+    
     # Fetch configuration from YAML
     config = get_table_config(
         source_name="base normalizada", 
