@@ -2,10 +2,10 @@ import pandas as pd
 import streamlit as st
 import altair as alt
 
-from models.gsheets.marts.bi_activos import bi_activos
-from models.gsheets.marts.bi_locales import bi_locales
-from models.gsheets.marts.bi_contratos import bi_contratos
-from models.gsheets.marts.bi_censos import bi_censos
+from models.gsheets.exposures.bi_activos import bi_activos
+from models.gsheets.exposures.bi_locales import bi_locales
+from models.gsheets.exposures.bi_contratos import bi_contratos
+from models.gsheets.exposures.bi_censos import bi_censos
 
 from models.raw.marts.metrics.general_metrics import calculate_general_metrics, get_latest_classification
 

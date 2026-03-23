@@ -1,7 +1,7 @@
 import pandas as pd
 
 from models.gsheets.staging.gsheets_tables import censos
-from models.gsheets.marts.bi_locales import bi_locales
+from models.gsheets.exposures.bi_locales import bi_locales
 
 from models.raw.marts.metrics.clasification_censo import clasify_censo
 

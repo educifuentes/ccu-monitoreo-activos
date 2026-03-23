@@ -1,10 +1,10 @@
 import streamlit as st
 
 # replace later with gsheets tables
-from models.gsheets.marts.bi_censos import bi_censos
-from models.gsheets.marts.bi_activos import bi_activos
-from models.gsheets.marts.bi_locales import bi_locales
-from models.gsheets.marts.bi_contratos import bi_contratos
+from models.gsheets.exposures.bi_censos import bi_censos
+from models.gsheets.exposures.bi_activos import bi_activos
+from models.gsheets.exposures.bi_locales import bi_locales
+from models.gsheets.exposures.bi_contratos import bi_contratos
 
 from utilities.ui_components import render_model_ui
 
