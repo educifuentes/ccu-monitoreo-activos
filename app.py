@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 
 from utilities.app_version import get_app_version
 
@@ -15,25 +16,6 @@ explore_page = st.Page("pages/2_tools/data_explorer.py", title="Explorador de Da
 validations_page = st.Page("pages/2_tools/validations.py", title="Validaciones", icon=":material/check_circle:")
 documentation_page = st.Page("pages/2_tools/documentation.py", title="Documentación", icon=":material/book:")
 
-# dbt Models
-staging_page = st.Page("pages/3_data_build/1_staging.py", title="Staging", icon=":material/dashboard:")
-intermediate_page = st.Page("pages/3_data_build/2_intermediate.py", title="Intermediate", icon=":material/inventory_2:")
-finals_page = st.Page("pages/3_data_build/3_finals.py", title="Finals", icon=":material/dashboard:")
-data_profilling_page = st.Page("pages/3_data_build/data_profilling.py", title="Data Profiling", icon=":material/dashboard:")
-requerimientos_page = st.Page("pages/3_data_build/requerimientos.py", title="Requerimientos", icon=":material/dashboard:")
-analysis_page = st.Page("pages/3_data_build/analysis.py", title="Analysis", icon=":material/experiment:")
-
-# fase 2 gsheets
-bi_tables_page = st.Page("pages/3_data_build/4_bi_tables.py", title="BI Tables", icon=":material/dashboard:")
-gsheets_stg_page = st.Page("pages/3_data_build/5_gheets.py", title="GSheets Staging", icon=":material/dashboard:")
-reprocess_sheets_page = st.Page("pages/3_data_build/6_reprocess_sheets.py", title="Reprocess Sheets", icon=":material/dashboard:")
-
-import os
-
-# Environment check (Local vs Cloud)
-# On local Mac dev, the USER env var is usually 'educifuentes'
-IS_LOCAL = os.getenv("USER") == "educifuentes"
-
 # Navigation Logic
 nav_dict = {
     "Vistas": [
@@ -48,11 +30,13 @@ nav_dict = {
 # Only expose the development environment tabs locally
 is_local = os.environ.get("ENVIRONMENT", "local").lower() == "local"
 if is_local:
-    pages["Desarrollo"] = [
-        st.Page("pages/3_dev/1_staging.py", title="Staging", icon=render_icon("staging")),
-        st.Page("pages/3_dev/2_intermediate.py", title="Intermediate", icon=render_icon("intermediate")),
-        st.Page("pages/3_dev/3_marts.py", title="Marts", icon=render_icon("marts")),
-        st.Page("pages/3_dev/4_exposures.py", title="Exposures", icon=render_icon("exposures")),
+    nav_dict["Desarrollo"] = [
+        st.Page("pages/3_dev/1_staging.py", title="Staging", icon=":material/dashboard:"),
+        st.Page("pages/3_dev/2_intermediate.py", title="Intermediate", icon=":material/inventory_2:"),
+        st.Page("pages/3_dev/3_marts.py", title="Marts", icon=":material/account_tree:"),
+        st.Page("pages/3_dev/4_exposures.py", title="Exposures", icon=":material/visibility:"),
+        st.Page("pages/3_dev/5_catalog.py", title="Catalog", icon=":material/book:"),
+        st.Page("pages/3_dev/model_details.py", icon=":material/info:")
     ]
 
 # current page
