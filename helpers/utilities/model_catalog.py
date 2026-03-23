@@ -19,10 +19,15 @@ def build_global_model_registry(root_path="models"):
             
         path_parts = rel_path.split(os.sep)
         
-        # Ensure we are inside at least a Schema and Stage
-        if len(path_parts) >= 2:
-            schema = path_parts[0]
-            stage = path_parts[1]
+        if len(path_parts) >= 1:
+            stage = path_parts[0]
+            
+            # Skip non-model folders that might be in the root of models/
+            if stage in ['sources', 'exposures', 'gsheets']:
+                continue
+                
+            # If there's a subfolder, it's the schema. Otherwise, assume 'core' for marts/metrics.
+            schema = path_parts[1] if len(path_parts) >= 2 else "core"
             
             for file in filenames:
                 if file == "__init__.py" or not file.endswith(".py"):
@@ -30,10 +35,8 @@ def build_global_model_registry(root_path="models"):
                     
                 model_name_full = file[:-3] # Strip .py
                 
-                # If you want to use st.page_link("pages/others/view_model.py", query_params={"model": model_name_full})
-                # or native LinkColumn URL:
-                # The url points to the root of the app, handled by app.py query params intercept via st.switch_page
-                link = f"/?model={model_name_full}"
+                # The url points to the model_details page
+                link = f"model_details?model={model_name_full}"
                 
                 records.append({
                     "schema": schema,

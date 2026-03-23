@@ -2,8 +2,8 @@
 
 import pandas as pd
 
-from models.raw.intermediate._int_reportes_ccu_base_2026_q1 import int_reportes_ccu_base_2026_q1_contratos_imagen, int_reportes_ccu_base_2026_q1_activos
-from models.raw.intermediate._int_reportes_ccu_base_2024_q1 import int_reportes_ccu_base_2024_q1
+from models.intermediate.bases_ccu._int_bases_ccu__base_2026_q1 import int_bases_ccu__base_2026_q1_contratos_imagen, int_bases_ccu__base_2026_q1_activos
+from models.intermediate.bases_ccu._int_bases_ccu__base_2024_q1 import int_reportes_ccu_base_2024_q1
 
 from utilities.transformations.date_parsing import parse_spanish_month_year
 from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
@@ -13,13 +13,13 @@ path = "seeds/gsheets_snapshots/2026-02-20 - Activos CCU.xlsx"
 
 def process_contratos(filepath: str) -> pd.DataFrame:
     """Solo dejar columnas locales_id y folio y que tiene local imagen"""
-    df = int_reportes_ccu_base_2026_q1_contratos_imagen()
+    df = int_bases_ccu__base_2026_q1_contratos_imagen()
     return df
 
 def process_bases_ccu(filepath: str) -> pd.DataFrame:
     """Se agrega fecha_suscripcion_comodato, fecha_termino_comodato, activos_entregados"""
 
-    df_2026 = int_reportes_ccu_base_2026_q1_activos()
+    df_2026 = int_bases_ccu__base_2026_q1_activos()
     df_2024 = int_reportes_ccu_base_2024_q1() 
 
     df = pd.concat([df_2026, df_2024], ignore_index=True)

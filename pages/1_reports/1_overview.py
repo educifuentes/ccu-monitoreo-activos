@@ -2,12 +2,12 @@ import pandas as pd
 import streamlit as st
 import altair as alt
 
-from models.raw.exposures._exp_activos import exp_activos
-from models.raw.exposures._exp_locales import exp_locales
-from models.raw.exposures._exp_contratos import exp_contratos
-from models.raw.exposures._exp_censos import exp_censos
+from models.exposures._exp_activos import exp_activos
+from models.exposures._exp_locales import exp_locales
+from models.exposures._exp_contratos import exp_contratos
+from models.exposures._exp_censos import exp_censos
 
-from models.raw.marts.metrics.general_metrics import calculate_general_metrics, get_latest_classification
+from models.marts.metrics.general_metrics import calculate_general_metrics, get_latest_classification
 
 from utilities.ui_components import display_compliance_badge
 from utilities.ui_config import CLASIFICACION_COLORS, MARCAS_COLORS
