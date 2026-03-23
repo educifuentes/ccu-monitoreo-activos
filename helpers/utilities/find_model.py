@@ -21,8 +21,11 @@ def find_model(model_name):
         schema = model_row.iloc[0]["schema"]
         stage = model_row.iloc[0]["stage"]
         
-        # 2. Build explicit module python path: models.{schema}.{stage}.{model_name}
-        module_path = f"models.{schema}.{stage}.{model_name}"
+        # 2. Build explicit module python path depending on if it has a schema folder
+        if schema == "core":
+            module_path = f"models.{stage}.{model_name}"
+        else:
+            module_path = f"models.{stage}.{schema}.{model_name}"
         
         try:
             # 3. Dynamically inject the raw module into execution scope
