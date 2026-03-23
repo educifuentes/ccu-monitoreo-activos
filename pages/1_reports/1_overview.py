@@ -2,10 +2,10 @@ import pandas as pd
 import streamlit as st
 import altair as alt
 
-from models.gsheets.exposures._exp_activos import exp_activos
-from models.gsheets.exposures._exp_locales import exp_locales
-from models.gsheets.exposures._exp_contratos import exp_contratos
-from models.gsheets.exposures._exp_censos import exp_censos
+from models.raw.exposures._exp_activos import exp_activos
+from models.raw.exposures._exp_locales import exp_locales
+from models.raw.exposures._exp_contratos import exp_contratos
+from models.raw.exposures._exp_censos import exp_censos
 
 from models.raw.marts.metrics.general_metrics import calculate_general_metrics, get_latest_classification
 
@@ -18,7 +18,7 @@ from utilities.transformations.date_formatting import format_date_spanish
 # -----------------------------------------------------------------------------
 st.set_page_config(page_title="Reportes General y Locales", layout="wide")
 st.title("Monitoreo de Activos CCU")
-st.markdown("Lectura de datos desde [Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)")
+st.markdown("Lectura de datos desde csv. Luego ira a [Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)")
 st.markdown(" ")
 # -----------------------------------------------------------------------------
 # DATA LOADING
