@@ -44,28 +44,16 @@ nav_dict = {
     "Herramientas": [explore_page, validations_page, documentation_page],
 }
 
-if IS_LOCAL:
 
-
-    nav_dict["Dev - Gsheets"] = [
-        gsheets_stg_page, 
-        reprocess_sheets_page,
-        bi_tables_page, 
+# Only expose the development environment tabs locally
+is_local = os.environ.get("ENVIRONMENT", "local").lower() == "local"
+if is_local:
+    pages["Desarrollo"] = [
+        st.Page("pages/3_dev/1_staging.py", title="Staging", icon=render_icon("staging")),
+        st.Page("pages/3_dev/2_intermediate.py", title="Intermediate", icon=render_icon("intermediate")),
+        st.Page("pages/3_dev/3_marts.py", title="Marts", icon=render_icon("marts")),
+        st.Page("pages/3_dev/4_exposures.py", title="Exposures", icon=render_icon("exposures")),
     ]
-
- 
-
-    nav_dict["Dev - RAW"] = [
-        staging_page,       
-        intermediate_page, 
-        finals_page, 
-    
-    ]
-
-    nav_dict["Dev - Otros"] = [
-        analysis_page
-    ]
-
 
 # current page
 pg = st.navigation(nav_dict)
