@@ -1,6 +1,8 @@
 import pandas as pd
 
-from models.raw.staging.censos._stg_censos_censo_2026_1 import stg_censos_censo_2026_1_agencia_pk, stg_censos_censo_2026_1_agencia_pk_agencia_corpa, stg_censos_censo_2026_1_agencia_corpa_sistematizado
+from models.raw.staging.censos._stg_censos__censo_2026_1_agencia_pk import stg_censos__censo_2026_1_agencia_pk
+from models.raw.staging.censos._stg_censos__censo_2026_1_agencia_corpa import stg_censos__censo_2026_1_agencia_corpa
+from models.raw.staging.censos._stg_censos__censo_2026_1_agencia_corpa_sistematizado import stg_censos__censo_2026_1_agencia_corpa_sistematizado
 from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
 from utilities.transformations.process_marcas import process_marcas, classify_marcas, process_marcas_questionnaire_version, correct_brand_names
 from utilities.transformations.text_cleaning import clean_text
@@ -10,7 +12,7 @@ from utilities.transformations.clean_region import clean_region
 def int_censos_censo_2026_1_agencia_pk():
 
     # 1. Load Data
-    df = stg_censos_censo_2026_1_agencia_pk()
+    df = stg_censos__censo_2026_1_agencia_pk()
 
     # 2. Column Renaming
     rename_dict = {
@@ -128,7 +130,7 @@ def int_censos_censo_2026_1_agencia_pk():
 def int_censos_censo_2026_1_agencia_corpa():
 
     # 1. Load Data
-    df = stg_censos_censo_2026_1_agencia_pk_agencia_corpa()
+    df = stg_censos__censo_2026_1_agencia_corpa()
 
     # 2. Column Renaming
     rename_dict = {
@@ -260,7 +262,7 @@ def int_censos_censo_2026_1_agencia_corpa():
     df = df[selected_columns]
 
     # 9. Append final systematized data (which provides permite_censo and motivo_no_censo)
-    df_sistematizado = stg_censos_censo_2026_1_agencia_corpa_sistematizado()
+    df_sistematizado = stg_censos__censo_2026_1_agencia_corpa_sistematizado()
 
     rename_dict_sistematizado = {
         "ID CLIENTE": "local_id",
