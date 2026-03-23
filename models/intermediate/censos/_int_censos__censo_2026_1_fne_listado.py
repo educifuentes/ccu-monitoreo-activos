@@ -1,12 +1,12 @@
 import pandas as pd
 import numpy as np
 
-from models.staging.censos._stg_censos__fne_listado_2026_1 import stg_censos__fne_listado_2026_1
+from models.staging.censos._stg_censos__censo_2026_1_fne_listado import stg_censos__censo_2026_1_fne_listado
 
 
-def int_censos__fne_listado_2026_1():
+def int_censos__censo_2026_1_fne_listado():
     # Define file path
-    df = stg_censos__fne_listado_2026_1()
+    df = stg_censos__censo_2026_1_fne_listado()
 
     rename_dict = {
         "ID CLIENTE": "local_id",

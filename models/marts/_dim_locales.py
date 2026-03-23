@@ -4,7 +4,7 @@ from models.intermediate.base_normalizada._int_base_normalizada__locales import 
 from models.intermediate.bases_ccu._int_bases_ccu__base_2026_q1 import int_bases_ccu__base_2026_q1_locales
 from models.intermediate.censos._int_censos__censo_2026_1 import int_censos__censo_2026_1_agencia_pk
 
-from models.intermediate.censos._int_censos__fne_listado_2026_1 import int_censos__fne_listado_2026_1
+from models.intermediate.censos._int_censos__censo_2026_1_fne_listado import int_censos__censo_2026_1_fne_listado
 
 
 from utilities.transformations.text_cleaning import clean_text
@@ -69,7 +69,7 @@ def _new_locales_censo_2026_1():
     print(f"Locales en censo_2026_1 no presentes en info base: {len(missing_ids)}")
 
     # add missing info from fne listado
-    fne_df = int_censos__fne_listado_2026_1()
+    fne_df = int_censos__censo_2026_1_fne_listado()
     
     # Keep only necessary columns from the right side for the join
     fne_df_subset = fne_df[['local_id', 'razon_social', 'rut']].drop_duplicates(subset=['local_id'])

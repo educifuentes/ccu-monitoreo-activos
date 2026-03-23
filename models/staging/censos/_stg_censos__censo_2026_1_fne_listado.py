@@ -3,7 +3,7 @@ import numpy as np
 
 from utilities.yaml_loader import load_yaml_config
 
-def stg_censos__fne_listado_2026_1():
+def stg_censos__censo_2026_1_fne_listado():
     # Define file path
     file_path = "seeds/censos/Listado Final_to_supervisoraENTREGADO POR FNE.xlsx - Visita supervisora.csv"
     
