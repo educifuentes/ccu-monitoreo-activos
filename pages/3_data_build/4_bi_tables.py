@@ -1,10 +1,10 @@
 import streamlit as st
 
 # replace later with gsheets tables
-from models.gsheets.exposures.bi_censos import bi_censos
-from models.gsheets.exposures.bi_activos import bi_activos
-from models.gsheets.exposures.bi_locales import bi_locales
-from models.gsheets.exposures.bi_contratos import bi_contratos
+from models.gsheets.exposures._exp_censos import exp_censos
+from models.gsheets.exposures._exp_activos import exp_activos
+from models.gsheets.exposures._exp_locales import exp_locales
+from models.gsheets.exposures._exp_contratos import exp_contratos
 
 from utilities.ui_components import render_model_ui
 
@@ -13,10 +13,10 @@ st.title("BI Tables")
 st.markdown("Tablas procesadas con lógica de negocio específica para visualización en Dashboards.")
 
 # --- Load Data (Top Level) ---
-df_activos = bi_activos()
-df_censos = bi_censos()
-df_locales = bi_locales()
-df_contratos = bi_contratos()
+df_activos = exp_activos()
+df_censos = exp_censos()
+df_locales = exp_locales()
+df_contratos = exp_contratos()
 
 # Create tabs for organization using Material Icons
 tab1, tab2, tab3, tab4 = st.tabs([

@@ -1,7 +1,7 @@
 import streamlit as st
 import altair as alt
 import pandas as pd
-from models.gsheets.exposures.bi_censos import bi_censos
+from models.gsheets.exposures._exp_censos import exp_censos
 from utilities.ui_config import CLASIFICACION_COLORS
 from utilities.widgets.explorer_de_datos import explorer_de_datos
 from utilities.widgets.display_df_censos import display_df_censos
@@ -15,7 +15,7 @@ st.title("Censos")
 
 # 1. Data Loading
 try:
-    df_censos = bi_censos()
+    df_censos = exp_censos()
 except Exception as e:
     st.error(f"Error cargando los datos de censos: {e}")
     st.stop()

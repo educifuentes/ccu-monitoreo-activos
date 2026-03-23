@@ -2,10 +2,10 @@ import pandas as pd
 import streamlit as st
 import altair as alt
 
-from models.gsheets.exposures.bi_activos import bi_activos
-from models.gsheets.exposures.bi_locales import bi_locales
-from models.gsheets.exposures.bi_contratos import bi_contratos
-from models.gsheets.exposures.bi_censos import bi_censos
+from models.gsheets.exposures._exp_activos import exp_activos
+from models.gsheets.exposures._exp_locales import exp_locales
+from models.gsheets.exposures._exp_contratos import exp_contratos
+from models.gsheets.exposures._exp_censos import exp_censos
 
 from models.raw.marts.metrics.general_metrics import calculate_general_metrics, get_latest_classification
 
@@ -23,10 +23,10 @@ st.markdown(" ")
 # -----------------------------------------------------------------------------
 # DATA LOADING
 # -----------------------------------------------------------------------------
-bi_activos_df = bi_activos()
-bi_locales_df = bi_locales()
-bi_contratos_df = bi_contratos()
-bi_censos_df = bi_censos()
+bi_activos_df = exp_activos()
+bi_locales_df = exp_locales()
+bi_contratos_df = exp_contratos()
+bi_censos_df = exp_censos()
 
 # -----------------------------------------------------------------------------
 # FILTERS

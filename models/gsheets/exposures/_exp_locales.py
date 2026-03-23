@@ -1,6 +1,6 @@
 from models.gsheets.staging.gsheets_tables import locales  
 
-def bi_locales():
+def exp_locales():
 
     df = locales()
 

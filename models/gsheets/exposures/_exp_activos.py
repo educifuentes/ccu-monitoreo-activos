@@ -8,7 +8,7 @@ from models.gsheets.staging.gsheets_tables import bases_ccu, censos
 
 # unir data de censo 1 y de censo 2
 
-def bi_activos():
+def exp_activos():
     """
     Unir data de conteo de activos de censos con data reportes ccu.
     """
