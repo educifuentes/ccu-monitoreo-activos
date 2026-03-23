@@ -1,6 +1,6 @@
 import streamlit as st
 from models.gsheets.staging.gsheets_tables import (
-    locales, 
+    clientes, 
     censos, 
     bases_ccu, 
     contratos
@@ -25,22 +25,22 @@ def safe_render(df):
 
 # Create tabs for organization
 tab1, tab2, tab3, tab4 = st.tabs([
-    f"{ICONS['locales']} Locales",
+    f"{ICONS['clientes']} Clientes",
     f"{ICONS['censos']} Censos",
     f"{ICONS['bases_ccu']} Bases CCU",
     f"{ICONS['contratos']} Contratos"
 ])
 
 with tab1:
-    st.header("Locales")
+    st.header("Clientes")
     try:
-        df_locales = locales()
-        df_locales = explorer_de_datos(df_locales, key_prefix="locales")
+        df_locales = clientes()
+        df_locales = explorer_de_datos(df_locales, key_prefix="clientes")
             
         st.metric("Total Registros", f"{len(df_locales):,}")
         safe_render(df_locales)
     except Exception as e:
-        st.error(f"Error cargando locales: {e}")
+        st.error(f"Error cargando clientes: {e}")
 
 with tab2:
     st.header("Censos")

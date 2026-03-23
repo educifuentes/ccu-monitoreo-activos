@@ -1,6 +1,6 @@
 import pandas as pd
 from models.marts._fct_censos import fct_censos_2026
-from models.marts._dim_locales import dim_locales
+from models.marts._dim_clientes import dim_clientes
 from utilities.constants.brands import BRAND_CORPORATE_MAPPING, CORPORATE_GROUPS
 
 def report_censo_2026():
@@ -19,7 +19,7 @@ def report_censo_2026():
         "COMUNA",
         "DIRECCIÓN",
         "Permite censo (SI/NO)",
-        "[Si corresponde] Motivo por el que no pudo ser censado (local cerrado, no permite ingreso, etc)",
+        "[Si corresponde] Motivo por el que no pudo ser censado (cliente cerrado, no permite ingreso, etc)",
         "Presencia de schopera comodato de CCU (SI/NO)",
         "Número de salidas totales de schop en máquinas CCU",
         "Instala schopera adicional (Sí/No)",
@@ -37,8 +37,8 @@ def report_censo_2026():
     COLUMN_MAPPING = {
         # agencia
         "AGENCIA": "agencia",
-        # locales info
-        "ID CLIENTE": "local_id",
+        # clientes info
+        "ID CLIENTE": "cliente_id",
         "NOMBRE FANTASÍA": "nombre_fantasia", 
         "RAZÓN SOCIAL": "razon_social",
         "RUT": "rut",
@@ -48,7 +48,7 @@ def report_censo_2026():
         # censo metadta
         "Permite censo (SI/NO)": "permite_censo",
         # pending
-        "[Si corresponde] Motivo por el que no pudo ser censado (local cerrado, no permite ingreso, etc)": "motivo_no_censo",
+        "[Si corresponde] Motivo por el que no pudo ser censado (cliente cerrado, no permite ingreso, etc)": "motivo_no_censo",
         # activos
         "Presencia de schopera comodato de CCU (SI/NO)": "schoperas",  
         "Número de salidas totales de schop en máquinas CCU": "salidas",
@@ -68,22 +68,22 @@ def report_censo_2026():
     }
 
     df_fct_censos = fct_censos_2026()
-    df_locales = dim_locales()
+    df_locales = dim_clientes()
 
-    # Ensure local_id has the same type
-    df_fct_censos["local_id"] = df_fct_censos["local_id"].astype(str)
-    df_locales["local_id"] = df_locales["local_id"].astype(str)
+    # Ensure cliente_id has the same type
+    df_fct_censos["cliente_id"] = df_fct_censos["cliente_id"].astype(str)
+    df_locales["cliente_id"] = df_locales["cliente_id"].astype(str)
 
     # adapt
     df_fct_censos["instalo"] = df_fct_censos["instalo"] > 0
     
 
-    # Drop duplicate local_ids from the lookup dataframe
-    df_locales = df_locales.drop_duplicates(subset=["local_id"], keep="last")
+    # Drop duplicate cliente_ids from the lookup dataframe
+    df_locales = df_locales.drop_duplicates(subset=["cliente_id"], keep="last")
     
-    # Set index to local_id to align the update
-    df_fct_censos = df_fct_censos.set_index('local_id')
-    df_locales = df_locales.set_index('local_id')
+    # Set index to cliente_id to align the update
+    df_fct_censos = df_fct_censos.set_index('cliente_id')
+    df_locales = df_locales.set_index('cliente_id')
     
     # Update only missing values
     missing_mask = df_fct_censos['razon_social'].isna()

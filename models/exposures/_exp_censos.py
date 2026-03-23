@@ -1,7 +1,7 @@
 import pandas as pd
 
 from models.marts._fct_censos import fct_censos
-from models.exposures._exp_locales import exp_locales
+from models.exposures._exp_clientes import exp_clientes
 
 from models.marts.metrics.clasification_censo import clasify_censo
 
@@ -16,6 +16,6 @@ def exp_censos():
     df = clasify_censo(df)
 
     # add region column
-    df = df.merge(exp_locales(), on='local_id', how='left')
+    df = df.merge(exp_clientes(), on='cliente_id', how='left')
 
     return df

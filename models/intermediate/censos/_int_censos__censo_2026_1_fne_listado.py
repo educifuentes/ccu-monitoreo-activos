@@ -9,7 +9,7 @@ def int_censos__censo_2026_1_fne_listado():
     df = stg_censos__censo_2026_1_fne_listado()
 
     rename_dict = {
-        "ID CLIENTE": "local_id",
+        "ID CLIENTE": "cliente_id",
         "NOMBRE FANTASÍA": "nombre_fantasia",
         "RAZÓN SOCIAL": "razon_social",
         "RUT": "rut",
@@ -21,7 +21,7 @@ def int_censos__censo_2026_1_fne_listado():
     df = df.rename(columns=rename_dict)
 
     select_cols = [
-        "local_id",
+        "cliente_id",
         "nombre_fantasia",
         "razon_social",
         "rut",
@@ -31,7 +31,7 @@ def int_censos__censo_2026_1_fne_listado():
     ]
 
     # Data Types
-    df["local_id"] = df["local_id"].astype("str")
+    df["cliente_id"] = df["cliente_id"].astype("str")
 
     df = df[select_cols]
 

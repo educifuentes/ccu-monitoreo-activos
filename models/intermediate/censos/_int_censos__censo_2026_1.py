@@ -16,7 +16,7 @@ def int_censos__censo_2026_1_agencia_pk():
 
     # 2. Column Renaming
     rename_dict = {
-        "ID Cliente": "local_id",
+        "ID Cliente": "cliente_id",
         "Dirección": "direccion",
         "Región": "region",
         "Comuna": "comuna", 
@@ -42,7 +42,7 @@ def int_censos__censo_2026_1_agencia_pk():
     df = df.rename(columns=rename_dict)
 
     # 3. Basic Data Types and Standard Columns
-    df["local_id"] = df["local_id"].astype("str")
+    df["cliente_id"] = df["cliente_id"].astype("str")
     df["rut"] = None
     df["razon_social"] = None
     df["accion_ccu"] = None
@@ -86,8 +86,8 @@ def int_censos__censo_2026_1_agencia_pk():
     
     # 8. Final Column Selection
     selected_columns = [
-        "local_id",
-        # locales cols
+        "cliente_id",
+        # clientes cols
         "razon_social",
         "nombre_fantasia",
         "rut",
@@ -134,8 +134,8 @@ def int_censos__censo_2026_1_agencia_corpa():
 
     # 2. Column Renaming
     rename_dict = {
-        "ID cliente": "local_id",
-        # info local
+        "ID cliente": "cliente_id",
+        # info cliente
         "DIRECCIÓN": "direccion",
         "REGIÓN": "region",
         "RUT": "rut",
@@ -165,7 +165,7 @@ def int_censos__censo_2026_1_agencia_corpa():
     df = df.rename(columns=rename_dict)
 
     # 3. Basic Data Types
-    df["local_id"] = df["local_id"].astype("str")
+    df["cliente_id"] = df["cliente_id"].astype("str")
 
     # 4. Period and Metadata
     df["periodo"] = "2026-S1"
@@ -223,8 +223,8 @@ def int_censos__censo_2026_1_agencia_corpa():
 
     # 8. Final Column Selection
     selected_columns = [
-        "local_id",
-        # locales cols
+        "cliente_id",
+        # clientes cols
         "razon_social",
         "nombre_fantasia",
         "rut",
@@ -265,16 +265,16 @@ def int_censos__censo_2026_1_agencia_corpa():
     df_sistematizado = stg_censos__censo_2026_1_agencia_corpa_sistematizado()
 
     rename_dict_sistematizado = {
-        "ID CLIENTE": "local_id",
+        "ID CLIENTE": "cliente_id",
         "Permite censo (SI/NO)": "permite_censo",
-        "[Si corresponde] Motivo por el que no pudo ser censado (local cerrado, no permite ingreso, etc)": "motivo_no_censo"
+        "[Si corresponde] Motivo por el que no pudo ser censado (cliente cerrado, no permite ingreso, etc)": "motivo_no_censo"
     }
 
     df_sistematizado = df_sistematizado.rename(columns=rename_dict_sistematizado)
 
-    columns_sistematizado = ["local_id", "permite_censo", "motivo_no_censo"]
+    columns_sistematizado = ["cliente_id", "permite_censo", "motivo_no_censo"]
 
-    df_sistematizado["local_id"] = df_sistematizado["local_id"].astype("str")
+    df_sistematizado["cliente_id"] = df_sistematizado["cliente_id"].astype("str")
 
     # Drop explicitly to avoid potential merge suffixes (_x, _y)
     cols_to_drop = [col for col in ["permite_censo", "motivo_no_censo"] if col in df.columns]
@@ -283,7 +283,7 @@ def int_censos__censo_2026_1_agencia_corpa():
 
     df = df.merge(
         df_sistematizado[columns_sistematizado],
-        on="local_id",
+        on="cliente_id",
         how="left"
     )
     

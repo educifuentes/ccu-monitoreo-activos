@@ -28,7 +28,7 @@ def int_reportes_ccu_base_2026_q1():
     return df
 
 def int_bases_ccu__base_2026_q1_locales():
-    locales_columns = ['local_id', 'razon_social', 'rut', 'direccion', 'region', 'ciudad', 'comuna', 'nombre_fantasia']
+    locales_columns = ['cliente_id', 'razon_social', 'rut', 'direccion', 'region', 'ciudad', 'comuna', 'nombre_fantasia']
 
     base_2026_q1_df = int_reportes_ccu_base_2026_q1()
 
@@ -39,7 +39,7 @@ def int_bases_ccu__base_2026_q1_locales():
 def int_bases_ccu__base_2026_q1_activos():
     df = int_reportes_ccu_base_2026_q1()
 
-    selected_columns = ['local_id', 'periodo', 'fecha', 'schoperas', 'salidas', 'coolers', 'fecha_suscripcion_comodato', 'fecha_termino_contrato', 'activos_entregados']
+    selected_columns = ['cliente_id', 'periodo', 'fecha', 'schoperas', 'salidas', 'coolers', 'fecha_suscripcion_comodato', 'fecha_termino_contrato', 'activos_entregados']
 
      # dtypes tp dates
     df = parse_spanish_month_year(df, "fecha_suscripcion_comodato")
@@ -55,7 +55,7 @@ def int_bases_ccu__base_2026_q1_contratos_imagen():
     # drop rows where es_local_imagen is False
     df = df[df["es_local_imagen?"] == True]
 
-    selected_columns = ['local_id', 'folio']
+    selected_columns = ['cliente_id', 'folio']
 
     df = df[selected_columns]
 

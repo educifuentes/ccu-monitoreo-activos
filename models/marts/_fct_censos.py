@@ -7,8 +7,8 @@ from models.intermediate.censos._int_censos__censo_2026_1 import int_censos__cen
 from models.intermediate.censos._int_censos__censo_2024_2 import int_censos__censo_2024_2
 
 selected_columns = [
-        "local_id",
-        # locales info
+        "cliente_id",
+        # clientes info
         "razon_social",
         "direccion",
         "rut",

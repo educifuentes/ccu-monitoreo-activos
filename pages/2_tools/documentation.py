@@ -20,7 +20,7 @@ st.subheader("Tablas")
 
 # Create tabs for organization
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
-    f"{ICONS['locales']} Locales",
+    f"{ICONS['clientes']} Clientes",
     f"{ICONS['censos']} Censos",
     f"{ICONS['bases_ccu']} Bases CCU",
     f"{ICONS['contratos']} Contratos",
@@ -30,8 +30,8 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
 
 
 with tab1:
-    dim_locales_path = os.path.abspath("models/raw/marts/_dim_locales.yml")
-    render_model_docs(dim_locales_path)
+    dim_clientes_path = os.path.abspath("models/raw/marts/_dim_clientes.yml")
+    render_model_docs(dim_clientes_path)
 
 with tab2:
     fct_censos_path = os.path.abspath("models/raw/marts/_fct_censos.yml")

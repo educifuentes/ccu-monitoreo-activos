@@ -10,7 +10,7 @@ def fct_bases_ccu():
     int_reportes_ccu_base_2026_q1_df = int_reportes_ccu_base_2026_q1()
 
     select_columns_base_2026 = [
-        "local_id",
+        "cliente_id",
         "periodo",
         "fecha",
         # activos
@@ -29,7 +29,7 @@ def fct_bases_ccu():
 
     df = pd.concat([int_reportes_ccu_base_2024_q1_df, int_reportes_ccu_base_2026_q1_df], ignore_index=True)   
 
-    df.sort_values(by=["local_id", "periodo"], ascending=[True, True], inplace=True)
+    df.sort_values(by=["cliente_id", "periodo"], ascending=[True, True], inplace=True)
 
 
 

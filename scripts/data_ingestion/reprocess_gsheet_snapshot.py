@@ -12,7 +12,7 @@ path = "seeds/gsheets_snapshots/2026-02-20 - Activos CCU.xlsx"
 
 
 def process_contratos(filepath: str) -> pd.DataFrame:
-    """Solo dejar columnas locales_id y folio y que tiene local imagen"""
+    """Solo dejar columnas locales_id y folio y que tiene cliente imagen"""
     df = int_bases_ccu__base_2026_q1_contratos_imagen()
     return df
 

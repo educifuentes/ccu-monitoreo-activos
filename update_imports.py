@@ -6,7 +6,7 @@ from pathlib import Path
 REPLACEMENTS = {
     # 1. Import paths (modules)
     "models.staging.base_normalizada._stg_base_normalizada__censo_2024_2": "models.staging.base_normalizada._stg_base_normalizada__censo_2024_2",
-    "models.staging.base_normalizada._stg_base_normalizada__locales": "models.staging.base_normalizada._stg_base_normalizada__locales",
+    "models.staging.base_normalizada._stg_base_normalizada__clientes": "models.staging.base_normalizada._stg_base_normalizada__clientes",
     "models.staging.base_normalizada._stg_base_normalizada__original": "models.staging.base_normalizada._stg_base_normalizada__original",
 
     "models.staging.bases_ccu._stg_bases_ccu__base_2024_q1": "models.staging.bases_ccu._stg_bases_ccu__base_2024_q1",
@@ -24,7 +24,7 @@ REPLACEMENTS = {
     # Catch any old imports that still used the monolithic file just in case
     "models.staging.censos._stg_censos__censo_2026_1": "models.staging.censos._stg_censos__censo_2026_1",
 
-    "models.intermediate.base_normalizada._int_base_normalizada__locales": "models.intermediate.base_normalizada._int_base_normalizada__locales",
+    "models.intermediate.base_normalizada._int_base_normalizada__clientes": "models.intermediate.base_normalizada._int_base_normalizada__clientes",
     "models.intermediate.bases_ccu._int_bases_ccu__base_2024_q1": "models.intermediate.bases_ccu._int_bases_ccu__base_2024_q1",
     "models.intermediate.bases_ccu._int_bases_ccu__base_2026_q1": "models.intermediate.bases_ccu._int_bases_ccu__base_2026_q1",
     "models.intermediate.censos._int_censos__censo_2024_2": "models.intermediate.censos._int_censos__censo_2024_2",
@@ -32,7 +32,7 @@ REPLACEMENTS = {
     "models.intermediate.censos._int_censos__censo_2026_1": "models.intermediate.censos._int_censos__censo_2026_1",
     "models.intermediate.censos._int_censos__fne_listado_2026_1": "models.intermediate.censos._int_censos__fne_listado_2026_1",
 
-    "models.marts._dim_locales": "models.marts._dim_locales",
+    "models.marts._dim_clientes": "models.marts._dim_clientes",
     "models.marts._fct_bases_ccu": "models.marts._fct_bases_ccu",
     "models.marts._fct_censos": "models.marts._fct_censos",
     "models.marts._fct_contratos": "models.marts._fct_contratos",
@@ -47,7 +47,7 @@ REPLACEMENTS = {
 
     # 2. Function names
     "stg_base_normalizada__censo_2024_2": "stg_base_normalizada__censo_2024_2",
-    "stg_base_normalizada__locales": "stg_base_normalizada__locales",
+    "stg_base_normalizada__clientes": "stg_base_normalizada__clientes",
     "stg_base_normalizada__original": "stg_base_normalizada__original",
     "stg_bases_ccu__base_2024_q1": "stg_bases_ccu__base_2024_q1",
     "stg_bases_ccu__base_2026_q1": "stg_bases_ccu__base_2026_q1",
@@ -55,7 +55,7 @@ REPLACEMENTS = {
     "stg_censos__censo_2025_2": "stg_censos__censo_2025_2",
     "stg_censos__fne_listado_2026_1": "stg_censos__fne_listado_2026_1",
 
-    "int_base_normalizada__locales": "int_base_normalizada__locales",
+    "int_base_normalizada__clientes": "int_base_normalizada__clientes",
     # the 2024 functions have suffixes
     "int_bases_ccu__base_2024_q1_locales": "int_bases_ccu__base_2024_q1_locales",
     "int_bases_ccu__base_2024_q1_activos": "int_bases_ccu__base_2024_q1_activos",

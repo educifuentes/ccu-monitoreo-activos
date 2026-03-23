@@ -9,7 +9,7 @@ from utilities.transformations.date_parsing import parse_spanish_month_year
 def fct_contratos():
     stg_bases_ccu__base_2026_q1_df = stg_bases_ccu__base_2026_q1()
 
-    columns_contratos = ['local_id',  
+    columns_contratos = ['cliente_id',  
                          'es_local_imagen?', 
                          'Folio', 
                          'fecha_suscripcion_comodato', 
@@ -37,7 +37,7 @@ def fct_contratos():
     }
 
     selected_columns = [
-        'local_id',
+        'cliente_id',
         'folio',
         'es_local_imagen?',
         'fecha_inicio',

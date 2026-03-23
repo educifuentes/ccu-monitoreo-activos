@@ -5,18 +5,18 @@ metrics:
     table: |
       | Clasificación | Descripción |
       | :--- | :--- |
-      | **En Regla** | El local cumple con la cuota exigida de competencia (1 por cada 4 CCU) dado que tiene más de 3 salidas. |
-      | **No en Regla** | El local tiene más de 3 salidas y no alcanza la cuota mínima de competencia exigida. |
-      | **No Aplica** | El local tiene 3 o menos salidas CCU, por lo que la normativa de libre competencia no le es exigible. |
+      | **En Regla** | El cliente cumple con la cuota exigida de competencia (1 por cada 4 CCU) dado que tiene más de 3 salidas. |
+      | **No en Regla** | El cliente tiene más de 3 salidas y no alcanza la cuota mínima de competencia exigida. |
+      | **No Aplica** | El cliente tiene 3 o menos salidas CCU, por lo que la normativa de libre competencia no le es exigible. |
 
   - name: "Metricas Generales"
     description: "Métricas generales para el monitoreo del parque de activos y contratos."
     columns:
-      - name: "Total Locales"
-        description: "Numero de localees id unicos de la tabla locales"
+      - name: "Total Clientes"
+        description: "Numero de localees id unicos de la tabla clientes"
       - name: "Contratos Vigentes"
         description: "Cantidad de contratos que se encuentran activos a la fecha actual."
-      - name: "Locales En Regla"
-        description: "Cantidad de locales que cumplen con la normativa (Censo 2025)"
-      - name: "Locales No en Regla"
-        description: "Cantidad de locales no cumplen con la normativa (Censo 2025)"
+      - name: "Clientes En Regla"
+        description: "Cantidad de clientes que cumplen con la normativa (Censo 2025)"
+      - name: "Clientes No en Regla"
+        description: "Cantidad de clientes no cumplen con la normativa (Censo 2025)"

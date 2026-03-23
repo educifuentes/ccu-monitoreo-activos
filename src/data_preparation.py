@@ -15,7 +15,7 @@ def load_data_gsheets():
     """Return DataFrames for given worksheet names."""
     
     conn = st.connection("gsheets", type=GSheetsConnection, ttl=TTL_VALUE)
-    worksheets = ["locales", "censos", "nominas", "contratos"]
+    worksheets = ["clientes", "censos", "nominas", "contratos"]
 
     return tuple(conn.read(worksheet=w) for w in worksheets)
 
@@ -132,18 +132,18 @@ def contratos_update_from_nominas(contratos_df, nominas_df):
             + nominas_df['fecha'].dt.quarter.astype(str)
         )
 
-    # Get the latest nomination record for each local_id
+    # Get the latest nomination record for each cliente_id
     latest_nominas = (
         nominas_df.sort_values('fecha', ascending=False)
-        .drop_duplicates('local_id')
+        .drop_duplicates('cliente_id')
     )
 
     # Merge this latest info into contratos_df
     # We include 'periodo' to capture when the 'termino' occurred
     contratos_df = pd.merge(
         contratos_df,
-        latest_nominas[['local_id', 'situacion', 'motivo', 'periodo']],
-        on='local_id',
+        latest_nominas[['cliente_id', 'situacion', 'motivo', 'periodo']],
+        on='cliente_id',
         how='left'
     )
 
@@ -174,15 +174,15 @@ def contratos_update_from_nominas(contratos_df, nominas_df):
 def build_activos_trimestres(censos_df: pd.DataFrame,
                                    nominas_df: pd.DataFrame) -> pd.DataFrame:
     """
-    Construye un dataframe activos_trimestrales a nivel de local_id y trimestre.
+    Construye un dataframe activos_trimestrales a nivel de cliente_id y trimestre.
 
-    Para cada local_id y trimestre (fecha), calcula:
+    Para cada cliente_id y trimestre (fecha), calcula:
     - estado
     - motivo
     - schoperas_totales
     - salidas_totales
 
-    La lógica es secuencial y cronológica por local.
+    La lógica es secuencial y cronológica por cliente.
     """
 
     # asegurar tipos y orden
@@ -193,18 +193,18 @@ def build_activos_trimestres(censos_df: pd.DataFrame,
     censos_df["fecha"] = pd.to_datetime(censos_df["fecha"])
     nominas_df["fecha"] = pd.to_datetime(nominas_df["fecha"])
 
-    # Sort nominas by local_id and date to ensure chronological processing
-    nominas_df = nominas_df.sort_values(["local_id", "fecha"])
+    # Sort nominas by cliente_id and date to ensure chronological processing
+    nominas_df = nominas_df.sort_values(["cliente_id", "fecha"])
 
     rows = []
 
-    # Iterate over each venue (local_id)
-    for local_id, nom_local in nominas_df.groupby("local_id"):
+    # Iterate over each venue (cliente_id)
+    for cliente_id, nom_local in nominas_df.groupby("cliente_id"):
         nom_local = nom_local.sort_values("fecha")
 
         # valores base iniciales desde censo
         # We assume there is at least one census record per venue
-        censo_local = censos_df.loc[censos_df["local_id"] == local_id].iloc[0]
+        censo_local = censos_df.loc[censos_df["cliente_id"] == cliente_id].iloc[0]
 
         prev_schoperas = censo_local["schoperas_total"]
         prev_salidas = censo_local["salidas_total"]
@@ -235,7 +235,7 @@ def build_activos_trimestres(censos_df: pd.DataFrame,
                 # Base values do NOT change if inactive (they persist for when it becomes active again or stay frozen)
 
             rows.append({
-                "local_id": local_id,
+                "cliente_id": cliente_id,
                 "fecha": fecha,
                 "estado": estado,
                 "motivo": motivo,
@@ -251,7 +251,7 @@ def build_activos_trimestres(censos_df: pd.DataFrame,
 
 
 def process_activos(censos_df, nominas_df):
-    """Builds and processes the activos dataframe tracking totals of salidas and schoperas by local_id and periodo"""
+    """Builds and processes the activos dataframe tracking totals of salidas and schoperas by cliente_id and periodo"""
     # Generate the quarterly assets data
     activos_df = build_activos_trimestres(censos_df, nominas_df)
 
@@ -277,7 +277,7 @@ def build_contratos_from_nominas(contratos_df, nominas_df):
 def get_generated_dataframes():
     """Main function to load and prepare all dataframes. Adds a generated activos_df"""
     # 1. Load Data - from CSV or Google Sheets
-    locales_df, censos_df, nominas_df, contratos_df = load_data_gsheets()
+    clientes_df, censos_df, nominas_df, contratos_df = load_data_gsheets()
     
     # 2. Process Census Data
     censos_df = process_censos(censos_df)
@@ -291,21 +291,21 @@ def get_generated_dataframes():
 
     # --- Data Merge ---
     # Perform a left join to add venue information to each census record.
-    # Join keys: censos_df.local_id = locales_df.id
+    # Join keys: censos_df.cliente_id = clientes_df.id
     censos_df = pd.merge(
         censos_df,
-        locales_df,
-        left_on='local_id',
+        clientes_df,
+        left_on='cliente_id',
         right_on='id',
         how='left'
     )
 
     activos_df = pd.merge(
         activos_df,
-        locales_df,
-        left_on='local_id',
+        clientes_df,
+        left_on='cliente_id',
         right_on='id',
         how='left'
     )
     
-    return locales_df, censos_df, activos_df, nominas_df, contratos_df
+    return clientes_df, censos_df, activos_df, nominas_df, contratos_df

@@ -21,7 +21,7 @@ def plot_clasificacion_pie(df):
     return fig
 
 try:
-    locales_df, censos_df, activos_df, nominas_df, contratos_df = get_generated_dataframes()
+    clientes_df, censos_df, activos_df, nominas_df, contratos_df = get_generated_dataframes()
 except FileNotFoundError as e:
     st.error(f"Error loading data file: {e}. Please make sure the files are in the 'data/raw/' directory.")
     st.stop()

@@ -27,13 +27,13 @@ def int_censos__censo_2024_2():
     # drop wrows here column Censo 1 is "SIN CENSO"
     df = df[df["Censo 1"] != "SIN CENSO"]
 
-    # drop local_ids none or nan
+    # drop cliente_ids none or nan
     df = df.dropna(subset=["ID CLIENTE"])
 
 
     # rename
     rename_dict = {
-        "ID CLIENTE": "local_id",
+        "ID CLIENTE": "cliente_id",
         "CATEGORÍA CENSO 1": "categoria_censo_2024_2",
         "Censo 1": "censo_2024_2",
         "CANTIDAD DE SCHOPERAS CCU": "schoperas_ccu",
@@ -63,7 +63,7 @@ def int_censos__censo_2024_2():
         df = classify_marcas(df)
 
     selected_columns = [
-        "local_id",
+        "cliente_id",
         # metadata
         "periodo",
         "fecha",  
@@ -91,7 +91,7 @@ def int_censos__censo_2024_2_deprecated():
     stg_censos_1_df = stg_censos__censo_2024_2()
 
     rename_dict = {
-        "SbjNum": "local_id",
+        "SbjNum": "cliente_id",
         "NOMBRE LOCAL": "nombre_local",
         "REGIÓN:": "region",
         "COMUNA": "comuna",
@@ -112,7 +112,7 @@ def int_censos__censo_2024_2_deprecated():
     int_censos__censo_2024_2_df["fecha"] = pd.to_datetime("2024-10-01")
 
     # Transform boolean-like columns
-    # In Censo 1 we don't have a direct "tiene_schoperas" Yes/No question for the whole local
+    # In Censo 1 we don't have a direct "tiene_schoperas" Yes/No question for the whole cliente
     # but we can derive it from schoperas_total or use other questions if they fit the pattern.
     
     # We can use the cooler questions as examples of yes_no_to_boolean
@@ -136,7 +136,7 @@ def int_censos__censo_2024_2_deprecated():
             int_censos__censo_2024_2_df["salidas"] += pd.to_numeric(int_censos__censo_2024_2_df[col_name_alt], errors='coerce').fillna(0)
 
     selected_columns = [
-        "local_id",
+        "cliente_id",
         # metadata
         "periodo",
         "fecha",
@@ -197,7 +197,7 @@ def int_base_norm_censo_2024_2():
 
     # # rename
     rename_dict = {
-        "id": "local_id",
+        "id": "cliente_id",
         "CATEGORÍA CENSO 1": "categoria",
         "CANTIDAD DE SCHOPERAS CCU": "schoperas_ccu",
         "CANTIDAD DE SALIDAS": "salidas_ccu",
@@ -218,7 +218,7 @@ def int_base_norm_censo_2024_2():
     df["fecha"] = pd.to_datetime("2024-10-01").date()
 
     selected_columns = [
-        "local_id",
+        "cliente_id",
         "periodo",
         "fecha",
         # activos cantidades

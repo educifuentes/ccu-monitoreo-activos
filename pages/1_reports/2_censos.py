@@ -84,7 +84,7 @@ with col_chart:
     if "clasificacion" in df_filtered_no_2024_s2.columns and "periodo" in df_filtered_no_2024_s2.columns:
         chart = alt.Chart(df_filtered_no_2024_s2).mark_bar().encode(
             x=alt.X('periodo:O', title='Periodo'),
-            y=alt.Y('count():Q', title='Número de Locales'),
+            y=alt.Y('count():Q', title='Número de Clientes'),
             color=alt.Color(
                 'clasificacion:N',
                 title='Clasificación',
@@ -95,7 +95,7 @@ with col_chart:
             ),
             tooltip=[
                 alt.Tooltip('periodo:O', title='Periodo'),
-                alt.Tooltip('count():Q', title='Número de Locales'),
+                alt.Tooltip('count():Q', title='Número de Clientes'),
                 alt.Tooltip('clasificacion:N', title='Clasificación')
             ]
         )
@@ -105,7 +105,7 @@ with col_chart:
 
 st.subheader("Detalles")
 
-censo_columns = ["periodo", "local_id", "razon_social", "marcas",  "instalo", "disponibilizo", "salidas", "clasificacion"]
+censo_columns = ["periodo", "cliente_id", "razon_social", "marcas",  "instalo", "disponibilizo", "salidas", "clasificacion"]
 
 censo_df_display = df_filtered[censo_columns]
 

@@ -10,7 +10,7 @@ def int_reportes_ccu_base_2024_q1():
     df = stg_base_normalizada__original_base_ccu_2024()
 
     rename_dict = {
-        "ID CLIENTE": "local_id",
+        "ID CLIENTE": "cliente_id",
         'N° Coolers': 'coolers',
         'N° Salidas Schop CCU': 'schoperas',
         'N° Columnas': 'salidas',
@@ -19,13 +19,13 @@ def int_reportes_ccu_base_2024_q1():
     df.rename(columns=rename_dict, inplace=True)
 
     # data types
-    df["local_id"] = df["local_id"].astype(str)
+    df["cliente_id"] = df["cliente_id"].astype(str)
     df["coolers"] = df["coolers"].astype('Int64')
     df["schoperas"] = df["schoperas"].astype('Int64')
     df["salidas"] = df["salidas"].astype('Int64')
 
     # clean
-    df["local_id"] = df["local_id"].replace("nan", None)
+    df["cliente_id"] = df["cliente_id"].replace("nan", None)
 
     # new columns
     # note: should be done in stg model, but int model. exepction. refactir later
@@ -39,7 +39,7 @@ def int_reportes_ccu_base_2024_q1():
 
     selected_columns = [
         # row identifiers
-        "local_id",
+        "cliente_id",
         "periodo",
         "fecha",
         # activos
@@ -62,7 +62,7 @@ def int_reportes_ccu_base_2024_q1():
 #     # rename columns
 
 #     rename_dict = {
-#         "id": "local_id",
+#         "id": "cliente_id",
 #         'N° Coolers': 'coolers',
 #         'N° Columnas (Schoperas)': 'schoperas',
 #         'N° Salidas Schop CCU': 'salidas',
@@ -71,13 +71,13 @@ def int_reportes_ccu_base_2024_q1():
 #     df.rename(columns=rename_dict, inplace=True)
 
 #     # data types
-#     df["local_id"] = df["local_id"].astype(str)
+#     df["cliente_id"] = df["cliente_id"].astype(str)
 #     df["coolers"] = df["coolers"].astype('Int64')
 #     df["schoperas"] = df["schoperas"].astype('Int64')
 #     df["salidas"] = df["salidas"].astype('Int64')
 
 #     # clean
-#     df["local_id"] = df["local_id"].replace("nan", None)
+#     df["cliente_id"] = df["cliente_id"].replace("nan", None)
 
 #     # new columns
 #     # note: should be done in stg model, but int model. exepction. refactir later
@@ -97,7 +97,7 @@ def int_reportes_ccu_base_2024_q1():
 
 #     selected_columns = [
 #         # row identifiers
-#         "local_id",
+#         "cliente_id",
 #         "periodo",
 #         "fecha",
 #         # activos

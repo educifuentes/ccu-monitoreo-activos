@@ -10,7 +10,7 @@ def exp_activos():
     Unir data de conteo de activos de censos con data reportes ccu.
     """
 
-    # # local version
+    # # cliente version
     fct_censos_df = fct_censos()
     fct_bases_ccu_df = fct_bases_ccu()
 
@@ -24,7 +24,7 @@ def exp_activos():
 
     selected_columns = [
         # row level identifiers
-        "local_id",
+        "cliente_id",
         "periodo",
         "fecha",    
         "fuente",
@@ -32,7 +32,7 @@ def exp_activos():
         "schoperas",
         "salidas",
         "coolers",
-        # locales info
+        # clientes info
     ]
 
     union_df = pd.concat([fct_censos_df, fct_bases_ccu_df], ignore_index=True)

@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def stg_base_normalizada__locales():
+def stg_base_normalizada__clientes():
     # Define file path
     file_path = "seeds/base_normalizada/base_normalizada - locales.csv"
     
@@ -10,7 +10,7 @@ def stg_base_normalizada__locales():
 
     # rename
     rename_dict = {
-        "id": "local_id",
+        "id": "cliente_id",
         "RAZON SOCIAL": "razon_social",
         "RUT": "rut",
         "DIRECCIÓN": "direccion",
@@ -26,7 +26,7 @@ def stg_base_normalizada__locales():
     df.rename(columns=rename_dict, inplace=True)
 
     selected_columns = [
-        "local_id",
+        "cliente_id",
         "razon_social",
         "rut",
         "direccion",
@@ -40,7 +40,7 @@ def stg_base_normalizada__locales():
         "salidas" ]
 
     # data types
-    df["local_id"] = df["local_id"].astype("str")
+    df["cliente_id"] = df["cliente_id"].astype("str")
     df["coolers"] = df["coolers"].astype("Int64")
     df["schoperas"] = df["schoperas"].astype("Int64")
     df["salidas"] = df["salidas"].astype("Int64")

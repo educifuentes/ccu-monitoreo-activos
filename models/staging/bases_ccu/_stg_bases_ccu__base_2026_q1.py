@@ -13,11 +13,11 @@ def stg_bases_ccu__base_2026_q1():
 
     # rename
     rename_dict = {
-        "id": "local_id",
+        "local_id": "cliente_id",
         "numero de schoperas": "schoperas",
         "numero de salidas": "salidas",
         "numero de coolers": "coolers",
-        "¿es local imagen?": "es_local_imagen?",
+        "¿es cliente imagen?": "es_local_imagen?",
         "Fecha de suscripción del comodato": "fecha_suscripcion_comodato",
         "Fecha de término del contrato (de aplicar)": "fecha_termino_contrato",
         "Activos entregados": "activos_entregados",
@@ -27,6 +27,6 @@ def stg_bases_ccu__base_2026_q1():
     df.rename(columns=rename_dict, inplace=True)
 
     # data types
-    df["local_id"] = df["local_id"].astype(str)
+    df["cliente_id"] = df["cliente_id"].astype(str)
 
     return df

@@ -28,7 +28,7 @@ nav_dict = {
 
 
 # Only expose the development environment tabs locally
-is_local = os.environ.get("ENVIRONMENT", "local").lower() == "local"
+is_local = os.environ.get("ENVIRONMENT", "cliente").lower() == "cliente"
 if is_local:
     nav_dict["Desarrollo"] = [
         st.Page("pages/3_dev/1_staging.py", title="Staging", icon=":material/dashboard:"),

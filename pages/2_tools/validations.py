@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 from models.gsheets.staging.gsheets_tables import (
-    locales, 
+    clientes, 
     censos, 
     bases_ccu, 
     contratos
@@ -21,16 +21,16 @@ st.markdown("Chequeos automáticos sobre las tablas fuente de Google Sheets para
 
 # --- Tab Layout ---
 tab1, tab2, tab3, tab4 = st.tabs([
-    ":material/sports_bar: Locales",
+    ":material/sports_bar: Clientes",
     ":material/checklist_rtl: Censos",
     ":material/assignment: Bases CCU",
     ":material/contract: Contratos"
 ])
 
-# --- Tab 1: Locales ---
+# --- Tab 1: Clientes ---
 with tab1:
     # test com
-    df_loc = locales()
+    df_loc = clientes()
     validate_locales(df_loc)
 
 # --- Tab 2: Censos ---
@@ -40,14 +40,14 @@ with tab2:
     # though streamlit runs top-down. 
     # Better to load it if not present, but here we can assume it's available or reload.
     if 'df_loc' not in locals():
-        df_loc = locales()
+        df_loc = clientes()
     validate_censos(df_censos, df_loc)
 
 # --- Tab 3: Bases CCU ---
 with tab3:
     df_bases = bases_ccu()
     if 'df_loc' not in locals():
-        df_loc = locales()
+        df_loc = clientes()
     validate_bases_ccu(df_bases, df_loc)
 
 # --- Tab 4: Contratos ---

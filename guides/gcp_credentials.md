@@ -44,7 +44,7 @@ gcloud iam service-accounts create time-track-deployer \
 
 ### 4. Create and Download Service Account Key
 
-To use the service account from your local machine (e.g., for uploading secrets or running scripts locally), you need a JSON key file.
+To use the service account from your cliente machine (e.g., for uploading secrets or running scripts locally), you need a JSON key file.
 
 > [!WARNING]
 > **Security Warning**: Never commit your JSON key file to version control. Ensure `.secrets/` is in your `.gitignore` file.

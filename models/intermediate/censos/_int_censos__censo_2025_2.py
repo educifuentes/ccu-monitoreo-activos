@@ -19,7 +19,7 @@ def int_censos__censo_2025_2():
     # 1. Column Renamming
     rename_dict = {
         "ID PK": "id_pk",
-        "ID CCU": "local_id",
+        "ID CCU": "cliente_id",
         "tipo_de_local": "tipo_de_local",
         "Visitador": "visitador",
         "rut Visitador": "rut_visitador",
@@ -33,7 +33,7 @@ def int_censos__censo_2025_2():
     df = stg_censos_2_df.rename(columns=rename_dict)
 
     # 2. Basic Data Types
-    df["local_id"] = df["local_id"].astype("str")
+    df["cliente_id"] = df["cliente_id"].astype("str")
 
     # 3. Brand Processing and Classification
     if "marcas" in df.columns:
@@ -64,7 +64,7 @@ def int_censos__censo_2025_2():
     
     # 8. Final Column Selection
     selected_columns = [
-        "local_id",
+        "cliente_id",
         # metadata censo
         "periodo",
         "fecha",
