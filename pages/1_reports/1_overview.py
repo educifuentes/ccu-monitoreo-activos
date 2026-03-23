@@ -23,25 +23,17 @@ st.markdown(" ")
 # -----------------------------------------------------------------------------
 # DATA LOADING
 # -----------------------------------------------------------------------------
-bi_activos_df = exp_activos()
-bi_locales_df = exp_locales()
-bi_contratos_df = exp_contratos()
-bi_censos_df = exp_censos()
+activos_df = exp_activos()
+locales_df = exp_locales()
+contratos_df = exp_contratos()
+censos_df = exp_censos()
+
 
 # -----------------------------------------------------------------------------
-# FILTERS
+# PANEL METRICAS 
 # -----------------------------------------------------------------------------
-# (Filters are currently commented out or unused, preserving structure)
-# selected_periodo = 2025
-# periodos = sorted(bi_activos_df['periodo'].unique(), reverse=True)
-# selected_periodo = st.selectbox("Seleccionar Periodo", periodos, width=200)
-# bi_censos_df = bi_censos_df[bi_censos_df['periodo'] == selected_periodo]
-
-# -----------------------------------------------------------------------------
-# METRICS PANEL
-# -----------------------------------------------------------------------------
-bi_censos_2025_df = bi_censos_df[bi_censos_df['periodo'] == "2025-S2"]
-metrics = calculate_general_metrics(bi_activos_df, bi_censos_2025_df, bi_contratos_df, bi_locales_df)
+censos_2025_df = censos_df[censos_df['periodo'] == "2025-S2"]
+metrics = calculate_general_metrics(activos_df, censos_2025_df, contratos_df, locales_df)
 
 m1, m2, m3, m4 = st.columns(4)
 m1.metric("Locales", f"{metrics['total_locales']}")
@@ -59,7 +51,7 @@ st.header(":material/sports_bar: Locales")
 st.markdown("Información detallada de censos, nóminas y contratos por cada establecimiento.")
 
 # 1. Selection
-unique_locales_master = bi_locales_df[['local_id', 'razon_social']].drop_duplicates().sort_values('local_id')
+unique_locales_master = locales_df[['local_id', 'razon_social']].drop_duplicates().sort_values('local_id')
 locales_options = {
     row['local_id']: f"{row['local_id']} - {row['razon_social']}" 
     for _, row in unique_locales_master.iterrows()
@@ -95,7 +87,7 @@ text_input_changed = st.session_state.last_text_input_value != text_input_id
 if text_input_changed and text_input_id:
     # Text input was just modified
     input_id_str = text_input_id.strip()
-    if input_id_str in bi_locales_df['local_id'].astype(str).values:
+    if input_id_str in locales_df['local_id'].astype(str).values:
         selected_local_id = input_id_str
     else:
         st.warning(f"ID '{input_id_str}' no encontrado")
@@ -106,7 +98,7 @@ st.session_state.last_text_input_value = text_input_id
 
 
 # 2. Logic & Data Retrieval
-local_master = bi_locales_df[bi_locales_df['local_id'] == selected_local_id]
+local_master = locales_df[locales_df['local_id'] == selected_local_id]
 
 if local_master.empty:
     st.error("No se encontró información maestra para este local.")
@@ -114,14 +106,14 @@ else:
     local_master = local_master.iloc[0]
 
     # Latest Classification
-    latest_clasificacion = get_latest_classification(selected_local_id, bi_censos_df)
+    latest_clasificacion = get_latest_classification(selected_local_id, censos_df)
     
     # Assets History
-    local_assets_history = bi_activos_df[bi_activos_df['local_id'] == selected_local_id].sort_values('fecha', ascending=False)
+    local_assets_history = activos_df[activos_df['local_id'] == selected_local_id].sort_values('fecha', ascending=False)
 
     # Contract Info
-    has_contrato_imagen = selected_local_id in bi_contratos_df['local_id'].values
-    local_contract = bi_contratos_df[bi_contratos_df['local_id'] == selected_local_id].iloc[0] if has_contrato_imagen else None
+    has_contrato_imagen = selected_local_id in contratos_df['local_id'].values
+    local_contract = contratos_df[contratos_df['local_id'] == selected_local_id].iloc[0] if has_contrato_imagen else None
 
     # 3. Local Card (Ficha)
     st.subheader(f"Ficha: {local_master['razon_social']}")
