@@ -1,7 +1,7 @@
 import pandas as pd
 
 from models.marts._fct_censos import fct_censos
-from models.marts.marts._dim_locales import exp_locales
+from models.exposures._exp_locales import exp_locales
 
 from models.marts.metrics.clasification_censo import clasify_censo
 

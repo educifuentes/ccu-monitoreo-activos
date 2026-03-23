@@ -2,7 +2,7 @@ import streamlit as st
 import altair as alt
 import pandas as pd
 
-from models.marts.censos.exposures._exp_censos import exp_censos
+from models.exposures._exp_censos import exp_censos
 
 from utilities.ui_config import CLASIFICACION_COLORS
 from utilities.widgets.explorer_de_datos import explorer_de_datos
