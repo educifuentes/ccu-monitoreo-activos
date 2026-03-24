@@ -1,12 +1,17 @@
 import pandas as pd
 import numpy as np
+from helpers.utilities.get_source_metadata import get_source_metadata
+from helpers.utilities.load_source import load_source
 
 def stg_censos__censo_2025_2():
     # Define file path
-    file_path = "seeds/censos/CENSO CCU PK 27JULIO ID 260725-2 - Hoja1.csv"
+    file_path = get_source_metadata(
+        "censo_2025_2",
+        "models/sources/_src_censos__censo_2025_2.yml"
+    )
     
     # Load CSV, skipping the first row of commas
-    df = pd.read_csv(file_path, skiprows=1)
+    df = load_source(file_path, skiprows=1)
     
     # 1. Basic Cleaning
     # Drop columns that are completely empty

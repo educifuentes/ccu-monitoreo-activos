@@ -1,21 +1,27 @@
 sources:
-  - name: censo_2026
-    description: deprecar
-    path: seeds/censos/CCU2026 PK - CCU_2026_29_V34.csv
-    url: https://docs.google.com/spreadsheets/d/1u7K9nqzU6v8y9vhhuU2_9d5RMr7DeSG7E5MMWpkyLGk/edit?gid=1317594973#gid=1317594973
-  - name: censo_2026_1_agencia_corpa
-    description: agencia nueva que hay que cargar. Recibida dia 10 marzo 2026. Son 241 locales.
-    notes: se reenvio de nuevo marzo 13, 2026 porque tenia errores.
-    path: seeds/censos/censo_2026_1/BBDD - Nuevo Censo - 05-03-3_version_marzo_13.xlsx - Sheet1.csv
-    url: https://docs.google.com/spreadsheets/d/1TEk5xkf3Y0NQ4bXx4UztdNGfzWw4gwit/edit?gid=1812778402#gid=1812778402
-    date_received: 2026-03-13
-  - name: censo_2026_1_agencia_pk
-    description: censo 2026 corregido. Recibida dia 10 marzo 2026. Son 900 aprox locales. Se mando corregida.
-    path: seeds/censos/censo_2026_1/CCU 10_03_26.xlsx - CCU_2026_03_10 .csv
-    url: https://docs.google.com/spreadsheets/d/166joXpmTS0fsyuvFSTFzaDk0BGJ1cePS/edit?gid=1499687421#gid=1499687421
-    date_received: 2026-03-10
-  - name: censo_2026_1_agencia_corpa_sistematizado
-    description: faltaba columnas de permite censo y motivo.
-    path: seeds/censos/censo_2026_1/Modelo sistematización información CORPA - 11 marzo.xlsx - Hoja1.csv
-    url: https://docs.google.com/spreadsheets/d/1TrcTkKPbP97Psb7mfwilAFYBDy3tlLlJ/edit?gid=1788066507#gid=1788066507
-    date_received: 2026-03-11
+  - name: censo 2026
+    description: Censo realizado en 2026.
+    tables:
+      - name: censo_2026
+        description: deprecar
+        path: seeds/censos/CCU2026 PK - CCU_2026_29_V34.csv
+        url: https://docs.google.com/spreadsheets/d/1u7K9nqzU6v8y9vhhuU2_9d5RMr7DeSG7E5MMWpkyLGk/edit?gid=1317594973#gid=1317594973
+      - name: censo_2026_1_agencia_corpa
+        description: agencia nueva que hay que cargar. Recibida dia 10 marzo 2026. Son 241 locales.
+        notes: se reenvio de nuevo marzo 13, 2026 porque tenia errores.
+        path: seeds/censos/censo_2026_1/BBDD - Nuevo Censo - 05-03-3_version_marzo_13.xlsx - Sheet1.csv
+        url: https://docs.google.com/spreadsheets/d/1TEk5xkf3Y0NQ4bXx4UztdNGfzWw4gwit/edit?gid=1812778402#gid=1812778402
+        date_received: 2026-03-13
+      - name: censo_2026_1_agencia_pk
+        description: censo 2026 corregido. Recibida dia 10 marzo 2026. Son 900 aprox locales. Se mando corregida.
+        path: seeds/censos/censo_2026_1/CCU 10_03_26.xlsx - CCU_2026_03_10 .csv
+        url: https://docs.google.com/spreadsheets/d/166joXpmTS0fsyuvFSTFzaDk0BGJ1cePS/edit?gid=1499687421#gid=1499687421
+        date_received: 2026-03-10
+      - name: censo_2026_1_agencia_corpa_sistematizado
+        description: faltaba columnas de permite censo y motivo.
+        path: seeds/censos/censo_2026_1/Modelo sistematización información CORPA - 11 marzo.xlsx - Hoja1.csv
+        url: https://docs.google.com/spreadsheets/d/1TrcTkKPbP97Psb7mfwilAFYBDy3tlLlJ/edit?gid=1788066507#gid=1788066507
+        date_received: 2026-03-11
+      - name: censo_2026_1_fne_listado
+        description: fne
+        path: seeds/censos/Listado Final_to_supervisoraENTREGADO POR FNE.xlsx - Visita supervisora.csv

@@ -1,12 +1,16 @@
 import pandas as pd
 import numpy as np
 
-from utilities.yaml_loader import load_yaml_config
+from helpers.utilities.get_source_metadata import get_source_metadata
+from helpers.utilities.load_source import load_source
 
 def stg_censos__censo_2026_1_fne_listado():
-    # Define file path
-    file_path = "seeds/censos/Listado Final_to_supervisoraENTREGADO POR FNE.xlsx - Visita supervisora.csv"
+    # Fetch file path from metadata
+    file_path = get_source_metadata(
+        "censo_2026_1_fne_listado",
+        "models/sources/_src_censos__censo_2026_1.yml"
+    )
     
     # Load CSV using the second row as header
-    df = pd.read_csv(file_path)
+    df = load_source(file_path)
     return df

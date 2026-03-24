@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 
 from helpers.utilities.get_source_metadata import get_source_metadata
+from helpers.utilities.load_source import load_source
 
 
 def stg_censos__censo_2024_2():
@@ -14,7 +15,7 @@ def stg_censos__censo_2024_2():
     )
     
     # Load CSV
-    df = pd.read_csv(file_path)
+    df = load_source(file_path)
     
     # 1. Basic Cleaning
     # Drop columns that are completely empty
