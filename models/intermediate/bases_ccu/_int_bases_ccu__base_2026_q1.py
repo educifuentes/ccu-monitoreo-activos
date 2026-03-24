@@ -55,4 +55,33 @@ def int_reportes_ccu_base_2026_q1():
     df["fecha_termino_contrato"] = parse_spanish_month_year(df["fecha_termino_contrato"])
     df["mes_cambio"] = parse_spanish_month_year(df["mes_cambio"])
 
-    return df
+
+
+    selected_columns = [
+        # keys
+        "cliente_id",
+        # cliente info
+        "razon_social",
+        "rut",
+        "direccion",
+        "region",
+        "ciudad",
+        "comuna",
+        "nombre_fantasia",
+        # activos
+        "schoperas_ccu",
+        "salidas",
+        "coolers",
+        # contratos
+        "es_local_imagen?",
+        "folio",
+        "fecha_suscripcion_comodato",
+        "fecha_termino_contrato",
+        # variacion activos
+        "activos_entregados",
+        "cantidad_total_salidas_schop",
+        "modificacion",
+        "mes_cambio"
+    ]
+
+    return df[selected_columns]
