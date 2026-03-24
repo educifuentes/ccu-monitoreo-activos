@@ -64,8 +64,10 @@ def int_censos__censo_2026_1_agencia_pk():
         df["marca_instalada_en_salida"] = df["marca_instalada_en_salida"].str.title()
 
     # 6. Value Transformations
-    df = yes_no_to_boolean(df, "hay_competencia_en_salida")
-    df = yes_no_to_boolean(df, "tiene_schoperas")
+    if "hay_competencia_en_salida" in df.columns:
+        df["hay_competencia_en_salida"] = yes_no_to_boolean(df["hay_competencia_en_salida"])
+    if "tiene_schoperas" in df.columns:
+        df["tiene_schoperas"] = yes_no_to_boolean(df["tiene_schoperas"])
     
     # Text and region cleaning
     df = clean_text(df, ["nombre_fantasia", "direccion"], title=True)

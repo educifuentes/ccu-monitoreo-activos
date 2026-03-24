@@ -1,15 +1,11 @@
 import pandas as pd
 
-def yes_no_to_boolean(df, column):
+def yes_no_to_boolean(series):
     """
-    Convierte una columna con valores 'Sí'/'No' (o 'Yes'/'No') a booleanos True/False.
+    Convierte una serie con valores 'Sí'/'No' (o 'Yes'/'No') a booleanos True/False.
     Maneja variaciones de mayúsculas/minúsculas y espacios en blanco.
     """
-    if column not in df.columns:
-        return df
-        
     # Crear un mapeo para normalizar los valores
-    # Usamos str.strip().str.lower() para mayor robustez
     mapping = {
         'si': True,
         'sí': True,
@@ -18,6 +14,8 @@ def yes_no_to_boolean(df, column):
     }
     
     # Aplicar la transformación de forma segura
-    df[column] = df[column].astype(str).str.strip().str.lower().map(mapping)
+    # Usamos str.strip().str.lower() para mayor robustez
     
-    return df
+    series = series.astype(str).str.strip().str.lower().map(mapping)
+
+    return series

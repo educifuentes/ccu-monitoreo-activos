@@ -19,14 +19,15 @@ def fct_contratos():
     df = stg_bases_ccu__base_2026_q1_df[columns_contratos]
 
     # data types
-    df = yes_no_to_boolean(df, 'es_local_imagen?')
+    if 'es_local_imagen?' in df.columns:
+        df.loc[:, 'es_local_imagen?'] = yes_no_to_boolean(df['es_local_imagen?'])
 
     df['fecha_suscripcion_comodato_original'] = df['fecha_suscripcion_comodato']
     df['fecha_termino_contrato_original'] = df['fecha_termino_contrato']
 
     # clean dates
-    df = parse_spanish_month_year(df, 'fecha_suscripcion_comodato')
-    df = parse_spanish_month_year(df, 'fecha_termino_contrato')
+    df.loc[:, 'fecha_suscripcion_comodato'] = parse_spanish_month_year(df['fecha_suscripcion_comodato'])
+    df.loc[:, 'fecha_termino_contrato'] = parse_spanish_month_year(df['fecha_termino_contrato'])
 
     # rename
     rename_dict = {

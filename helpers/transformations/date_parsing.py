@@ -2,11 +2,10 @@ import pandas as pd
 import re
 from datetime import datetime
 
-def parse_spanish_month_year(df, column_name):
+def parse_spanish_month_year(series):
     """
     Parses Spanish month-year strings (e.g., 'Marzo 2025') into datetime objects.
     Handles ranges like 'Junio 2025 - Julio 2025' by taking the earliest date.
-    Adds a boolean flag column '{column_name}_es_rango'.
     """
     spanish_months = {
         'enero': 1, 'febrero': 2, 'marzo': 3, 'abril': 4,
@@ -16,16 +15,14 @@ def parse_spanish_month_year(df, column_name):
 
     def process_val(val):
         if pd.isna(val) or str(val).strip() == '':
-            return None, False
+            return None
         
         val_str = str(val).lower().strip()
-        is_range = False
         
         # Check for range: "Mes Año - Mes Año"
         if '-' in val_str:
             parts = val_str.split('-')
             val_str = parts[0].strip()
-            is_range = True
         
         # Match "month year"
         match = re.search(r'([a-z]+)\s+(\d{4})', val_str)
@@ -35,21 +32,14 @@ def parse_spanish_month_year(df, column_name):
             
             month_int = spanish_months.get(month_str)
             if month_int:
-                return datetime(year_int, month_int, 1).date(), is_range
+                return datetime(year_int, month_int, 1).date()
         
         # Fallback to pandas to_datetime for standard formats
         dt = pd.to_datetime(val_str, errors='coerce')
         if pd.notna(dt):
-            return dt.date(), is_range
+            return dt.date()
         
-        return None, False
+        return None
 
     # Apply processing
-    processed = df[column_name].apply(process_val)
-    df[column_name] = processed.apply(lambda x: x[0])
-    df[f"{column_name}_es_rango"] = processed.apply(lambda x: x[1])
-
-    # drop the "es_rango" column
-    df = df.drop(columns=[f"{column_name}_es_rango"])
-    
-    return df
+    return series.apply(process_val)

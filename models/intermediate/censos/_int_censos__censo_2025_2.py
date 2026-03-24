@@ -41,7 +41,8 @@ def int_censos__censo_2025_2():
         df = classify_marcas(df)
 
     # 4. Value Transformations
-    df = yes_no_to_boolean(df, "tiene_schoperas")
+    if "tiene_schoperas" in df.columns:
+        df["tiene_schoperas"] = yes_no_to_boolean(df["tiene_schoperas"])
     
     # 5. Period and Metadata
     df["periodo"] = "2025-S2"

@@ -1,62 +1,56 @@
 import pandas as pd
-import numpy as np
 
 from helpers.transformations.yes_no_to_boolean import yes_no_to_boolean
 from helpers.transformations.date_parsing import parse_spanish_month_year
 
 
-
 from models.staging.bases_ccu._stg_bases_ccu__base_2026_q1 import stg_bases_ccu__base_2026_q1
 
 def int_reportes_ccu_base_2026_q1():
-    # Use staging model instead of loading CSV directly
+
     df = stg_bases_ccu__base_2026_q1()
 
     # rename
     rename_dict = {
+        "local_id": "cliente_id",
+        # local info
+        "razon_social": "razon_social",
+        "rut": "rut",
+        "direccion": "direccion",
+        "region": "region",
+        "ciudad": "ciudad",
+        "comuna": "comuna",
+        "nombre_fantasia": "nombre_fantasia",
+        # activos
+        "numero de schoperas": "schoperas_ccu",
+        "numero de salidas": "salidas",
+        "numero de coolers": "coolers",
+        # contratos
+        "¿es local imagen?": "es_local_imagen?",
         "Folio": "folio",
+        "Fecha de suscripción del comodato": "fecha_suscripcion_comodato",
+        "Fecha de término del contrato (de aplicar)": "fecha_termino_contrato",
+        # variacion activos
+        "Activos entregados": "activos_entregados",
+        "Cantidad total de salidas de schop": "cantidad_total_salidas_schop",
+        "Modificacion": "modificacion",
+        "Mes cambio": "mes_cambio",
     }
+
     df.rename(columns=rename_dict, inplace=True)
 
-    # new columns (Intermediate specific logic)
-    df["periodo"] = "2026-Q1"
-    df["fecha"] = pd.to_datetime("2026-01-01").date() 
+    # data types
+    df["cliente_id"] = df["cliente_id"].astype(str)
 
-    # dtypes 
-    df = yes_no_to_boolean(df, "es_local_imagen?")
+    df["schoperas_ccu"] = df["schoperas_ccu"].astype("Int64")
+    df["salidas"] = df["salidas"].astype("Int64")
+    df["coolers"] = df["coolers"].astype("Int64")
 
-    return df
+    df["es_local_imagen?"] = yes_no_to_boolean(df["es_local_imagen?"])
 
-def int_bases_ccu__base_2026_q1_locales():
-    locales_columns = ['cliente_id', 'razon_social', 'rut', 'direccion', 'region', 'ciudad', 'comuna', 'nombre_fantasia']
+    df["modificacion"] = df["modificacion"].astype("category")
 
-    base_2026_q1_df = int_reportes_ccu_base_2026_q1()
-
-    df = base_2026_q1_df[locales_columns]
-
-    return df
-
-def int_bases_ccu__base_2026_q1_activos():
-    df = int_reportes_ccu_base_2026_q1()
-
-    selected_columns = ['cliente_id', 'periodo', 'fecha', 'schoperas', 'salidas', 'coolers', 'fecha_suscripcion_comodato', 'fecha_termino_contrato', 'activos_entregados']
-
-     # dtypes tp dates
-    df = parse_spanish_month_year(df, "fecha_suscripcion_comodato")
-    df = parse_spanish_month_year(df, "fecha_termino_contrato")
-
-    df = df[selected_columns]
-    return df
-
-def int_bases_ccu__base_2026_q1_contratos_imagen():
-
-    df = int_reportes_ccu_base_2026_q1()
-
-    # drop rows where es_local_imagen is False
-    df = df[df["es_local_imagen?"] == True]
-
-    selected_columns = ['cliente_id', 'folio']
-
-    df = df[selected_columns]
+    df["fecha_suscripcion_comodato"] = parse_spanish_month_year(df["fecha_suscripcion_comodato"])
+    df["fecha_termino_contrato"] = parse_spanish_month_year(df["fecha_termino_contrato"])
 
     return df

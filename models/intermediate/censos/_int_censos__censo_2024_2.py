@@ -116,7 +116,9 @@ def int_censos__censo_2024_2_deprecated():
     # but we can derive it from schoperas_total or use other questions if they fit the pattern.
     
     # We can use the cooler questions as examples of yes_no_to_boolean
-    int_censos__censo_2024_2_df = yes_no_to_boolean(int_censos__censo_2024_2_df, 'INSPECCIÓN VISUAL PARA VER Y REGISTRAR SI EXISTEN COOLERS O REFRIGERADORES VERTICALES (CON VIDRIO) PARA ENFRIAR CERVEZAS.\n(EN CASO QUE LOS COOLERS NO SE ENCUENTREN VISIBLES DEBERÁ PEDIR PERMISO AL DEPENDIENTE/ADMINISTRADOR/PROPIETARIO PARA OBSERVARLOS Y FOTOGRAFIARLOS)\n\n¿HAY COOLERS O REFRIGERADORES VERTICALES (CON VIDRIO) PARA ENFRIAR CERVEZAS?')
+    col_cooler = 'INSPECCIÓN VISUAL PARA VER Y REGISTRAR SI EXISTEN COOLERS O REFRIGERADORES VERTICALES (CON VIDRIO) PARA ENFRIAR CERVEZAS.\n(EN CASO QUE LOS COOLERS NO SE ENCUENTREN VISIBLES DEBERÁ PEDIR PERMISO AL DEPENDIENTE/ADMINISTRADOR/PROPIETARIO PARA OBSERVARLOS Y FOTOGRAFIARLOS)\n\n¿HAY COOLERS O REFRIGERADORES VERTICALES (CON VIDRIO) PARA ENFRIAR CERVEZAS?'
+    if col_cooler in int_censos__censo_2024_2_df.columns:
+        int_censos__censo_2024_2_df[col_cooler] = yes_no_to_boolean(int_censos__censo_2024_2_df[col_cooler])
     
     # Create "tiene_schoperas" based on schoperas_total
     int_censos__censo_2024_2_df["tiene_schoperas"] = int_censos__censo_2024_2_df["schoperas_total"] > 0

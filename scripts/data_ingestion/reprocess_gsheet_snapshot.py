@@ -6,7 +6,6 @@ from models.intermediate.bases_ccu._int_bases_ccu__base_2026_q1 import int_bases
 from models.intermediate.bases_ccu._int_bases_ccu__base_2024_q1 import int_reportes_ccu_base_2024_q1
 
 from helpers.transformations.date_parsing import parse_spanish_month_year
-from helpers.transformations.yes_no_to_boolean import yes_no_to_boolean
 
 path = "seeds/gsheets_snapshots/2026-02-20 - Activos CCU.xlsx"
 
