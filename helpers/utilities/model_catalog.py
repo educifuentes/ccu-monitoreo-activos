@@ -48,5 +48,9 @@ def build_global_model_registry(root_path="models"):
     # Return empty DataFrame with columns if no records
     if not records:
         return pd.DataFrame(columns=["schema", "stage", "model", "link"])
+
+    # sort by model
+    df = pd.DataFrame(records)
+    df = df.sort_values(by="model", ascending=False)
         
-    return pd.DataFrame(records)
+    return df
