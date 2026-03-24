@@ -5,7 +5,7 @@ from models.marts._fct_bases_ccu import fct_bases_ccu
 
 # unir data de censo 1 y de censo 2
 
-def exp_activos():
+def activos_ccu_y_censos():
     """
     Unir data de conteo de activos de censos con data reportes ccu.
     """

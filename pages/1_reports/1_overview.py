@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 import altair as alt
 
-from models.exposures._exp_activos import exp_activos
+from models.exposures.activos_ccu_y_censos import activos_ccu_y_censos
 from models.exposures._exp_clientes import exp_clientes
 from models.exposures._exp_contratos import exp_contratos
 from models.exposures._exp_censos import exp_censos
@@ -23,7 +23,7 @@ st.markdown(" ")
 # -----------------------------------------------------------------------------
 # DATA LOADING
 # -----------------------------------------------------------------------------
-activos_df = exp_activos()
+activos_df = activos_ccu_y_censos()
 clientes_df = exp_clientes()
 contratos_df = exp_contratos()
 censos_df = exp_censos()
