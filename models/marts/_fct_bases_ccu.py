@@ -1,35 +1,54 @@
 import pandas as pd
 
-from models.intermediate.bases_ccu._int_bases_ccu__base_2024_q1 import int_reportes_ccu_base_2024_q1
+# from models.intermediate.bases_ccu._int_bases_ccu__base_2024_q1 import int_reportes_ccu_base_2024_q1
 from models.intermediate.bases_ccu._int_bases_ccu__base_2026_q1 import int_reportes_ccu_base_2026_q1
 
 
 def fct_bases_ccu():
-    # dfs inputs by period
-    int_reportes_ccu_base_2024_q1_df = int_reportes_ccu_base_2024_q1()
-    int_reportes_ccu_base_2026_q1_df = int_reportes_ccu_base_2026_q1()
+   # inputs
+   # int_reportes_ccu_base_2024_q1_df = int_reportes_ccu_base_2024_q1()
+    df_ccu_2026_1 = int_reportes_ccu_base_2026_q1()
 
-    select_columns_base_2026 = [
+    # new columns
+    df_ccu_2026_1["periodo"] = "2026-Q1"
+
+
+    selected_columns = [
+        # keys
         "cliente_id",
         "periodo",
-        "fecha",
+        # local info
+        "razon_social",
+        "rut",
+        "direccion",
+        "region",
+        "ciudad",
+        "comuna",
+        "nombre_fantasia",
         # activos
-        "schoperas",
+        "schoperas_ccu",
         "salidas",
         "coolers",
-        # fechas
+        # contratos
+        "es_local_imagen?",
         "fecha_suscripcion_comodato",
         "fecha_termino_contrato",
-        "activos_entregados"
+        # variacion activos
+        "activos_entregados",
+        "cantidad_total_salidas_schop",
+        "modificacion",
+        "mes_cambio",
     ]
 
 
 
-    int_reportes_ccu_base_2026_q1_df = int_reportes_ccu_base_2026_q1_df[select_columns_base_2026]
+    # int_reportes_ccu_base_2026_q1_df = int_reportes_ccu_base_2026_q1_df[select_columns_base_2026]
 
-    df = pd.concat([int_reportes_ccu_base_2024_q1_df, int_reportes_ccu_base_2026_q1_df], ignore_index=True)   
+    # df = pd.concat([int_reportes_ccu_base_2024_q1_df, int_reportes_ccu_base_2026_q1_df], ignore_index=True)   
 
-    df.sort_values(by=["cliente_id", "periodo"], ascending=[True, True], inplace=True)
+    # df.sort_values(by=["cliente_id", "periodo"], ascending=[True, True], inplace=True)
+
+    df = df_ccu_2026_1[selected_columns]
 
 
 

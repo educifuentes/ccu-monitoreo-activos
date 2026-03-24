@@ -53,5 +53,6 @@ def int_reportes_ccu_base_2026_q1():
 
     df["fecha_suscripcion_comodato"] = parse_spanish_month_year(df["fecha_suscripcion_comodato"])
     df["fecha_termino_contrato"] = parse_spanish_month_year(df["fecha_termino_contrato"])
+    df["mes_cambio"] = parse_spanish_month_year(df["mes_cambio"])
 
     return df
