@@ -7,7 +7,7 @@ sources:
       - name: base_normalizada_original
         description: Lo primero que presento Pilar. antes de los colores
         path: seeds/base_normalizada/base_normalizada_orginal.csv
-      - name: clientes
+      - name: base_normalizada_clientes
         url: https://docs.google.com/spreadsheets/d/1w9F7pvef-eOMT1fqHZ4K2OofzY8hoF20bluBo8wIYPE/edit?gid=581899419#gid=581899419
         path: seeds/base_normalizada/base_normalizada - locales.csv
       - name: censo_2024_2

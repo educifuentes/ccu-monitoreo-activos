@@ -1,15 +1,14 @@
 import pandas as pd
 import numpy as np
-
-from utilities.yaml_loader import get_table_config
+from helpers.utilities.get_source_metadata import get_source_metadata
+from helpers.utilities.load_source import load_source
 
 def stg_bases_ccu__base_2026_q1():
     # Fetch configuration from YAML
-    config = get_table_config(source_name="reportes_ccu", table_name="base_2026_q1")
-    file_path = config.get('path')
+    file_path = get_source_metadata("base_2026_q1", "models/sources/_src_bases_ccu.yml")
     
     # Load CSV
-    df = pd.read_csv(file_path)
+    df = load_source(file_path)
 
     # rename
     rename_dict = {

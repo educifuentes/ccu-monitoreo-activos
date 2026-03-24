@@ -10,7 +10,7 @@ def render_model_ui(df, table_name=None):
     """
 
 
-    with st.expander(f"Tabla: `{table_name}`"):
+    with st.expander(f"`{table_name}`"):
         st.code(f"Shape: {df.shape}")
         with st.expander("Columnas"):
             st.code("\n".join(df.columns))

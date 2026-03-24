@@ -1,24 +1,18 @@
 import pandas as pd
 import numpy as np
-
-from utilities.yaml_loader import get_table_config
+from helpers.utilities.get_source_metadata import get_source_metadata
+from helpers.utilities.load_source import load_source
 
 def stg_base_normalizada__original():
 
-    
     # Fetch configuration from YAML
-    config = get_table_config(
-        source_name="base normalizada", 
-        table_name="base_normalizada_original", 
-        yaml_path="models/sources/_src_base_normalizada.yml"
+    file_path = get_source_metadata(
+        "base_normalizada_original", 
+        "models/sources/_src_base_normalizada.yml"
     )
-    file_path = config.get('path')
 
-    # drop columns encuestada unificada
-    
-    
     # Load CSV
-    df = pd.read_csv(file_path, skiprows=1)
+    df = load_source(file_path, skiprows=1)
 
     # Drop columns encuestada unificada
     columns_to_drop_encuestada_unificada = [
