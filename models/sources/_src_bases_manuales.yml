@@ -18,3 +18,7 @@ sources:
         url: https://docs.google.com/spreadsheets/d/1w9F7pvef-eOMT1fqHZ4K2OofzY8hoF20bluBo8wIYPE/edit?gid=216900586#gid=216900586
       - name: reporte_comodatos
         url: https://docs.google.com/spreadsheets/d/1w9F7pvef-eOMT1fqHZ4K2OofzY8hoF20bluBo8wIYPE/edit?gid=1699826494#gid=1699826494
+      - name: clientes_ghsheets_2026_03
+        description: la tabla de locales luego de los edits manuales que hicieorn Pilar. Viene del gogole sheet.
+        date_received: 2026-03-24
+        path: seeds/bases_manuales/Activos CCU - locales.csv
