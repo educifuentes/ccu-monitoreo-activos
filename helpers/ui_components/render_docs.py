@@ -18,11 +18,22 @@ def render_model_docs(yaml_path, kind="table"):
         st.error(f"❌ Error al cargar el archivo YAML: {e}")
         return
 
-    if not data or ('models' not in data and 'metrics' not in data):
-        st.warning("No se encontró información de modelos o métricas en el archivo.")
+    if not data:
+        st.warning("El archivo YAML está vacío.")
         return
 
-    items = data.get('models', []) + data.get('metrics', [])
+    items = []
+    if 'models' in data or 'metrics' in data:
+        items = data.get('models', []) + data.get('metrics', [])
+    elif 'model_name' in data:
+        items = [{
+            'name': data.get('model_name'),
+            'description': data.get('description', 'Sin descripción disponible.'),
+            'columns': data.get('columns', [])
+        }]
+    else:
+        st.warning("No se encontró información de modelos o métricas en el archivo.")
+        return
 
     for model in items:
         model_name = model.get('name', 'Sin Nombre')

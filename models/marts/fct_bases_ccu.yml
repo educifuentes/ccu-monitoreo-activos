@@ -1,0 +1,59 @@
+model_name: fct_bases_ccu
+columns:
+  - name: cliente_id
+    description: ID del cliente
+    data_type: string
+  - name: razon_social
+    description: Razón social del cliente
+    data_type: string
+  - name: rut
+    description: RUT del cliente
+    data_type: string
+  - name: direccion
+    description: Dirección del local
+    data_type: string
+  - name: region
+    description: Región donde se ubica el local
+    data_type: string
+  - name: ciudad
+    description: Ciudad donde se ubica el local
+    data_type: string
+  - name: comuna
+    description: Comuna donde se ubica el local
+    data_type: string
+  - name: nombre_fantasia
+    description: Nombre de fantasía del local
+    data_type: string
+  - name: schoperas_ccu
+    description: Cantidad de schoperas CCU
+    data_type: Int64
+  - name: salidas
+    description: Cantidad de salidas
+    data_type: Int64
+  - name: coolers
+    description: Número de coolers
+    data_type: Int64
+  - name: "es_local_imagen?"
+    description: Indica si es un local imagen
+    data_type: boolean
+  - name: folio
+    description: Folio o número de contrato
+    data_type: string
+  - name: fecha_suscripcion_comodato
+    description: Fecha de suscripción del comodato
+    data_type: date
+  - name: fecha_termino_contrato
+    description: Fecha de término del contrato
+    data_type: date
+  - name: activos_entregados
+    description: Cantidad de activos entregados
+    data_type: string
+  - name: cantidad_total_salidas_schop
+    description: Cantidad total de salidas de schop
+    data_type: string
+  - name: modificacion
+    description: Indica si hubo modificación
+    data_type: category
+  - name: mes_cambio
+    description: Mes del cambio o modificación
+    data_type: string

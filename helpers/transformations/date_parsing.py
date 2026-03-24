@@ -1,6 +1,6 @@
 import pandas as pd
 import re
-from datetime import datetime
+from datetime import date
 
 def parse_spanish_month_year(series):
     """
@@ -32,7 +32,7 @@ def parse_spanish_month_year(series):
             
             month_int = spanish_months.get(month_str)
             if month_int:
-                return datetime(year_int, month_int, 1).date()
+                return date(year_int, month_int, 1)
         
         # Fallback to pandas to_datetime for standard formats
         dt = pd.to_datetime(val_str, errors='coerce')
@@ -42,4 +42,5 @@ def parse_spanish_month_year(series):
         return None
 
     # Apply processing
-    return series.apply(process_val)
+    res = series.apply(process_val)
+    return pd.to_datetime(res, errors='coerce').dt.date

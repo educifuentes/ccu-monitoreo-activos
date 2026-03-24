@@ -1,10 +1,11 @@
 import pandas as pd
 
+from models.staging.bases_ccu._stg_bases_ccu__base_2026_q1 import stg_bases_ccu__base_2026_q1
+
 from helpers.transformations.yes_no_to_boolean import yes_no_to_boolean
 from helpers.transformations.date_parsing import parse_spanish_month_year
 
 
-from models.staging.bases_ccu._stg_bases_ccu__base_2026_q1 import stg_bases_ccu__base_2026_q1
 
 def int_reportes_ccu_base_2026_q1():
 
