@@ -2,12 +2,12 @@ import pandas as pd
 import numpy as np
 
 from models.staging.bases_ccu._stg_bases_ccu__base_2024_q1 import stg_bases_ccu__base_2024_q1
-from models.staging.base_normalizada._stg_base_normalizada__original import stg_base_normalizada__original_base_ccu_2024
+from models.staging.bases_manuales._stg_bases_manuales__original import stg_bases_manuales__original_base_ccu_2024
 
 def int_reportes_ccu_base_2024_q1():
     """veine directo de base normalizada"""
 
-    df = stg_base_normalizada__original_base_ccu_2024()
+    df = stg_bases_manuales__original_base_ccu_2024()
 
     rename_dict = {
         "ID CLIENTE": "cliente_id",

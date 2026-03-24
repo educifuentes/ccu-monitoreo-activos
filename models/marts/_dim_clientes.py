@@ -1,6 +1,6 @@
 import pandas as pd
 
-from models.intermediate.base_normalizada._int_base_normalizada__clientes import int_base_normalizada__clientes
+from models.intermediate.bases_manuales._int_bases_manuales__clientes import int_bases_manuales__clientes
 from models.intermediate.bases_ccu._int_bases_ccu__base_2026_q1 import int_bases_ccu__base_2026_q1_locales
 from models.intermediate.censos._int_censos__censo_2026_1 import int_censos__censo_2026_1_agencia_pk
 
@@ -17,7 +17,7 @@ def update_with_base_ccu_2026_q1():
     Adds records from the normalized base that are missing in the 2026 report.
     """
     # load df
-    df_norm = int_base_normalizada__clientes()
+    df_norm = int_bases_manuales__clientes()
     df_ccu = int_bases_ccu__base_2026_q1_locales()
 
     # columns

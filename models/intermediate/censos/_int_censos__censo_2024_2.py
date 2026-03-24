@@ -1,8 +1,8 @@
 import pandas as pd
 
 from models.staging.censos._stg_censos__censo_2024_2 import stg_censos__censo_2024_2
-from models.staging.base_normalizada._stg_base_normalizada__censo_2024_2 import stg_base_normalizada__censo_2024_2
-from models.staging.base_normalizada._stg_base_normalizada__original import stg_base_normalizada__original_censo_2024
+from models.staging.bases_manuales._stg_bases_manuales__censo_2024_2 import stg_bases_manuales__censo_2024_2
+from models.staging.bases_manuales._stg_bases_manuales__original import stg_bases_manuales__original_censo_2024
 
 from utilities.transformations.process_marcas import process_marcas, classify_marcas
 from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
@@ -16,7 +16,7 @@ def int_censos__censo_2024_2():
     # orifnal name: int_base_norm_original_censo_2024
     #mviene de base normalizada original
 
-    df = stg_base_normalizada__original_censo_2024()
+    df = stg_bases_manuales__original_censo_2024()
 
     # clean
     # drop rows based on  where CATEGORÍA CENSO 1 column:  "NO CENSADO" , None or NaN, and CCU/Cuestionados 
@@ -158,7 +158,7 @@ def int_censos__censo_2024_2_deprecated():
 
 
 def clean_df_summary_censo_2024():
-    df = stg_base_normalizada__original_censo_2024()
+    df = stg_bases_manuales__original_censo_2024()
     summary_data = []
 
     initial_len = len(df)
@@ -186,7 +186,7 @@ def clean_df_summary_censo_2024():
 
 
 def int_base_norm_censo_2024_2():
-    df = stg_base_normalizada__censo_2024_2()
+    df = stg_bases_manuales__censo_2024_2()
 
     # Apply brand processing
     brands_col = "CCU/ABINBEV/OTRAS MARCAS COMPETENCIA"

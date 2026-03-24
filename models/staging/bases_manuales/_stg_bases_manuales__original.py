@@ -3,12 +3,12 @@ import numpy as np
 from helpers.utilities.get_source_metadata import get_source_metadata
 from helpers.utilities.load_source import load_source
 
-def stg_base_normalizada__original():
+def stg_bases_manuales__original():
 
     # Fetch configuration from YAML
     file_path = get_source_metadata(
         "base_normalizada_original", 
-        "models/sources/_src_base_normalizada.yml"
+        "models/sources/_src_bases_manuales.yml"
     )
 
     # Load CSV
@@ -35,8 +35,8 @@ def stg_base_normalizada__original():
 
     return df
 
-def stg_base_normalizada__original_base_ccu_2024():
-    df = stg_base_normalizada__original()
+def stg_bases_manuales__original_base_ccu_2024():
+    df = stg_bases_manuales__original()
     selected_columns = ["ID CLIENTE", "N° Coolers", "N° Columnas", "N° Salidas Schop CCU"]
     
     # Drop rows where all three activos columns are null or none
@@ -47,8 +47,8 @@ def stg_base_normalizada__original_base_ccu_2024():
     df = df[selected_columns]
     return df
 
-def stg_base_normalizada__original_censo_2024():
-    df = stg_base_normalizada__original()
+def stg_bases_manuales__original_censo_2024():
+    df = stg_bases_manuales__original()
 
     selected_columns = [
         "ID CLIENTE", 

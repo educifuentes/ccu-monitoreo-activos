@@ -3,9 +3,9 @@ import numpy as np
 from helpers.utilities.get_source_metadata import get_source_metadata
 from helpers.utilities.load_source import load_source
 
-def stg_base_normalizada__clientes():
+def stg_bases_manuales__clientes():
     # Define file path
-    file_path = get_source_metadata("base_normalizada_clientes", "models/sources/_src_base_normalizada.yml")
+    file_path = get_source_metadata("base_normalizada_clientes", "models/sources/_src_bases_manuales.yml")
     
     # Load CSV
     df = load_source(file_path)

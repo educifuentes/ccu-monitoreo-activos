@@ -6,9 +6,9 @@ from pathlib import Path
 # All paths are relative to models/raw
 MAPPINGS = {
     # Staging - base_normalizada
-    "staging/base_normalizada/_stg_base_normalizada__censo_2024_2.py": "../staging/base_normalizada/_stg_base_normalizada__censo_2024_2.py",
-    "staging/base_normalizada/_stg_base_normalizada__clientes.py": "../staging/base_normalizada/_stg_base_normalizada__clientes.py",
-    "staging/base_normalizada/_stg_base_normalizada__original.py": "../staging/base_normalizada/_stg_base_normalizada__original.py",
+    "staging/base_normalizada/_stg_bases_manuales__censo_2024_2.py": "../staging/base_normalizada/_stg_bases_manuales__censo_2024_2.py",
+    "staging/base_normalizada/_stg_bases_manuales__clientes.py": "../staging/base_normalizada/_stg_bases_manuales__clientes.py",
+    "staging/base_normalizada/_stg_bases_manuales__original.py": "../staging/base_normalizada/_stg_bases_manuales__original.py",
 
     # Staging - bases_ccu
     "staging/bases_ccu/_stg_bases_ccu__base_2024_q1.py": "../staging/bases_ccu/_stg_bases_ccu__base_2024_q1.py",
@@ -24,7 +24,7 @@ MAPPINGS = {
     "staging/censos/_stg_censos__censo_2026_1_listado_marcas.py": "../staging/censos/_stg_censos__censo_2026_1_listado_marcas.py",
 
     # Intermediate - base_normalizada
-    "intermediate/_int_base_normalizada__clientes.py": "../intermediate/base_normalizada/_int_base_normalizada__clientes.py",
+    "intermediate/_int_bases_manuales__clientes.py": "../intermediate/base_normalizada/_int_bases_manuales__clientes.py",
 
     # Intermediate - bases_ccu
     "intermediate/_int_reportes_ccu_base_2024_q1.py": "../intermediate/bases_ccu/_int_bases_ccu__base_2024_q1.py",

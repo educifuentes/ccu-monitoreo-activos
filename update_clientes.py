@@ -6,8 +6,8 @@ import re
 # File moves
 FILES_TO_MOVE = {
     "models/marts/_dim_clientes.py": "models/marts/_dim_clientes.py",
-    "models/staging/base_normalizada/_stg_base_normalizada__clientes.py": "models/staging/base_normalizada/_stg_base_normalizada__clientes.py",
-    "models/intermediate/base_normalizada/_int_base_normalizada__clientes.py": "models/intermediate/base_normalizada/_int_base_normalizada__clientes.py",
+    "models/staging/base_normalizada/_stg_bases_manuales__clientes.py": "models/staging/base_normalizada/_stg_bases_manuales__clientes.py",
+    "models/intermediate/base_normalizada/_int_bases_manuales__clientes.py": "models/intermediate/base_normalizada/_int_bases_manuales__clientes.py",
     "models/exposures/_exp_clientes.py": "models/exposures/_exp_clientes.py",
 }
 
@@ -17,14 +17,14 @@ FILES_TO_MOVE = {
 STR_REPLACEMENTS = [
     # 1. Explicit Module Paths
     ("models.marts._dim_clientes", "models.marts._dim_clientes"),
-    ("models.staging.base_normalizada._stg_base_normalizada__clientes", "models.staging.base_normalizada._stg_base_normalizada__clientes"),
-    ("models.intermediate.base_normalizada._int_base_normalizada__clientes", "models.intermediate.base_normalizada._int_base_normalizada__clientes"),
+    ("models.staging.bases_manuales._stg_bases_manuales__clientes", "models.staging.bases_manuales._stg_bases_manuales__clientes"),
+    ("models.intermediate.bases_manuales._int_bases_manuales__clientes", "models.intermediate.bases_manuales._int_bases_manuales__clientes"),
     ("models.exposures._exp_clientes", "models.exposures._exp_clientes"),
 
     # 2. Function Names
     ("dim_clientes", "dim_clientes"),
-    ("stg_base_normalizada__clientes", "stg_base_normalizada__clientes"),
-    ("int_base_normalizada__clientes", "int_base_normalizada__clientes"),
+    ("stg_bases_manuales__clientes", "stg_bases_manuales__clientes"),
+    ("int_bases_manuales__clientes", "int_bases_manuales__clientes"),
     ("exp_clientes", "exp_clientes"),
     ("clientes_options", "clientes_options"),
     ("unique_clientes_master", "unique_clientes_master"),
