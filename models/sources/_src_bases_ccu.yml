@@ -7,6 +7,45 @@ sources:
         description: Pilar manda de nuevo parta actualizar data de clientes.
         date_received: 2026-03-24
         url: https://docs.google.com/spreadsheets/d/1xxTqbLUKZpSpXbYOTH6qQbpIvy5F3ew3B8_cb9y75_U/edit?gid=904467430#gid=904467430
+        columns:
+          - name: local_id
+            description: Identificador único del local
+          - name: razon_social
+            description: Razón social del cliente
+          - name: rut
+            description: RUT del cliente
+          - name: direccion
+            description: Dirección del local
+          - name: region
+            description: Región del local
+          - name: ciudad
+            description: Ciudad del local
+          - name: comuna
+            description: Comuna del local
+          - name: nombre_fantasia
+            description: Nombre de fantasía del local
+          - name: numero de schoperas
+            description: Número de máquinas schoperas
+          - name: numero de salidas
+            description: Número total de salidas de schop
+          - name: numero de coolers
+            description: Número de coolers
+          - name: ¿es local imagen?
+            description: Indica si el local es de imagen
+          - name: Folio
+            description: Folio del contrato
+          - name: Fecha de suscripción del comodato
+            description: Fecha de inicio del comodato
+          - name: "Fecha de término del contrato (de aplicar)"
+            description: Fecha de fin del contrato si aplica
+          - name: Activos entregados
+            description: Descripción de activos entregados
+          - name: Cantidad total de salidas de schop
+            description: Total de salidas de schop
+          - name: Modificacion
+            description: Tipo de modificación realizada
+          - name: Mes cambio
+            description: Mes en que se efectuó el cambio
         path: seeds/reportes_ccu/base_ccu_2026_q1.csv
       - name: base_solicitada_2026
         nota: se uso one time para actualizar locales. Ignorar por ahora.
