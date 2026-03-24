@@ -221,6 +221,10 @@ def int_censos__censo_2026_1_agencia_corpa():
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors='coerce').astype("Int64")
 
+    # Initialize missing metadata before slice
+    df["permite_censo"] = None
+    df["motivo_no_censo"] = None
+
     # 8. Final Column Selection
     selected_columns = [
         "cliente_id",
@@ -269,7 +273,7 @@ def int_censos__censo_2026_1_agencia_corpa():
     rename_dict_sistematizado = {
         "ID CLIENTE": "cliente_id",
         "Permite censo (SI/NO)": "permite_censo",
-        "[Si corresponde] Motivo por el que no pudo ser censado (cliente cerrado, no permite ingreso, etc)": "motivo_no_censo"
+        "[Si corresponde] Motivo por el que no pudo ser censado (local cerrado, no permite ingreso, etc)": "motivo_no_censo"
     }
 
     df_sistematizado = df_sistematizado.rename(columns=rename_dict_sistematizado)
@@ -289,8 +293,4 @@ def int_censos__censo_2026_1_agencia_corpa():
         how="left"
     )
 
-    # metadata censo
-    df["permite_censo"] = None
-    df["motivo_no_censo"] = None
-    
     return df
