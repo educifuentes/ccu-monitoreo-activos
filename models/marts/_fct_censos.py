@@ -7,7 +7,10 @@ from models.intermediate.censos._int_censos__censo_2026_1 import int_censos__cen
 from models.intermediate.censos._int_censos__censo_2024_2 import int_censos__censo_2024_2
 
 selected_columns = [
+        # keys
         "cliente_id",
+        "periodo",
+        "fecha",
         # clientes info
         "razon_social",
         "direccion",
@@ -15,9 +18,7 @@ selected_columns = [
         "region",
         "comuna",
         "nombre_fantasia",
-        # metadata
-        "periodo",
-        "fecha",
+        # censo metadata
         "agencia",
         "permite_censo",
         "motivo_no_censo",
@@ -26,7 +27,6 @@ selected_columns = [
         "schoperas_ccu",
         "salidas",
         # accion
-        "accion_ccu",
         "instalo",
         "disponibilizo",
         # marcas
@@ -75,6 +75,8 @@ def fct_censos():
         ], 
         selected_columns
     )
+
+    df.sort_values(by=["periodo"], ascending=False, inplace=True)
 
     return df
 
