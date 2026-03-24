@@ -1,9 +1,9 @@
 import streamlit as st
 
-from utilities.transformations.gsheet_links import add_gsheet_link
-from utilities.ui_icons import ICONS
+from helpers.transformations.gsheet_links import add_gsheet_link
+from helpers.ui_components.ui_icons import ICONS
 
-from utilities.widgets.explorer_de_datos import explorer_de_datos
+from helpers.widgets.explorer_de_datos import explorer_de_datos
 
 def display_compliance_badge(clasificacion):
     """Displays a formatted st.badge based on the classification."""

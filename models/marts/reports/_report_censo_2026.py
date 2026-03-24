@@ -1,7 +1,7 @@
 import pandas as pd
 from models.marts._fct_censos import fct_censos_2026
 from models.marts._dim_clientes import dim_clientes
-from utilities.constants.brands import BRAND_CORPORATE_MAPPING, CORPORATE_GROUPS
+from helpers.constants.brands import BRAND_CORPORATE_MAPPING, CORPORATE_GROUPS
 
 def report_censo_2026():
     """

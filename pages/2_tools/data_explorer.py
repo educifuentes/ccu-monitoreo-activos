@@ -5,8 +5,8 @@ from models.gsheets.staging.gsheets_tables import (
     bases_ccu, 
     contratos
 )
-from utilities.ui_icons import ICONS
-from utilities.widgets.explorer_de_datos import explorer_de_datos
+from helpers.ui_components.ui_icons import ICONS
+from helpers.widgets.explorer_de_datos import explorer_de_datos
 
 
 st.set_page_config(page_title="Explorador de Datos", layout="wide")

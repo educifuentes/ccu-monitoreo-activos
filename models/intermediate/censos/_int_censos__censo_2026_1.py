@@ -3,10 +3,10 @@ import pandas as pd
 from models.staging.censos._stg_censos__censo_2026_1_agencia_pk import stg_censos__censo_2026_1_agencia_pk
 from models.staging.censos._stg_censos__censo_2026_1_agencia_corpa import stg_censos__censo_2026_1_agencia_corpa
 from models.staging.censos._stg_censos__censo_2026_1_agencia_corpa_sistematizado import stg_censos__censo_2026_1_agencia_corpa_sistematizado
-from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
-from utilities.transformations.process_marcas import process_marcas, classify_marcas, process_marcas_questionnaire_version, correct_brand_names
-from utilities.transformations.text_cleaning import clean_text
-from utilities.transformations.clean_region import clean_region
+from helpers.transformations.yes_no_to_boolean import yes_no_to_boolean
+from helpers.transformations.process_marcas import process_marcas, classify_marcas, process_marcas_questionnaire_version, correct_brand_names
+from helpers.transformations.text_cleaning import clean_text
+from helpers.transformations.clean_region import clean_region
 
 
 def int_censos__censo_2026_1_agencia_pk():
@@ -235,6 +235,8 @@ def int_censos__censo_2026_1_agencia_corpa():
         "periodo",
         "fecha",
         "agencia",
+        "permite_censo",
+        "motivo_no_censo",
         # activos
         "schoperas_total",
         "schoperas_ccu",
@@ -286,5 +288,9 @@ def int_censos__censo_2026_1_agencia_corpa():
         on="cliente_id",
         how="left"
     )
+
+    # metadata censo
+    df["permite_censo"] = None
+    df["motivo_no_censo"] = None
     
     return df

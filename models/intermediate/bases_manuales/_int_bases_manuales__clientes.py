@@ -1,7 +1,7 @@
 from models.staging.bases_manuales._stg_bases_manuales__clientes import stg_bases_manuales__clientes
 from models.intermediate.bases_ccu._int_bases_ccu__base_2026_q1 import int_bases_ccu__base_2026_q1_locales
 
-from utilities.transformations.text_cleaning import clean_text
+from helpers.transformations.text_cleaning import clean_text
 
 
 def int_bases_manuales__clientes():

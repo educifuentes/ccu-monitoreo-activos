@@ -9,9 +9,9 @@ from models.exposures._exp_censos import exp_censos
 
 from models.marts.metrics.general_metrics import calculate_general_metrics, get_latest_classification
 
-from utilities.ui_components import display_compliance_badge
-from utilities.ui_config import CLASIFICACION_COLORS, MARCAS_COLORS
-from utilities.transformations.date_formatting import format_date_spanish
+from helpers.ui_components.ui_components import display_compliance_badge
+from helpers.ui_components.ui_config import CLASIFICACION_COLORS, MARCAS_COLORS
+from helpers.transformations.date_formatting import format_date_spanish
 
 # -----------------------------------------------------------------------------
 # PAGE CONFIGURATION

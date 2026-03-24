@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 
-from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
-from utilities.transformations.date_parsing import parse_spanish_month_year
+from helpers.transformations.yes_no_to_boolean import yes_no_to_boolean
+from helpers.transformations.date_parsing import parse_spanish_month_year
 
 
 

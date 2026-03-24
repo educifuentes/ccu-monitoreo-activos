@@ -1,6 +1,6 @@
 import pandas as pd
 
-from utilities.constants.brands import BRAND_CORPORATE_MAPPING, FREE_TEXT_MAPPINGS, IGNORE_FREE_TEXT
+from helpers.constants.brands import BRAND_CORPORATE_MAPPING, FREE_TEXT_MAPPINGS, IGNORE_FREE_TEXT
 import re
 import difflib
 

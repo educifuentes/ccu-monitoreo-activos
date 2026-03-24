@@ -7,8 +7,8 @@ from models.intermediate.censos._int_censos__censo_2026_1 import int_censos__cen
 from models.intermediate.censos._int_censos__censo_2026_1_fne_listado import int_censos__censo_2026_1_fne_listado
 
 
-from utilities.transformations.text_cleaning import clean_text
-from utilities.transformations.clean_region import clean_region
+from helpers.transformations.text_cleaning import clean_text
+from helpers.transformations.clean_region import clean_region
 
 
 def update_with_base_ccu_2026_q1():

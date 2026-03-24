@@ -2,8 +2,8 @@ import pandas as pd
 
 from models.staging.censos._stg_censos__censo_2025_2 import stg_censos__censo_2025_2
 
-from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
-from utilities.transformations.process_marcas import process_marcas, classify_marcas
+from helpers.transformations.yes_no_to_boolean import yes_no_to_boolean
+from helpers.transformations.process_marcas import process_marcas, classify_marcas
 
 def int_censos__censo_2025_2():
     """

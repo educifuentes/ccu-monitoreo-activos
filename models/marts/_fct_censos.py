@@ -1,5 +1,5 @@
 import pandas as pd
-from utilities.transformations.dataframe_alignment import safe_concat_with_columns
+from helpers.transformations.dataframe_alignment import safe_concat_with_columns
 
 from models.intermediate.censos._int_censos__censo_2025_2 import int_censos__censo_2025_2
 from models.intermediate.censos._int_censos__censo_2026_1 import int_censos__censo_2026_1_agencia_pk, int_censos__censo_2026_1_agencia_corpa
@@ -50,11 +50,11 @@ def fct_censos_2026():
     # blends corpa and pk agencias
     # tenporal para reporte censo 2026 on demand
 
-    df_censo_2026_1 = int_censos__censo_2026_1_agencia_pk()
+    df_censo_2026_1_agencia_pk = int_censos__censo_2026_1_agencia_pk()
     df_censo_2026_1_agencia_corpa = int_censos__censo_2026_1_agencia_corpa()
 
     # 5. Union and Final Processing
-    df = safe_concat_with_columns([df_censo_2026_1, df_censo_2026_1_agencia_corpa], selected_columns)
+    df = safe_concat_with_columns([df_censo_2026_1_agencia_pk, df_censo_2026_1_agencia_corpa], selected_columns)
 
     return df
 

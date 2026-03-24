@@ -4,9 +4,9 @@ import pandas as pd
 
 from models.exposures._exp_censos import exp_censos
 
-from utilities.ui_config import CLASIFICACION_COLORS
-from utilities.widgets.explorer_de_datos import explorer_de_datos
-from utilities.widgets.display_df_censos import display_df_censos
+from helpers.ui_components.ui_config import CLASIFICACION_COLORS
+from helpers.widgets.explorer_de_datos import explorer_de_datos
+from helpers.widgets.display_df_censos import display_df_censos
 
 
 

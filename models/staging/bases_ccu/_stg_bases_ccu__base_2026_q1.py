@@ -16,7 +16,7 @@ def stg_bases_ccu__base_2026_q1():
         "numero de schoperas": "schoperas",
         "numero de salidas": "salidas",
         "numero de coolers": "coolers",
-        "¿es cliente imagen?": "es_local_imagen?",
+        "¿es local imagen?": "es_local_imagen?",
         "Fecha de suscripción del comodato": "fecha_suscripcion_comodato",
         "Fecha de término del contrato (de aplicar)": "fecha_termino_contrato",
         "Activos entregados": "activos_entregados",

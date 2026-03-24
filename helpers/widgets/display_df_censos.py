@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
-from utilities.ui_config import CLASIFICACION_COLORS
-from utilities.constants.brands import BRANDS, BRAND_COLORS
+from helpers.ui_components.ui_config import CLASIFICACION_COLORS
+from helpers.constants.brands import BRANDS, BRAND_COLORS
 
 def display_df_censos(df: pd.DataFrame):
     config = {

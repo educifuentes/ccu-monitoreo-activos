@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
-from utilities.ui_components import render_troubled_rows
-from utilities.ui_icons import ICONS
+from helpers.ui_components.ui_components import render_troubled_rows
+from helpers.ui_components.ui_icons import ICONS
 
 def validate_locales(df):
     st.header("Clientes")

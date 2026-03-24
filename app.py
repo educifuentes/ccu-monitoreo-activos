@@ -1,7 +1,7 @@
 import streamlit as st
 import os
 
-from utilities.app_version import get_app_version
+from helpers.utilities.app_version import get_app_version
 
 
 # Page configuration

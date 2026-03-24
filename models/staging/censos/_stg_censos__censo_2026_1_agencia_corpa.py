@@ -1,6 +1,6 @@
 from helpers.utilities.get_source_metadata import get_source_metadata
 from helpers.utilities.load_source import load_source
-from utilities.transformations.clean_column_names import clean_column_name
+from helpers.transformations.clean_column_names import clean_column_name
 
 SOURCE_YAML_PATH = "models/sources/_src_censos__censo_2026_1.yml"
 

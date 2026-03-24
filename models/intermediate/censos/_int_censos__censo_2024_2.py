@@ -4,8 +4,8 @@ from models.staging.censos._stg_censos__censo_2024_2 import stg_censos__censo_20
 from models.staging.bases_manuales._stg_bases_manuales__censo_2024_2 import stg_bases_manuales__censo_2024_2
 from models.staging.bases_manuales._stg_bases_manuales__original import stg_bases_manuales__original_censo_2024
 
-from utilities.transformations.process_marcas import process_marcas, classify_marcas
-from utilities.transformations.yes_no_to_boolean import yes_no_to_boolean
+from helpers.transformations.process_marcas import process_marcas, classify_marcas
+from helpers.transformations.yes_no_to_boolean import yes_no_to_boolean
 
 # nota
 # se usa finalmente int_base_norm_original_censo_2024
