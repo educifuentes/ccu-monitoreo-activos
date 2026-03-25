@@ -61,7 +61,7 @@ def validate_bases_ccu(periodo=None):
     st.markdown("### 3. Activos Vacíos en 2024-Q1")
     df_2024 = _df[_df["periodo"] == "2024-Q1"]
     empty_activos = df_2024[
-        df_2024["schoperas"].isna() &
+        df_2024["schoperas_ccu"].isna() &
         df_2024["coolers"].isna() &
         df_2024["salidas"].isna()
     ]
@@ -70,7 +70,7 @@ def validate_bases_ccu(periodo=None):
         st.success(f"{ICONS['check']} Todos los registros de 2024-Q1 tienen al menos un activo válido.")
     else:
         st.error(f"{ICONS['close']} Se detectaron {len(empty_activos)} registros en 2024-Q1 sin ningún activo reportado.")
-        render_troubled_rows(empty_activos[["cliente_id", "periodo", "schoperas", "coolers", "salidas"]])
+        render_troubled_rows(empty_activos[["cliente_id", "periodo", "schoperas_ccu", "coolers", "salidas"]])
 
     # 4. Contratos
     st.markdown("### 4. Contratos")
