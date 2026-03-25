@@ -37,29 +37,35 @@ def render_model_ui(df, table_name=None):
         st.dataframe(df)
     st.divider()
 
-def render_troubled_rows(df, gid, row_indices=None):
+def render_troubled_rows(df, gid=None, row_indices=None, source=None):
     """
-    Renders a dataframe of troubled rows with a configured Google Sheet link.
-    
+    Renders a dataframe of troubled rows.
+
     Args:
         df (pd.DataFrame): The dataframe containing the rows to display.
-        gid (str): The Google Sheet Grid ID.
-        row_indices (pd.Series or list, optional): The original row indices for linking. 
+        gid (str, optional): The Google Sheet Grid ID. Required when source="gsheets".
+        row_indices (pd.Series or list, optional): The original row indices for linking.
                                                    If None, tries to use df['row_index'].
+        source (str, optional): Data source hint. Pass "gsheets" to show the GSheet
+                                 link column. Omit (or pass None) to display the plain
+                                 dataframe without a link.
     """
-    if row_indices is None:
-        if 'row_index' in df.columns:
-            row_indices = df['row_index']
-    
-    df_with_links = add_gsheet_link(df, gid, row_indices)
-    
-    # Drop row_index from display if it exists
-    display_df = df_with_links.copy()
-    if 'row_index' in display_df.columns:
-        display_df = display_df.drop(columns=['row_index'])
+    if source == "gsheets" and gid is not None:
+        if row_indices is None and "row_index" in df.columns:
+            row_indices = df["row_index"]
 
-    st.dataframe(
-        display_df, 
-        width='stretch',
-        column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")}
-    )
+        df_with_links = add_gsheet_link(df, gid, row_indices)
+
+        display_df = df_with_links.copy()
+        if "row_index" in display_df.columns:
+            display_df = display_df.drop(columns=["row_index"])
+
+        st.dataframe(
+            display_df,
+            use_container_width=True,
+            column_config={"link": st.column_config.LinkColumn("link", display_text="Ir a Gsheet")},
+        )
+    else:
+        display_df = df.drop(columns=["row_index"], errors="ignore")
+        st.dataframe(display_df, use_container_width=True)
+

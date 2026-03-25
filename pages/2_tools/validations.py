@@ -1,14 +1,6 @@
 import streamlit as st
-import pandas as pd
 
-from models.gsheets.staging.gsheets_tables import (
-    clientes, 
-    censos, 
-    bases_ccu, 
-    contratos
-)
-
-from tests.test_locales import validate_locales
+from tests.test_clientes import validate_locales
 from tests.test_censos import validate_censos
 from tests.test_bases_ccu import validate_bases_ccu
 from tests.test_contratos import validate_contratos
@@ -16,42 +8,24 @@ from tests.test_contratos import validate_contratos
 # --- Page Config & Header ---
 st.set_page_config(page_title="Validaciones", layout="wide")
 st.title(":material/fact_check: Validaciones")
-st.markdown("Chequeos automáticos sobre las tablas fuente de Google Sheets para asegurar la integridad de los reportes.")
-
+st.markdown("Chequeos automáticos sobre las tablas fuente para asegurar la integridad de los reportes.")
 
 # --- Tab Layout ---
 tab1, tab2, tab3, tab4 = st.tabs([
     ":material/sports_bar: Clientes",
     ":material/checklist_rtl: Censos",
     ":material/assignment: Bases CCU",
-    ":material/contract: Contratos"
+    ":material/contract: Contratos",
 ])
 
-# --- Tab 1: Clientes ---
 with tab1:
-    # test com
-    df_loc = clientes()
-    validate_locales(df_loc)
+    validate_locales()
 
-# --- Tab 2: Censos ---
 with tab2:
-    df_censos = censos()
-    # We reuse df_loc from tab1, but ensuring it's loaded if tab1 wasn't run is safer, 
-    # though streamlit runs top-down. 
-    # Better to load it if not present, but here we can assume it's available or reload.
-    if 'df_loc' not in locals():
-        df_loc = clientes()
-    validate_censos(df_censos, df_loc)
+    validate_censos()
 
-# --- Tab 3: Bases CCU ---
 with tab3:
-    df_bases = bases_ccu()
-    if 'df_loc' not in locals():
-        df_loc = clientes()
-    validate_bases_ccu(df_bases, df_loc)
+    validate_bases_ccu()
 
-# --- Tab 4: Contratos ---
 with tab4:
-    df_contratos = contratos()
-    validate_contratos(df_contratos)
-
+    validate_contratos()
