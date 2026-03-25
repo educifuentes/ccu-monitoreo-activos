@@ -33,7 +33,7 @@ def metrics_censo_kpis_by_period():
 
     # Human friendly names
     name_mapping = {
-        "cliente_id_count": "Total Clientes",
+        "cliente_id_count": "# Clientes",
         "marcas_abinbev_sum": "# con AbInbev",
         "marcas_abinbev_mean": "% con AbInbev",
         "marcas_kross_sum": "# con Kross",
@@ -42,8 +42,8 @@ def metrics_censo_kpis_by_period():
         "marcas_ccu_mean": "% con CCU",
         "marcas_otras_sum": "# con Otras Marcas",
         "marcas_otras_mean": "% con Otras Marcas",
-        "hay_competencia_sum": "# con Competencia en Salida",
-        "hay_competencia_mean": "% con Competencia en Salida",
+        "hay_competencia_sum": "# con Comp. en Salida",
+        "hay_competencia_mean": "% con Comp. en Salida",
         "instalo_gt_0_sum": "# que Instalaron",
         "instalo_gt_0_mean": "% que Instalaron",
         "disponibilizo_gt_0_sum": "# que Disponibilizaron",
@@ -53,7 +53,7 @@ def metrics_censo_kpis_by_period():
     metrics_df = metrics_df.rename(columns=name_mapping).reset_index()
 
     # Reorder columns to put Total Clientes first
-    cols = ["periodo", "Total Clientes"] + [c for c in metrics_df.columns if c not in ["periodo", "Total Clientes"]]
+    cols = ["periodo", "# Clientes"] + [c for c in metrics_df.columns if c not in ["periodo", "# Clientes"]]
     metrics_df = metrics_df[cols]
 
     metrics_df.sort_values(by="periodo", ascending=False, inplace=True)
@@ -61,6 +61,6 @@ def metrics_censo_kpis_by_period():
     # format display columns
     for col in metrics_df.columns:
         if col.startswith("%"):
-            metrics_df[col] = (metrics_df[col] * 100).round(1).astype(str) + "%"
+            metrics_df[col] = (metrics_df[col] * 100).round(0).astype(int).astype(str) + "%"
 
     return metrics_df

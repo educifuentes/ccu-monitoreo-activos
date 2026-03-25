@@ -50,7 +50,30 @@ st.subheader("General")
 
 # Metrics
 df_metrics = metrics_censo_kpis_by_period()
-st.dataframe(df_metrics, hide_index=True, use_container_width=True)
+if selected_periodo != "Todos":
+    df_metrics = df_metrics[df_metrics["periodo"] == selected_periodo]
+
+kpi_marcas = ["periodo", "# Clientes",
+        "# con AbInbev",
+        "% con AbInbev",
+        "# con Kross",
+        "% con Kross",
+        "# con CCU",
+        "% con CCU",
+        "# con Otras Marcas",
+        "% con Otras Marcas"]
+
+kpi_acciones = ["periodo", "# con Comp. en Salida",
+        "% con Comp. en Salida",
+        "# que Instalaron",
+        "% que Instalaron",
+        "# que Disponibilizaron",
+        "% que Disponibilizaron"]
+
+st.dataframe(df_metrics[kpi_marcas], hide_index=True)
+st.dataframe(df_metrics[kpi_acciones], hide_index=True)
+
+
 #metrics
 
 # st.subheader("Cumplimiento")
