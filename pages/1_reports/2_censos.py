@@ -3,6 +3,7 @@ import altair as alt
 import pandas as pd
 
 from models.exposures._exp_censos import exp_censos
+from models.exposures._exp_asset_evolution_censos import exp_asset_evolution_censos
 
 from helpers.ui_components.ui_config import CLASIFICACION_COLORS
 from helpers.widgets.explorer_de_datos import explorer_de_datos
@@ -19,6 +20,7 @@ st.caption("data de censos y reportes comodatos trimestrales de CCU")
 # 1. Data Loading
 try:
     df_censos = exp_censos()
+    df_asset_evolution_censos = exp_asset_evolution_censos()
 except Exception as e:
     st.error(f"Error cargando los datos de censos: {e}")
     st.stop()
@@ -61,8 +63,10 @@ if df_filtered.empty:
     st.stop()
 
 # 3. Layout: Table & Chart
-st.divider()
+st.subheader("Resumen")
+
 col_table, col_chart = st.columns([1, 1.5])
+
 
 with col_table:
     st.subheader(f"por Región - {selected_periodo}")
@@ -104,12 +108,33 @@ with col_chart:
     else:
         st.info("Las columnas 'clasificacion' o 'periodo' no están disponibles en los datos de censos.")
 
-st.subheader("Detalles")
 
-censo_columns = ["periodo", "cliente_id", "razon_social", "marcas",  "instalo", "disponibilizo", "salidas", "clasificacion"]
+st.subheader("Detalle por Cliente")
 
-censo_df_display = df_filtered[censo_columns]
+unique_clientes = (
+    df_censos[["cliente_id", "razon_social"]]
+    .drop_duplicates()
+    .sort_values("cliente_id")
+)
+clientes_options = {
+    row["cliente_id"]: f"{row['cliente_id']} - {row['razon_social']}"
+    for _, row in unique_clientes.iterrows()
+}
 
-explorer_de_datos(censo_df_display)
+cliente_seleccionado = st.selectbox(
+    "Seleccione un cliente",
+    options=list(clientes_options.keys()),
+    format_func=lambda x: clientes_options[x],
+)
 
-display_df_censos(censo_df_display)
+if cliente_seleccionado:
+    st.subheader(clientes_options[cliente_seleccionado])
+    censo_columns_client = ["periodo", "schoperas_total", "schoperas_ccu", "salidas", "clasificacion"]
+
+    df_filter_by_client = df_censos[df_censos["cliente_id"] == cliente_seleccionado]
+    st.dataframe(df_filter_by_client[censo_columns_client], hide_index=True, use_container_width=True)
+
+    st.subheader("Evolucion de Activos")
+    asset_evolution_columns_client = ["periodo", "schoperas_total", "schoperas_total_diff", "schoperas_ccu", "schoperas_ccu_diff", "salidas", "salidas_diff"]
+    df_asset_evolution_censos_client = df_asset_evolution_censos[df_asset_evolution_censos["cliente_id"] == cliente_seleccionado]
+    st.dataframe(df_asset_evolution_censos_client, hide_index=True, use_container_width=True)

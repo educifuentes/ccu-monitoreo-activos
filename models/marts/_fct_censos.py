@@ -41,7 +41,7 @@ selected_columns = [
         "marcas_ccu_listado",
         "marcas_otras_listado",
         # competencia
-         "hay_competencia_en_salida"
+         "hay_competencia_en_salida",
         "marca_instalada_en_salida",
 
     ]

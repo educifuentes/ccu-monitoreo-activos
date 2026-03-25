@@ -7,15 +7,20 @@ from models.marts.metrics.clasification_censo import clasify_censo
 
 def exp_censos():
     """
-    Uses the classification logic defined in models.marts.metrics.clasification_censo.
+    censo con dim clientes
     """
     # 1. Data Loading and Integration
     df = fct_censos()
-    
+    clientes_df = exp_clientes()
+
+    # Merge; clientes_df is the authoritative source for shared columns
+    df = df.merge(clientes_df, on='cliente_id', how='left', suffixes=('_censos', ''))
+
+    # Drop any _censos-suffixed duplicates (fct_censos copies of client columns)
+    cols_to_drop = [c for c in df.columns if c.endswith('_censos')]
+    df = df.drop(columns=cols_to_drop)
+
     # 2. Classification Logic (Moved to metrics layer)
     df = clasify_censo(df)
-
-    # add region column
-    df = df.merge(exp_clientes(), on='cliente_id', how='left')
 
     return df
