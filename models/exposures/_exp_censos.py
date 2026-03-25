@@ -27,7 +27,7 @@ def exp_censos():
         "motivo_no_censo",
         "schoperas_total",
         "schoperas_ccu",
-        "schoperas_competencia"
+        "schoperas_competencia",
         "salidas",
         "instalo",
         "disponibilizo",
