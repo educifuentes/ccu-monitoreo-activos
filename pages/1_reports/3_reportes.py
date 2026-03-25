@@ -3,6 +3,8 @@ import streamlit as st
 
 from models.marts.reports._report_censo_2026 import report_censo_2026
 
+from helpers.ui_components.ui_components import render_model_ui
+
 
 st.set_page_config(page_title="Reportes", layout="wide")
 
@@ -20,4 +22,5 @@ with col1:
 with col2:
     st.dataframe(df["AGENCIA"].value_counts().reset_index(), hide_index=True)
 
-st.dataframe(df, hide_index=True, height=700)
+
+render_model_ui(df)

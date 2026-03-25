@@ -24,7 +24,7 @@ nav_dict = {
         general_page, 
         clientes_page,
         censos_page,
-        reportes_page
+        # reportes_page
     ],
     "Herramientas": [explore_page, validations_page, documentation_page],
 }

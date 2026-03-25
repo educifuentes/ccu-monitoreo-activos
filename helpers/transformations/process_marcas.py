@@ -226,3 +226,26 @@ def correct_brand_names(series):
         return val
 
     return series.apply(_correct)
+
+
+# pending
+
+       # Clean marcas_otras_listado: keep only brands that belong to CORPORATE_GROUPS[3] ("marcas_otras")
+    # _otras_brands = {
+    #     brand for brand, group in BRAND_CORPORATE_MAPPING.items()
+    #     if group == CORPORATE_GROUPS[3]
+    # }
+
+    # def _filter_otras_brands(cell):
+    #     if pd.isna(cell) or str(cell).strip() == "":
+    #         return cell
+    #     tokens = [t.strip().upper() for t in str(cell).split(",")]
+    #     filtered = [t for t in tokens if t in _otras_brands]
+    #     return ", ".join(filtered) if filtered else None
+
+    # out_df["Otras (indicar cuáles)"] = (
+    #     out_df["Otras (indicar cuáles)"]
+    #     .str.upper()
+    #     .str.strip()
+    #     .apply(_filter_otras_brands)
+    # )
