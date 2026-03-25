@@ -71,3 +71,20 @@ def validate_bases_ccu(periodo=None):
     else:
         st.error(f"{ICONS['close']} Se detectaron {len(empty_activos)} registros en 2024-Q1 sin ningún activo reportado.")
         render_troubled_rows(empty_activos[["cliente_id", "periodo", "schoperas", "coolers", "salidas"]])
+
+    # 4. Contratos
+    st.markdown("### 4. Contratos")
+
+    nulos_id = _df[_df["cliente_id"].isna()]
+    if not nulos_id.empty:
+        st.error(f"{ICONS['close']} Detectados {len(nulos_id)} filas sin cliente_id")
+        render_troubled_rows(nulos_id[["cliente_id", "folio"]])
+    else:
+        st.success(f"{ICONS['check']} Todos los registros tienen cliente_id")
+
+    nulos_folio = _df[_df["folio"].isna()]
+    if not nulos_folio.empty:
+        st.warning(f"{ICONS['warning']} Detectados {len(nulos_folio)} registros sin Folio")
+        render_troubled_rows(nulos_folio[["cliente_id", "folio"]])
+    else:
+        st.success(f"{ICONS['check']} Todos los registros tienen Folio")
