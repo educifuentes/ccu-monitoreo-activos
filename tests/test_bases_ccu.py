@@ -14,42 +14,43 @@ df = fct_bases_ccu()
 df_locales = dim_clientes()
 
 
-def validate_bases_ccu():
+def validate_bases_ccu(periodo=None):
     st.header("Bases CCU")
 
-    total_filas = len(df)
+    _df = df[df["periodo"] == periodo] if periodo else df
+    total_filas = len(_df)
     if total_filas == 0:
         st.warning("La tabla Bases CCU está vacía.")
         return
 
     # 1. cliente_id + periodo
     st.markdown("### 1. `cliente_id` + `periodo`")
-    df["key"] = df["cliente_id"].astype(str) + "_" + df["periodo"].astype(str)
-    ids_unicos = df["key"].nunique()
+    _df["key"] = _df["cliente_id"].astype(str) + "_" + _df["periodo"].astype(str)
+    ids_unicos = _df["key"].nunique()
 
     if ids_unicos == total_filas:
         st.success(f"{ICONS['check']} Registros únicos ({total_filas} filas)")
     else:
         st.error(f"{ICONS['close']} Se detectaron {total_filas - ids_unicos} duplicados")
-        dupes = df[df.duplicated("key", keep=False)].sort_values(["cliente_id", "periodo"])
+        dupes = _df[_df.duplicated("key", keep=False)].sort_values(["cliente_id", "periodo"])
         render_troubled_rows(dupes[["cliente_id", "periodo"]])
 
     # 1.1 Check Foreign Key (cliente_id exists in Clientes)
     st.markdown("### 1.1 cliente_id de Bases CCU no presente en tabla Clientes")
     ids_maestros = set(df_locales["cliente_id"].unique())
-    ids_bases = set(df["cliente_id"].unique())
+    ids_bases = set(_df["cliente_id"].unique())
     ids_faltantes = ids_bases - ids_maestros
 
     if not ids_faltantes:
         st.success(f"{ICONS['check']} Todos los `cliente_id` existen en la tabla Clientes")
     else:
         st.error(f"{ICONS['close']} Se detectaron {len(ids_faltantes)} `cliente_id` que NO existen en Clientes")
-        missing_df = df[df["cliente_id"].isin(ids_faltantes)]
+        missing_df = _df[_df["cliente_id"].isin(ids_faltantes)]
         render_troubled_rows(missing_df[["cliente_id", "periodo"]].drop_duplicates())
 
     # 2. Validez de Identificadores
     st.markdown("### 2. Validez de Identificadores")
-    non_numeric = df[pd.to_numeric(df["cliente_id"], errors="coerce").isna()]
+    non_numeric = _df[pd.to_numeric(_df["cliente_id"], errors="coerce").isna()]
     if non_numeric.empty:
         st.success(f"{ICONS['check']} Todos los IDs son numéricos válidos.")
     else:
@@ -58,9 +59,9 @@ def validate_bases_ccu():
 
     # 3. Activos Vacíos en 2024-Q1
     st.markdown("### 3. Activos Vacíos en 2024-Q1")
-    df_2024 = df[df["periodo"] == "2024-Q1"]
+    df_2024 = _df[_df["periodo"] == "2024-Q1"]
     empty_activos = df_2024[
-        df_2024["schoperas_ccu"].isna() &
+        df_2024["schoperas"].isna() &
         df_2024["coolers"].isna() &
         df_2024["salidas"].isna()
     ]
@@ -69,4 +70,4 @@ def validate_bases_ccu():
         st.success(f"{ICONS['check']} Todos los registros de 2024-Q1 tienen al menos un activo válido.")
     else:
         st.error(f"{ICONS['close']} Se detectaron {len(empty_activos)} registros en 2024-Q1 sin ningún activo reportado.")
-        render_troubled_rows(empty_activos[["cliente_id", "periodo", "schoperas_ccu", "coolers", "salidas"]])
+        render_troubled_rows(empty_activos[["cliente_id", "periodo", "schoperas", "coolers", "salidas"]])

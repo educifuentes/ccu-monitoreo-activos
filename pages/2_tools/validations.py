@@ -1,8 +1,8 @@
 import streamlit as st
 
 from tests.test_clientes import validate_locales
-from tests.test_censos import validate_censos
-from tests.test_bases_ccu import validate_bases_ccu
+from tests.test_censos import validate_censos, df as censos_df
+from tests.test_bases_ccu import validate_bases_ccu, df as bases_df
 from tests.test_contratos import validate_contratos
 
 # --- Page Config & Header ---
@@ -22,10 +22,22 @@ with tab1:
     validate_locales()
 
 with tab2:
-    validate_censos()
+    periodos_censos = sorted(censos_df["periodo"].dropna().unique(), reverse=True)
+    selected_periodo_censos = st.selectbox(
+        "Filtrar por periodo",
+        options=["Todos"] + list(periodos_censos),
+        key="periodo_censos",
+    )
+    validate_censos(periodo=selected_periodo_censos if selected_periodo_censos != "Todos" else None)
 
 with tab3:
-    validate_bases_ccu()
+    periodos_bases = sorted(bases_df["periodo"].dropna().unique(), reverse=True)
+    selected_periodo_bases = st.selectbox(
+        "Filtrar por periodo",
+        options=["Todos"] + list(periodos_bases),
+        key="periodo_bases",
+    )
+    validate_bases_ccu(periodo=selected_periodo_bases if selected_periodo_bases != "Todos" else None)
 
 with tab4:
     validate_contratos()

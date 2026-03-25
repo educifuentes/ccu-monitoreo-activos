@@ -11,13 +11,14 @@ from helpers.ui_components.ui_icons import ICONS
 # DATA LOADING
 # -----------------------------------------------------------------------------
 df = fct_censos()
-df_locales = dim_clientes()
+df_clientes = dim_clientes()
 
 
-def validate_censos():
+def validate_censos(periodo=None):
     st.header("Censos")
 
-    total_filas = len(df)
+    _df = df[df["periodo"] == periodo] if periodo else df
+    total_filas = len(_df)
     if total_filas == 0:
         st.warning("La tabla Censos está vacía.")
         return
@@ -27,32 +28,32 @@ def validate_censos():
 
     # 1.1 Uniqueness
     st.markdown("#### 1.1 `cliente_id` + `periodo` duplicados")
-    df["key"] = df["cliente_id"].astype(str) + "_" + df["periodo"].astype(str)
-    ids_unicos = df["key"].nunique()
+    _df["key"] = _df["cliente_id"].astype(str) + "_" + _df["periodo"].astype(str)
+    ids_unicos = _df["key"].nunique()
 
     if ids_unicos == total_filas:
         st.success(f"{ICONS['check']} Unicidad por Cliente y Periodo ({total_filas} registros)")
     else:
         st.error(f"{ICONS['close']} Se detectaron {total_filas - ids_unicos} registros duplicados (mismo Cliente y Periodo)")
-        dupes = df[df.duplicated("key", keep=False)].sort_values(["cliente_id", "periodo"])
+        dupes = _df[_df.duplicated("key", keep=False)].sort_values(["cliente_id", "periodo"])
         render_troubled_rows(dupes[["cliente_id", "periodo", "schoperas_ccu"]])
 
     # 1.2 Check Foreign Key (cliente_id exists in Clientes)
     st.markdown("#### 1.2 `cliente_id` de censos no presente en tabla Clientes")
-    ids_maestros = set(df_locales["cliente_id"].unique())
-    ids_censos = set(df["cliente_id"].unique())
+    ids_maestros = set(df_clientes["cliente_id"].unique())
+    ids_censos = set(_df["cliente_id"].unique())
     ids_faltantes = ids_censos - ids_maestros
 
     if not ids_faltantes:
         st.success(f"{ICONS['check']} Todos los `cliente_id` existen en la tabla Clientes")
     else:
         st.error(f"{ICONS['close']} Se detectaron {len(ids_faltantes)} `cliente_id` que NO existen en Clientes")
-        missing_df = df[df["cliente_id"].isin(ids_faltantes)]
+        missing_df = _df[_df["cliente_id"].isin(ids_faltantes)]
         render_troubled_rows(missing_df[["cliente_id", "periodo"]].drop_duplicates())
 
     # 2.1 Check for Negative Values
     st.markdown("#### 2.1 Valores negativos en `salidas`")
-    negativos_sal = df[df["salidas"] < 0]
+    negativos_sal = _df[_df["salidas"] < 0]
     if not negativos_sal.empty:
         st.error(f"{ICONS['close']} Se detectaron {len(negativos_sal)} registros con salidas negativas")
         render_troubled_rows(negativos_sal[["cliente_id", "periodo", "salidas"]])
@@ -61,7 +62,7 @@ def validate_censos():
 
     # 3. Censo 2 (2025-S2) Validations
     st.markdown("### 3. Validaciones para Censo 2 - 2025-S2")
-    df_2025 = df[df["periodo"] == "2025-S2"]
+    df_2025 = _df[_df["periodo"] == "2025-S2"]
 
     if df_2025.empty:
         st.warning("No hay datos para el periodo 2025-S2")
