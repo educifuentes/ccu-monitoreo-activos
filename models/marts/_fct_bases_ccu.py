@@ -11,12 +11,14 @@ def fct_bases_ccu():
 
     # new columns
     df_ccu_2026_1["periodo"] = "2026-Q1"
+    df_ccu_2026_1["fecha"] = df_ccu_2026_1["mes_cambio"]
 
 
     selected_columns = [
         # keys
         "cliente_id",
         "periodo",
+        "fecha",
         # local info
         "razon_social",
         "rut",
@@ -40,16 +42,10 @@ def fct_bases_ccu():
         "mes_cambio",
     ]
 
-
-
-    # int_reportes_ccu_base_2026_q1_df = int_reportes_ccu_base_2026_q1_df[select_columns_base_2026]
-
-    # df = pd.concat([int_reportes_ccu_base_2024_q1_df, int_reportes_ccu_base_2026_q1_df], ignore_index=True)   
-
-    # df.sort_values(by=["cliente_id", "periodo"], ascending=[True, True], inplace=True)
-
     df = df_ccu_2026_1[selected_columns]
 
+    # to string type
+    df["periodo"] = df["periodo"].astype(str)
 
 
     return df

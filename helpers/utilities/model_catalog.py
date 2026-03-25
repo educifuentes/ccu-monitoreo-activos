@@ -23,7 +23,7 @@ def build_global_model_registry(root_path="models"):
             stage = path_parts[0]
             
             # Skip non-model folders that might be in the root of models/
-            if stage in ['sources', 'exposures', 'gsheets']:
+            if stage in ['sources', 'gsheets']:
                 continue
                 
             # If there's a subfolder, it's the schema. Otherwise, assume 'core' for marts/metrics.

@@ -1,7 +1,5 @@
 import streamlit as st
 
-from helpers.widgets.explorer_de_datos import explorer_de_datos
-
 def render_model_ui(df, table_name=None):
     """
     Renders a standard UI component for a data model summary.
@@ -17,6 +15,5 @@ def render_model_ui(df, table_name=None):
         with st.expander("Data Types"):
             dtypes_str = "\n".join([f"{col}: {dtype}" for col, dtype in df.dtypes.items()])
             st.code(dtypes_str)
-        df = explorer_de_datos(df)
         st.dataframe(df)
     st.divider()

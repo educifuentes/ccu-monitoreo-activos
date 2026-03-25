@@ -10,9 +10,10 @@ from helpers.widgets.display_df_censos import display_df_censos
 
 
 
-st.set_page_config(page_title="Censos", layout="wide")
+st.set_page_config(page_title="Evolucion de Activos", layout="wide")
 
-st.title("Censos")
+st.title("Evolucion de Activos")
+st.caption("data de censos y reportes comodatos trimestrales de CCU")
 
 
 # 1. Data Loading

@@ -7,7 +7,7 @@ from helpers.utilities.app_version import get_app_version
 # Page configuration
 
 # Section - Reports
-general_page = st.Page("pages/1_reports/1_overview.py", title="General", icon=":material/dashboard:")
+general_page = st.Page("pages/1_reports/1_clientes.py", title="Clientes", icon=":material/dashboard:")
 censos_page = st.Page("pages/1_reports/2_censos.py", title="Censos", icon=":material/article:")
 reportes_page = st.Page("pages/1_reports/3_reportes.py", title="Reportes", icon=":material/article:")
 

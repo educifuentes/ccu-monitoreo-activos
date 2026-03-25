@@ -14,29 +14,30 @@ def activos_ccu_y_censos():
     fct_censos_df = fct_censos()
     fct_bases_ccu_df = fct_bases_ccu()
 
-
-
     # new column
     fct_censos_df["fuente"] = "Censo"
     fct_bases_ccu_df["fuente"] = "CCU"
     
-    
+    fct_censos_df["schoperas_no_ccu"] = fct_censos_df["schoperas_total"] - fct_censos_df["schoperas_ccu"]
+    fct_bases_ccu_df["schoperas_no_ccu"] = fct_bases_ccu_df["schoperas_total"] - fct_bases_ccu_df["schoperas_ccu"]
+
+    # ---
 
     selected_columns = [
-        # row level identifiers
+        # keys
         "cliente_id",
+        "fuente",
         "periodo",
         "fecha",    
-        "fuente",
-        # activos cantidades
-        "schoperas",
+        # activos 
+        "schoperas_ccu",
+        "schoperas_total",
         "salidas",
         "coolers",
-        # clientes info
+        "schoperas_no_ccu"
     ]
 
     union_df = pd.concat([fct_censos_df, fct_bases_ccu_df], ignore_index=True)
-
 
 
     return union_df[selected_columns]
