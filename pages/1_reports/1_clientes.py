@@ -6,12 +6,14 @@ from models.exposures._exp_clientes import exp_clientes
 from models.exposures._exp_censos import exp_censos
 from models.exposures._exp_activos_ccu_y_censos import exp_activos_ccu_y_censos
 from models.exposures._exp_asset_evolution import exp_asset_evolution
+from models.exposures._exp_contratos import exp_contratos
 
 # marts
 from models.marts.metrics.general_metrics import calculate_general_metrics, get_latest_classification
 
 # helpers
 from helpers.ui_components.ui_components import display_compliance_badge
+from helpers.ui_components.icons import render_icon
 from helpers.ui_components.ui_config import CLASIFICACION_COLORS, MARCAS_COLORS
 from helpers.transformations.date_formatting import format_date_spanish
 
@@ -28,18 +30,7 @@ st.markdown(" ")
 clientes_df = exp_clientes()
 censos_df = exp_censos()
 activos_df = exp_activos_ccu_y_censos()
-
-
-# -----------------------------------------------------------------------------
-# PANEL METRICAS 
-# -----------------------------------------------------------------------------
-# censos_2025_df = censos_df[censos_df['periodo'] == "2025-S2"]
-# metrics = calculate_general_metrics(activos_df, censos_2025_df, clientes_df)
-
-# m1.metric("Clientes", f"{metrics['total_clientes']}")
-# m2.metric("En regla", f"{metrics['en_regla']}")
-# m3.metric("No en regla", f"{metrics['no_en_regla']}")
-
+contratos_df = exp_contratos()
 
 
 # -----------------------------------------------------------------------------
@@ -98,6 +89,8 @@ st.session_state.last_text_input_value = text_input_id
 
 # 2. Logic & Data Retrieval
 cliente_master = clientes_df[clientes_df['cliente_id'] == selected_cliente_id]
+contratos_cliente = contratos_df[contratos_df['cliente_id'] == selected_cliente_id]
+
 
 if cliente_master.empty:
     st.error("No se encontró información maestra para este cliente.")
@@ -117,19 +110,23 @@ else:
     col_info, col_comp = st.columns([2, 1])
 
     with col_info:
+        st.subheader("Información del Cliente")
         with st.container(border=True):
             st.markdown(f"📍 **Dirección:** {cliente_master['direccion']}")
             st.markdown(f"**Ciudad/Comuna:** {cliente_master['ciudad']}")
             st.markdown(f"**Región:** {cliente_master['region']}")
 
     with col_comp:
+        st.subheader("Contrato")
         with st.container(border=True):
-            st.markdown("**Cumplimiento (Censo 2025)**") 
-            if latest_clasificacion != "Sin Datos":
-                display_compliance_badge(latest_clasificacion)
+            contrato = contratos_cliente.iloc[0] if not contratos_cliente.empty else None
+            if contrato is not None:
+                icon = render_icon("check") if contrato['es_local_imagen'] else render_icon("close")
+                st.markdown(f"**Local Imagen:** {icon}")
+                st.markdown(f"**Suscripción Comodato:** {format_date_spanish(contrato['fecha_suscripcion_comodato'])}")
+                st.markdown(f"**Término Contrato:** {format_date_spanish(contrato['fecha_termino_contrato'])}")
             else:
-                st.warning("No hay clasificación disponible")
-
+                st.warning("Sin datos de contrato")
 
     # 5. Assets Evolution
     st.subheader(":material/monitoring: Evolución de Activos")

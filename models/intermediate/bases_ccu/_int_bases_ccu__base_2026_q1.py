@@ -27,7 +27,7 @@ def int_reportes_ccu_base_2026_q1():
         "numero de salidas": "salidas",
         "numero de coolers": "coolers",
         # contratos
-        "¿es local imagen?": "es_local_imagen?",
+        "¿es local imagen?": "es_local_imagen",
         "Folio": "folio",
         "Fecha de suscripción del comodato": "fecha_suscripcion_comodato",
         "Fecha de término del contrato (de aplicar)": "fecha_termino_contrato",
@@ -47,7 +47,7 @@ def int_reportes_ccu_base_2026_q1():
     df["salidas"] = df["salidas"].astype("Int64")
     df["coolers"] = df["coolers"].astype("Int64")
 
-    df["es_local_imagen?"] = yes_no_to_boolean(df["es_local_imagen?"])
+    df["es_local_imagen"] = yes_no_to_boolean(df["es_local_imagen"])
 
     df["modificacion"] = df["modificacion"].astype("category")
 
@@ -73,7 +73,7 @@ def int_reportes_ccu_base_2026_q1():
         "salidas",
         "coolers",
         # contratos
-        "es_local_imagen?",
+        "es_local_imagen",
         "folio",
         "fecha_suscripcion_comodato",
         "fecha_termino_contrato",

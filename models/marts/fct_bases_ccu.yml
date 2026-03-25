@@ -33,7 +33,7 @@ columns:
   - name: coolers
     description: Número de coolers
     data_type: Int64
-  - name: "es_local_imagen?"
+  - name: "es_local_imagen"
     description: Indica si es un local imagen
     data_type: boolean
   - name: folio

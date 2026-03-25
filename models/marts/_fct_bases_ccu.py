@@ -32,7 +32,8 @@ def fct_bases_ccu():
         "salidas",
         "coolers",
         # contratos
-        "es_local_imagen?",
+        "folio",
+        "es_local_imagen",
         "fecha_suscripcion_comodato",
         "fecha_termino_contrato",
         # variacion activos
