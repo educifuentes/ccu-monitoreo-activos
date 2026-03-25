@@ -111,24 +111,15 @@ with col_chart:
 
 st.subheader("Detalle por Cliente")
 
-unique_clientes = (
-    df_censos[["cliente_id", "razon_social"]]
-    .drop_duplicates()
-    .sort_values("cliente_id")
-)
-clientes_options = {
-    row["cliente_id"]: f"{row['cliente_id']} - {row['razon_social']}"
-    for _, row in unique_clientes.iterrows()
-}
+unique_clientes = sorted(df_censos["cliente_id"].dropna().unique())
 
 cliente_seleccionado = st.selectbox(
     "Seleccione un cliente",
-    options=list(clientes_options.keys()),
-    format_func=lambda x: clientes_options[x],
+    options=unique_clientes,
 )
 
 if cliente_seleccionado:
-    st.subheader(clientes_options[cliente_seleccionado])
+    st.subheader(f"Cliente: {cliente_seleccionado}")
     censo_columns_client = ["periodo", "schoperas_total", "schoperas_ccu", "salidas", "clasificacion"]
 
     df_filter_by_client = df_censos[df_censos["cliente_id"] == cliente_seleccionado]
