@@ -2,13 +2,15 @@ import pandas as pd
 import streamlit as st
 import altair as alt
 
-from models.exposures.activos_ccu_y_censos import activos_ccu_y_censos
 from models.exposures._exp_clientes import exp_clientes
-from models.exposures._exp_contratos import exp_contratos
 from models.exposures._exp_censos import exp_censos
+from models.exposures._exp_activos_ccu_y_censos import exp_activos_ccu_y_censos
+from models.exposures._exp_asset_evolution import exp_asset_evolution
 
+# marts
 from models.marts.metrics.general_metrics import calculate_general_metrics, get_latest_classification
 
+# helpers
 from helpers.ui_components.ui_components import display_compliance_badge
 from helpers.ui_components.ui_config import CLASIFICACION_COLORS, MARCAS_COLORS
 from helpers.transformations.date_formatting import format_date_spanish
@@ -23,23 +25,20 @@ st.markdown(" ")
 # -----------------------------------------------------------------------------
 # DATA LOADING
 # -----------------------------------------------------------------------------
-activos_df = activos_ccu_y_censos()
 clientes_df = exp_clientes()
-contratos_df = exp_contratos()
 censos_df = exp_censos()
+activos_df = exp_activos_ccu_y_censos()
 
 
 # -----------------------------------------------------------------------------
 # PANEL METRICAS 
 # -----------------------------------------------------------------------------
-censos_2025_df = censos_df[censos_df['periodo'] == "2025-S2"]
-metrics = calculate_general_metrics(activos_df, censos_2025_df, contratos_df, clientes_df)
+# censos_2025_df = censos_df[censos_df['periodo'] == "2025-S2"]
+# metrics = calculate_general_metrics(activos_df, censos_2025_df, clientes_df)
 
-m1, m2, m3, m4 = st.columns(4)
-m1.metric("Clientes", f"{metrics['total_clientes']}")
-m2.metric("Contratos Imagen", f"{metrics['total_contratos_imagen']}")
-m3.metric("En regla", f"{metrics['en_regla']}")
-m4.metric("No en regla", f"{metrics['no_en_regla']}")
+# m1.metric("Clientes", f"{metrics['total_clientes']}")
+# m2.metric("En regla", f"{metrics['en_regla']}")
+# m3.metric("No en regla", f"{metrics['no_en_regla']}")
 
 
 
@@ -111,10 +110,6 @@ else:
     # Assets History
     cliente_assets_history = activos_df[activos_df['cliente_id'] == selected_cliente_id].sort_values('fecha', ascending=False)
 
-    # Contract Info
-    has_contrato_imagen = selected_cliente_id in contratos_df['cliente_id'].values
-    cliente_contract = contratos_df[contratos_df['cliente_id'] == selected_cliente_id].iloc[0] if has_contrato_imagen else None
-
     # 3. Cliente Card (Ficha)
     st.subheader(f"Ficha: {cliente_master['razon_social']}")
     st.caption(f"ID: {selected_cliente_id} | RUT: {cliente_master['rut']}")
@@ -135,57 +130,39 @@ else:
             else:
                 st.warning("No hay clasificación disponible")
 
-    # 4. Contract Section
-    st.subheader(":material/contract: Contrato Imagen")
-    if has_contrato_imagen:
-        st.success("✅ Tiene contrato Imagen")
-        if 'folio' in cliente_contract and pd.notna(cliente_contract['folio']):
-            st.markdown(f"**Folio:** {cliente_contract['folio']}")
-    else:
-        st.info("No tiene contrato Imagen")
 
     # 5. Assets Evolution
     st.subheader(":material/monitoring: Evolución de Activos")
     st.markdown("Cronología de activos (Schoperas, Salidas, Coolers) según Censos y Bases CCU.")
 
-    if not cliente_assets_history.empty:
-        # Format dates
-        table_df = cliente_assets_history.copy()
-        table_df['fecha'] = pd.to_datetime(table_df['fecha']).dt.strftime('%d/%m/%Y')
-        
-        # Display Table
-        display_cols = ['fecha', 'periodo', 'fuente', 'schoperas', 'salidas', 'coolers']
-        table_df = table_df[display_cols].rename(columns={
-            'fecha': 'Fecha',
-            'periodo': 'Periodo',
-            'fuente': 'Fuente',
-            'schoperas': 'Schoperas',
-            'salidas': 'Salidas',
-            'coolers': 'Coolers'
-        })
-        
-        st.dataframe(table_df, width='stretch', hide_index=True, column_config={
-            "Fuente": st.column_config.MultiselectColumn(
-                "Fuente",
-                help="Fuente de la informacion",
+    asset_evolution = exp_asset_evolution()
+    cliente_asset_evolution = asset_evolution[asset_evolution['cliente_id'] == selected_cliente_id]
+    st.dataframe(cliente_asset_evolution, width='stretch', hide_index=True, column_config={
+            "cliente_id": None,
+            "fuente": st.column_config.MultiselectColumn(
+                "fuente",
                 options=["Censo", "CCU"],
-                color=["#ffa421", "#803df5"],
+                color=["#D97A2B", "#7FB77E"],
             )
         })
+
+
         
         # Trend Chart
-        if len(cliente_assets_history) > 1:
-            st.markdown("---")
-            st.caption("Tendencia Temporal de Activos")
-            chart_data = cliente_assets_history.melt(id_vars=['fecha'], value_vars=['schoperas', 'salidas'], var_name='Activo', value_name='Cantidad')
+
+
+    #     if len(cliente_assets_history) > 1:
+    #         st.markdown("---")
+    #         st.caption("Tendencia Temporal de Activos")
+    #         chart_data = cliente_assets_history.melt(id_vars=['fecha'], value_vars=['schoperas_ccu', 'salidas'], var_name='Activo', value_name='Cantidad')
             
-            line_chart = alt.Chart(chart_data).mark_line(point=True).encode(
-                x=alt.X('fecha:T', title='Fecha'),
-                y=alt.Y('Cantidad:Q', title='Cantidad'),
-                color='Activo:N',
-                tooltip=['fecha', 'Activo', 'Cantidad']
-            ).properties(height=250)
+    #         line_chart = alt.Chart(chart_data).mark_line(point=True).encode(
+    #             x=alt.X('fecha:T', title='Fecha'),
+    #             y=alt.Y('Cantidad:Q', title='Cantidad'),
+    #             color='Activo:N',
+    #             tooltip=['fecha', 'Activo', 'Cantidad']
+    #         ).properties(height=250)
             
-            st.altair_chart(line_chart, width='stretch')
-    else:
-        st.warning("No hay registros históricos de activos para este cliente.")
+    #         st.altair_chart(line_chart, width='stretch')
+    # else:
+    #     st.warning("No hay registros históricos de activos para este cliente.")
