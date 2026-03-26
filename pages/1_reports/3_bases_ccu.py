@@ -9,11 +9,11 @@ from models.metrics._metric_bases_ccu_kpis_by_period import metrics_bases_ccu_kp
 from helpers.ui_components.metrics_display import metrics_display
 from helpers.ui_components.ui_config import CLASIFICACION_COLORS
 from helpers.widgets.explorer_de_datos import explorer_de_datos
-
+from helpers.ui_components.icons import render_icon
 
 
 st.set_page_config(page_title="Bases CCU", layout="wide")
-st.title("📦 Reporte de Bases CCU")
+st.title(f"{render_icon('bases_ccu')} Reporte de Bases CCU")
 st.caption("Detalle de activos y cumplimiento según la base oficial.")
 
 # 1. Data Loading
@@ -42,7 +42,7 @@ with col_f1:
 st.divider()
 
 # 3. Content Tabs
-tab_gen, tab_det = st.tabs(["📊 Resumen General", "🔍 Detalle por Cliente"])
+tab_gen, tab_det = st.tabs(["General", "Detalle Cliente"])
 
 with tab_gen:
     df_m = df_metrics.copy()
@@ -51,7 +51,7 @@ with tab_gen:
     
     if not df_m.empty:
         kpi_cols = ["periodo", "N Clientes", "N Clientes Local Imagen", "N Clientes Nuevos"]
-        st.subheader("Indicadores de Cobertura")
+        st.caption("Fuente: Bases CCU.")
         metrics_display(df_m[kpi_cols])
     else:
         st.info("No hay métricas para el periodo seleccionado.")

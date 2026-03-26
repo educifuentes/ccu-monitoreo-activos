@@ -21,12 +21,9 @@ ICONS = {
     "warning": "warning",
     "close": "close",
     # models
-    # censos
-    "person": "person",
-    "hogares": "family_group",
-    # energia
-    "contaminantes": "co2",
-    "censos": "family_group",
+    "clientes": "sports_bar",
+    "censos": "checklist_rtl",
+    "bases_ccu": "assignment",
     # dev data build
     "staging": "steppers",
     "intermediate": "factory",

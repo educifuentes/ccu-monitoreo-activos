@@ -9,11 +9,12 @@ from models.metrics._metric_censo_kpis_by_period import metrics_censo_kpis_by_pe
 from helpers.ui_components.ui_config import CLASIFICACION_COLORS
 from helpers.widgets.explorer_de_datos import explorer_de_datos
 from helpers.widgets.display_df_censos import display_df_censos
-
+from helpers.ui_components.metrics_display import metrics_display
+from helpers.ui_components.icons import render_icon
 
 
 st.set_page_config(page_title="Censos", layout="wide")
-st.title("📋 Reporte de Censos")
+st.title(f"{render_icon('censos')} Censos")
 st.caption("Seguimiento detallado de las encuestas en terreno.")
 
 # 1. Data Loading
@@ -42,7 +43,7 @@ with col_f1:
 st.divider()
 
 # 3. Main Content
-tab_gen, tab_det = st.tabs(["📊 Resumen General", "🔍 Detalle por Cliente"])
+tab_gen, tab_det = st.tabs(["General", "Detalle Cliente"])
 
 with tab_gen:
     df_m = df_metrics.copy()
@@ -50,16 +51,28 @@ with tab_gen:
         df_m = df_m[df_m["periodo"] == selected_periodo]
     
     if not df_m.empty:
-        kpi_marcas = ["periodo", "N Clientes", 
-                      "N con AbInbev", "% con AbInbev", 
-                      "N con Kross", "% con Kross", 
-                      "N con CCU", "% con CCU",
-                      "N con Otras Marcas", "% con Otras Marcas"]
+        kpi_generales = ["periodo", "N Clientes", "N Permite censos"]
+        kpi_marcas = ["periodo",
+                "N con AbInbev", "% con AbInbev",
+                "N con Kross", "% con Kross",
+                "N con CCU", "% con CCU",
+                "N con Otras Marcas", "% con Otras Marcas"]
+
+        kpi_acciones = ["periodo", 
+                "N que Instalaron", "% que Instalaron",
+                "N que Disponibilizaron", "% que Disponibilizaron", 
+                "N con Comp. en Salida", "% con Comp. en Salida"]
+        
+        st.subheader("Generales")
+        st.caption("Fuente: Censos.")
+        metrics_display(df_m[kpi_generales])
+
         st.subheader("Presencia de Marcas")
+        st.caption("Fuente: Censos.")
         metrics_display(df_m[kpi_marcas])
         
-        kpi_acciones = ["periodo", "N con Comp. en Salida", "% con Comp. en Salida", "N que Instalaron", "% que Instalaron", "N que Disponibilizaron", "% que Disponibilizaron"]
-        st.subheader("Acciones Realizadas")
+        st.subheader("Acciones en el Punto de Venta")
+        st.caption("Fuente: Censos.")
         metrics_display(df_m[kpi_acciones])
     else:
         st.info("No hay métricas para el periodo seleccionado.")

@@ -24,8 +24,11 @@ from helpers.ui_components.ui_config import CLASIFICACION_COLORS, MARCAS_COLORS
 from helpers.transformations.date_formatting import format_date_spanish
 
 
+from helpers.ui_components.icons import render_icon
+
+
 st.set_page_config(page_title="Monitoreo de Activos CCU", layout="wide")
-st.title(" Monitoreo de Activos CCU")
+st.title(f"{render_icon('dashboard')} Monitoreo de Activos CCU")
 st.markdown("""
     Vista consolidada de indicadores para los Censos y Bases CCU.
     [Ver Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)
@@ -64,18 +67,21 @@ if not df_m.empty:
             "N con CCU", "% con CCU",
             "N con Otras Marcas", "% con Otras Marcas"]
 
-    kpi_acciones = ["periodo", "N con Comp. en Salida",
-            "% con Comp. en Salida",
+    kpi_acciones = ["periodo", 
             "N que Instalaron", "% que Instalaron",
-            "N que Disponibilizaron", "% que Disponibilizaron"]
+            "N que Disponibilizaron", "% que Disponibilizaron", 
+            "N con Comp. en Salida", "% con Comp. en Salida"]
     
     st.subheader("Generales")
+    st.caption("Fuente: Censos.")
     metrics_display(df_m[kpi_generales])
 
     st.subheader("Presencia de Marcas")
+    st.caption("Fuente: Censos.")
     metrics_display(df_m[kpi_marcas])
     
     st.subheader("Acciones en el Punto de Venta")
+    st.caption("Fuente: Censos.")
     metrics_display(df_m[kpi_acciones])
 else:
     st.info("No hay métricas de censos para el periodo seleccionado.")
@@ -85,6 +91,7 @@ else:
 unique_periodos_bases = sorted(df_metrics_bases["periodo"].dropna().unique(), reverse=True)
 
 st.subheader("Contratos")
+st.caption("Fuente: Bases CCU.")
 
 col_fb1, col_fb2 = st.columns([1, 2])
 with col_fb1:

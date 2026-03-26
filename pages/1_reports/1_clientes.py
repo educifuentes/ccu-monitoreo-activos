@@ -18,7 +18,7 @@ from helpers.charts.trend_assets import render_trend_assets_chart
 # PAGE CONFIG
 # =============================================================================
 st.set_page_config(page_title="Clientes", layout="wide")
-st.title(":material/sports_bar: Clientes")
+st.title(f"{render_icon('clientes')} Clientes")
 
 
 # =============================================================================
