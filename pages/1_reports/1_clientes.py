@@ -17,13 +17,9 @@ from helpers.charts.trend_assets import render_trend_assets_chart
 # =============================================================================
 # PAGE CONFIG
 # =============================================================================
-st.set_page_config(page_title="Reportes General y Clientes", layout="wide")
-st.title("Monitoreo de Activos CCU")
-st.markdown(
-    "Lectura de datos desde csv. Luego ira a "
-    "[Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)"
-)
-st.markdown(" ")
+st.set_page_config(page_title="Clientes", layout="wide")
+st.title("Clientes")
+
 
 # =============================================================================
 # DATA LOADING  (runs once per session, cached by each exposure function)
@@ -104,7 +100,7 @@ else:
 
     # ── Header ────────────────────────────────────────────────────────────────
     st.subheader(f"Ficha: {cliente['razon_social']}")
-    st.caption(f"ID: {selected_cliente_id} | RUT: {cliente['rut']}")
+    st.caption(f"ID: {selected_cliente_id} | RUT: {cliente['rut']} | Nombre Fantasia: {cliente['nombre_fantasia']}")
 
     # ── Info + Contrato columns ───────────────────────────────────────────────
     col_info, col_comp = st.columns([2, 1])
