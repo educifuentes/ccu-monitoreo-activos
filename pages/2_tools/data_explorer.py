@@ -1,4 +1,5 @@
 import streamlit as st
+
 from models.marts._dim_clientes import dim_clientes
 from models.marts._fct_censos import fct_censos
 from models.marts._fct_bases_ccu import fct_bases_ccu
@@ -10,7 +11,7 @@ from helpers.widgets.explorer_de_datos import explorer_de_datos
 st.set_page_config(page_title="Explorador de Datos", layout="wide")
 
 st.title("Explorador de Datos")
-st.markdown("Exploración rápida de los tablas en Google Sheets.")
+st.markdown("Exploración rápida de los tablas en  [Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)")
 
 def safe_render(df):
     """
