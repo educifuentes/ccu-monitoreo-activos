@@ -108,7 +108,6 @@ def render_metrics_docs(yaml_path):
         if description:
             st.info(description)
             
-        # Metrics are in 'columns'
         metrics_list = group.get('columns', [])
         
         for metric in metrics_list:
@@ -116,8 +115,7 @@ def render_metrics_docs(yaml_path):
             desc = metric.get('description', '')
             table = metric.get('table', '')
             
-            if desc:
-                st.write(desc)
+            st.markdown(f"**`{name}`**: {desc}")
             if table:
                 st.markdown(table)
         

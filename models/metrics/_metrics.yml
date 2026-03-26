@@ -1,31 +1,48 @@
 metrics:
-  - group_name: generales
-    description: "Métricas generales para el monitoreo del parque de activos, censos y bases CCU."
+  - group_name: Censos
+    description: "Indicadores clave de desempeño derivados de las encuestas de censo en terreno."
     columns:
       - name: "N Clientes"
-        description: "Número total de clientes únicos identificados en el periodo."
+        description: "Cantidad total de clientes únicos que fueron censados en el periodo."
+      - name: "N Permite censos"
+        description: "Cantidad de clientes que permitieron la realización del censo."
+      - name: "% Permite censos"
+        description: "Porcentaje de clientes que permitieron el censo sobre el total de intentos."
+      - name: "N con AbInbev"
+        description: "Cantidad de clientes con presencia de marcas AbInbev detectadas en el censo."
+      - name: "% con AbInbev"
+        description: "Porcentaje de presencia de marcas AbInbev."
+      - name: "N con Kross"
+        description: "Cantidad de clientes con presencia de marca Kross."
+      - name: "% con Kross"
+        description: "Porcentaje de presencia de marca Kross."
       - name: "N con CCU"
-        description: "Cantidad de clientes con presencia de marcas CCU (Censo)."
+        description: "Cantidad de clientes con presencia de marcas CCU."
       - name: "% con CCU"
-        description: "Porcentaje de clientes con presencia de marcas CCU sobre el total (Censo)."
-      - name: "N Clientes con Local Imagen"
-        description: "Cantidad de clientes marcados como 'Local Imagen' en el contrato (Base CCU)."
-      - name: "N Clientes Nuevos"
-        description: "Cantidad de clientes que no aparecían en el periodo anterior inmediato (Base CCU)."
+        description: "Porcentaje de presencia de marcas CCU."
+      - name: "N con Otras Marcas"
+        description: "Cantidad de clientes con presencia de marcas de otros competidores."
+      - name: "% con Otras Marcas"
+        description: "Porcentaje de presencia de otras marcas."
       - name: "N con Comp. en Salida"
-        description: "Cantidad de clientes con presencia de competencia detectada en las salidas (Censo)."
+        description: "Cantidad de clientes con presencia de competencia en las salidas de la schopera CCU."
+      - name: "% con Comp. en Salida"
+        description: "Porcentaje de clientes con competencia en salida CCU."
       - name: "N que Instalaron"
-        description: "Cantidad de clientes que realizaron instalaciones de activos en el periodo (Censo)."
+        description: "Cantidad de clientes donde se realizó una instalación de activo nuevo durante el censo (instalo > 0 )"
+      - name: "% que Instalaron"
+        description: "Porcentaje de clientes con instalaciones nuevas."
       - name: "N que Disponibilizaron"
-        description: "Cantidad de clientes que dejaron activos disponibles en el periodo (Censo)."
-  - group_name: cumplimiento censo
+        description: "Cantidad de clientes que dejaron salidas o activos disponibles para uso."
+      - name: "% que Disponibilizaron"
+        description: "Porcentaje de clientes que disponibilizaron al menos una salida (disponibilizar > 0)"
+
+  - group_name: Bases CCU
+    description: "indicadores derivados de la base oficial de activos de CCU."
     columns:
-      - name: "Clasificación de Cumplimiento"
-        column_name: "clasificacion"
-        description: "Se revisa el total de 'Salidas CCU; si este es mayor a 3, se exige una 'Cuota Objetivo' de 1 salida para la competencia por cada 4 de CCU. El cumplimiento ('En Regla') se logra si la suma de salidas instaladas o disponibilizadas para la competencia iguala o supera esta cuota; de lo contrario, se marca como 'No en Regla'."
-        table: |
-          | Clasificación | Descripción |
-          | :--- | :--- |
-          | **En Regla** | El cliente cumple con la cuota exigida de competencia (1 por cada 4 CCU) dado que tiene más de 3 salidas. |
-          | **No en Regla** | El cliente tiene más de 3 salidas y no alcanza la cuota mínima de competencia exigida. |
-          | **No Aplica** | El cliente tiene 3 o menos salidas CCU, por lo que la normativa de libre competencia no le es exigible. |
+      - name: "N Clientes"
+        description: "Cantidad total de clientes únicos presentes en la base oficial de CCU para el periodo."
+      - name: "N Clientes Local Imagen"
+        description: "Cantidad de clientes clasificados como 'Local Imagen' según su contrato en la base oficial."
+      - name: "N Clientes Nuevos"
+        description: "Cantidad de clientes que aparecen por primera vez en la base respecto al periodo inmediatamente anterior."

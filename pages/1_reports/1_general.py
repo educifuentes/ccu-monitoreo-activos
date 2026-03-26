@@ -27,7 +27,7 @@ from helpers.transformations.date_formatting import format_date_spanish
 st.set_page_config(page_title="Monitoreo de Activos CCU", layout="wide")
 st.title(" Monitoreo de Activos CCU")
 st.markdown("""
-    Vista consolidada de los indicadores clave de desempeño (KPIs) para los Censos y Bases CCU.
+    Vista consolidada de indicadores para los Censos y Bases CCU.
     [Ver Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)
 """)
 
@@ -57,7 +57,7 @@ if selected_periodo_censos != "Todos":
     df_m = df_m[df_m["periodo"] == selected_periodo_censos]
 
 if not df_m.empty:
-    kpi_generales = ["periodo", "N Clientes"]
+    kpi_generales = ["periodo", "N Clientes", "N Permite censos"]
     kpi_marcas = ["periodo",
             "N con AbInbev", "% con AbInbev",
             "N con Kross", "% con Kross",

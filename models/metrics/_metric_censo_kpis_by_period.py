@@ -18,7 +18,8 @@ def metrics_censo_kpis_by_period():
         "marcas_otras",
         "hay_competencia",
         "instalo_gt_0",
-        "disponibilizo_gt_0"
+        "disponibilizo_gt_0",
+        "permite_censo"
     ]
 
     # Grouping and Aggregation
@@ -34,6 +35,8 @@ def metrics_censo_kpis_by_period():
     # Human friendly names
     name_mapping = {
         "cliente_id_count": "N Clientes",
+        "permite_censo_sum": "N Permite censos",
+        "permite_censo_mean": "% Permite censos",
         "marcas_abinbev_sum": "N con AbInbev",
         "marcas_abinbev_mean": "% con AbInbev",
         "marcas_kross_sum": "N con Kross",
@@ -61,6 +64,6 @@ def metrics_censo_kpis_by_period():
     # format display columns
     for col in metrics_df.columns:
         if col.startswith("%"):
-            metrics_df[col] = (metrics_df[col] * 100).round(0).astype(int).astype(str) + "%"
+            metrics_df[col] = (metrics_df[col] * 100).round(0).fillna(0).astype(int).astype(str) + "%"
 
     return metrics_df
