@@ -32,7 +32,7 @@ with tab1:
 
 with tab2:
     st.header("Marcas y sus Grupos")
-    marcas_table_path = get_path("documentation/_marcas_table.md")
+    marcas_table_path = get_path("models/documentation/marcas_y_grupos.md")
     if os.path.exists(marcas_table_path):
         with open(marcas_table_path, "r", encoding="utf-8") as f:
             st.markdown(f.read())
