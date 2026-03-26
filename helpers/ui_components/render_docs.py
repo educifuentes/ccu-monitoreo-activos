@@ -79,3 +79,46 @@ def render_model_docs(yaml_path, kind="table"):
                 st.markdown(model['table'])
             
             st.divider()
+
+def render_metrics_docs(yaml_path):
+    """
+    Renders documentation specifically for the metrics format.
+    Handles groups, descriptions, and metric columns/tables.
+    """
+    if not os.path.exists(yaml_path):
+        st.error(f"⚠️ Archivo no encontrado: `{yaml_path}`")
+        return
+
+    try:
+        with open(yaml_path, 'r', encoding='utf-8') as f:
+            data = yaml.safe_load(f)
+    except Exception as e:
+        st.error(f"❌ Error al cargar el archivo YAML: {e}")
+        return
+
+    if not data or 'metrics' not in data:
+        st.warning("No se encontró información de métricas en el archivo.")
+        return
+
+    for group in data['metrics']:
+        group_name = group.get('group_name', 'General')
+        description = group.get('description', '')
+        
+        st.subheader(f"Grupo: {group_name}")
+        if description:
+            st.info(description)
+            
+        # Metrics are in 'columns'
+        metrics_list = group.get('columns', [])
+        
+        for metric in metrics_list:
+            name = metric.get('name', 'Sin Nombre')
+            desc = metric.get('description', '')
+            table = metric.get('table', '')
+            
+            if desc:
+                st.write(desc)
+            if table:
+                st.markdown(table)
+        
+        st.divider()

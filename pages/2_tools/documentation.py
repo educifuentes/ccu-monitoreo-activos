@@ -1,7 +1,7 @@
 import streamlit as st
 import os
 
-from helpers.ui_components.render_docs import render_model_docs
+from helpers.ui_components.render_docs import render_model_docs, render_metrics_docs
 from helpers.ui_components.ui_icons import ICONS
 
 st.set_page_config(page_title="Documentación", layout="wide")
@@ -24,13 +24,13 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
 with tab1:
     st.header("Clientes")
 
-    # dim_clientes_path = os.path.abspath("models/raw/marts/_dim_clientes.yml")
-    # render_model_docs(dim_clientes_path)
+    dim_clientes_path = os.path.abspath("models/marts/dim_clientes.yml")
+    render_model_docs(dim_clientes_path)
 
 with tab2:
     st.header("Censos")
-    # fct_censos_path = os.path.abspath("models/raw/marts/_fct_censos.yml")
-    # render_model_docs(fct_censos_path)
+    fct_censos_path = os.path.abspath("models/marts/fct_censos.yml")
+    render_model_docs(fct_censos_path)
 
 with tab3:
     st.header("Bases CCU")
@@ -44,7 +44,7 @@ with tab4:
 
 with tab5:
     st.header("Métricas")
-    # fct_metricas_path = os.path.abspath("models/raw/marts/metrics/_metrics_docs.yml")
-    # render_model_docs(fct_metricas_path, kind="metrics")
+    fct_metricas_path = os.path.abspath("models/metrics/_metrics.yml")
+    render_metrics_docs(fct_metricas_path)
 
 

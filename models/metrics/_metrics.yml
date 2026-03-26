@@ -1,0 +1,31 @@
+metrics:
+  - group_name: generales
+    description: "Métricas generales para el monitoreo del parque de activos, censos y bases CCU."
+    columns:
+      - name: "# Clientes"
+        description: "Número total de clientes únicos identificados en el periodo."
+      - name: "# con CCU"
+        description: "Cantidad de clientes con presencia de marcas CCU (Censo)."
+      - name: "% con CCU"
+        description: "Porcentaje de clientes con presencia de marcas CCU sobre el total (Censo)."
+      - name: "# Clientes con Local Imagen"
+        description: "Cantidad de clientes marcados como 'Local Imagen' en el contrato (Base CCU)."
+      - name: "# Clientes Nuevos"
+        description: "Cantidad de clientes que no aparecían en el periodo anterior inmediato (Base CCU)."
+      - name: "# con Comp. en Salida"
+        description: "Cantidad de clientes con presencia de competencia detectada en las salidas (Censo)."
+      - name: "# que Instalaron"
+        description: "Cantidad de clientes que realizaron instalaciones de activos en el periodo (Censo)."
+      - name: "# que Disponibilizaron"
+        description: "Cantidad de clientes que dejaron activos disponibles en el periodo (Censo)."
+  - group_name: cumplimiento censo
+    columns:
+      - name: "Clasificación de Cumplimiento"
+        column_name: "clasificacion"
+        description: "Se revisa el total de 'Salidas CCU; si este es mayor a 3, se exige una 'Cuota Objetivo' de 1 salida para la competencia por cada 4 de CCU. El cumplimiento ('En Regla') se logra si la suma de salidas instaladas o disponibilizadas para la competencia iguala o supera esta cuota; de lo contrario, se marca como 'No en Regla'."
+        table: |
+          | Clasificación | Descripción |
+          | :--- | :--- |
+          | **En Regla** | El cliente cumple con la cuota exigida de competencia (1 por cada 4 CCU) dado que tiene más de 3 salidas. |
+          | **No en Regla** | El cliente tiene más de 3 salidas y no alcanza la cuota mínima de competencia exigida. |
+          | **No Aplica** | El cliente tiene 3 o menos salidas CCU, por lo que la normativa de libre competencia no le es exigible. |
