@@ -14,6 +14,11 @@ def exp_activos_ccu_y_censos():
     fct_censos_df = fct_censos()
     fct_bases_ccu_df = fct_bases_ccu()
 
+    # ajusten coolers en censos
+    fct_censos_df["coolers"] = fct_censos_df["tiene_coolers"]
+    # Map boolean to int for coolers
+    fct_censos_df["coolers"] = fct_censos_df["tiene_coolers"].fillna(False).astype(int)
+
     # new column
     fct_censos_df["fuente"] = "Censo"
     fct_bases_ccu_df["fuente"] = "CCU"
