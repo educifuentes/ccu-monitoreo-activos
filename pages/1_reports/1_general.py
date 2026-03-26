@@ -24,8 +24,8 @@ from helpers.ui_components.ui_config import CLASIFICACION_COLORS, MARCAS_COLORS
 from helpers.transformations.date_formatting import format_date_spanish
 
 
-st.set_page_config(page_title="Reportes General y Clientes", layout="wide")
-st.title("General")
+st.set_page_config(page_title="Monitoreo de Activos CCU", layout="wide")
+st.title("Monitoreo de Activos CCU")
 st.markdown("Lectura de datos desde csv. Luego ira a [Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)")
 
 
@@ -53,6 +53,7 @@ selected_periodo = st.selectbox(
     index=1 if len(unique_periodos) > 0 else 0
 )
 
+st.header("General")
 
 # 3. Layout: Table & Chart
 st.subheader("Metricas - Censos")
