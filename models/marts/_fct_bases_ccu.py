@@ -13,6 +13,10 @@ def fct_bases_ccu():
     df_ccu_2026_1["periodo"] = "2026-Q1"
     df_ccu_2026_1["fecha"] = df_ccu_2026_1["mes_cambio"]
 
+    df = df_ccu_2026_1[selected_columns]
+
+    # to string type
+    df["periodo"] = df["periodo"].astype(str)
 
     selected_columns = [
         # keys
@@ -43,10 +47,7 @@ def fct_bases_ccu():
         "mes_cambio",
     ]
 
-    df = df_ccu_2026_1[selected_columns]
-
-    # to string type
-    df["periodo"] = df["periodo"].astype(str)
+    df[selected_columns]
 
 
     return df

@@ -16,4 +16,14 @@ def dim_clientes():
     # DATA TYPES
     df["cliente_id"] = df["cliente_id"].replace("nan", pd.NA)
 
+    selected_columns = ["cliente_id",
+                        "razon_social",
+                        "rut",
+                        "direccion",
+                        "region",
+                        "ciudad",
+                        "comuna",
+                        "nombre_fantasia"]
+    df = df[selected_columns]
+
     return df

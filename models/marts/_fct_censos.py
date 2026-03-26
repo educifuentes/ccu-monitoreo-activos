@@ -39,15 +39,12 @@ def fct_censos():
         "instalo",
         "disponibilizo",
         # marcas
-        "marcas",
         "marcas_abinbev",
         "marcas_kross",
         "marcas_ccu",
         "marcas_otras",
         # listados
-        "marcas_abinbev_listado",
-        "marcas_kross_listado",
-        "marcas_ccu_listado",
+        "marcas",
         "marcas_otras_listado",
         # competencia
         "hay_competencia_en_salida",
