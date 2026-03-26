@@ -17,23 +17,23 @@ def int_censos__censo_2026_1_corregido_manual():
     # 2. Column Renaming to match schema
     rename_dict = {
         "ID CLIENTE": "cliente_id",
+        # cliente info
         "NOMBRE FANTASÍA": "nombre_fantasia",
         "RAZÓN SOCIAL": "razon_social",
         "RUT": "rut",
         "REGIÓN": "region",
         "COMUNA": "comuna",
         "DIRECCIÓN": "direccion",
+        # censo metadata
         "Permite censo (SI/NO)": "permite_censo",
         "[Si corresponde] Motivo por el que no pudo ser censado (local cerrado, no permite ingreso, etc)": "motivo_no_censo",
-        "Presencia de schopera comodato de CCU (SI/NO)": "tiene_schopera",
+        # activos
         "Número de salidas totales de schop en máquinas CCU": "salidas",
         "Instala schopera adicional (Sí/No)": "instalo",
         "Disponibiliza salidas en máquina schopera (0,1,2)": "disponibilizo",
         "Otras (indicar cuáles)": "marcas_texto_libre",
         "Competencia en salida CCU (Sí/No)": "hay_competencia_en_salida",
         "Indicar nombre de competidor en salida CCU": "marca_instalada_en_salida",
-        # "schoperas_total": "schoperas_total", # Already matches or exists
-        # "schoperas_ccu": "schoperas_ccu", # Already matches or exists
     }
 
     df = df.rename(columns=rename_dict)
@@ -45,7 +45,8 @@ def int_censos__censo_2026_1_corregido_manual():
     df["agencia"] = "definitiva_pilar"
     
     # User requested column: coolers (Solo hay que agregar columna de coolers)
-    df["coolers"] = None
+    df["tiene_coolers"] = None
+    # pending get from other int models
 
     # 4. Brand Consolidation (CCH, Kross, Otras)
     # Map CCH and Kross to marques if SI
@@ -109,12 +110,14 @@ def int_censos__censo_2026_1_corregido_manual():
         "permite_censo",
         "motivo_no_censo",
         "agencia",
+        # activos
         "schoperas_total",
         "schoperas_ccu",
         "salidas",
-        "coolers", # Included as requested
+        "tiene_coolers",
         "instalo",
         "disponibilizo",
+        # marcas
         "marcas",
         "marcas_abinbev",
         "marcas_kross",
@@ -124,6 +127,7 @@ def int_censos__censo_2026_1_corregido_manual():
         "marcas_kross_listado",
         "marcas_ccu_listado",
         "marcas_otras_listado",
+        # competencia
         "hay_competencia_en_salida",
         "marca_instalada_en_salida"
     ]

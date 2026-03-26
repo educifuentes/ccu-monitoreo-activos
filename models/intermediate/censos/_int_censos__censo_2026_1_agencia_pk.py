@@ -24,7 +24,7 @@ def int_censos__censo_2026_1_agencia_pk():
         "EL LOCAL CUENTA CON MAQUINAS SHOPERAS?": "tiene_schoperas",
         "NÚMERO TOTAL DE MÁQUINAS SCHOPERAS EN EL LOCAL": "schoperas_total",
         "NÚMERO DE MÁQUINAS SCHOPERAS DE CCU(ASUMIR QUE LA SCHOPERA ES CCU SI LA MAYORÍA DE LAS MARCAS SON CCU - REVISAR TARJETERO DE APOYO)": "schoperas_ccu",
-        "¿TIENE ALGÚN EQUIPO COOLER ENTREGADO POR CCU?": "tiene_coolers",
+        "¿TIENE ALGÚN EQUIPO COOLER ENTREGADO POR CCU? ": "tiene_coolers",
         # accion
         "CUANTAS SHOPERAS NUEVAS INSTALO CCU PARA MARCAS ARTESANALES?": "instalo",
         'CUANTAS SALIDAS DEJO LIBRE CCU PARA MARCAS ARTESANALES? s ': "disponibilizo",

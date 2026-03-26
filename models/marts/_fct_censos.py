@@ -2,21 +2,15 @@ import pandas as pd
 from helpers.transformations.dataframe_alignment import safe_concat_with_columns
 
 from models.intermediate.censos._int_censos__censo_2025_2 import int_censos__censo_2025_2
-from models.intermediate.censos._int_censos__censo_2026_1_agencia_pk import int_censos__censo_2026_1_agencia_pk
-from models.intermediate.censos._int_censos__censo_2026_1_agencia_corpa import int_censos__censo_2026_1_agencia_corpa
-from models.intermediate.censos._int_censos__censo_2026_1_corregido_manual import int_censos__censo_2026_1_corregido_manual
-
 from models.intermediate.censos._int_censos__censo_2024_2 import int_censos__censo_2024_2
-
+from models.intermediate.censos._int_censos__censo_2026_1 import int_censos__censo_2026_1
 
 def fct_censos():
 
     # 1. Load intermediate models
     df_censo_2024_2 = int_censos__censo_2024_2()
     df_censo_2025_2 = int_censos__censo_2025_2()
-    df_censo_2026_1_agencia_pk = int_censos__censo_2026_1_agencia_pk()
-    df_censo_2026_1_agencia_corpa = int_censos__censo_2026_1_agencia_corpa()
-    df_censo_2026_1_corregido_manual = int_censos__censo_2026_1_corregido_manual()
+    df_censo_2026_1 = int_censos__censo_2026_1()
 
     selected_columns = [
         # keys
@@ -38,6 +32,7 @@ def fct_censos():
         "schoperas_total",
         "schoperas_ccu",
         "salidas",
+        "tiene_coolers",
         # accion
         "instalo",
         "disponibilizo",
@@ -58,9 +53,7 @@ def fct_censos():
     df = safe_concat_with_columns(
         [df_censo_2024_2, 
         df_censo_2025_2, 
-        df_censo_2026_1_agencia_pk, 
-        df_censo_2026_1_agencia_corpa,
-        df_censo_2026_1_corregido_manual
+        df_censo_2026_1,
         ], 
         selected_columns
     )
