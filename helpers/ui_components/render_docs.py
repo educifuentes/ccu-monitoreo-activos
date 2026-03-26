@@ -43,8 +43,7 @@ def render_model_docs(yaml_path, kind="table"):
             if kind == "metrics":
                 st.subheader(f"{model_name}")
             else:
-                st.subheader(f"Tabla: {model_name}")
-            st.info(description)
+                st.markdown("")
             
             if 'columns' in model:                
                 # Preparar datos para la tabla

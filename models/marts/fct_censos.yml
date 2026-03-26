@@ -4,7 +4,7 @@ columns:
     description: ID del cliente (unido con dim_clientes)
     data_type: string
   - name: periodo
-    description: Periodo reportado (ej: 2026-Q1, 2025-Q2)
+    description: "Periodo reportado (ej: 2026-Q1, 2025-Q2)"
     data_type: string
   - name: fecha
     description: Fecha exacta de la encuesta o censo

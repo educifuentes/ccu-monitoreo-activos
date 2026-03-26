@@ -27,8 +27,12 @@ with tab1:
 
 with tab2:
     st.header("Marcas y sus Grupos")
-    with open("documentation/_marcas_table.md", "r", encoding="utf-8") as f:
-        st.markdown(f.read())
+    marcas_table_path = os.path.abspath("documentation/_marcas_table.md")
+    if os.path.exists(marcas_table_path):
+        with open(marcas_table_path, "r", encoding="utf-8") as f:
+            st.markdown(f.read())
+    else:
+        st.warning(f"No se encontró el archivo de documentación de marcas en {marcas_table_path}")
 
 with tab3:
     st.header("Clientes")
