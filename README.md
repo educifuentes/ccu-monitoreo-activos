@@ -9,8 +9,6 @@ Your application is now successfully deployed to Google Cloud Run!
 Whenever you make changes to your code or secrets and want to push them to the live server, simply run:
 
 ```bash
-./scripts/deploy.sh
-
 
 ./scripts/release.sh
 ```

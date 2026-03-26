@@ -21,13 +21,19 @@ def explorer_de_datos(df: pd.DataFrame, key_prefix: str = "") -> pd.DataFrame:
 
     df = df.copy()
     
-    # Intentar convertir objetos a fechas si es posible
+    # Intentar convertir objetos a fechas si es posible (excepto 'periodo')
     for col in df.columns:
+        if col.lower() == 'periodo':
+            continue
+            
         if is_object_dtype(df[col]):
-            try:
-                df[col] = pd.to_datetime(df[col])
-            except Exception:
-                pass
+            # Solo intentar si parece una fecha (contiene guiones o barras)
+            if df[col].astype(str).str.contains(r'[-/]', regex=True).any():
+                try:
+                    df[col] = pd.to_datetime(df[col])
+                except Exception:
+                    pass
+        
         if is_datetime64_any_dtype(df[col]):
             df[col] = df[col].dt.tz_localize(None)
 

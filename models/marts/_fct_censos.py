@@ -59,6 +59,7 @@ def fct_censos():
     )
 
  
+    df["periodo"] = df["periodo"].astype(str)
     df.sort_values(by=["periodo"], ascending=False, inplace=True)
 
     return df
