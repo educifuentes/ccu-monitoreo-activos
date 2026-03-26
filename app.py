@@ -11,6 +11,8 @@ general_page = st.Page("pages/1_reports/1_general.py", title="General", icon=":m
 clientes_page = st.Page("pages/1_reports/1_clientes.py", title="Clientes", icon=":material/dashboard:")
 
 censos_page = st.Page("pages/1_reports/2_censos.py", title="Censos", icon=":material/article:")
+bases_ccu_page = st.Page("pages/1_reports/3_bases_ccu.py", title="Bases CCU", icon=":material/article:")
+
 reportes_page = st.Page("pages/1_reports/3_reportes.py", title="Reportes", icon=":material/article:")
 
 # Section - Tools
@@ -24,7 +26,7 @@ nav_dict = {
         general_page, 
         clientes_page,
         censos_page,
-        # reportes_page
+        bases_ccu_page
     ],
     "Herramientas": [explore_page, validations_page, documentation_page],
 }

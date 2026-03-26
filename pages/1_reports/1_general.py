@@ -79,8 +79,11 @@ kpi_acciones = ["periodo", "# con Comp. en Salida",
         "# que Disponibilizaron",
         "% que Disponibilizaron"]
 
-metrics_display(df_metrics[kpi_marcas])
-metrics_display(df_metrics[kpi_acciones])
+# metrics_display(df_metrics[kpi_marcas])
+# metrics_display(df_metrics[kpi_acciones])
+
+st.dataframe(df_metrics[kpi_marcas], hide_index=True)
+st.dataframe(df_metrics[kpi_acciones], hide_index=True)
 
 # Metricas - Bases CCU
 st.subheader("Metricas - Bases CCU")
