@@ -13,15 +13,14 @@ from helpers.widgets.display_df_censos import display_df_censos
 
 
 st.set_page_config(page_title="Censos", layout="wide")
-
-st.title("Censos")
-st.caption("Detalle de encuestas de censos")
-
+st.title("📋 Reporte de Censos")
+st.caption("Seguimiento detallado de las encuestas en terreno.")
 
 # 1. Data Loading
 try:
     df_censos = exp_censos()
     df_asset_evolution_censos = exp_asset_evolution_censos()
+    df_metrics = metrics_censo_kpis_by_period()
 except Exception as e:
     st.error(f"Error cargando los datos de censos: {e}")
     st.stop()
@@ -30,95 +29,66 @@ if df_censos.empty:
     st.warning("No hay datos de censos disponibles.")
     st.stop()
 
-# 2. Filtering
+# 2. Global Filter
+unique_periodos = sorted(df_censos["periodo"].dropna().unique(), reverse=True)
+col_f1, col_f2 = st.columns([1, 2])
+with col_f1:
+    selected_periodo = st.selectbox(
+        "Periodo",
+        options=["Todos"] + unique_periodos,
+        index=1 if len(unique_periodos) > 0 else 0
+    )
+
 st.divider()
 
-# Get unique, non-null periods and sort them descending
-unique_periodos = sorted(df_censos["periodo"].dropna().unique(), reverse=True)
-periodos_opciones = ["Todos"] + unique_periodos
+# 3. Main Content
+tab_gen, tab_det = st.tabs(["📊 Resumen General", "🔍 Detalle por Cliente"])
 
-    # Default to the most recent period if available
-selected_periodo = st.selectbox(
-    "Filtrar por Periodo",
-    options=periodos_opciones,
-    index=1 if len(unique_periodos) > 0 else 0
-)
+with tab_gen:
+    df_m = df_metrics.copy()
+    if selected_periodo != "Todos":
+        df_m = df_m[df_m["periodo"] == selected_periodo]
+    
+    if not df_m.empty:
+        kpi_marcas = ["periodo", "N Clientes", 
+                      "N con AbInbev", "% con AbInbev", 
+                      "N con Kross", "% con Kross", 
+                      "N con CCU", "% con CCU",
+                      "N con Otras Marcas", "% con Otras Marcas"]
+        st.subheader("Presencia de Marcas")
+        metrics_display(df_m[kpi_marcas])
+        
+        kpi_acciones = ["periodo", "N con Comp. en Salida", "% con Comp. en Salida", "N que Instalaron", "% que Instalaron", "N que Disponibilizaron", "% que Disponibilizaron"]
+        st.subheader("Acciones Realizadas")
+        metrics_display(df_m[kpi_acciones])
+    else:
+        st.info("No hay métricas para el periodo seleccionado.")
 
+with tab_det:
+    unique_clientes = sorted(df_censos["cliente_id"].dropna().unique())
+    cliente_seleccionado = st.selectbox(
+        "Seleccione un cliente para ver su historial",
+        options=unique_clientes,
+    )
 
-# 3. Layout: Table & Chart
-st.subheader("General")
+    if cliente_seleccionado:
+        st.subheader(f"Cliente ID: {cliente_seleccionado}")
+        
+        # Latest Info
+        latest_info = df_censos[df_censos["cliente_id"] == cliente_seleccionado].sort_values("fecha", ascending=False).iloc[0]
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Clasificación Actual", latest_info.get("clasificacion", "N/A"))
+        c2.metric("Total Schoperas", int(latest_info["schoperas_total"]))
+        c3.metric("Salidas CCU", int(latest_info["salidas"]))
+        
+        st.divider()
+        
+        st.subheader("Historial de Censos")
+        censo_cols = ["periodo", "fecha", "schoperas_total", "schoperas_ccu", "salidas", "clasificacion"]
+        df_c = df_censos[df_censos["cliente_id"] == cliente_seleccionado]
+        st.dataframe(df_c[censo_cols], hide_index=True, use_container_width=True)
 
-# Metrics
-df_metrics = metrics_censo_kpis_by_period()
-if selected_periodo != "Todos":
-    df_metrics = df_metrics[df_metrics["periodo"] == selected_periodo]
-
-kpi_marcas = ["periodo", "# Clientes",
-        "# con AbInbev",
-        "% con AbInbev",
-        "# con Kross",
-        "% con Kross",
-        "# con CCU",
-        "% con CCU",
-        "# con Otras Marcas",
-        "% con Otras Marcas"]
-
-kpi_acciones = ["periodo", "# con Comp. en Salida",
-        "% con Comp. en Salida",
-        "# que Instalaron",
-        "% que Instalaron",
-        "# que Disponibilizaron",
-        "% que Disponibilizaron"]
-
-st.dataframe(df_metrics[kpi_marcas], hide_index=True)
-st.dataframe(df_metrics[kpi_acciones], hide_index=True)
-
-
-#metrics
-
-# st.subheader("Cumplimiento")
-# # filter out rows with fecha before 2025
-# df_filtered_no_2024_s2 = df_censos[pd.to_datetime(df_censos["fecha"], errors='coerce').dt.year >= 2025]
-# if "clasificacion" in df_filtered_no_2024_s2.columns and "periodo" in df_filtered_no_2024_s2.columns:
-#     chart = alt.Chart(df_filtered_no_2024_s2).mark_bar().encode(
-#         x=alt.X('periodo:O', title='Periodo'),
-#         y=alt.Y('count():Q', title='Número de Clientes'),
-#         color=alt.Color(
-#             'clasificacion:N',
-#             title='Clasificación',
-#             scale=alt.Scale(
-#                 domain=list(CLASIFICACION_COLORS.keys()),
-#                 range=list(CLASIFICACION_COLORS.values())
-#             )
-#         ),
-#         tooltip=[
-#             alt.Tooltip('periodo:O', title='Periodo'),
-#             alt.Tooltip('count():Q', title='Número de Clientes'),
-#             alt.Tooltip('clasificacion:N', title='Clasificación')
-#         ]
-#     )
-#     st.altair_chart(chart, width='stretch', height=250)
-# else:
-#     st.info("Las columnas 'clasificacion' o 'periodo' no están disponibles en los datos de censos.")
-
-
-st.subheader("Detalle por Cliente")
-
-unique_clientes = sorted(df_censos["cliente_id"].dropna().unique())
-
-cliente_seleccionado = st.selectbox(
-    "Seleccione un cliente",
-    options=unique_clientes,
-)
-
-if cliente_seleccionado:
-    st.subheader(f"Cliente: {cliente_seleccionado}")
-    censo_columns_client = ["periodo", "schoperas_total", "schoperas_ccu", "salidas", "clasificacion"]
-
-    df_filter_by_client = df_censos[df_censos["cliente_id"] == cliente_seleccionado]
-    st.dataframe(df_filter_by_client[censo_columns_client], hide_index=True, use_container_width=True)
-
-    st.subheader("Evolucion de Activos")
-    asset_evolution_columns_client = ["periodo", "schoperas_total", "schoperas_total_diff", "schoperas_ccu", "schoperas_ccu_diff", "salidas", "salidas_diff"]
-    df_asset_evolution_censos_client = df_asset_evolution_censos[df_asset_evolution_censos["cliente_id"] == cliente_seleccionado]
-    st.dataframe(df_asset_evolution_censos_client, hide_index=True, use_container_width=True)
+        st.subheader("Evolución de Activos")
+        asset_cols = ["periodo", "schoperas_total", "schoperas_total_diff", "schoperas_ccu", "schoperas_ccu_diff", "salidas", "salidas_diff"]
+        df_e = df_asset_evolution_censos[df_asset_evolution_censos["cliente_id"] == cliente_seleccionado]
+        st.dataframe(df_e[asset_cols], hide_index=True, use_container_width=True)

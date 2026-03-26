@@ -25,84 +25,83 @@ from helpers.transformations.date_formatting import format_date_spanish
 
 
 st.set_page_config(page_title="Monitoreo de Activos CCU", layout="wide")
-st.title("Monitoreo de Activos CCU")
-st.markdown("Lectura de datos desde csv. Luego ira a [Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)")
-
-
+st.title(" Monitoreo de Activos CCU")
+st.markdown("""
+    Vista consolidada de los indicadores clave de desempeño (KPIs) para los Censos y Bases CCU.
+    [Ver Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)
+""")
 
 # 1. Data Loading
 try:
     df_censos = exp_censos()
-    df_asset_evolution_censos = exp_asset_evolution_censos()
+    df_metrics_censos = metrics_censo_kpis_by_period()
+    df_metrics_bases = metrics_bases_ccu_kpis_by_period()
 except Exception as e:
-    st.error(f"Error cargando los datos de censos: {e}")
+    st.error(f"Error cargando los datos: {e}")
     st.stop()
 
-if df_censos.empty:
-    st.warning("No hay datos de censos disponibles.")
-    st.stop()
+# 2. Censos Section
+unique_periodos_censos = sorted(df_metrics_censos["periodo"].dropna().unique(), reverse=True)
 
-# Get unique, non-null periods and sort them descending
-unique_periodos = sorted(df_censos["periodo"].dropna().unique(), reverse=True)
-periodos_opciones = ["Todos"] + unique_periodos
+col_f1, col_f2 = st.columns([1, 2])
+with col_f1:
+    selected_periodo_censos = st.selectbox(
+        "Filtrar por Periodo (Censos)",
+        options=["Todos"] + unique_periodos_censos,
+        index=1 if len(unique_periodos_censos) > 0 else 0,
+        key="filter_censos"
+    )
 
-    # Default to the most recent period if available
-selected_periodo = st.selectbox(
-    "Filtrar por Periodo",
-    options=periodos_opciones,
-    index=1 if len(unique_periodos) > 0 else 0
-)
+df_m = df_metrics_censos.copy()
+if selected_periodo_censos != "Todos":
+    df_m = df_m[df_m["periodo"] == selected_periodo_censos]
 
-st.header("General")
+if not df_m.empty:
+    kpi_generales = ["periodo", "N Clientes"]
+    kpi_marcas = ["periodo",
+            "N con AbInbev", "% con AbInbev",
+            "N con Kross", "% con Kross",
+            "N con CCU", "% con CCU",
+            "N con Otras Marcas", "% con Otras Marcas"]
 
-# 3. Layout: Table & Chart
-st.subheader("Metricas - Censos")
+    kpi_acciones = ["periodo", "N con Comp. en Salida",
+            "% con Comp. en Salida",
+            "N que Instalaron", "% que Instalaron",
+            "N que Disponibilizaron", "% que Disponibilizaron"]
+    
+    st.subheader("Generales")
+    metrics_display(df_m[kpi_generales])
 
-# Metrics
-df_metrics = metrics_censo_kpis_by_period()
-if selected_periodo != "Todos":
-    df_metrics = df_metrics[df_metrics["periodo"] == selected_periodo]
+    st.subheader("Presencia de Marcas")
+    metrics_display(df_m[kpi_marcas])
+    
+    st.subheader("Acciones en el Punto de Venta")
+    metrics_display(df_m[kpi_acciones])
+else:
+    st.info("No hay métricas de censos para el periodo seleccionado.")
 
-kpi_marcas = ["periodo", "# Clientes",
-        "# con AbInbev",
-        "% con AbInbev",
-        "# con Kross",
-        "% con Kross",
-        "# con CCU",
-        "% con CCU",
-        "# con Otras Marcas",
-        "% con Otras Marcas"]
 
-kpi_acciones = ["periodo", "# con Comp. en Salida",
-        "% con Comp. en Salida",
-        "# que Instalaron",
-        "% que Instalaron",
-        "# que Disponibilizaron",
-        "% que Disponibilizaron"]
-
-# metrics_display(df_metrics[kpi_marcas])
-# metrics_display(df_metrics[kpi_acciones])
-
-st.dataframe(df_metrics[kpi_marcas], hide_index=True)
-st.dataframe(df_metrics[kpi_acciones], hide_index=True)
-
-# Metricas - Bases CCU
-st.subheader("Metricas - Bases CCU")
-
-df_metrics_bases = metrics_bases_ccu_kpis_by_period()
-
+# 3. Bases CCU Section
 unique_periodos_bases = sorted(df_metrics_bases["periodo"].dropna().unique(), reverse=True)
-periodos_opciones_bases = ["Todos"] + list(unique_periodos_bases)
-selected_periodo_bases = st.selectbox(
-    "Filtrar por Periodo (Bases CCU)",
-    options=periodos_opciones_bases,
-    index=1 if len(unique_periodos_bases) > 0 else 0
-)
 
+st.subheader("Contratos")
+
+col_fb1, col_fb2 = st.columns([1, 2])
+with col_fb1:
+    selected_periodo_bases = st.selectbox(
+        "Filtrar por Periodo (Bases CCU)",
+        options=["Todos"] + unique_periodos_bases,
+        index=1 if len(unique_periodos_bases) > 0 else 0,
+        key="filter_bases"
+    )
+
+df_b = df_metrics_bases.copy()
 if selected_periodo_bases != "Todos":
-    df_metrics_bases = df_metrics_bases[df_metrics_bases["periodo"] == selected_periodo_bases]
+    df_b = df_b[df_b["periodo"] == selected_periodo_bases]
 
-kpi_bases = ["periodo", "# Clientes", "# Clientes Local Imagen", "# Clientes Nuevos"]
-
-metrics_display(df_metrics_bases[kpi_bases])
+if not df_b.empty:
+    kpi_bases = ["periodo", "N Clientes", "N Clientes Local Imagen", "N Clientes Nuevos"]
+    metrics_display(df_b[kpi_bases])
+else:
+    st.info("No hay métricas de bases CCU para el periodo seleccionado.")
 

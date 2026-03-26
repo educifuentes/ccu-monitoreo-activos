@@ -2,21 +2,21 @@ metrics:
   - group_name: generales
     description: "Métricas generales para el monitoreo del parque de activos, censos y bases CCU."
     columns:
-      - name: "# Clientes"
+      - name: "N Clientes"
         description: "Número total de clientes únicos identificados en el periodo."
-      - name: "# con CCU"
+      - name: "N con CCU"
         description: "Cantidad de clientes con presencia de marcas CCU (Censo)."
       - name: "% con CCU"
         description: "Porcentaje de clientes con presencia de marcas CCU sobre el total (Censo)."
-      - name: "# Clientes con Local Imagen"
+      - name: "N Clientes con Local Imagen"
         description: "Cantidad de clientes marcados como 'Local Imagen' en el contrato (Base CCU)."
-      - name: "# Clientes Nuevos"
+      - name: "N Clientes Nuevos"
         description: "Cantidad de clientes que no aparecían en el periodo anterior inmediato (Base CCU)."
-      - name: "# con Comp. en Salida"
+      - name: "N con Comp. en Salida"
         description: "Cantidad de clientes con presencia de competencia detectada en las salidas (Censo)."
-      - name: "# que Instalaron"
+      - name: "N que Instalaron"
         description: "Cantidad de clientes que realizaron instalaciones de activos en el periodo (Censo)."
-      - name: "# que Disponibilizaron"
+      - name: "N que Disponibilizaron"
         description: "Cantidad de clientes que dejaron activos disponibles en el periodo (Censo)."
   - group_name: cumplimiento censo
     columns:

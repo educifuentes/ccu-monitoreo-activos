@@ -4,9 +4,9 @@ from models.marts._fct_bases_ccu import fct_bases_ccu
 def metrics_bases_ccu_kpis_by_period():
     """
     Calcula los KPIs de bases CCU por periodo:
-    - # Clientes
-    - # Clientes con Local Imagen
-    - # Clientes nuevos respecto al periodo anterior más reciente
+    - N Clientes
+    - N Clientes con Local Imagen
+    - N Clientes nuevos respecto al periodo anterior más reciente
     """
     df = fct_bases_ccu()
 
@@ -57,9 +57,9 @@ def metrics_bases_ccu_kpis_by_period():
     agg_df = agg_df.rename(
         columns={
             "periodo": "periodo",
-            "clientes": "# Clientes",
-            "clientes_local_imagen": "# Clientes Local Imagen",
-            "clientes_nuevos": "# Clientes Nuevos",
+            "clientes": "N Clientes",
+            "clientes_local_imagen": "N Clientes Local Imagen",
+            "clientes_nuevos": "N Clientes Nuevos",
         }
     )
 

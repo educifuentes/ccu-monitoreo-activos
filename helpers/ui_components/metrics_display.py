@@ -16,8 +16,8 @@ def metrics_display(df):
         st.warning("El DataFrame de métricas debe contener una columna 'periodo'.")
         return
 
-    # Filter out columns that shouldn't be metrics (like 'periodo')
-    metric_cols = [col for col in df.columns if col != 'periodo']
+    # Display only columns that represent metrics (containing '#', '%', or starting with 'N ')
+    metric_cols = [col for col in df.columns if col != 'periodo' and ('#' in col or '%' in col or col.startswith('N '))]
     MAX_COLS = 6
 
     for _, row in df.iterrows():

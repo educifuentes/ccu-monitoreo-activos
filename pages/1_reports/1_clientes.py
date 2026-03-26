@@ -18,7 +18,7 @@ from helpers.charts.trend_assets import render_trend_assets_chart
 # PAGE CONFIG
 # =============================================================================
 st.set_page_config(page_title="Clientes", layout="wide")
-st.title("Clientes")
+st.title(":material/sports_bar: Clientes")
 
 
 # =============================================================================
@@ -33,8 +33,7 @@ contratos_df = exp_contratos()
 # =============================================================================
 # CLIENTE SELECTION
 # =============================================================================
-st.header(":material/sports_bar: Clientes")
-st.markdown("Información detallada de censos, nóminas y contratos por cada establecimiento.")
+st.markdown("Información detallada de cada cliente a aprties de censos y reporets CCU.")
 
 unique_clientes = (
     clientes_df[["cliente_id", "razon_social"]]
