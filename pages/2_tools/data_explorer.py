@@ -1,10 +1,8 @@
 import streamlit as st
-from models.gsheets.staging.gsheets_tables import (
-    clientes, 
-    censos, 
-    bases_ccu, 
-    contratos
-)
+from models.marts._dim_clientes import dim_clientes
+from models.marts._fct_censos import fct_censos
+from models.marts._fct_bases_ccu import fct_bases_ccu
+
 from helpers.ui_components.ui_icons import ICONS
 from helpers.widgets.explorer_de_datos import explorer_de_datos
 
@@ -24,17 +22,17 @@ def safe_render(df):
     st.dataframe(df, width='stretch')
 
 # Create tabs for organization
-tab1, tab2, tab3, tab4 = st.tabs([
+tab1, tab2, tab3 = st.tabs([
     f"{ICONS['clientes']} Clientes",
     f"{ICONS['censos']} Censos",
-    f"{ICONS['bases_ccu']} Bases CCU",
-    f"{ICONS['contratos']} Contratos"
+    f"{ICONS['bases_ccu']} Reportes CCU",
 ])
 
 with tab1:
     st.header("Clientes")
     try:
-        df_locales = clientes()
+        # Use dim_clientes instead of clientes
+        df_locales = dim_clientes()
         df_locales = explorer_de_datos(df_locales, key_prefix="clientes")
             
         st.metric("Total Registros", f"{len(df_locales):,}")
@@ -45,7 +43,8 @@ with tab1:
 with tab2:
     st.header("Censos")
     try:
-        df_censos = censos()
+        # Use fct_censos instead of censos
+        df_censos = fct_censos()
         df_censos = explorer_de_datos(df_censos, key_prefix="censos")
         
         safe_render(df_censos)
@@ -55,24 +54,18 @@ with tab2:
 with tab3:
     st.header("Bases CCU")
     try:
-        df_bases_ccu = bases_ccu()
+        # Use fct_bases_ccu instead of bases_ccu
+        df_bases_ccu = fct_bases_ccu()
         df_bases_ccu = explorer_de_datos(df_bases_ccu, key_prefix="bases_ccu")
         
         col1, col2, col3 = st.columns(3)
         col1.metric("Total", f"{len(df_bases_ccu):,}")
-        col2.metric("2024-Q1", f"{len(df_bases_ccu[df_bases_ccu['periodo'] == '2024-Q1']):,}")
-        col3.metric("2026-Q1", f"{len(df_bases_ccu[df_bases_ccu['periodo'] == '2026-Q1']):,}")
+        
+        # Check if 'periodo' exists before filtering
+        if 'periodo' in df_bases_ccu.columns:
+            col2.metric("2024-Q1", f"{len(df_bases_ccu[df_bases_ccu['periodo'] == '2024-Q1']):,}")
+            col3.metric("2026-Q1", f"{len(df_bases_ccu[df_bases_ccu['periodo'] == '2026-Q1']):,}")
+        
         safe_render(df_bases_ccu)
     except Exception as e:
         st.error(f"Error cargando bases_ccu: {e}")
-
-with tab4:
-    st.header("Contratos")
-    try:
-        df_contratos = contratos()
-        df_contratos = explorer_de_datos(df_contratos, key_prefix="contratos")
-        
-        st.metric("Total Registros", f"{len(df_contratos):,}")
-        safe_render(df_contratos)
-    except Exception as e:
-        st.error(f"Error cargando contratos: {e}")
