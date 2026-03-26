@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+
 from helpers.ui_components.render_docs import render_model_docs
 from helpers.ui_components.ui_icons import ICONS
 
@@ -10,14 +11,12 @@ st.title(f"{ICONS['documentation']} Documentación")
 st.subheader("Tablas")
 
 # Create tabs for organization
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
     f"{ICONS['clientes']} Clientes",
     f"{ICONS['censos']} Censos",
     f"{ICONS['bases_ccu']} Bases CCU",
-    f"{ICONS['contratos']} Contratos",
-    f"{ICONS['metrics']} Metricas",
     f"{ICONS['metrics']} Marcas",
-
+    f"{ICONS['metrics']} Metricas",
 ])
 
 
@@ -39,18 +38,13 @@ with tab3:
     render_model_docs(fct_bases_ccu_path)
 
 with tab4:
-    st.header("Contratos")
-    # fct_contratos_path = os.path.abspath("models/raw/marts/_fct_contratos.yml")
-    # render_model_docs(fct_contratos_path)
+    st.header("Marcas y sus Grupos")
+    with open("documentation/_marcas_table.md", "r", encoding="utf-8") as f:
+        st.markdown(f.read())
 
 with tab5:
     st.header("Métricas")
     # fct_metricas_path = os.path.abspath("models/raw/marts/metrics/_metrics_docs.yml")
     # render_model_docs(fct_metricas_path, kind="metrics")
-
-with tab6:
-    st.header("Marcas y Grupos Corporativos")
-    with open("documentation/_marcas_table.md", "r", encoding="utf-8") as f:
-        st.markdown(f.read())
 
 

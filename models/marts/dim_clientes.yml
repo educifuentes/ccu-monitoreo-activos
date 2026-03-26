@@ -1,0 +1,26 @@
+model_name: dim_clientes
+columns:
+  - name: cliente_id
+    description: ID único del cliente
+    data_type: string
+  - name: razon_social
+    description: Razón social legal del cliente
+    data_type: string
+  - name: rut
+    description: RUT del cliente o empresa
+    data_type: string
+  - name: direccion
+    description: Dirección física del local
+    data_type: string
+  - name: region
+    description: Región administrativa donde se ubica el local
+    data_type: string
+  - name: ciudad
+    description: Ciudad donde se ubica el local
+    data_type: string
+  - name: comuna
+    description: Comuna donde se ubica el local
+    data_type: string
+  - name: nombre_fantasia
+    description: Nombre comercial o de fantasía del local
+    data_type: string

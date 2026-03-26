@@ -1,0 +1,77 @@
+model_name: fct_censos
+columns:
+  - name: cliente_id
+    description: ID del cliente (unido con dim_clientes)
+    data_type: string
+  - name: periodo
+    description: Periodo reportado (ej: 2026-Q1, 2025-Q2)
+    data_type: string
+  - name: fecha
+    description: Fecha exacta de la encuesta o censo
+    data_type: date
+  - name: razon_social
+    description: Razón social del cliente al momento del censo
+    data_type: string
+  - name: direccion
+    description: Dirección del local al momento del censo
+    data_type: string
+  - name: rut
+    description: RUT del cliente
+    data_type: string
+  - name: region
+    description: Región del local
+    data_type: string
+  - name: comuna
+    description: Comuna del local
+    data_type: string
+  - name: nombre_fantasia
+    description: Nombre de fantasía del local
+    data_type: string
+  - name: agencia
+    description: Agencia externa que realizó el levantamiento
+    data_type: category
+  - name: permite_censo
+    description: Indica si el local permitió realizar el censo (Si/No)
+    data_type: string
+  - name: motivo_no_censo
+    description: Razón por la cual no se pudo realizar el censo
+    data_type: string
+  - name: schoperas_total
+    description: Conteo total de schoperas encontradas en el local
+    data_type: Int64
+  - name: schoperas_ccu
+    description: Conteo de schoperas pertenecientes a CCU
+    data_type: Int64
+  - name: salidas
+    description: Número de salidas activas
+    data_type: Int64
+  - name: instalo
+    description: Cantidad de activos instalados en este periodo
+    data_type: Int64
+  - name: disponibilizo
+    description: Cantidad de activos que se dejaron disponibles
+    data_type: Int64
+  - name: marcas_abinbev
+    description: Flag binario (0/1) de presencia de marcas AbInbev
+    data_type: Int64
+  - name: marcas_kross
+    description: Flag binario (0/1) de presencia de marcas Kross
+    data_type: Int64
+  - name: marcas_ccu
+    description: Flag binario (0/1) de presencia de marcas CCU
+    data_type: Int64
+  - name: marcas_otras
+    description: Flag binario (0/1) de presencia de otras marcas de competencia
+    data_type: Int64
+  - name: marcas
+    description: Texto consolidado con todas las marcas detectadas
+    data_type: string
+  - name: marcas_otras_listado
+    description: Listado específico de 'otras marcas' detectadas
+    data_type: string
+  - name: hay_competencia_en_salida
+    description: Indica presencia de competencia en las salidas de schop
+    data_type: boolean
+  - name: marca_instalada_en_salida
+    description: Nombre de la marca de competencia instalada en la salida
+    data_type: string
