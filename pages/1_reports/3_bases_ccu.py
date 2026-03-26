@@ -2,7 +2,7 @@ import streamlit as st
 import altair as alt
 import pandas as pd
 
-from models.marts._fct_bases_ccu import fct_bases_ccu
+from models.exposures._exp_bases_ccu import exp_bases_ccu
 from models.exposures._exp_asset_evolution_bases_ccu import exp_asset_evolution_bases_ccu
 from models.metrics._metric_bases_ccu_kpis_by_period import metrics_bases_ccu_kpis_by_period
 
@@ -20,7 +20,7 @@ st.caption("Detalle de reportes de bases CCU")
 
 # 1. Data Loading
 try:
-    df_bases_ccu = fct_bases_ccu()
+    df_bases_ccu = exp_bases_ccu()
     df_asset_evolution_bases = exp_asset_evolution_bases_ccu()
 except Exception as e:
     st.error(f"Error cargando los datos de Bases CCU: {e}")
