@@ -4,7 +4,7 @@ import pandas as pd
 
 from models.marts._fct_bases_ccu import fct_bases_ccu
 from models.exposures._exp_asset_evolution_bases_ccu import exp_asset_evolution_bases_ccu
-from models.exposures.metrics._metric_bases_ccu_kpis_by_period import metrics_bases_ccu_kpis_by_period
+from models.metrics._metric_bases_ccu_kpis_by_period import metrics_bases_ccu_kpis_by_period
 from helpers.ui_components.metrics_display import metrics_display
 
 from helpers.ui_components.ui_config import CLASIFICACION_COLORS

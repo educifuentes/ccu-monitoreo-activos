@@ -7,7 +7,7 @@ from models.exposures._exp_activos_ccu_y_censos import exp_activos_ccu_y_censos
 from models.exposures._exp_asset_evolution import exp_asset_evolution
 from models.exposures._exp_contratos import exp_contratos
 
-from models.marts.metrics.general_metrics import get_latest_classification
+from models.metrics.general_metrics import get_latest_classification
 
 from helpers.ui_components.ui_components import display_compliance_badge
 from helpers.ui_components.icons import render_icon

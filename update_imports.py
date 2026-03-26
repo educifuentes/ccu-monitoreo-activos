@@ -36,7 +36,7 @@ REPLACEMENTS = {
     "models.marts._fct_bases_ccu": "models.marts._fct_bases_ccu",
     "models.marts._fct_censos": "models.marts._fct_censos",
     "models.marts._fct_contratos": "models.marts._fct_contratos",
-    "models.marts.metrics": "models.marts.metrics",
+    "models.metrics": "models.metrics",
     "models.marts.reports": "models.marts.reports",
 
     # Remaining `models.raw` catch-all (sources, exposures)

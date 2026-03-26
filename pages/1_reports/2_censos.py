@@ -4,7 +4,7 @@ import pandas as pd
 
 from models.exposures._exp_censos import exp_censos
 from models.exposures._exp_asset_evolution_censos import exp_asset_evolution_censos
-from models.exposures.metrics._metric_censo_kpis_by_period import metrics_censo_kpis_by_period
+from models.metrics._metric_censo_kpis_by_period import metrics_censo_kpis_by_period
 
 from helpers.ui_components.ui_config import CLASIFICACION_COLORS
 from helpers.widgets.explorer_de_datos import explorer_de_datos

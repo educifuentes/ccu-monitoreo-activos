@@ -6,8 +6,8 @@ from models.exposures._exp_censos import exp_censos
 
 from models.exposures._exp_censos import exp_censos
 from models.exposures._exp_asset_evolution_censos import exp_asset_evolution_censos
-from models.exposures.metrics._metric_censo_kpis_by_period import metrics_censo_kpis_by_period
-from models.exposures.metrics._metric_bases_ccu_kpis_by_period import metrics_bases_ccu_kpis_by_period
+from models.metrics._metric_censo_kpis_by_period import metrics_censo_kpis_by_period
+from models.metrics._metric_bases_ccu_kpis_by_period import metrics_bases_ccu_kpis_by_period
 from helpers.ui_components.metrics_display import metrics_display
 
 from helpers.ui_components.ui_config import CLASIFICACION_COLORS
@@ -16,7 +16,7 @@ from helpers.widgets.display_df_censos import display_df_censos
 
 
 # marts
-from models.marts.metrics.general_metrics import calculate_general_metrics, get_latest_classification
+from models.metrics.general_metrics import calculate_general_metrics, get_latest_classification
 
 # helpers
 from helpers.ui_components.ui_components import display_compliance_badge
