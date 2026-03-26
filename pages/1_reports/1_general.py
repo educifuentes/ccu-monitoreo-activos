@@ -8,6 +8,7 @@ from models.exposures._exp_censos import exp_censos
 from models.exposures._exp_asset_evolution_censos import exp_asset_evolution_censos
 from models.exposures.metrics._metric_censo_kpis_by_period import metrics_censo_kpis_by_period
 from models.exposures.metrics._metric_bases_ccu_kpis_by_period import metrics_bases_ccu_kpis_by_period
+from helpers.ui_components.metrics_display import metrics_display
 
 from helpers.ui_components.ui_config import CLASIFICACION_COLORS
 from helpers.widgets.explorer_de_datos import explorer_de_datos
@@ -78,8 +79,8 @@ kpi_acciones = ["periodo", "# con Comp. en Salida",
         "# que Disponibilizaron",
         "% que Disponibilizaron"]
 
-st.dataframe(df_metrics[kpi_marcas], hide_index=True)
-st.dataframe(df_metrics[kpi_acciones], hide_index=True)
+metrics_display(df_metrics[kpi_marcas])
+metrics_display(df_metrics[kpi_acciones])
 
 # Metricas - Bases CCU
 st.subheader("Metricas - Bases CCU")
@@ -99,5 +100,5 @@ if selected_periodo_bases != "Todos":
 
 kpi_bases = ["periodo", "# Clientes", "# Clientes Local Imagen", "# Clientes Nuevos"]
 
-st.dataframe(df_metrics_bases[kpi_bases], hide_index=True)
+metrics_display(df_metrics_bases[kpi_bases])
 
