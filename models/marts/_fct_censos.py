@@ -3,6 +3,7 @@ from helpers.transformations.dataframe_alignment import safe_concat_with_columns
 
 from models.intermediate.censos._int_censos__censo_2025_2 import int_censos__censo_2025_2
 from models.intermediate.censos._int_censos__censo_2026_1 import int_censos__censo_2026_1_agencia_pk, int_censos__censo_2026_1_agencia_corpa
+from models.intermediate.censos._int_censos__censo_2026_1_corregido_manual import int_censos__censo_2026_1_corregido_manual
 
 from models.intermediate.censos._int_censos__censo_2024_2 import int_censos__censo_2024_2
 
@@ -14,6 +15,7 @@ def fct_censos():
     df_censo_2025_2 = int_censos__censo_2025_2()
     df_censo_2026_1_agencia_pk = int_censos__censo_2026_1_agencia_pk()
     df_censo_2026_1_agencia_corpa = int_censos__censo_2026_1_agencia_corpa()
+    df_censo_2026_1_corregido_manual = int_censos__censo_2026_1_corregido_manual()
 
     selected_columns = [
         # keys
@@ -56,7 +58,8 @@ def fct_censos():
         [df_censo_2024_2, 
         df_censo_2025_2, 
         df_censo_2026_1_agencia_pk, 
-        df_censo_2026_1_agencia_corpa
+        df_censo_2026_1_agencia_corpa,
+        df_censo_2026_1_corregido_manual
         ], 
         selected_columns
     )

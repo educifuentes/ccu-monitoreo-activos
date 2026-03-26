@@ -25,3 +25,7 @@ sources:
       - name: censo_2026_1_fne_listado
         description: fne
         path: seeds/censos/Listado Final_to_supervisoraENTREGADO POR FNE.xlsx - Visita supervisora.csv
+      - name: censo_2026_1_corregido_manual
+        description: Reporte que envio Pilar a FNE. Data definitiva del censo. Solo hay que agregar columna de coolers.
+        path: seeds/censos/censo_2026_1/Anexo 6 listado locales.xlsx - Hoja 1 - 2026-03-11T17-25_expor.csv
+        date_received: 2026-03-19
