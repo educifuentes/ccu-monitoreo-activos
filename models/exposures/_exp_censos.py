@@ -1,6 +1,6 @@
 import pandas as pd
 
-from models.marts._fct_censos import fct_censos
+from models.marts.gsheets._fct_censos_gsheets import fct_censos_gsheets
 from models.exposures._exp_clientes import exp_clientes
 
 from models.metrics.clasification_censo import clasify_censo
@@ -10,7 +10,7 @@ def exp_censos():
     censo con dim clientes
     """
     # 1. Data Loading and Integration
-    df = fct_censos()
+    df = fct_censos_gsheets()
 
     # calculate new metrics
     df["schoperas_competencia"] = df["schoperas_total"] - df["schoperas_ccu"]

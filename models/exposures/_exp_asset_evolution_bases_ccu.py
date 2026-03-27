@@ -1,11 +1,11 @@
-from models.marts._fct_bases_ccu import fct_bases_ccu
+from models.marts.gsheets._fct_bases_ccu_gsheets import fct_bases_ccu_gsheets
 
 def exp_asset_evolution_bases_ccu():
     """
     Evolution of Bases CCU assets per cliente_id ordered by fecha descending.
     Computes period-over-period differences for schoperas_ccu, salidas, and coolers.
     """
-    df = fct_bases_ccu()
+    df = fct_bases_ccu_gsheets()
 
 
     # Sort descending by fecha within each cliente_id

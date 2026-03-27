@@ -1,7 +1,7 @@
 import pandas as pd
 
-from models.marts._fct_censos import fct_censos
-from models.marts._fct_bases_ccu import fct_bases_ccu
+from models.marts.gsheets._fct_censos_gsheets import fct_censos_gsheets
+from models.marts.gsheets._fct_bases_ccu_gsheets import fct_bases_ccu_gsheets
 
 # unir data de censo 1 y de censo 2
 
@@ -11,8 +11,8 @@ def exp_activos_ccu_y_censos():
     """
 
     # # cliente version
-    fct_censos_df = fct_censos()
-    fct_bases_ccu_df = fct_bases_ccu()
+    fct_censos_df = fct_censos_gsheets()
+    fct_bases_ccu_df = fct_bases_ccu_gsheets()
 
     # ajusten coolers en censos
     fct_censos_df["coolers"] = fct_censos_df["tiene_coolers"]

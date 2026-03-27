@@ -1,11 +1,11 @@
 import pandas as pd
 
-from models.marts._fct_bases_ccu import fct_bases_ccu
+from models.marts.gsheets._fct_bases_ccu_gsheets import fct_bases_ccu_gsheets
 
 
 def exp_contratos():
 
-    df = fct_bases_ccu()
+    df = fct_bases_ccu_gsheets()
 
     selected_columns = [
         "cliente_id",

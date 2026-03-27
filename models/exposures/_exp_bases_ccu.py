@@ -1,6 +1,6 @@
 import pandas as pd
 
-from models.marts._fct_bases_ccu import fct_bases_ccu
+from models.marts.gsheets._fct_bases_ccu_gsheets import fct_bases_ccu_gsheets
 from models.exposures._exp_clientes import exp_clientes
 
 from models.metrics.clasification_censo import clasify_censo
@@ -10,7 +10,7 @@ def exp_bases_ccu():
     Consolida la información de bases CCU con la dimensión de clientes.
     """
     # 1. Data Loading from Marts
-    df = fct_bases_ccu()
+    df = fct_bases_ccu_gsheets()
 
     # Define standard columns to keep from CCU
     ccu_columns = [
