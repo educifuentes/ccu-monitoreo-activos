@@ -30,9 +30,8 @@ from helpers.ui_components.icons import render_icon
 st.set_page_config(page_title="Monitoreo de Activos CCU", layout="wide")
 st.title(f"{render_icon('dashboard')} Monitoreo de Activos CCU")
 st.markdown("""
-    Vista consolidada de indicadores para los Censos y Bases CCU.
-    [Ver Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)
-""")
+    Fuente de datos:  [ Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)
+""")    
 
 # 1. Data Loading
 try:

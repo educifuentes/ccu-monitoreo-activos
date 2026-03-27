@@ -33,9 +33,10 @@ def find_model(model_name):
             
             # Find the primary internal function defined specifically within this module script (ignoring imports)
             model_func = None
-            for name, func in inspect.getmembers(module, inspect.isfunction):
-                if getattr(func, "__module__", "") == module.__name__:
-                    model_func = func
+            for name, member in inspect.getmembers(module, callable):
+                # Ensure the member is defined in this module and is not a class
+                if getattr(member, "__module__", "") == module.__name__ and not inspect.isclass(member):
+                    model_func = member
                     break
                     
             if model_func:                
