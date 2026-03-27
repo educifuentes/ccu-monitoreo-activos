@@ -10,3 +10,4 @@ models/staging/__pycache__
 models/intermediate/__pycache__
 models/marts/__pycache__
 config/keys/*
+seeds/outputs/*
