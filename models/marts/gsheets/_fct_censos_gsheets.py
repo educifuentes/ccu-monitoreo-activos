@@ -41,6 +41,7 @@ def fct_censos_gsheets():
         # competencia
         "hay_competencia_en_salida",
         "marca_instalada_en_salida",
+        "row_index"
     ]
 
     df = df[selected_columns]

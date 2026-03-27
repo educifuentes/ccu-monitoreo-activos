@@ -33,6 +33,8 @@ def fct_bases_ccu_gsheets():
         "cantidad_total_salidas_schop",
         "modificacion",
         "mes_cambio",
+        # metadata
+        "row_index"
     ]
 
     df = df[selected_columns]
