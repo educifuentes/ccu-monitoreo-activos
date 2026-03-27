@@ -12,7 +12,7 @@ from helpers.ui_components.ui_icons import ICONS
 df = dim_clientes()
 
 
-def validate_locales():
+def validate_clientes():
     st.header("Clientes")
 
     total_filas = len(df)

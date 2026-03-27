@@ -1,6 +1,6 @@
 import streamlit as st
 
-from tests.test_clientes import validate_locales
+from tests.test_clientes import validate_clientes
 from tests.test_censos import validate_censos, df as censos_df
 from tests.test_bases_ccu import validate_bases_ccu, df as bases_df
 
@@ -17,7 +17,7 @@ tab1, tab2, tab3 = st.tabs([
 ])
 
 with tab1:
-    validate_locales()
+    validate_clientes()
 
 with tab2:
     periodos_censos = sorted(censos_df["periodo"].dropna().unique(), reverse=True)
