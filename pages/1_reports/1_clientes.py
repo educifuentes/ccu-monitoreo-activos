@@ -105,7 +105,7 @@ else:
     col_info, col_comp = st.columns([2, 1])
 
     with col_info:
-        st.subheader("Información del Cliente")
+        st.subheader("Información")
         with st.container(border=True):
             st.markdown(f"📍 **Dirección:** {cliente['direccion']}")
             st.markdown(f"**Ciudad/Comuna:** {cliente['ciudad']}")
@@ -125,7 +125,7 @@ else:
 
     # ── Assets Evolution table ────────────────────────────────────────────────
     st.subheader(":material/monitoring: Evolución de Activos")
-    st.markdown("Cronología de activos (Schoperas, Salidas, Coolers) según Censos y Bases CCU.")
+    st.markdown("Historial de activos consolidadado (Censos + Bases CCU)")
 
     st.dataframe(
         asset_evo_cliente,

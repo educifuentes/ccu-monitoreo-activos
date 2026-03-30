@@ -18,12 +18,9 @@ def render_trend_assets_chart(assets_history_df: pd.DataFrame) -> None:
         st.warning("No hay registros históricos de activos para este cliente.")
         return
 
-    st.markdown("---")
-    st.caption("Tendencia Temporal de Activos")
-
     chart_data = assets_history_df.melt(
         id_vars=["fecha"],
-        value_vars=["schoperas_ccu", "salidas"],
+        value_vars=["schoperas_ccu", "salidas", "coolers"],
         var_name="Activo",
         value_name="Cantidad",
     )
@@ -32,10 +29,10 @@ def render_trend_assets_chart(assets_history_df: pd.DataFrame) -> None:
         alt.Chart(chart_data)
         .mark_line(point=True)
         .encode(
-            x=alt.X("fecha:T", title="Fecha"),
+            x=alt.X("fecha:T", title="Fecha", axis=alt.Axis(format="%Y-%m")),
             y=alt.Y("Cantidad:Q", title="Cantidad"),
             color="Activo:N",
-            tooltip=["fecha", "Activo", "Cantidad"],
+            tooltip=[alt.Tooltip("fecha:T", format="%Y-%m"), "Activo", "Cantidad"],
         )
         .properties(height=250)
     )

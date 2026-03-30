@@ -29,60 +29,43 @@ if df_bases_ccu.empty:
     st.warning("No hay datos de Bases CCU disponibles.")
     st.stop()
 
-# 2. Global Filter
-unique_periodos = sorted(df_bases_ccu["periodo"].dropna().unique(), reverse=True)
+# 2. Global Filter & Summary
+unique_periodos = sorted(df_metrics["periodo"].dropna().unique().tolist())
 col_f1, col_f2 = st.columns([1, 2])
 with col_f1:
     selected_periodo = st.selectbox(
         "Periodo",
         options=["Todos"] + unique_periodos,
-        index=1 if len(unique_periodos) > 0 else 0
+        index=0,
+        key="filter_bases_page"
     )
+
+df_m = df_metrics.copy()
+if selected_periodo != "Todos":
+    df_m = df_m[df_m["periodo"] == selected_periodo]
+
+with col_f2:
+    if not df_m.empty:
+        kpi_cols = ["periodo", "N Clientes", "N Clientes Local Imagen"]
+        metrics_display(df_m[kpi_cols], show_header=False, show_divider=False, max_cols=3)
 
 st.divider()
 
-# 3. Content Tabs
-tab_gen, tab_det = st.tabs(["General", "Detalle Cliente"])
+# 3. Details Section
+st.header("Detalle por Cliente")
+unique_clientes = sorted(df_bases_ccu["cliente_id"].dropna().unique())
+cliente_seleccionado = st.selectbox(
+    "Seleccione un cliente para ver su detalle",
+    options=unique_clientes,
+)
 
-with tab_gen:
-    df_m = df_metrics.copy()
-    if selected_periodo != "Todos":
-        df_m = df_m[df_m["periodo"] == selected_periodo]
+if cliente_seleccionado:    
+    # Latest info
+    client_latest = df_bases_ccu[df_bases_ccu["cliente_id"] == cliente_seleccionado].sort_values("fecha", ascending=False).iloc[0]
     
-    if not df_m.empty:
-        kpi_cols = ["periodo", "N Clientes", "N Clientes Local Imagen", "N Clientes Nuevos"]
-        st.caption("Fuente: Bases CCU.")
-        metrics_display(df_m[kpi_cols])
-    else:
-        st.info("No hay métricas para el periodo seleccionado.")
-
-with tab_det:
-    unique_clientes = sorted(df_bases_ccu["cliente_id"].dropna().unique())
-    cliente_seleccionado = st.selectbox(
-        "Seleccione un cliente para ver su detalle",
-        options=unique_clientes,
-    )
-
-    if cliente_seleccionado:
-        st.subheader(f"Ficha Cliente: {cliente_seleccionado}")
-        
-        # Latest info
-        client_latest = df_bases_ccu[df_bases_ccu["cliente_id"] == cliente_seleccionado].sort_values("fecha", ascending=False).iloc[0]
-        
-        c1, c2, c3 = st.columns(3)
-        with st.container(border=True):
-            st.markdown(f"**Razón Social:** {client_latest['razon_social']}")
-            st.markdown(f"**Nombre Fantasía:** {client_latest['nombre_fantasia']}")
-            st.markdown(f"**RUT:** {client_latest['rut']}")
-        
-        st.divider()
-        
-        st.subheader("Historial de Activos (Base CCU)")
-        ccu_cols = ["periodo", "fecha", "schoperas_ccu", "salidas", "coolers", "es_local_imagen"]
-        df_c = df_bases_ccu[df_bases_ccu["cliente_id"] == cliente_seleccionado]
-        st.dataframe(df_c[ccu_cols], hide_index=True, use_container_width=True)
-
-        st.subheader("Evolución de Activos")
-        asset_cols = ["periodo", "schoperas_ccu", "schoperas_ccu_diff", "salidas", "salidas_diff", "coolers", "coolers_diff"]
-        df_e = df_asset_evolution_bases[df_asset_evolution_bases["cliente_id"] == cliente_seleccionado]
-        st.dataframe(df_e[asset_cols], hide_index=True, use_container_width=True)
+    c1, c2, c3 = st.columns(3)
+    
+    st.subheader("Historial de Activos (Base CCU)")
+    ccu_cols = ["periodo", "fecha", "schoperas_ccu", "salidas", "coolers", "es_local_imagen"]
+    df_c = df_bases_ccu[df_bases_ccu["cliente_id"] == cliente_seleccionado]
+    st.dataframe(df_c[ccu_cols], hide_index=True, use_container_width=True)

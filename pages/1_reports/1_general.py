@@ -45,10 +45,11 @@ except Exception as e:
 # 2. Censos Section
 unique_periodos_censos = sorted(df_metrics_censos["periodo"].dropna().unique(), reverse=True)
 
+# Header Row
 col_f1, col_f2 = st.columns([1, 2])
 with col_f1:
     selected_periodo_censos = st.selectbox(
-        "Filtrar por Periodo (Censos)",
+        "Periodo",
         options=["Todos"] + unique_periodos_censos,
         index=1 if len(unique_periodos_censos) > 0 else 0,
         key="filter_censos"
@@ -57,6 +58,11 @@ with col_f1:
 df_m = df_metrics_censos.copy()
 if selected_periodo_censos != "Todos":
     df_m = df_m[df_m["periodo"] == selected_periodo_censos]
+
+with col_f2:
+    if not df_m.empty:
+        kpi_generales = ["periodo", "N Clientes", "N Permite censos"]
+        metrics_display(df_m[kpi_generales], show_header=False, show_divider=False, max_cols=2)
 
 if not df_m.empty:
     kpi_generales = ["periodo", "N Clientes", "N Permite censos"]
@@ -70,11 +76,9 @@ if not df_m.empty:
             "N que Instalaron", "% que Instalaron",
             "N que Disponibilizaron", "% que Disponibilizaron", 
             "N con Comp. en Salida", "% con Comp. en Salida"]
-    
-    st.markdown("### Generales")
-    metrics_display(df_m[kpi_generales], max_cols=6)
 
-    st.markdown("### Presencia de Marcas")
+    # --- Presencia de Marcas ---
+    st.markdown("#### Presencia de Marcas")
     
     for period in df_m["periodo"].unique():
         st.markdown(f"###### Periodo: {period}")
@@ -92,8 +96,8 @@ if not df_m.empty:
             metrics_display(df_p[["periodo", "N con Otras Marcas", "% con Otras Marcas"]], show_header=False, show_divider=False)
         st.divider()
     
-    st.markdown("### Acciones en el Punto de Venta")
-    metrics_display(df_m[kpi_acciones], max_cols=6)
+    st.markdown("#### Acciones en el Punto de Venta")
+    metrics_display(df_m[kpi_acciones], max_cols=6, show_header=False)
 else:
     st.info("No hay métricas de censos para el periodo seleccionado.")
 
