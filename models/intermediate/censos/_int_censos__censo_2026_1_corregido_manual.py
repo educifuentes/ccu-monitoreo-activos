@@ -27,57 +27,45 @@ def int_censos__censo_2026_1_corregido_manual():
         # censo metadata
         "Permite censo (SI/NO)": "permite_censo",
         "[Si corresponde] Motivo por el que no pudo ser censado (local cerrado, no permite ingreso, etc)": "motivo_no_censo",
+        "Presencia de schopera comodato de CCU (SI/NO)": "presencia_schopera_ccu",
         # activos
         "Número de salidas totales de schop en máquinas CCU": "salidas",
+        "schoperas_total": "schoperas_total",
+        "schoperas_ccu": "schoperas_ccu",
+        "schoperas competencia": "schoperas_competencia",
+        # acciones
         "Instala schopera adicional (Sí/No)": "instalo",
         "Disponibiliza salidas en máquina schopera (0,1,2)": "disponibilizo",
+        # marcas
+        "CCH (Si/No)": "marcas_abinbev",
+        "Kross (Si/No)": "marcas_kross",
         "Otras (indicar cuáles)": "marcas_texto_libre",
+        # competencia
         "Competencia en salida CCU (Sí/No)": "hay_competencia_en_salida",
-        "Indicar nombre de competidor en salida CCU": "marca_instalada_en_salida",
+        "Indicar nombre de competidor en salida CCU": "marca_competidor_en_salida",
+        # complementarios / auditoria
+        "Local implementado según primer reporte (complementario)": "local_implementado_primer_reporte",
+        "Local cuestionado por CCU según primer reporte (complementario)": "local_cuestionado_primer_reporte",
+        "Local no implementado por CCU según primer reporte (complementario)": "local_no_implementado_primer_reporte",
+        "Fue censado en julio de 2025": "censo_julio_2025",
+        "Fue censado en julio de 2025 y sujeto a compromiso N°2": "censo_julio_2025_compromiso_2",
+        "Unnamed: 21": "temp_unnamed_21",
     }
 
     df = df.rename(columns=rename_dict)
 
     # 3. Basic Data Types and Standard Columns
     df["cliente_id"] = df["cliente_id"].astype("str")
-    df["periodo"] = "2026-S1"
-    df["fecha"] = pd.to_datetime("2026-03-11").date() # Based on filename date
-    df["agencia"] = "definitiva_pilar"
-    
-    # User requested column: coolers (Solo hay que agregar columna de coolers)
-    df["tiene_coolers"] = None
-    # pending get from other int models
 
-    # 4. Brand Consolidation (CCH, Kross, Otras)
-    # Map CCH and Kross to marques if SI
-    df["marcas_ccu_flag"] = yes_no_to_boolean(df["CCH (Si/No)"])
-    df["marcas_kross_flag"] = yes_no_to_boolean(df["Kross (Si/No)"])
-    
-    # Reconstruct a marcas-like string for standard processing if possible, 
-    # or manually handle it.
-    # Let's manually create marcas_abinbev, marcas_kross, marcas_ccu, marcas_otras.
-    # We use classify_marcas if we have a 'marcas' list.
-    
-    def build_marcas_list(row):
-        marcas = []
-        if row["marcas_ccu_flag"]: marcas.append("CCU")
-        if row["marcas_kross_flag"]: marcas.append("KROSS")
-        if pd.notnull(row["marcas_texto_libre"]) and str(row["marcas_texto_libre"]).strip() != "":
-            marcas.append(str(row["marcas_texto_libre"]))
-        return ", ".join(marcas)
+    # cast types
+    df["marcas_abinbev"] = yes_no_to_boolean(df["marcas_abinbev"])
+    df["marcas_kross"] = yes_no_to_boolean(df["marcas_kross"])
 
-    df["marcas"] = df.apply(build_marcas_list, axis=1)
-    
-    # Standard brand processing
-    df = process_marcas(df)
-    df = classify_marcas(df)
 
     # 5. Value Transformations
     df["permite_censo"] = yes_no_to_boolean(df["permite_censo"])
     df["hay_competencia_en_salida"] = yes_no_to_boolean(df["hay_competencia_en_salida"])
-    if "tiene_schoperas" in df.columns:
-        df["tiene_schoperas"] = yes_no_to_boolean(df["tiene_schoperas"])
-    
+
     # 6. Action transformations
     df["instalo"] = yes_no_to_boolean(df["instalo"]).astype("Int64")
     df["disponibilizo"] = pd.to_numeric(df["disponibilizo"], errors="coerce").astype("Int64")
@@ -90,46 +78,30 @@ def int_censos__censo_2026_1_corregido_manual():
         df["marca_instalada_en_salida"] = correct_brand_names(df["marca_instalada_en_salida"])
         df["marca_instalada_en_salida"] = df["marca_instalada_en_salida"].str.title()
 
-    # 8. Numeric Conversions
-    numeric_cols = ["salidas", "schoperas_total", "schoperas_ccu"]
-    for col in numeric_cols:
-        if col in df.columns:
-            df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0).astype("Int64")
 
-    # 9. Final Column Selection
+
     selected_columns = [
         "cliente_id",
-        "razon_social",
+        # info cliente
         "nombre_fantasia",
+        "razon_social",
         "rut",
-        "direccion",
         "region",
         "comuna",
-        "periodo",
-        "fecha",
+        "direccion",
+        # metadata censo
         "permite_censo",
         "motivo_no_censo",
-        "agencia",
-        # activos
-        "schoperas_total",
-        "schoperas_ccu",
-        "salidas",
-        "tiene_coolers",
-        "instalo",
-        "disponibilizo",
         # marcas
-        "marcas",
         "marcas_abinbev",
         "marcas_kross",
-        "marcas_ccu",
-        "marcas_otras",
-        "marcas_abinbev_listado",
-        "marcas_kross_listado",
-        "marcas_ccu_listado",
-        "marcas_otras_listado",
-        # competencia
-        "hay_competencia_en_salida",
-        "marca_instalada_en_salida"
+        "marcas_texto_libre",
+        "marca_competidor_en_salida",
+        # acciones
+        "disponibilizo",
+        "hay_competencia_en_salida"
     ]
+
+
     
     return df[selected_columns]
