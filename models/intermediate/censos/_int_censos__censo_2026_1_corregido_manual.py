@@ -92,6 +92,11 @@ def int_censos__censo_2026_1_corregido_manual():
         # metadata censo
         "permite_censo",
         "motivo_no_censo",
+        # activos
+        "schoperas_ccu",
+        "schoperas_total",
+        "schoperas_competencia",
+        "salidas",
         # marcas
         "marcas_abinbev",
         "marcas_kross",
@@ -102,6 +107,7 @@ def int_censos__censo_2026_1_corregido_manual():
         "hay_competencia_en_salida"
     ]
 
+    df = df[selected_columns]
 
     
-    return df[selected_columns]
+    return df
