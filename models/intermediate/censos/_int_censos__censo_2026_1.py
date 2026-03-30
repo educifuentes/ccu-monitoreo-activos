@@ -67,11 +67,13 @@ def int_censos__censo_2026_1():
 
 
     df = df_censo_2026_1_corregido_manual.merge(df_agencias[columns_agencias], on="cliente_id", how="left")
-    # clean invalid IDs
+    # Data cleaning: drop rows with invalid cliente_id
     df = df[df["cliente_id"].notna()]
     df = df[df["cliente_id"].astype(str).str.lower() != "nan"]
 
-    
+    # 3. Fill missing metadata for 2026-1
+    df["periodo"] = df["periodo"].fillna("2026-S1")
+    df["fecha"] = df["fecha"].fillna(pd.to_datetime("2026-03-11").date())
     final_columns = [
         # keys
         "cliente_id",

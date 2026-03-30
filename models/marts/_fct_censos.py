@@ -60,5 +60,9 @@ def fct_censos():
     df["periodo"] = df["periodo"].astype(str)
     df.sort_values(by=["periodo"], ascending=False, inplace=True)
 
+    # clean invalid IDs
+    df = df[df["cliente_id"].notna()]
+    df = df[df["cliente_id"].astype(str).str.lower() != "nan"]
+
     return df
 
