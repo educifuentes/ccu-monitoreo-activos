@@ -39,7 +39,7 @@ def int_censos__censo_2026_1_corregido_manual():
         # marcas
         "CCH (Si/No)": "marcas_abinbev",
         "Kross (Si/No)": "marcas_kross",
-        "Otras (indicar cuáles)": "marcas_texto_libre",
+        "Otras (indicar cuáles)": "marcas_otras_listado",
         # competencia
         "Competencia en salida CCU (Sí/No)": "hay_competencia_en_salida",
         "Indicar nombre de competidor en salida CCU": "marca_competidor_en_salida",
@@ -100,9 +100,10 @@ def int_censos__censo_2026_1_corregido_manual():
         # marcas
         "marcas_abinbev",
         "marcas_kross",
-        "marcas_texto_libre",
+        "marcas_otras_listado",
         "marca_competidor_en_salida",
         # acciones
+        "instalo",
         "disponibilizo",
         "hay_competencia_en_salida"
     ]
