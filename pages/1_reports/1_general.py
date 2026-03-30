@@ -73,15 +73,26 @@ if not df_m.empty:
     
     st.subheader("Generales")
     st.caption("Fuente: Censos.")
-    metrics_display(df_m[kpi_generales])
+    metrics_display(df_m[kpi_generales], max_cols=6)
 
     st.subheader("Presencia de Marcas")
     st.caption("Fuente: Censos.")
-    metrics_display(df_m[kpi_marcas])
+    
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.markdown("**AbInbev**")
+        metrics_display(df_m[["periodo", "N con AbInbev", "% con AbInbev"]], show_header=False, show_divider=False)
+    with col2:
+        st.markdown("**Kross**")
+        metrics_display(df_m[["periodo", "N con Kross", "% con Kross"]], show_header=False, show_divider=False)
+    with col3:
+        st.markdown("**Otras Marcas**")
+        metrics_display(df_m[["periodo", "N con Otras Marcas", "% con Otras Marcas"]], show_header=False, show_divider=False)
+    st.divider()
     
     st.subheader("Acciones en el Punto de Venta")
     st.caption("Fuente: Censos.")
-    metrics_display(df_m[kpi_acciones])
+    metrics_display(df_m[kpi_acciones], max_cols=6)
 else:
     st.info("No hay métricas de censos para el periodo seleccionado.")
 
@@ -107,7 +118,7 @@ if selected_periodo_bases != "Todos":
 
 if not df_b.empty:
     kpi_bases = ["periodo", "N Clientes", "N Clientes Local Imagen", "N Clientes Nuevos"]
-    metrics_display(df_b[kpi_bases])
+    metrics_display(df_b[kpi_bases], max_cols=6)
 else:
     st.info("No hay métricas de bases CCU para el periodo seleccionado.")
 
