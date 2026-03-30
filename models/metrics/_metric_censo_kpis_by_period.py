@@ -65,5 +65,7 @@ def metrics_censo_kpis_by_period():
     for col in metrics_df.columns:
         if col.startswith("%"):
             metrics_df[col] = (metrics_df[col] * 100).round(0).fillna(0).astype(int).astype(str) + "%"
+        elif col.startswith("N "):
+            metrics_df[col] = metrics_df[col].fillna(0).apply(lambda x: f"{int(x):,}".replace(",", "."))
 
     return metrics_df

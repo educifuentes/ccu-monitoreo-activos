@@ -30,7 +30,7 @@ from helpers.ui_components.icons import render_icon
 st.set_page_config(page_title="Monitoreo de Activos CCU", layout="wide")
 st.title(f"{render_icon('dashboard')} Monitoreo de Activos CCU")
 st.markdown("""
-    Fuente de datos:  [ Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)
+    Fuente de Datos: [Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)
 """)    
 
 # 1. Data Loading
@@ -76,7 +76,6 @@ if not df_m.empty:
     metrics_display(df_m[kpi_generales], max_cols=6)
 
     st.subheader("Presencia de Marcas")
-    st.caption("Fuente: Censos.")
     
     col1, col2, col3 = st.columns(3)
     with col1:

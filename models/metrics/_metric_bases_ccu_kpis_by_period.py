@@ -63,4 +63,9 @@ def metrics_bases_ccu_kpis_by_period():
         }
     )
 
+    # --- Format display columns ---
+    for col in agg_df.columns:
+        if col.startswith("N "):
+            agg_df[col] = agg_df[col].fillna(0).apply(lambda x: f"{int(x):,}".replace(",", "."))
+
     return agg_df
