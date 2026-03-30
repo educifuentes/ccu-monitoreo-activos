@@ -11,6 +11,7 @@ def fct_censos_gsheets():
         "cliente_id",
         "periodo",
         "fecha",
+        "agencia",
         # clientes info
         "razon_social",
         "direccion",
@@ -19,28 +20,26 @@ def fct_censos_gsheets():
         "comuna",
         "nombre_fantasia",
         # censo metadata
-        "agencia",
         "permite_censo",
         "motivo_no_censo",
         # activos
         "schoperas_total",
         "schoperas_ccu",
+        "schoperas_competencia",
         "salidas",
         "tiene_coolers",
         # accion
         "instalo",
         "disponibilizo",
+        "hay_competencia_en_salida",
+        "marca_competidor_en_salida",
         # marcas
+        "marcas",
         "marcas_abinbev",
         "marcas_kross",
-        "marcas_ccu",
         "marcas_otras",
-        # listados
-        "marcas",
         "marcas_otras_listado",
-        # competencia
-        "hay_competencia_en_salida",
-        "marca_instalada_en_salida",
+        # gsheets
         "row_index"
     ]
 

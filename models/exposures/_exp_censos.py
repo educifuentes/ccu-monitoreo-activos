@@ -34,14 +34,12 @@ def exp_censos():
         "marcas",
         "marcas_abinbev",
         "marcas_kross",
-        "marcas_ccu",
         "marcas_otras",
         "hay_competencia_en_salida",
-        "marca_instalada_en_salida",
+        "marca_competidor_en_salida",
         "aplica_regla",
         "salidas_objetivo",
         "salidas_competencia",
-        "cumple_cuota",
         "clasificacion"
     ]
 

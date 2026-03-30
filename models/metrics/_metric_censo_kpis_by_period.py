@@ -14,7 +14,6 @@ def metrics_censo_kpis_by_period():
     cols_to_agg = [
         "marcas_abinbev",
         "marcas_kross",
-        "marcas_ccu",
         "marcas_otras",
         "hay_competencia",
         "instalo_gt_0",
@@ -41,8 +40,6 @@ def metrics_censo_kpis_by_period():
         "marcas_abinbev_mean": "% con AbInbev",
         "marcas_kross_sum": "N con Kross",
         "marcas_kross_mean": "% con Kross",
-        "marcas_ccu_sum": "N con CCU",
-        "marcas_ccu_mean": "% con CCU",
         "marcas_otras_sum": "N con Otras Marcas",
         "marcas_otras_mean": "% con Otras Marcas",
         "hay_competencia_sum": "N con Comp. en Salida",
