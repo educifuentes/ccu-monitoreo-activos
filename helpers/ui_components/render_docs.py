@@ -103,19 +103,17 @@ def render_metrics_docs(yaml_path):
         group_name = group.get('group_name', 'General')
         description = group.get('description', '')
         
-        st.subheader(f"Grupo: {group_name}")
-        if description:
-            st.info(description)
+        with st.expander(f"{group_name}", expanded=True):
+            if description:
+                st.markdown(description)
+                
+            metrics_list = group.get('columns', [])
             
-        metrics_list = group.get('columns', [])
-        
-        for metric in metrics_list:
-            name = metric.get('name', 'Sin Nombre')
-            desc = metric.get('description', '')
-            table = metric.get('table', '')
-            
-            st.markdown(f"**`{name}`**: {desc}")
-            if table:
-                st.markdown(table)
-        
-        st.divider()
+            for metric in metrics_list:
+                name = metric.get('name', 'Sin Nombre')
+                desc = metric.get('description', '')
+                table = metric.get('table', '')
+                
+                st.markdown(f"**`{name}`**: {desc}")
+                if table:
+                    st.markdown(table)
