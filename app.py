@@ -16,7 +16,7 @@ bases_ccu_page = st.Page("pages/1_reports/3_bases_ccu.py", title="Bases CCU", ic
 reportes_page = st.Page("pages/1_reports/3_reportes.py", title="Reportes", icon=":material/article:")
 
 # Section - Tools
-explore_page = st.Page("pages/2_tools/data_explorer.py", title="Explorador de Datos", icon=":material/search:")
+explore_page = st.Page("pages/2_tools/data_explorer.py", title="Explorar Tablas", icon=":material/search:")
 validations_page = st.Page("pages/2_tools/validations.py", title="Validaciones", icon=":material/check_circle:")
 documentation_page = st.Page("pages/2_tools/documentation.py", title="Documentación", icon=":material/book:")
 
