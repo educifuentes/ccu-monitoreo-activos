@@ -25,7 +25,7 @@ def metrics_display(df, show_header=True, show_divider=True, max_cols=3):
     for _, row in df.iterrows():
         # Period Header
         if show_header:
-            st.markdown(f"#### Periodo: {row['periodo']}")
+            st.markdown(f"###### Periodo: {row['periodo']}")
         
         # Chunk metrics into groups of max_cols
         for i in range(0, len(metric_cols), max_cols):

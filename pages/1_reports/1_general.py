@@ -71,26 +71,28 @@ if not df_m.empty:
             "N que Disponibilizaron", "% que Disponibilizaron", 
             "N con Comp. en Salida", "% con Comp. en Salida"]
     
-    st.subheader("Generales")
-    st.caption("Fuente: Censos.")
+    st.markdown("### Generales")
     metrics_display(df_m[kpi_generales], max_cols=6)
 
-    st.subheader("Presencia de Marcas")
+    st.markdown("### Presencia de Marcas")
     
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown("**AbInbev**")
-        metrics_display(df_m[["periodo", "N con AbInbev", "% con AbInbev"]], show_header=False, show_divider=False)
-    with col2:
-        st.markdown("**Kross**")
-        metrics_display(df_m[["periodo", "N con Kross", "% con Kross"]], show_header=False, show_divider=False)
-    with col3:
-        st.markdown("**Otras Marcas**")
-        metrics_display(df_m[["periodo", "N con Otras Marcas", "% con Otras Marcas"]], show_header=False, show_divider=False)
-    st.divider()
+    for period in df_m["periodo"].unique():
+        st.markdown(f"###### Periodo: {period}")
+        df_p = df_m[df_m["periodo"] == period]
+        
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.markdown("**AbInbev**")
+            metrics_display(df_p[["periodo", "N con AbInbev", "% con AbInbev"]], show_header=False, show_divider=False)
+        with col2:
+            st.markdown("**Kross**")
+            metrics_display(df_p[["periodo", "N con Kross", "% con Kross"]], show_header=False, show_divider=False)
+        with col3:
+            st.markdown("**Otras Marcas**")
+            metrics_display(df_p[["periodo", "N con Otras Marcas", "% con Otras Marcas"]], show_header=False, show_divider=False)
+        st.divider()
     
-    st.subheader("Acciones en el Punto de Venta")
-    st.caption("Fuente: Censos.")
+    st.markdown("### Acciones en el Punto de Venta")
     metrics_display(df_m[kpi_acciones], max_cols=6)
 else:
     st.info("No hay métricas de censos para el periodo seleccionado.")
@@ -99,8 +101,7 @@ else:
 # 3. Bases CCU Section
 unique_periodos_bases = sorted(df_metrics_bases["periodo"].dropna().unique(), reverse=True)
 
-st.subheader("Contratos")
-st.caption("Fuente: Bases CCU.")
+st.markdown("### Contratos")
 
 col_fb1, col_fb2 = st.columns([1, 2])
 with col_fb1:
