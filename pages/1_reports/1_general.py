@@ -29,9 +29,11 @@ from helpers.ui_components.icons import render_icon
 
 st.set_page_config(page_title="Monitoreo de Activos CCU", layout="wide")
 st.title(f"{render_icon('dashboard')} Monitoreo de Activos CCU")
+st.markdown("Dashboard de información de activos de CCU para el Cumplimiento de Ley de Competencia de la FNE")
 st.markdown("""
     Fuente de Datos: [Google Sheets](https://docs.google.com/spreadsheets/d/11JgW2Z9cFrHvNFw21-zlvylTHHo5tvizJeA9oxHcDHU/edit?gid=2068995815#gid=2068995815)
 """)    
+st.markdown(" ")
 
 # 1. Data Loading
 try:
