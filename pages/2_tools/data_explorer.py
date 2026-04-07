@@ -1,8 +1,8 @@
 import streamlit as st
 
-from models.marts._dim_clientes import dim_clientes
-from models.marts._fct_censos import fct_censos
-from models.marts._fct_bases_ccu import fct_bases_ccu
+from models.marts.gsheets._dim_clientes_gsheets import dim_clientes_gsheets
+from models.marts.gsheets._fct_censos_gsheets import fct_censos_gsheets
+from models.marts.gsheets._fct_bases_ccu_gsheets import fct_bases_ccu_gsheets
 
 from helpers.ui_components.ui_icons import ICONS
 from helpers.widgets.explorer_de_datos import explorer_de_datos
@@ -26,14 +26,14 @@ def safe_render(df):
 tab1, tab2, tab3 = st.tabs([
     f"{ICONS['clientes']} Clientes",
     f"{ICONS['censos']} Censos",
-    f"{ICONS['bases_ccu']} Reportes CCU",
+    f"{ICONS['bases_ccu']} Bases CCU",
 ])
 
 with tab1:
     st.header("Clientes")
     try:
-        # Use dim_clientes instead of clientes
-        df_locales = dim_clientes()
+        # Use dim_clientes_gsheets instead of dim_clientes
+        df_locales = dim_clientes_gsheets()
         df_locales = explorer_de_datos(df_locales, key_prefix="clientes")
             
         st.metric("Total", f"{len(df_locales):,}")
@@ -44,8 +44,8 @@ with tab1:
 with tab2:
     st.header("Censos")
     try:
-        # Use fct_censos instead of censos
-        df_censos = fct_censos()
+        # Use fct_censos_gsheets instead of fct_censos
+        df_censos = fct_censos_gsheets()
         df_censos = explorer_de_datos(df_censos, key_prefix="censos")
         
         # Summary by period
@@ -60,8 +60,8 @@ with tab2:
 with tab3:
     st.header("Bases CCU")
     try:
-        # Use fct_bases_ccu instead of bases_ccu
-        df_bases_ccu = fct_bases_ccu()
+        # Use fct_bases_ccu_gsheets instead of fct_bases_ccu
+        df_bases_ccu = fct_bases_ccu_gsheets()
         df_bases_ccu = explorer_de_datos(df_bases_ccu, key_prefix="bases_ccu")
         
         # Summary by period

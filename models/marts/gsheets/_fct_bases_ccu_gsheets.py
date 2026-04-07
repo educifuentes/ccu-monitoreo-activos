@@ -43,6 +43,10 @@ def fct_bases_ccu_gsheets():
     df["cliente_id"] = df["cliente_id"].astype(str).str.replace(r'\.0$', '', regex=True).replace("nan", pd.NA)
     df["periodo"] = df["periodo"].astype(str)
 
+    # Cast fecha to date only (not datetime)
+    if "fecha" in df.columns:
+        df["fecha"] = pd.to_datetime(df["fecha"], errors='coerce').dt.date
+
     # Cast asset counts to Int64
     numeric_cols = ["schoperas_ccu", "salidas", "coolers"]
     for col in numeric_cols:
