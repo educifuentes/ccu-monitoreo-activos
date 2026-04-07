@@ -9,6 +9,7 @@ metrics:
       - name: "N Clientes Sin Activos"
         description: "Cantidad de clientes que no tienen shoperas instaladas."
         calculation: " Count disctint clientes_id that have schoperas_ccu = 0 or None"
+
       - name: "% Permite censos"
         description: "Porcentaje de clientes que permitieron el censo sobre el total de intentos."
       - name: "N con AbInbev"

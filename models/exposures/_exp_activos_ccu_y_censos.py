@@ -1,7 +1,7 @@
 import pandas as pd
 
-from models.marts.gsheets._fct_censos_gsheets import fct_censos_gsheets
-from models.marts.gsheets._fct_bases_ccu_gsheets import fct_bases_ccu_gsheets
+from models.exposures._exp_censos import exp_censos
+from models.exposures._exp_bases_ccu import exp_bases_ccu
 
 # unir data de censo 1 y de censo 2
 
@@ -11,17 +11,22 @@ def exp_activos_ccu_y_censos():
     """
 
     # # cliente version
-    fct_censos_df = fct_censos_gsheets()
-    fct_bases_ccu_df = fct_bases_ccu_gsheets()
+    censos_df = exp_censos()
+    bases_ccu_df = exp_bases_ccu()
+
 
     # ajusten coolers en censos
-    fct_censos_df["coolers"] = fct_censos_df["tiene_coolers"]
+    censos_df["coolers"] = censos_df["tiene_coolers"]
     # Map boolean to int for coolers
-    fct_censos_df["coolers"] = fct_censos_df["tiene_coolers"].fillna(False).astype(int)
+    censos_df["coolers"] = censos_df["tiene_coolers"].fillna(False).astype(int)
 
-    # new column
-    fct_censos_df["fuente"] = "Censo"
-    fct_bases_ccu_df["fuente"] = "CCU"
+    # new columns before concat
+    censos_df["fuente"] = "Censo"
+    bases_ccu_df["fuente"] = "CCU"
+
+    bases_ccu_df["schoperas_competencia"] = None
+
+
     
     selected_columns = [
         # keys
@@ -31,11 +36,12 @@ def exp_activos_ccu_y_censos():
         "fecha",    
         # activos 
         "schoperas_ccu",
+        "schoperas_competencia",
         "salidas",
         "coolers",
     ]
 
-    union_df = pd.concat([fct_censos_df, fct_bases_ccu_df], ignore_index=True)
+    union_df = pd.concat([censos_df, bases_ccu_df], ignore_index=True)
 
 
     return union_df[selected_columns]

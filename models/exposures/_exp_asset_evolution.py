@@ -15,7 +15,7 @@ def exp_asset_evolution():
 
     # Window function: LEAD(schoperas_ccu) partitioned by cliente_id, ordered by fecha DESC
     # i.e. the next row in the sorted order = the row with the older fecha
-    for col in ["schoperas_ccu", "salidas", "coolers"]:
+    for col in ["schoperas_ccu", "salidas", "coolers", "schoperas_competencia"]:
         df[f"{col}_prev"] = df.groupby("cliente_id")[col].shift(-1)
         df[f"{col}_diff"] = df[col] - df[f"{col}_prev"]
         df = df.drop(columns=[f"{col}_prev"])
@@ -27,6 +27,8 @@ def exp_asset_evolution():
         "fecha",
         "schoperas_ccu",
         "schoperas_ccu_diff",
+        "schoperas_competencia",
+        "schoperas_competencia_diff",
         "salidas",
         "salidas_diff",
         "coolers",
