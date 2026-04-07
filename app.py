@@ -9,10 +9,6 @@ from helpers.utilities.app_version import get_app_version
 # Section - Reports
 general_page = st.Page("pages/1_reports/1_general.py", title="General", icon=":material/dashboard:")
 clientes_page = st.Page("pages/1_reports/1_clientes.py", title="Clientes", icon=":material/sports_bar:")
-
-censos_page = st.Page("pages/1_reports/2_censos.py", title="Censos", icon=":material/checklist_rtl:")
-bases_ccu_page = st.Page("pages/1_reports/3_bases_ccu.py", title="Bases CCU", icon=":material/assignment:")
-
 reportes_page = st.Page("pages/1_reports/3_reportes.py", title="Reportes", icon=":material/article:")
 
 # Section - Tools
@@ -24,7 +20,8 @@ documentation_page = st.Page("pages/2_tools/documentation.py", title="Documentac
 nav_dict = {
     "Vistas": [
         general_page, 
-        clientes_page
+        clientes_page,
+        reportes_page
     ],
     "Herramientas": [explore_page, validations_page, documentation_page],
 }
