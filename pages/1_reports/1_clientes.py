@@ -6,6 +6,7 @@ from models.exposures._exp_censos import exp_censos
 from models.exposures._exp_bases_ccu import exp_bases_ccu
 from models.exposures._exp_activos_ccu_y_censos import exp_activos_ccu_y_censos
 from models.exposures._exp_asset_evolution import exp_asset_evolution
+from models.exposures._exp_asset_evolution_censos import exp_asset_evolution_censos
 from models.exposures._exp_contratos import exp_contratos
 
 from models.metrics.general_metrics import get_latest_classification
@@ -28,9 +29,13 @@ st.title(f"{render_icon('clientes')} Clientes")
 clientes_df  = exp_clientes()
 censos_df    = exp_censos()
 activos_df   = exp_activos_ccu_y_censos()
-asset_evolution_df = exp_asset_evolution()
 contratos_df = exp_contratos()
 bases_ccu_df = exp_bases_ccu()
+
+# calculate dtables
+asset_evolution_df = exp_asset_evolution()
+asset_evolution_censos_df = exp_asset_evolution_censos()
+
 
 # =============================================================================
 # CLIENTE SELECTION
@@ -149,9 +154,17 @@ else:
 
     # ── Historial de Censos ───────────────────────────────────────────────────
     st.subheader("Historial de Censos")
+
     censo_cols = ["periodo", "fecha", "schoperas_total", "schoperas_ccu", "salidas", "tiene_coolers", "instalo", "disponibilizo", "marcas_abinbev", "marcas_kross", "marcas_otras"]
     df_c = censos_df[censos_df["cliente_id"] == selected_cliente_id]
     st.dataframe(df_c[censo_cols], hide_index=True, use_container_width=True)
+
+    st.markdown("Evolucion Activos Censos")
+
+
+    df_evol_censos = asset_evolution_censos_df[asset_evolution_censos_df["cliente_id"] == selected_cliente_id]
+    censo_evol_columns = ["periodo", "fecha", "schoperas_total", "schoperas_total_diff", "schoperas_ccu", "schoperas_ccu_diff", "schoperas_competencia", "schoperas_competencia_diff", "salidas", "salidas_diff"]
+    st.dataframe(df_evol_censos, hide_index=True, use_container_width=True)
 
     # ── Historial de Activos (Base CCU) ───────────────────────────────────────
     st.subheader("Historial en Bases CCU")
