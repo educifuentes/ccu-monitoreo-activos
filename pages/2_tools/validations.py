@@ -24,7 +24,8 @@ with tab2:
     selected_periodo_censos = st.selectbox(
         "Filtrar por periodo",
         options=["Todos"] + list(periodos_censos),
-        key="periodo_censos",
+        index=1 if len(periodos_censos) > 0 else 0,
+        key="periodo_censos", width=400
     )
     validate_censos(periodo=selected_periodo_censos if selected_periodo_censos != "Todos" else None)
 
@@ -33,6 +34,7 @@ with tab3:
     selected_periodo_bases = st.selectbox(
         "Filtrar por periodo",
         options=["Todos"] + list(periodos_bases),
-        key="periodo_bases",
+        index=1 if len(periodos_bases) > 0 else 0,
+        key="periodo_bases", width=400
     )
     validate_bases_ccu(periodo=selected_periodo_bases if selected_periodo_bases != "Todos" else None)

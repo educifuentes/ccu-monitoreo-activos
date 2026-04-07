@@ -40,7 +40,7 @@ def validate_censos(periodo=None):
         render_troubled_rows(dupes[["cliente_id", "periodo", "schoperas_ccu", "row_index"]], source="gsheets", gid=SHEETS_IDS["censos"])
 
     # 1.2 Check Foreign Key (cliente_id exists in Clientes)
-    st.markdown("#### 1.2 `cliente_id` de censos no presente en tabla Clientes")
+    st.markdown("#### 1.2 `cliente_id` de censos no presente en tabla Clientes (Clientes Nuevos)")
     ids_maestros = set(df_clientes["cliente_id"].unique())
     ids_censos = set(_df["cliente_id"].unique())
     ids_faltantes = ids_censos - ids_maestros
@@ -48,56 +48,22 @@ def validate_censos(periodo=None):
     if not ids_faltantes:
         st.success(f"{ICONS['check']} Todos los `cliente_id` existen en la tabla Clientes")
     else:
-        st.error(f"{ICONS['close']} Se detectaron {len(ids_faltantes)} `cliente_id` que NO existen en Clientes")
+        st.error(f"{ICONS['close']} Se detectaron {len(ids_faltantes)} `cliente_id` que NO existen en Clientes (Clientes Nuevos)")
         missing_df = _df[_df["cliente_id"].isin(ids_faltantes)]
         render_troubled_rows(missing_df[["cliente_id", "periodo", "row_index"]].drop_duplicates(), source="gsheets", gid=SHEETS_IDS["censos"])
 
-    # 2.1 Check for Negative Values
-    st.markdown("#### 2.1 Valores negativos en `salidas`")
-    negativos_sal = _df[_df["salidas"] < 0]
-    if not negativos_sal.empty:
-        st.error(f"{ICONS['close']} Se detectaron {len(negativos_sal)} registros con salidas negativas")
-        render_troubled_rows(negativos_sal[["cliente_id", "periodo", "salidas", "row_index"]], source="gsheets", gid=SHEETS_IDS["censos"])
-    else:
-        st.success(f"{ICONS['check']} No hay valores negativos en salidas")
+    # 2. Activos y Acciones
+    st.markdown("### 2. Activos y Acciones")
 
-    # 3. Censo 2 (2025-S2) Validations
-    st.markdown("### 3. Validaciones para Censo 2 - 2025-S2")
-    df_2025 = _df[_df["periodo"] == "2025-S2"]
+    cols_to_check = ["salidas", "schoperas_total", "schoperas_ccu", "instalo", "disponibilizo"]
+    
+    for idx, col in enumerate(cols_to_check, start=1):
+        if col in _df.columns:
+            st.markdown(f"#### 2.{idx} Valores negativos en `{col}`")
+            negativos = _df[_df[col] < 0]
+            if not negativos.empty:
+                st.error(f"{ICONS['close']} Se detectaron {len(negativos)} registros con {col} negativos")
+                render_troubled_rows(negativos[["cliente_id", "periodo", col, "row_index"]], source="gsheets", gid=SHEETS_IDS["censos"])
+            else:
+                st.success(f"{ICONS['check']} No hay valores negativos en {col}")
 
-    if df_2025.empty:
-        st.warning("No hay datos para el periodo 2025-S2")
-    else:
-        # 3.1 instalo
-        st.markdown("#### 3.1 Nulos y negativos en `instalo`")
-
-        nulos_ins = df_2025["instalo"].isna().sum()
-        if nulos_ins > 0:
-            st.warning(f"{ICONS['warning']} {nulos_ins} registros con 'instalo' nulo")
-            render_troubled_rows(df_2025[df_2025["instalo"].isna()][["cliente_id", "periodo", "instalo", "row_index"]], source="gsheets", gid=SHEETS_IDS["censos"])
-        else:
-            st.success(f"{ICONS['check']} 'instalo': Sin nulos")
-
-        negativos_ins = df_2025[df_2025["instalo"] < 0]
-        if not negativos_ins.empty:
-            st.error(f"{ICONS['close']} Se detectaron {len(negativos_ins)} registros con instalo negativos")
-            render_troubled_rows(negativos_ins[["cliente_id", "periodo", "instalo", "row_index"]], source="gsheets", gid=SHEETS_IDS["censos"])
-        else:
-            st.success(f"{ICONS['check']} No hay valores negativos en instalo")
-
-        # 3.2 disponibilizo
-        st.markdown("#### 3.2 Nulos y negativos en `disponibilizo`")
-
-        nulos_disp = df_2025["disponibilizo"].isna().sum()
-        if nulos_disp > 0:
-            st.warning(f"{ICONS['warning']} {nulos_disp} registros con 'disponibilizo' nulo")
-            render_troubled_rows(df_2025[df_2025["disponibilizo"].isna()][["cliente_id", "periodo", "disponibilizo", "row_index"]], source="gsheets", gid=SHEETS_IDS["censos"])
-        else:
-            st.success(f"{ICONS['check']} 'disponibilizo': Sin nulos")
-
-        negativos_disp = df_2025[df_2025["disponibilizo"] < 0]
-        if not negativos_disp.empty:
-            st.error(f"{ICONS['close']} Se detectaron {len(negativos_disp)} registros con disponibilizo negativos")
-            render_troubled_rows(negativos_disp[["cliente_id", "periodo", "disponibilizo", "row_index"]], source="gsheets", gid=SHEETS_IDS["censos"])
-        else:
-            st.success(f"{ICONS['check']} No hay valores negativos en disponibilizo")

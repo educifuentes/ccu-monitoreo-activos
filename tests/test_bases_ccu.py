@@ -37,7 +37,7 @@ def validate_bases_ccu(periodo=None):
         render_troubled_rows(dupes[["cliente_id", "periodo", "row_index"]], source="gsheets", gid=SHEETS_IDS["bases_ccu"])
 
     # 1.1 Check Foreign Key (cliente_id exists in Clientes)
-    st.markdown("### 1.1 cliente_id de Bases CCU no presente en tabla Clientes")
+    st.markdown("### 1.1 cliente_id de Bases CCU no presente en tabla Clientes (Clientes Nuevos)")
     ids_maestros = set(df_locales["cliente_id"].unique())
     ids_bases = set(_df["cliente_id"].unique())
     ids_faltantes = ids_bases - ids_maestros
