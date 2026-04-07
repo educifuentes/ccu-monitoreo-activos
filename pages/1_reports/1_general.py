@@ -88,18 +88,38 @@ if not df_m.empty:
         
         col1, col2, col3 = st.columns(3)
         with col1:
-            st.markdown("**AbInbev**")
-            metrics_display(df_p[["periodo", "N con AbInbev", "% con AbInbev"]], show_header=False, show_divider=False)
+            with st.container(border=True):
+                st.markdown("**AbInbev**")
+                metrics_display(df_p[["periodo", "N con AbInbev", "% con AbInbev"]], show_header=False, show_divider=False)
         with col2:
-            st.markdown("**Kross**")
-            metrics_display(df_p[["periodo", "N con Kross", "% con Kross"]], show_header=False, show_divider=False)
+            with st.container(border=True):
+                st.markdown("**Kross**")
+                metrics_display(df_p[["periodo", "N con Kross", "% con Kross"]], show_header=False, show_divider=False)
         with col3:
-            st.markdown("**Otras Marcas**")
-            metrics_display(df_p[["periodo", "N con Otras Marcas", "% con Otras Marcas"]], show_header=False, show_divider=False)
+            with st.container(border=True):
+                st.markdown("**Otras Marcas**")
+                metrics_display(df_p[["periodo", "N con Otras Marcas", "% con Otras Marcas"]], show_header=False, show_divider=False)
         st.divider()
     
     st.markdown("#### Acciones en el Punto de Venta")
-    metrics_display(df_m[kpi_acciones], max_cols=6, show_header=False)
+    for period in df_m["periodo"].unique():
+        st.markdown(f"###### Periodo: {period}")
+        df_p = df_m[df_m["periodo"] == period]
+        
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            with st.container(border=True):
+                st.markdown("**Instalaron**")
+                metrics_display(df_p[["periodo", "N que Instalaron", "% que Instalaron"]], show_header=False, show_divider=False)
+        with col2:
+            with st.container(border=True):
+                st.markdown("**Disponibilizaron**")
+                metrics_display(df_p[["periodo", "N que Disponibilizaron", "% que Disponibilizaron"]], show_header=False, show_divider=False)
+        with col3:
+            with st.container(border=True):
+                st.markdown("**Competencia en Salida**")
+                metrics_display(df_p[["periodo", "N con Comp. en Salida", "% con Comp. en Salida"]], show_header=False, show_divider=False)
+        st.divider()
 else:
     st.info("No hay métricas de censos para el periodo seleccionado.")
 
