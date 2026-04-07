@@ -126,8 +126,7 @@ else:
                 st.warning("Sin datos de contrato")
 
     # ── Assets Evolution table ────────────────────────────────────────────────
-    st.subheader(":material/monitoring: Evolución de Activos")
-    st.markdown("Historial de activos consolidadado (Censos + Bases CCU)")
+    st.subheader(":material/monitoring: Evolución de Activos - Censos + Bases CCU")
 
     st.dataframe(
         asset_evo_cliente,
@@ -155,7 +154,7 @@ else:
     st.dataframe(df_c[censo_cols], hide_index=True, use_container_width=True)
 
     # ── Historial de Activos (Base CCU) ───────────────────────────────────────
-    st.subheader("Historial de Activos (Base CCU)")
+    st.subheader("Historial en Bases CCU")
     ccu_cols = ["periodo", "fecha", "schoperas_ccu", "salidas", "coolers", "es_local_imagen"]
     df_b = bases_ccu_df[bases_ccu_df["cliente_id"] == selected_cliente_id]
     st.dataframe(df_b[ccu_cols], hide_index=True, use_container_width=True)

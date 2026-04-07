@@ -24,9 +24,7 @@ documentation_page = st.Page("pages/2_tools/documentation.py", title="Documentac
 nav_dict = {
     "Vistas": [
         general_page, 
-        clientes_page,
-        censos_page,
-        bases_ccu_page
+        clientes_page
     ],
     "Herramientas": [explore_page, validations_page, documentation_page],
 }

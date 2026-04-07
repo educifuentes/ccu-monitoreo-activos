@@ -57,10 +57,6 @@ def int_censos__censo_2026_1_corregido_manual():
     # 3. Basic Data Types and Standard Columns
     df["cliente_id"] = df["cliente_id"].astype("str")
 
-    # cast types
-    df["marcas_abinbev"] = yes_no_to_boolean(df["marcas_abinbev"])
-    df["marcas_kross"] = yes_no_to_boolean(df["marcas_kross"])
-
 
     # 5. Value Transformations
     df["permite_censo"] = yes_no_to_boolean(df["permite_censo"])
@@ -78,6 +74,10 @@ def int_censos__censo_2026_1_corregido_manual():
         df["marca_instalada_en_salida"] = correct_brand_names(df["marca_instalada_en_salida"])
         df["marca_instalada_en_salida"] = df["marca_instalada_en_salida"].str.title()
 
+
+    # new column
+    df["marcas_otras"] = False
+    df["marcas_otras"] = df["marcas_otras_listado"].apply(lambda x: True if pd.notnull(x) and str(x).strip() != "" else False)
 
 
     selected_columns = [
@@ -100,6 +100,7 @@ def int_censos__censo_2026_1_corregido_manual():
         # marcas
         "marcas_abinbev",
         "marcas_kross",
+        "marcas_otras",
         "marcas_otras_listado",
         "marca_competidor_en_salida",
         # acciones
