@@ -3,6 +3,7 @@ ICONS = {
     "logo": "energy_program_saving",
     # core pages
     "home": "home",
+    "report": "data_table",
     "catalog": "view_list",
     "documentation": "article",
     "projects": "rocket",

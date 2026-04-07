@@ -22,8 +22,6 @@ from models.metrics.general_metrics import calculate_general_metrics, get_latest
 from helpers.ui_components.ui_components import display_compliance_badge
 from helpers.ui_components.ui_config import CLASIFICACION_COLORS, MARCAS_COLORS
 from helpers.transformations.date_formatting import format_date_spanish
-
-
 from helpers.ui_components.icons import render_icon
 
 

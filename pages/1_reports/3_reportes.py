@@ -3,10 +3,14 @@ import streamlit as st
 
 from models.exposures._exp_censos_reporte_fne import exp_censos_reporte_fne
 
+from helpers.ui_components.icons import render_icon
+
+
 
 st.set_page_config(page_title="Reportes", layout="wide")
 
-st.title("Reportes")
+st.title(f"{render_icon('report')} Reportes")
+
 st.markdown("Tabla de censos en formato de reporte para FNE")
 
 df = exp_censos_reporte_fne()
