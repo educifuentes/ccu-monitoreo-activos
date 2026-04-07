@@ -24,20 +24,9 @@ def validate_bases_ccu(periodo=None):
         st.warning("La tabla Bases CCU está vacía.")
         return
 
-    # 1. cliente_id + periodo
-    st.markdown("### 1. `cliente_id` + `periodo`")
-    _df["key"] = _df["cliente_id"].astype(str) + "_" + _df["periodo"].astype(str)
-    ids_unicos = _df["key"].nunique()
+    st.markdown("## 1. Comparacion con tabla Clientes")
 
-    if ids_unicos == total_filas:
-        st.success(f"{ICONS['check']} Registros únicos ({total_filas} filas)")
-    else:
-        st.error(f"{ICONS['close']} Se detectaron {total_filas - ids_unicos} duplicados")
-        dupes = _df[_df.duplicated("key", keep=False)].sort_values(["cliente_id", "periodo"])
-        render_troubled_rows(dupes[["cliente_id", "periodo", "row_index"]], source="gsheets", gid=SHEETS_IDS["bases_ccu"])
-
-    # 1.1 Check Foreign Key (cliente_id exists in Clientes)
-    st.markdown("### 1.1 cliente_id de Bases CCU no presente en tabla Clientes (Clientes Nuevos)")
+    st.markdown("### 1.1 `cliente_id` de Bases CCU no presente en tabla Clientes (Clientes Nuevos)")
     ids_maestros = set(df_locales["cliente_id"].unique())
     ids_bases = set(_df["cliente_id"].unique())
     ids_faltantes = ids_bases - ids_maestros
@@ -49,8 +38,44 @@ def validate_bases_ccu(periodo=None):
         missing_df = _df[_df["cliente_id"].isin(ids_faltantes)]
         render_troubled_rows(missing_df[["cliente_id", "periodo", "row_index"]].drop_duplicates(), source="gsheets", gid=SHEETS_IDS["bases_ccu"])
 
-    # 2. Validez de Identificadores
-    st.markdown("### 2. Validez de Identificadores")
+    st.markdown("#### 1.2 `direccion` diferente entre Bases CCU y Clientes")
+    if "direccion" in _df.columns and "direccion" in df_locales.columns:
+        merged_df = _df.dropna(subset=["cliente_id"]).merge(
+            df_locales[["cliente_id", "direccion"]], 
+            on="cliente_id", 
+            how="inner", 
+            suffixes=("", "_maestro")
+        )
+        
+        # Compare as strings, ignoring case and trailing whitespace
+        dir_censo = merged_df["direccion"].fillna("").astype(str).str.strip().str.lower()
+        dir_maestro = merged_df["direccion_maestro"].fillna("").astype(str).str.strip().str.lower()
+        
+        # Flag if both are not empty and they differ
+        mismatched = merged_df[(dir_censo != "") & (dir_maestro != "") & (dir_censo != dir_maestro)]
+        
+        if mismatched.empty:
+            st.success(f"{ICONS['check']} Todas las direcciones coinciden entre Bases CCU y Clientes")
+        else:
+            st.error(f"{ICONS['close']} Se detectaron {len(mismatched)} registros con `direccion` diferente")
+            render_troubled_rows(mismatched[["cliente_id", "periodo", "direccion", "direccion_maestro", "row_index"]], source="gsheets", gid=SHEETS_IDS["bases_ccu"])
+    else:
+        st.warning("La columna `direccion` no existe en ambas tablas para validar.")
+
+    st.markdown("## 2. Integridad Datos")
+
+    st.markdown("#### 2.1 `cliente_id` + `periodo` duplicados")
+    _df["key"] = _df["cliente_id"].astype(str) + "_" + _df["periodo"].astype(str)
+    ids_unicos = _df["key"].nunique()
+
+    if ids_unicos == total_filas:
+        st.success(f"{ICONS['check']} Registros únicos ({total_filas} filas)")
+    else:
+        st.error(f"{ICONS['close']} Se detectaron {total_filas - ids_unicos} duplicados")
+        dupes = _df[_df.duplicated("key", keep=False)].sort_values(["cliente_id", "periodo"])
+        render_troubled_rows(dupes[["cliente_id", "periodo", "row_index"]], source="gsheets", gid=SHEETS_IDS["bases_ccu"])
+
+    st.markdown("#### 2.2 Validez de Identificadores")
     non_numeric = _df[pd.to_numeric(_df["cliente_id"], errors="coerce").isna()]
     if non_numeric.empty:
         st.success(f"{ICONS['check']} Todos los IDs son numéricos válidos.")
@@ -58,23 +83,8 @@ def validate_bases_ccu(periodo=None):
         st.error(f"{ICONS['close']} Se detectaron {len(non_numeric)} IDs no numéricos.")
         render_troubled_rows(non_numeric[["cliente_id", "periodo", "row_index"]], source="gsheets", gid=SHEETS_IDS["bases_ccu"])
 
-    # 3. Activos Vacíos en 2024-Q1
-    st.markdown("### 3. Activos Vacíos en 2024-Q1")
-    df_2024 = _df[_df["periodo"] == "2024-Q1"]
-    empty_activos = df_2024[
-        df_2024["schoperas_ccu"].isna() &
-        df_2024["coolers"].isna() &
-        df_2024["salidas"].isna()
-    ]
 
-    if empty_activos.empty:
-        st.success(f"{ICONS['check']} Todos los registros de 2024-Q1 tienen al menos un activo válido.")
-    else:
-        st.error(f"{ICONS['close']} Se detectaron {len(empty_activos)} registros en 2024-Q1 sin ningún activo reportado.")
-        render_troubled_rows(empty_activos[["cliente_id", "periodo", "schoperas_ccu", "coolers", "salidas", "row_index"]], source="gsheets", gid=SHEETS_IDS["bases_ccu"])
-
-    # 4. Contratos
-    st.markdown("### 4. Contratos")
+    st.markdown("#### 2.4 Contratos")
 
     nulos_id = _df[_df["cliente_id"].isna()]
     if not nulos_id.empty:

@@ -26,7 +26,6 @@ def validate_censos(periodo=None):
 
     st.markdown("## 1. Comparacion con tabla Clientes")
 
-        # 1.2 Check Foreign Key (cliente_id exists in Clientes)
     st.markdown("### 1.1 `cliente_id` de censos no presente en tabla Clientes (Clientes Nuevos)")
     ids_maestros = set(df_clientes["cliente_id"].unique())
     ids_censos = set(_df["cliente_id"].unique())
@@ -39,7 +38,7 @@ def validate_censos(periodo=None):
         missing_df = _df[_df["cliente_id"].isin(ids_faltantes)]
         render_troubled_rows(missing_df[["cliente_id", "periodo", "row_index"]].drop_duplicates(), source="gsheets", gid=SHEETS_IDS["censos"])
 
-    st.markdown("#### 1.3 `direccion` diferente entre Censos y Clientes")
+    st.markdown("#### 1.2 `direccion` diferente entre Censos y Clientes")
     if "direccion" in _df.columns and "direccion" in df_clientes.columns:
         merged_df = _df.dropna(subset=["cliente_id"]).merge(
             df_clientes[["cliente_id", "direccion"]], 
