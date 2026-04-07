@@ -3,6 +3,8 @@ import pandas as pd
 # from models.intermediate.bases_ccu._int_bases_ccu__base_2024_q1 import int_reportes_ccu_base_2024_q1
 from models.intermediate.bases_ccu._int_bases_ccu__base_2026_q1 import int_reportes_ccu_base_2026_q1
 
+from helpers.transformations.text_cleaning import clean_text
+
 
 def fct_bases_ccu():
    # inputs
@@ -49,6 +51,9 @@ def fct_bases_ccu():
 
     # to string type
     df["periodo"] = df["periodo"].astype(str)
+
+    # clean text
+    df = clean_text(df, ["region", "comuna", "ciudad", "direccion", "razon_social", "nombre_fantasia"])
 
 
     return df
