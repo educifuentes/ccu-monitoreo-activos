@@ -74,7 +74,7 @@ if not df_m.empty:
             "N que Disponibilizaron", "% que Disponibilizaron", 
             "N con Comp. en Salida", "% con Comp. en Salida"]
 
-    st.markdown("#### General")
+    st.markdown(f"#### {render_icon('general')} General")
     
     for period in df_m["periodo"].unique():
         st.markdown(f"###### Periodo: {period}")
@@ -85,7 +85,7 @@ if not df_m.empty:
         st.divider()
 
     # --- Presencia de Marcas ---
-    st.markdown("#### Presencia de Marcas")
+    st.markdown(f"#### {render_icon('marcas')} Presencia de Marcas")
     
     for period in df_m["periodo"].unique():
         st.markdown(f"###### Periodo: {period}")
@@ -106,7 +106,7 @@ if not df_m.empty:
                 metrics_display(df_p[["periodo", "N con Otras Marcas", "% con Otras Marcas"]], show_header=False, show_divider=False)
         st.divider()
     
-    st.markdown("#### Acciones en el Punto de Venta")
+    st.markdown(f"#### {render_icon('acciones')} Acciones en el Punto de Venta")
     for period in df_m["periodo"].unique():
         st.markdown(f"###### Periodo: {period}")
         df_p = df_m[df_m["periodo"] == period]
@@ -132,7 +132,7 @@ else:
 # 3. Bases CCU Section
 unique_periodos_bases = sorted(df_metrics_bases["periodo"].dropna().unique(), reverse=True)
 
-st.markdown("### Contratos")
+st.markdown(f"#### {render_icon('contratos')} Contratos")
 
 kpi_bases = [
     "periodo", 
@@ -158,7 +158,7 @@ if selected_periodo_bases != "Todos":
 
 if not df_b.empty:
     with st.container(border=True):
-        metrics_display(df_b[kpi_bases], max_cols=6, show_divider=False)
+        metrics_display(df_b[kpi_bases], max_cols=4, show_divider=False)
 else:
     st.info("No hay métricas de bases CCU para el periodo seleccionado.")
 

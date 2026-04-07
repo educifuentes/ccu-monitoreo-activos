@@ -30,6 +30,11 @@ ICONS = {
     "intermediate": "factory",
     "marts": "rocket",
     "exposures": "bar_chart_4_bars",
+    # kpis
+    "marcas": "copyright",
+    "general": "dashboard",
+    "acciones": "build",
+    "contratos": "contract",
 }
 
 def render_icon(icon_key: str) -> str:
