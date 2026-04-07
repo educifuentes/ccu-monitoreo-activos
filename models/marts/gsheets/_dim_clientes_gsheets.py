@@ -8,7 +8,7 @@ def dim_clientes_gsheets():
     df = load_gsheets_worksheet("clientes")
 
     # DATA TYPES
-    df["cliente_id"] = df["cliente_id"].astype(str).replace("nan", pd.NA)
+    df["cliente_id"] = df["cliente_id"].astype(str).str.replace(r'\.0$', '', regex=True).replace("nan", pd.NA)
 
     selected_columns = [
                         "cliente_id",

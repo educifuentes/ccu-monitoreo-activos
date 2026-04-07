@@ -30,6 +30,9 @@ def exp_bases_ccu():
         "mes_cambio",
     ]
 
+    # data types
+    df["cliente_id"] = df["cliente_id"].astype(str).str.replace(r'\.0$', '', regex=True).replace("nan", pd.NA)
+
     df = df[ccu_columns]
 
     # Merge; clientes_df is the authoritative source for shared columns

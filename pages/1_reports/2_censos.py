@@ -31,13 +31,14 @@ if df_censos.empty:
     st.stop()
 
 # 2. Global Filter & Summary
-unique_periodos = sorted(df_metrics["periodo"].dropna().unique().tolist())
+unique_periodos = sorted(df_metrics["periodo"].dropna().unique().tolist(), reverse=True)
+default_periodo_index = 1 if unique_periodos else 0
 col_f1, col_f2 = st.columns([1, 2])
 with col_f1:
     selected_periodo = st.selectbox(
         "Periodo",
         options=["Todos"] + unique_periodos,
-        index=0,
+        index=default_periodo_index,
         key="filter_censos_page"
     )
 

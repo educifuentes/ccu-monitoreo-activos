@@ -40,7 +40,7 @@ def fct_bases_ccu_gsheets():
     df = df[selected_columns]
     
     # Cast cliente_id and periodo to str to avoid TypeError on sorting
-    df["cliente_id"] = df["cliente_id"].astype(str)
+    df["cliente_id"] = df["cliente_id"].astype(str).str.replace(r'\.0$', '', regex=True).replace("nan", pd.NA)
     df["periodo"] = df["periodo"].astype(str)
 
     # Cast asset counts to Int64

@@ -3,6 +3,7 @@ import altair as alt
 
 from models.exposures._exp_clientes import exp_clientes
 from models.exposures._exp_censos import exp_censos
+from models.exposures._exp_bases_ccu import exp_bases_ccu
 from models.exposures._exp_activos_ccu_y_censos import exp_activos_ccu_y_censos
 from models.exposures._exp_asset_evolution import exp_asset_evolution
 from models.exposures._exp_contratos import exp_contratos
@@ -29,6 +30,7 @@ censos_df    = exp_censos()
 activos_df   = exp_activos_ccu_y_censos()
 asset_evolution_df = exp_asset_evolution()
 contratos_df = exp_contratos()
+bases_ccu_df = exp_bases_ccu()
 
 # =============================================================================
 # CLIENTE SELECTION
@@ -143,3 +145,17 @@ else:
 
     # ── Trend Chart ───────────────────────────────────────────────────────────
     render_trend_assets_chart(activos_cliente)
+
+    st.divider()
+
+    # ── Historial de Censos ───────────────────────────────────────────────────
+    st.subheader("Historial de Censos")
+    censo_cols = ["periodo", "fecha", "schoperas_total", "schoperas_ccu", "salidas", "marcas"]
+    df_c = censos_df[censos_df["cliente_id"] == selected_cliente_id]
+    st.dataframe(df_c[censo_cols], hide_index=True, use_container_width=True)
+
+    # ── Historial de Activos (Base CCU) ───────────────────────────────────────
+    st.subheader("Historial de Activos (Base CCU)")
+    ccu_cols = ["periodo", "fecha", "schoperas_ccu", "salidas", "coolers", "es_local_imagen"]
+    df_b = bases_ccu_df[bases_ccu_df["cliente_id"] == selected_cliente_id]
+    st.dataframe(df_b[ccu_cols], hide_index=True, use_container_width=True)
