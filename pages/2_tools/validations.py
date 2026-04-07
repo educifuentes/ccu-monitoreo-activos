@@ -11,15 +11,12 @@ st.markdown("Chequeos automáticos sobre las tablas fuente para asegurar la inte
 
 # --- Tab Layout ---
 tab1, tab2, tab3 = st.tabs([
-    ":material/sports_bar: Clientes",
     ":material/checklist_rtl: Censos",
-    ":material/assignment: Bases CCU"
+    ":material/assignment: Bases CCU",
+    ":material/sports_bar: Clientes",
 ])
 
 with tab1:
-    validate_clientes()
-
-with tab2:
     periodos_censos = sorted(censos_df["periodo"].dropna().unique(), reverse=True)
     selected_periodo_censos = st.selectbox(
         "Filtrar por periodo",
@@ -29,7 +26,7 @@ with tab2:
     )
     validate_censos(periodo=selected_periodo_censos if selected_periodo_censos != "Todos" else None)
 
-with tab3:
+with tab2:
     periodos_bases = sorted(bases_df["periodo"].dropna().unique(), reverse=True)
     selected_periodo_bases = st.selectbox(
         "Filtrar por periodo",
@@ -38,3 +35,6 @@ with tab3:
         key="periodo_bases", width=400
     )
     validate_bases_ccu(periodo=selected_periodo_bases if selected_periodo_bases != "Todos" else None)
+
+with tab3:
+    validate_clientes()

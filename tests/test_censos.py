@@ -24,23 +24,10 @@ def validate_censos(periodo=None):
         st.warning("La tabla Censos está vacía.")
         return
 
-    # 1. Generales
-    st.markdown("### 1. Generales")
+    st.markdown("## 1. Comparacion con tabla Clientes")
 
-    # 1.1 Uniqueness
-    st.markdown("#### 1.1 `cliente_id` + `periodo` duplicados")
-    _df["key"] = _df["cliente_id"].astype(str) + "_" + _df["periodo"].astype(str)
-    ids_unicos = _df["key"].nunique()
-
-    if ids_unicos == total_filas:
-        st.success(f"{ICONS['check']} Unicidad por Cliente y Periodo ({total_filas} registros)")
-    else:
-        st.error(f"{ICONS['close']} Se detectaron {total_filas - ids_unicos} registros duplicados (mismo Cliente y Periodo)")
-        dupes = _df[_df.duplicated("key", keep=False)].sort_values(["cliente_id", "periodo"])
-        render_troubled_rows(dupes[["cliente_id", "periodo", "schoperas_ccu", "row_index"]], source="gsheets", gid=SHEETS_IDS["censos"])
-
-    # 1.2 Check Foreign Key (cliente_id exists in Clientes)
-    st.markdown("#### 1.2 `cliente_id` de censos no presente en tabla Clientes (Clientes Nuevos)")
+        # 1.2 Check Foreign Key (cliente_id exists in Clientes)
+    st.markdown("### 1.1 `cliente_id` de censos no presente en tabla Clientes (Clientes Nuevos)")
     ids_maestros = set(df_clientes["cliente_id"].unique())
     ids_censos = set(_df["cliente_id"].unique())
     ids_faltantes = ids_censos - ids_maestros
@@ -52,8 +39,46 @@ def validate_censos(periodo=None):
         missing_df = _df[_df["cliente_id"].isin(ids_faltantes)]
         render_troubled_rows(missing_df[["cliente_id", "periodo", "row_index"]].drop_duplicates(), source="gsheets", gid=SHEETS_IDS["censos"])
 
+    st.markdown("#### 1.3 `direccion` diferente entre Censos y Clientes")
+    if "direccion" in _df.columns and "direccion" in df_clientes.columns:
+        merged_df = _df.dropna(subset=["cliente_id"]).merge(
+            df_clientes[["cliente_id", "direccion"]], 
+            on="cliente_id", 
+            how="inner", 
+            suffixes=("", "_maestro")
+        )
+        
+        # Compare as strings, ignoring case and trailing whitespace
+        dir_censo = merged_df["direccion"].fillna("").astype(str).str.strip().str.lower()
+        dir_maestro = merged_df["direccion_maestro"].fillna("").astype(str).str.strip().str.lower()
+        
+        # Flag if both are not empty and they differ
+        mismatched = merged_df[(dir_censo != "") & (dir_maestro != "") & (dir_censo != dir_maestro)]
+        
+        if mismatched.empty:
+            st.success(f"{ICONS['check']} Todas las direcciones coinciden entre Censos y Clientes")
+        else:
+            st.error(f"{ICONS['close']} Se detectaron {len(mismatched)} registros con `direccion` diferente")
+            render_troubled_rows(mismatched[["cliente_id", "periodo", "direccion", "direccion_maestro", "row_index"]], source="gsheets", gid=SHEETS_IDS["censos"])
+    else:
+        st.warning("La columna `direccion` no existe en ambas tablas para validar.")
+    
+    st.markdown("### 2. Integridad Datos")
+
+
+    # 1.1 Uniqueness
+    st.markdown("#### 2.1 `cliente_id` + `periodo` duplicados")
+    _df["key"] = _df["cliente_id"].astype(str) + "_" + _df["periodo"].astype(str)
+    ids_unicos = _df["key"].nunique()
+
+    if ids_unicos == total_filas:
+        st.success(f"{ICONS['check']} Unicidad por Cliente y Periodo ({total_filas} registros)")
+    else:
+        st.error(f"{ICONS['close']} Se detectaron {total_filas - ids_unicos} registros duplicados (mismo Cliente y Periodo)")
+        dupes = _df[_df.duplicated("key", keep=False)].sort_values(["cliente_id", "periodo"])
+        render_troubled_rows(dupes[["cliente_id", "periodo", "schoperas_ccu", "row_index"]], source="gsheets", gid=SHEETS_IDS["censos"])
+
     # 2. Activos y Acciones
-    st.markdown("### 2. Activos y Acciones")
 
     cols_to_check = ["salidas", "schoperas_total", "schoperas_ccu", "instalo", "disponibilizo"]
     
