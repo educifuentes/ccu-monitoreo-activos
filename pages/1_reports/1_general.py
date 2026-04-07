@@ -51,7 +51,7 @@ unique_periodos_censos = sorted(df_metrics_censos["periodo"].dropna().unique(), 
 col_f1, col_f2 = st.columns([1, 2])
 with col_f1:
     selected_periodo_censos = st.selectbox(
-        "Periodo",
+        "Periodo - Censos",
         options=["Todos"] + unique_periodos_censos,
         index=1 if len(unique_periodos_censos) > 0 else 0,
         key="filter_censos"
@@ -61,13 +61,10 @@ df_m = df_metrics_censos.copy()
 if selected_periodo_censos != "Todos":
     df_m = df_m[df_m["periodo"] == selected_periodo_censos]
 
-with col_f2:
-    if not df_m.empty:
-        kpi_generales = ["periodo", "N Clientes", "N Permite censos"]
-        metrics_display(df_m[kpi_generales], show_header=False, show_divider=False, max_cols=2)
 
 if not df_m.empty:
-    kpi_generales = ["periodo", "N Clientes", "N Permite censos"]
+    kpi_generales = ["periodo", "N Clientes", "N Permite censos", "N Clientes Sin Activos", "% Clientes Sin Activos"]
+
     kpi_marcas = ["periodo",
             "N con AbInbev", "% con AbInbev",
             "N con Kross", "% con Kross",
@@ -78,6 +75,16 @@ if not df_m.empty:
             "N que Instalaron", "% que Instalaron",
             "N que Disponibilizaron", "% que Disponibilizaron", 
             "N con Comp. en Salida", "% con Comp. en Salida"]
+
+    st.markdown("#### General")
+    
+    for period in df_m["periodo"].unique():
+        st.markdown(f"###### Periodo: {period}")
+        df_p = df_m[df_m["periodo"] == period]
+        
+        with st.container(border=True):
+            metrics_display(df_p[kpi_generales], show_header=False, show_divider=False, max_cols=4)
+        st.divider()
 
     # --- Presencia de Marcas ---
     st.markdown("#### Presencia de Marcas")
@@ -129,10 +136,12 @@ unique_periodos_bases = sorted(df_metrics_bases["periodo"].dropna().unique(), re
 
 st.markdown("### Contratos")
 
+kpi_bases = ["periodo", "N Clientes", "N Clientes Local Imagen", "N Clientes Nuevos"]
+
 col_fb1, col_fb2 = st.columns([1, 2])
 with col_fb1:
     selected_periodo_bases = st.selectbox(
-        "Filtrar por Periodo (Bases CCU)",
+        "Periodo - Bases CCU",
         options=["Todos"] + unique_periodos_bases,
         index=1 if len(unique_periodos_bases) > 0 else 0,
         key="filter_bases"
@@ -143,8 +152,8 @@ if selected_periodo_bases != "Todos":
     df_b = df_b[df_b["periodo"] == selected_periodo_bases]
 
 if not df_b.empty:
-    kpi_bases = ["periodo", "N Clientes", "N Clientes Local Imagen", "N Clientes Nuevos"]
-    metrics_display(df_b[kpi_bases], max_cols=6)
+    with st.container(border=True):
+        metrics_display(df_b[kpi_bases], max_cols=6, show_divider=False)
 else:
     st.info("No hay métricas de bases CCU para el periodo seleccionado.")
 

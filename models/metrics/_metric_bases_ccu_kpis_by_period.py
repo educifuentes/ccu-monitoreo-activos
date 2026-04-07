@@ -4,9 +4,6 @@ from models.marts._fct_bases_ccu import fct_bases_ccu
 def metrics_bases_ccu_kpis_by_period():
     """
     Calcula los KPIs de bases CCU por periodo:
-    - N Clientes
-    - N Clientes con Local Imagen
-    - N Clientes nuevos respecto al periodo anterior más reciente
     """
     df = fct_bases_ccu()
 

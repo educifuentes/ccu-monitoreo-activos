@@ -10,6 +10,7 @@ def metrics_censo_kpis_by_period():
     df["hay_competencia"] = df["hay_competencia_en_salida"].fillna(False).astype(bool)
     df["instalo_gt_0"] = (df["instalo"] > 0).fillna(False)
     df["disponibilizo_gt_0"] = (df["disponibilizo"] > 0).fillna(False)
+    df["sin_activos"] = (df["schoperas_ccu"].fillna(0) == 0)
 
     cols_to_agg = [
         "marcas_abinbev",
@@ -18,7 +19,8 @@ def metrics_censo_kpis_by_period():
         "hay_competencia",
         "instalo_gt_0",
         "disponibilizo_gt_0",
-        "permite_censo"
+        "permite_censo",
+        "sin_activos"
     ]
 
     # Grouping and Aggregation
@@ -34,6 +36,8 @@ def metrics_censo_kpis_by_period():
     # Human friendly names
     name_mapping = {
         "cliente_id_count": "N Clientes",
+        "sin_activos_sum": "N Clientes Sin Activos",
+        "sin_activos_mean": "% Clientes Sin Activos",
         "permite_censo_sum": "N Permite censos",
         "permite_censo_mean": "% Permite censos",
         "marcas_abinbev_sum": "N con AbInbev",
