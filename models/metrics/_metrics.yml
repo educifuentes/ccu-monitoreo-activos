@@ -44,9 +44,13 @@ metrics:
   - group_name: Bases CCU
     description: "indicadores derivados de la base oficial de activos de CCU."
     columns:
-      - name: "N Clientes"
+      - name: "N Clientes con comodato"
         description: "Cantidad total de clientes únicos presentes en la base oficial de CCU para el periodo."
+      - name: "N Clientes con comodato Nuevos"
+        description: "Cantidad de clientes que aparecen por primera vez en la bases CCU con contrato respecto al periodo anterior."
       - name: "N Clientes Local Imagen"
         description: "Cantidad de clientes clasificados como 'Local Imagen' según su contrato en la base oficial."
-      - name: "N Clientes Nuevos"
-        description: "Cantidad de clientes que aparecen por primera vez en la bases CCU con contrato respecto al periodo anterior."
+      - name: "% Clientes Local Imagen"
+        description: "Porcentaje de clientes clasificados como 'Local Imagen' según su contrato en la base oficial."
+      - name: "N Contratos Imagen Nuevos"
+        description: "Cantidad de contratos de imagen nuevos que aparecen por primera vez en la bases CCU con contrato respecto al periodo anterior."

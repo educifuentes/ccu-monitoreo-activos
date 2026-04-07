@@ -134,7 +134,14 @@ unique_periodos_bases = sorted(df_metrics_bases["periodo"].dropna().unique(), re
 
 st.markdown("### Contratos")
 
-kpi_bases = ["periodo", "N Clientes", "N Clientes Local Imagen", "N Clientes Nuevos"]
+kpi_bases = [
+    "periodo", 
+    "N Clientes con comodato", 
+    "N Clientes con comodato Nuevos",
+    "N Clientes Local Imagen", 
+    "% Clientes Local Imagen",
+    "N Contratos Imagen Nuevos"
+]
 
 col_fb1, col_fb2 = st.columns([1, 2])
 with col_fb1:

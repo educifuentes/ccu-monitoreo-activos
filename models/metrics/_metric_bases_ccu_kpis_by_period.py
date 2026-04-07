@@ -45,7 +45,22 @@ def metrics_bases_ccu_kpis_by_period():
             return len(current_ids)
         return len(current_ids - previous_ids)
 
+    def get_previous_period_imagen_clients(current_period):
+        for p in all_periods:
+            if p < current_period:
+                return set(df.loc[(df["periodo"] == p) & df["es_local_imagen"], "cliente_id"])
+        return set()
+
+    def count_new_imagen_clients(current_period):
+        current_ids = set(df.loc[(df["periodo"] == current_period) & df["es_local_imagen"], "cliente_id"])
+        previous_ids = get_previous_period_imagen_clients(current_period)
+        if not previous_ids:
+            return len(current_ids)
+        return len(current_ids - previous_ids)
+
     agg_df["clientes_nuevos"] = agg_df["periodo"].apply(count_new_clients)
+    agg_df["clientes_imagen_nuevos"] = agg_df["periodo"].apply(count_new_imagen_clients)
+    agg_df["clientes_local_imagen_perc"] = (agg_df["clientes_local_imagen"] / agg_df["clientes"]).fillna(0)
 
     # --- Sort descending by period ---
     agg_df.sort_values(by="periodo", ascending=False, inplace=True)
@@ -54,15 +69,19 @@ def metrics_bases_ccu_kpis_by_period():
     agg_df = agg_df.rename(
         columns={
             "periodo": "periodo",
-            "clientes": "N Clientes",
+            "clientes": "N Clientes con comodato",
             "clientes_local_imagen": "N Clientes Local Imagen",
-            "clientes_nuevos": "N Clientes Nuevos",
+            "clientes_local_imagen_perc": "% Clientes Local Imagen",
+            "clientes_nuevos": "N Clientes con comodato Nuevos",
+            "clientes_imagen_nuevos": "N Contratos Imagen Nuevos",
         }
     )
 
     # --- Format display columns ---
     for col in agg_df.columns:
-        if col.startswith("N "):
+        if col.startswith("%"):
+            agg_df[col] = (agg_df[col] * 100).round(0).fillna(0).astype(int).astype(str) + "%"
+        elif col.startswith("N "):
             agg_df[col] = agg_df[col].fillna(0).apply(lambda x: f"{int(x):,}".replace(",", "."))
 
     return agg_df
