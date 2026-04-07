@@ -34,10 +34,10 @@ def fct_censos_gsheets():
         "hay_competencia_en_salida",
         "marca_competidor_en_salida",
         # marcas
-        "marcas",
         "marcas_abinbev",
         "marcas_kross",
         "marcas_otras",
+        "marcas_listado",
         "marcas_otras_listado",
         # gsheets
         "row_index"

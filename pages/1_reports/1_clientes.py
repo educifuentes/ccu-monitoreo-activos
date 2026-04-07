@@ -149,7 +149,7 @@ else:
 
     # ── Historial de Censos ───────────────────────────────────────────────────
     st.subheader("Historial de Censos")
-    censo_cols = ["periodo", "fecha", "schoperas_total", "schoperas_ccu", "salidas", "marcas"]
+    censo_cols = ["periodo", "fecha", "schoperas_total", "schoperas_ccu", "salidas", "tiene_coolers", "instalo", "disponibilizo", "marcas_abinbev", "marcas_kross", "marcas_otras"]
     df_c = censos_df[censos_df["cliente_id"] == selected_cliente_id]
     st.dataframe(df_c[censo_cols], hide_index=True, use_container_width=True)
 
