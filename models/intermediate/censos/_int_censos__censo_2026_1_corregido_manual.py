@@ -60,10 +60,9 @@ def int_censos__censo_2026_1_corregido_manual():
 
     # 5. Value Transformations
     df["permite_censo"] = yes_no_to_boolean(df["permite_censo"])
-    df["hay_competencia_en_salida"] = yes_no_to_boolean(df["hay_competencia_en_salida"])
 
     # 6. Action transformations
-    df["instalo"] = yes_no_to_boolean(df["instalo"]).astype("Int64")
+    df["instalo"] = df["instalo"].apply(lambda x: 1 if x is True else None).astype("Int64")
     df["disponibilizo"] = pd.to_numeric(df["disponibilizo"], errors="coerce").astype("Int64")
 
     # 7. Text and Region Cleaning

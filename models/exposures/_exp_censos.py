@@ -29,6 +29,7 @@ def exp_censos():
         "schoperas_ccu",
         "schoperas_competencia",
         "salidas",
+        "tiene_coolers",
         "instalo",
         "disponibilizo",
         "marcas_abinbev",
