@@ -14,7 +14,7 @@ Aplicación de monitoreo y validación de activos para CCU. Permite cruzar la in
 
 ## Deploy
 
-Para publicar nuevos cambios en los servidores, simplemente ejecuta en la terminal:
+Para publicar nuevos cambios ejecutar:
 
 ```bash
 ./scripts/release.sh

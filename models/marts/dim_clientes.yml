@@ -24,3 +24,6 @@ columns:
   - name: nombre_fantasia
     description: Nombre comercial o de fantasía del local
     data_type: string
+  - name: finalizado
+    description: Indica si el cliente ha esta cerrado o se ha terminado su contrato
+    data_type: boolean
