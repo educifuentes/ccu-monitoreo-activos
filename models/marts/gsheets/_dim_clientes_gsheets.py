@@ -18,7 +18,10 @@ def dim_clientes_gsheets():
                         "region",
                         "ciudad",
                         "comuna",
-                        "nombre_fantasia", "fuente", "row_index"]
+                        "nombre_fantasia",
+                        "finalizado",
+                        "fuente",
+                        "row_index"]
     
     df = df[selected_columns]
     
