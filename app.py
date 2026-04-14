@@ -2,8 +2,10 @@ import streamlit as st
 import os
 
 from helpers.utilities.app_version import get_app_version
+from helpers.utilities.auth import check_password
 
-
+if not check_password():
+    st.stop()
 # Page configuration
 
 # Section - Reports
