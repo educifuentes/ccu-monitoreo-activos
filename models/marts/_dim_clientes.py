@@ -27,7 +27,10 @@ def dim_clientes():
                         "region",
                         "ciudad",
                         "comuna",
-                        "nombre_fantasia", "fuente"]
+                        "nombre_fantasia",
+                        "finalizado",
+                        "fuente"]
+
     df = df[selected_columns]
 
     return df

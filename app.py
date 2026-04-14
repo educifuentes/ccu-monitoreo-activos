@@ -40,7 +40,7 @@ if is_local:
         st.Page("pages/3_dev/3_marts.py", title="Marts", icon=":material/account_tree:"),
         st.Page("pages/3_dev/4_exposures.py", title="Exposures", icon=":material/visibility:"),
         st.Page("pages/3_dev/5_catalog.py", title="Catalog", icon=":material/book:"),
-        st.Page("pages/3_dev/model_details.py", icon=":material/info:")
+        st.Page("pages/3_dev/model_details.py", title="Model Details", icon=":material/info:")
     ]
 
 # current page
