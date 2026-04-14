@@ -68,12 +68,27 @@ def validate_clientes():
 
     # 3. RUT
     st.markdown("### 3. `rut`")
+
+    st.markdown("#### 3.1 clientes sin `rut`")
+
     nulos_rut = df[df["rut"].isna()]
     if not nulos_rut.empty:
         st.warning(f"{ICONS['warning']} Detectados {len(nulos_rut)} clientes sin RUT")
         render_troubled_rows(nulos_rut[["cliente_id", "razon_social", "rut", "row_index"]], source="gsheets", gid=SHEETS_IDS["clientes"])
     else:
         st.success(f"{ICONS['check']} Todos los clientes tienen RUT")
+
+
+    st.markdown("#### 3.2 clientes con RUT duplicado (excluyendo clientes finalizados)")
+
+    no_finalizados = df[df["finalizado"] != True]
+    non_null_rut = no_finalizados[no_finalizados["rut"].notna()]
+    dupes_rut = non_null_rut[non_null_rut.duplicated("rut", keep=False)].sort_values("rut", key=lambda col: col.astype(str))
+    if not dupes_rut.empty:
+        st.warning(f"{ICONS['warning']} Se detectaron {len(dupes_rut)} clientes no finalizados con RUT duplicado")
+        render_troubled_rows(dupes_rut[["cliente_id", "razon_social", "rut", "finalizado", "row_index"]], source="gsheets", gid=SHEETS_IDS["clientes"])
+    else:
+        st.success(f"{ICONS['check']} No hay clientes no finalizados con RUT duplicado")
 
     # 4. Dirección
     st.markdown("### 4. `direccion`")
