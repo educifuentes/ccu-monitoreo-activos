@@ -1,7 +1,12 @@
 import streamlit as st
+from helpers.utilities.check_environment import get_environment
 
 def check_password():
     """Returns True if the user has entered the correct password in this session."""
+
+    # Bypass authentication if not in production
+    if get_environment() != "production":
+        return True
 
     if st.session_state.get("password_correct", False):
         return True
