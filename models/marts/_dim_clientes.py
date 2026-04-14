@@ -12,6 +12,10 @@ def dim_clientes():
         "local_id": "cliente_id"
     }, inplace=True)
 
+    # new column
+
+    df["finalizado"] = False
+
 
     # DATA TYPES
     df["cliente_id"] = df["cliente_id"].replace("nan", pd.NA)

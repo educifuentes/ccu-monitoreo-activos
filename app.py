@@ -3,6 +3,7 @@ import os
 
 from helpers.utilities.app_version import get_app_version
 from helpers.utilities.auth import check_password
+from helpers.utilities.check_environment import get_environment
 
 if not check_password():
     st.stop()
@@ -30,7 +31,8 @@ nav_dict = {
 
 
 # Only expose the development environment tabs locally
-is_local = os.environ.get("ENVIRONMENT", "production").lower() == "local"
+env = get_environment()
+is_local = env == "local"
 if is_local:
     nav_dict["Desarrollo"] = [
         st.Page("pages/3_dev/1_staging.py", title="Staging", icon=":material/dashboard:"),
