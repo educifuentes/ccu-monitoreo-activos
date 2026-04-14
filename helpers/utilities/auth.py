@@ -14,7 +14,7 @@ def check_password():
     # Center the login input
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        password = st.text_input("Ingrese contraseñ", type="password", key="temp_password")
+        password = st.text_input("Ingrese contraseña", type="password", key="temp_password")
         
         if password:
             if password == st.secrets["password"]:
