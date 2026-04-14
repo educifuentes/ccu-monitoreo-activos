@@ -54,7 +54,7 @@ with st.sidebar:
     st.divider()
     # Logo and version
     app_version = get_app_version()
-    # st.image("utilities/assets/logo_gotomarket_solid.png", width='stretch')
+
     st.caption(f"Version: {app_version}")
 
 pg.run()

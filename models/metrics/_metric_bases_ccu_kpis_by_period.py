@@ -1,11 +1,11 @@
-from models.marts._fct_bases_ccu import fct_bases_ccu
+from models.marts.gsheets._fct_bases_ccu_gsheets import fct_bases_ccu_gsheets
 
 
 def metrics_bases_ccu_kpis_by_period():
     """
     Calcula los KPIs de bases CCU por periodo:
     """
-    df = fct_bases_ccu()
+    df = fct_bases_ccu_gsheets()
 
     # --- Pre-calculate boolean flags ---
     df["es_local_imagen"] = df["es_local_imagen"].fillna(False).astype(bool)
