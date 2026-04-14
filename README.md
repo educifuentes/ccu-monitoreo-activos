@@ -7,8 +7,10 @@ Aplicación de monitoreo y validación de activos para CCU. Permite cruzar la in
 ## Features
 
 - **Reportes:** Dashboard general, vistas detalladas por clientes y reportes analíticos.
-- **Herramientas de Datos:** Explorador interactivo de tablas y módulo de validación de datos.
-- **Vistas UI:** Acceso seguro bajo contraseña en producción.
+- **Herramientas:**
+  - Explorador interactivo de tablas
+  - Módulo de validación de datos
+  - Documentación
 
 ## Deploy
 
