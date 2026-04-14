@@ -43,7 +43,7 @@ except Exception as e:
     st.stop()
 
 # 2. Censos Section
-unique_periodos_censos = sorted(df_metrics_censos["periodo"].dropna().unique(), reverse=True)
+unique_periodos_censos = sorted(df_metrics_censos["periodo"].dropna().unique(), key=str, reverse=True)
 
 # Header Row
 col_f1, col_f2 = st.columns([1, 2])
@@ -130,7 +130,7 @@ else:
 
 
 # 3. Bases CCU Section
-unique_periodos_bases = sorted(df_metrics_bases["periodo"].dropna().unique(), reverse=True)
+unique_periodos_bases = sorted(df_metrics_bases["periodo"].dropna().unique(), key=str, reverse=True)
 
 st.markdown(f"#### {render_icon('contratos')} Contratos")
 

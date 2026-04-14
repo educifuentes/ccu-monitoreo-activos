@@ -20,10 +20,10 @@ def metrics_bases_ccu_kpis_by_period():
         .reset_index()
     )
 
-    # --- Calculate new clients vs previous period ---
+    # Calculate new clients vs previous period ---
     # Sort periods; periods are strings like "2026-Q1", "2025-Q4", etc.
     # We sort descending so that for each period we can look up its predecessor.
-    all_periods = sorted(df["periodo"].unique(), reverse=True)
+    all_periods = sorted(df["periodo"].dropna().unique(), key=str, reverse=True)
 
     def get_previous_period_clients(current_period):
         """
@@ -63,7 +63,7 @@ def metrics_bases_ccu_kpis_by_period():
     agg_df["clientes_local_imagen_perc"] = (agg_df["clientes_local_imagen"] / agg_df["clientes"]).fillna(0)
 
     # --- Sort descending by period ---
-    agg_df.sort_values(by="periodo", ascending=False, inplace=True)
+    agg_df.sort_values(by="periodo", ascending=False, inplace=True, key=lambda col: col.astype(str))
 
     # --- Human-friendly names ---
     agg_df = agg_df.rename(

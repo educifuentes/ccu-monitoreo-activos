@@ -60,7 +60,7 @@ def metrics_censo_kpis_by_period():
     cols = ["periodo", "N Clientes"] + [c for c in metrics_df.columns if c not in ["periodo", "N Clientes"]]
     metrics_df = metrics_df[cols]
 
-    metrics_df.sort_values(by="periodo", ascending=False, inplace=True)
+    metrics_df.sort_values(by="periodo", ascending=False, inplace=True, key=lambda col: col.astype(str))
 
     # format display columns
     for col in metrics_df.columns:
