@@ -27,6 +27,10 @@ st.title(f"{render_icon('clientes')} Clientes")
 # DATA LOADING  (runs once per session, cached by each exposure function)
 # =============================================================================
 clientes_df  = exp_clientes()
+
+show_finalizados = st.session_state.get("show_finalizados", False)
+if not show_finalizados and "finalizado" in clientes_df.columns:
+    clientes_df = clientes_df[clientes_df["finalizado"] != True]
 censos_df    = exp_censos()
 activos_df   = exp_activos_ccu_y_censos()
 contratos_df = exp_contratos()
@@ -62,7 +66,7 @@ col_select, col_input = st.columns([2, 1])
 
 with col_select:
     selected_cliente_id = st.selectbox(
-        "Seleccionar Cliente para ver detalles",
+        f"Seleccionar Cliente para ver detalles (Total: {clientes_df['cliente_id'].nunique()})",
         options=list(clientes_options.keys()),
         format_func=lambda x: clientes_options[x],
         key="local_selector",
@@ -86,6 +90,8 @@ if text_input_changed and text_input_id:
 
 st.session_state.last_selectbox_value = selected_cliente_id
 st.session_state.last_text_input_value = text_input_id
+
+st.checkbox("Incluir clientes finalizados", key="show_finalizados")
 
 # =============================================================================
 # FILTER DATA FOR SELECTED CLIENTE
